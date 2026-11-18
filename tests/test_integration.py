@@ -378,3 +378,85 @@ def test_duplicate_check_on_inserted_data(tmp_db):
     assert added == 1
     assert len(dates) == len(set(dates)), "入库数据不得有重复日期"
     c.close()
+
+
+# ---------- collector start 失败保护 / log_errors 统计（最终补充 P2/P3）----------
+@pytest.mark.integration
+def test_collector_start_failure_skips_target_and_continues(monkeypatch, tmp_db):
+    """P2：第一个标的 FetchLogRepo.start 失败 → 记录标的/阶段/原始异常，跳过它但继续其他标的。"""
+    import adapters.collector as col
+    from pathlib import Path
+    from storage.repository import FetchLogRepo as RealFetchLog
+    monkeypatch.setattr("storage.db.get_db_path", lambda: Path(tmp_db))
+
+    orig_start = RealFetchLog.start
+    calls = {"n": 0}
+
+    def flaky_start(source, task):
+        calls["n"] += 1
+        if calls["n"] == 1:  # 仅第一个标的（stock:600519）start 失败
+            raise OSError("fetch_log start disk full")
+        return orig_start(source, task)
+
+    monkeypatch.setattr(col.FetchLogRepo, "start", flaky_start)
+
+    stats = col.collect_and_store("20251101", "20251114", adapter=_stub_adapter())
+    # 失败被明确记录：标的 + 阶段 FETCH_LOG_START + 原始异常
+    assert any("FETCH_LOG_START" in e and "600519" in e and "OSError" in e
+               and "disk full" in e for e in stats["errors"]), stats["errors"]
+    # 同样计入 log_errors
+    assert any("FETCH_LOG_START" in e and "600519" in e
+               for e in stats["log_errors"]), stats["log_errors"]
+    # 600519 被跳过（其接口本会 ValueError），未调用其 fetch；其余标的正常执行
+    # 2 只个股（300750 + 000001）+ 3 指数入库
+    assert stats["stocks"] == 2 and stats["indices"] == 3, stats
+    assert not any("600519" in e and "FETCH_ADAPTER" in e
+                   for e in stats["errors"]), "start 失败的标的不应进入采集阶段"
+
+
+@pytest.mark.integration
+def test_collector_success_log_write_failure_counted_not_masked(monkeypatch, tmp_db):
+    """P3：成功入库但成功日志写失败 → 入库行数照常统计，log_errors 记录，不伪装成采集失败。"""
+    import adapters.collector as col
+    from pathlib import Path
+    monkeypatch.setattr("storage.db.get_db_path", lambda: Path(tmp_db))
+
+    orig_finish = col.FetchLogRepo.finish
+
+    def fail_success_finish(log_id, status, *a, **k):
+        if status == "success":
+            raise OSError("success log disk full")
+        return orig_finish(log_id, status, *a, **k)
+
+    monkeypatch.setattr(col.FetchLogRepo, "finish", fail_success_finish)
+
+    stats = col.collect_and_store("20251101", "20251114", adapter=_stub_adapter())
+    # 真实入库行数照常统计（_stub_adapter 中 600519 接口失败，只入库 2 个股 + 3 指数）
+    assert stats["stocks"] == 2 and stats["indices"] == 3, stats
+    # 未伪装成采集失败：errors 中不含 "success log disk full"
+    assert not any("success log disk full" in e for e in stats["errors"]), stats["errors"]
+    # log_errors 明确记录成功日志写入失败（含标的、阶段、原始异常）
+    assert any("FETCH_LOG_WRITE" in e and "success" in e and "OSError" in e
+               and "disk full" in e for e in stats["log_errors"]), stats["log_errors"]
+
+
+@pytest.mark.integration
+def test_collector_failed_log_write_failure_counted(monkeypatch, tmp_db):
+    """P3：失败日志写入失败也应记入 log_errors（原异常与对应标的不丢）。"""
+    import adapters.collector as col
+    from pathlib import Path
+    monkeypatch.setattr("storage.db.get_db_path", lambda: Path(tmp_db))
+
+    def boom_finish(*a, **k):
+        raise OSError("failed log disk full")
+
+    monkeypatch.setattr(col.FetchLogRepo, "finish", boom_finish)
+
+    stats = col.collect_and_store("20251101", "20251114", adapter=_stub_adapter())
+    # 采集故障本身仍在 errors（600519 的 FETCH_ADAPTER/ValueError）
+    assert any("600519" in e and "FETCH_ADAPTER" in e for e in stats["errors"]), stats["errors"]
+    # 失败日志写失败的原始异常与标的均进入 log_errors
+    assert any("FETCH_LOG_WRITE" in e and "failed" in e and "OSError" in e
+               and "disk full" in e for e in stats["log_errors"]), stats["log_errors"]
+    # 日志故障不影响采集结果
+    assert stats["stocks"] == 2 and stats["indices"] == 3, stats

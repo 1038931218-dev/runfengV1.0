@@ -1,3 +1,5 @@
+# 本轮实际执行时间: 2026-11-18 18:24:17 (Asia/Shanghai)
+# 分支: review/round5 (最终补充审查 P1-P3)
 /root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pylama/lint/__init__.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
   from pkg_resources import iter_entry_points
 ============================= test session starts ==============================
@@ -6,7 +8,7 @@ cachedir: .pytest_cache
 rootdir: /workspace/runfeng-invest-center
 configfile: pytest.ini
 plugins: Faker-40.1.2, anyio-4.12.1, pylama-8.4.1
-collecting ... collected 63 items / 60 deselected / 3 selected
+collecting ... collected 73 items / 70 deselected / 3 selected
 
 tests/test_network.py::test_akshare_history_stock_fetch FAILED           [ 33%]
 tests/test_network.py::test_akshare_history_index_fetch FAILED           [ 66%]
@@ -15,7 +17,7 @@ tests/test_network.py::test_baostock_fetch_classified SKIPPED (环境...)  [100%
 =================================== FAILURES ===================================
 _______________________ test_akshare_history_stock_fetch _______________________
 
-self = <urllib3.connectionpool.HTTPSConnectionPool object at 0x7fa8d2df9bd0>
+self = <urllib3.connectionpool.HTTPSConnectionPool object at 0x7f0569225ed0>
 method = 'GET'
 url = '/api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=0&secid=1.600519&beg=20251101&end=20251114'
 body = None
@@ -254,7 +256,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                               ^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <http.client.HTTPResponse object at 0x7fa9130b5ff0>
+self = <http.client.HTTPResponse object at 0x7f05a94d7370>
 
     def _read_status(self):
         line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
@@ -273,7 +275,7 @@ E           http.client.RemoteDisconnected: Remote end closed connection without
 
 During handling of the above exception, another exception occurred:
 
-self = <requests.adapters.HTTPAdapter object at 0x7fa8d2df8950>
+self = <requests.adapters.HTTPAdapter object at 0x7f0569224c50>
 request = <PreparedRequest [GET]>, stream = False
 timeout = Timeout(connect=5.0, read=15.0, total=None), verify = True
 cert = None, proxies = OrderedDict([('x_ide_auth', 'auth.proxy')])
@@ -370,7 +372,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                               ^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <http.client.HTTPResponse object at 0x7fa9130b5ff0>
+self = <http.client.HTTPResponse object at 0x7f05a94d7370>
 
     def _read_status(self):
         line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
@@ -401,10 +403,10 @@ tests/test_network.py:20:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 adapters/akshare_adapter.py:48: in fetch_stock_daily
     df = self._call_with_retry(
-adapters/base.py:201: in _call_with_retry
+adapters/base.py:245: in _call_with_retry
     raise last_exc  # type: ignore[misc]
     ^^^^^^^^^^^^^^
-adapters/base.py:184: in _call_with_retry
+adapters/base.py:228: in _call_with_retry
     result = func(*args, **call_kwargs)
              ^^^^^^^^^^^^^^^^^^^^^^^^^^
 /root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock_feature/stock_hist_em.py:992: in stock_zh_a_hist
@@ -424,7 +426,7 @@ adapters/base.py:184: in _call_with_retry
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <requests.adapters.HTTPAdapter object at 0x7fa8d2df8950>
+self = <requests.adapters.HTTPAdapter object at 0x7f0569224c50>
 request = <PreparedRequest [GET]>, stream = False
 timeout = Timeout(connect=5.0, read=15.0, total=None), verify = True
 cert = None, proxies = OrderedDict([('x_ide_auth', 'auth.proxy')])
@@ -518,12 +520,12 @@ adapters/akshare_adapter.py:94: in fetch_index_daily
     df = self._call_isolated(
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <adapters.akshare_adapter.AKShareAdapter object at 0x7fa8d28b1210>
-func = <function stock_zh_index_daily_em at 0x7fa91391db20>, args = ()
+self = <adapters.akshare_adapter.AKShareAdapter object at 0x7f0568d84e10>
+func = <function stock_zh_index_daily_em at 0x7f05a9d4a700>, args = ()
 kwargs = {'end_date': '20251114', 'start_date': '20251101', 'symbol': 'sh000300'}
 ok = False, result = None
 err = "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
-elapsed = 127
+elapsed = 130
 
     def _call_isolated(self, func: Callable, *args, **kwargs):
         """进程隔离调用：无法安全中断的 SDK 用此路径，硬超时强制终止。"""
@@ -532,16 +534,20 @@ elapsed = 127
         )
         self.last_elapsed_ms = elapsed
         if not ok:
+            # 主进程硬超时：保留 TaskTimeoutError 分类（子进程被强制终止）
             if err and err.startswith("TASK_TIMEOUT"):
                 self.last_error = err
                 raise TaskTimeoutError(f"[{self.source_name}] {err}")
-            # 子进程回传的异常字符串：尽力按类型归类
+            # P1：依据子进程回传的「异常类型名」精确重建分类。
+            # 网络类（ConnectionError/Timeout/ConnectionRefusedError 等）保留
+            # NetworkLimitError 分类；未知异常归 DataParseError；绝不凭消息文本
+            # 中的 "network" 等字样误判为网络异常。
             self.last_error = err
->           raise DataParseError(f"[{self.source_name}] 子进程执行失败: {err}")
-E           adapters.base.DataParseError: [akshare] 子进程执行失败: ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+>           raise _rebuild_isolated_error(err, self.source_name)
+E           adapters.base.NetworkLimitError: [akshare] 子进程网络异常[ConnectionError]: ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
 
-adapters/base.py:215: DataParseError
+adapters/base.py:263: NetworkLimitError
 =========================== short test summary info ============================
 FAILED tests/test_network.py::test_akshare_history_stock_fetch - requests.exc...
 FAILED tests/test_network.py::test_akshare_history_index_fetch - adapters.bas...
-================= 2 failed, 1 skipped, 60 deselected in 12.06s =================
+================= 2 failed, 1 skipped, 70 deselected in 12.07s =================

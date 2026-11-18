@@ -483,3 +483,83 @@ def test_baostock_business_ok_rows_returned(monkeypatch):
     assert len(qs) == 1 and qs[0].close == 1.5
 
 
+# ---------- _call_isolated 子进程网络异常分类测试（最终补充 P1）----------
+def _mock_base_isolated(monkeypatch, err, ok=False, result=None, elapsed=5):
+    """替换 base.run_isolated 返回可控四元组，精确模拟子进程回传。"""
+    import adapters.base as bmod
+    monkeypatch.setattr(
+        bmod, "run_isolated",
+        lambda *a, **k: (ok, result, err, elapsed),
+    )
+    return bmod
+
+
+def _concrete_base_adapter(bmod):
+    """构造可实例化的最小 BaseAdapter 子类，仅用于 _call_isolated 分类测试。"""
+    class Concrete(bmod.BaseAdapter):
+        source_name = "unit"
+        def fetch_stock_daily(self, *a, **k): pass
+        def fetch_index_daily(self, *a, **k): pass
+    return Concrete()
+
+
+def test_isolated_connection_error_is_network(monkeypatch):
+    """P1：子进程 ConnectionError → NetworkLimitError，不再退化为 DataParseError。"""
+    bmod = _mock_base_isolated(monkeypatch, "ConnectionError: connection reset")
+    a = _concrete_base_adapter(bmod)
+    with pytest.raises(NetworkLimitError) as ei:
+        a._call_isolated(lambda: None)
+    assert type(ei.value).__name__ != "DataParseError"
+    assert "ConnectionError" in str(ei.value)
+
+
+def test_isolated_timeout_is_network(monkeypatch):
+    """P1：子进程 Timeout → NetworkLimitError（ConnectionTimeoutError 子类）。"""
+    bmod = _mock_base_isolated(monkeypatch, "Timeout: read timed out")
+    a = _concrete_base_adapter(bmod)
+    with pytest.raises(NetworkLimitError) as ei:
+        a._call_isolated(lambda: None)
+    assert isinstance(ei.value, ConnectionTimeoutError)
+
+
+def test_isolated_connection_refused_is_network(monkeypatch):
+    """P1：子进程 ConnectionRefusedError → 保留网络异常分类。"""
+    bmod = _mock_base_isolated(monkeypatch, "ConnectionRefusedError: refused")
+    a = _concrete_base_adapter(bmod)
+    with pytest.raises(NetworkLimitError):
+        a._call_isolated(lambda: None)
+
+
+def test_isolated_value_error_is_parse_even_if_message_mentions_network(monkeypatch):
+    """P1：类型名 ValueError 即便消息含 'network' 仍归 DataParseError（不得凭文本误判）。"""
+    bmod = _mock_base_isolated(monkeypatch, "ValueError: network field parse failed")
+    a = _concrete_base_adapter(bmod)
+    with pytest.raises(DataParseError) as ei:
+        a._call_isolated(lambda: None)
+    assert not isinstance(ei.value, NetworkLimitError), "解析错误被误判为网络异常"
+
+
+def test_isolated_unknown_error_is_parse(monkeypatch):
+    """P1：未知异常类型名一律归 DataParseError，绝不归网络限制。"""
+    bmod = _mock_base_isolated(monkeypatch, "WeirdError: ???")
+    a = _concrete_base_adapter(bmod)
+    with pytest.raises(DataParseError):
+        a._call_isolated(lambda: None)
+
+
+def test_isolated_hard_timeout_keeps_task_timeout(monkeypatch):
+    """P1：主进程硬超时（TASK_TIMEOUT）保留 TaskTimeoutError 分类。"""
+    bmod = _mock_base_isolated(monkeypatch, "TASK_TIMEOUT: 任务超过 1s 未返回，已强制终止")
+    a = _concrete_base_adapter(bmod)
+    with pytest.raises(TaskTimeoutError):
+        a._call_isolated(lambda: None)
+
+
+def test_isolated_normal_result_returned(monkeypatch):
+    """P1：子进程正常结果须原样返回，last_error 清空。"""
+    bmod = _mock_base_isolated(monkeypatch, None, ok=True, result=[1, 2, 3], elapsed=9)
+    a = _concrete_base_adapter(bmod)
+    assert a._call_isolated(lambda: None) == [1, 2, 3]
+    assert a.last_error is None and a.last_elapsed_ms == 9
+
+

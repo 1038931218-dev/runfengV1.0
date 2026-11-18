@@ -117,6 +117,50 @@ class TaskTimeoutError(NetworkLimitError):
 NON_RETRYABLE_ERRORS = (ParameterError, DataParseError, LoginError)
 
 
+# 子进程隔离回传的异常以 "类型名: 消息" 字符串表示（见 utils/timeout.py::_worker）。
+# 主进程仅依据「异常类型名」精确重建网络异常分类，绝不扫描消息文本中的
+# network/timeout 等字样——否则 ValueError("network parse fail") 之类真实解析
+# 错误会被误判为网络限制，违反异常分类纪律（本轮 P1）。
+# 白名单只包含连接/超时/拒绝类；其余（含 ValueError/KeyError/JSONDecodeError 等）
+# 一律归 DataParseError。
+_ISOLATED_NETWORK_EXC = {
+    # requests / urllib3 常见网络异常类型名
+    "ConnectionError": NetworkLimitError,
+    "Timeout": ConnectionTimeoutError,
+    "ConnectTimeout": ConnectionTimeoutError,
+    "ReadTimeout": ConnectionTimeoutError,
+    "ConnectionRefusedError": ConnectionRefusedError,
+    "ConnectionResetError": NetworkLimitError,
+    "ConnectionAbortedError": NetworkLimitError,
+    "BrokenPipeError": NetworkLimitError,
+    "NewConnectionError": NetworkLimitError,
+    "MaxRetryError": NetworkLimitError,
+    "NameResolutionError": NetworkLimitError,
+    "gaierror": NetworkLimitError,
+    "SSLError": NetworkLimitError,
+    # 内建/本项目超时类型名
+    "TimeoutError": ConnectionTimeoutError,
+    "ConnectionTimeoutError": ConnectionTimeoutError,
+    "TaskTimeoutError": TaskTimeoutError,
+}
+
+
+def _rebuild_isolated_error(err: str | None, source_name: str) -> AdapterError:
+    """依据子进程回传的异常类型名重建分类；未知异常归 DataParseError。
+
+    只读取冒号前的「类型名」做精确匹配，完全忽略消息文本，确保：
+    - ConnectionError / Timeout / ConnectionRefusedError 等保留网络异常分类；
+    - 消息里即便出现 "network" 字样，只要类型名不在白名单仍归 DataParseError。
+    """
+    if not err:
+        return DataParseError(f"[{source_name}] 子进程执行失败(无异常描述)")
+    type_name = err.split(":", 1)[0].strip()
+    exc_cls = _ISOLATED_NETWORK_EXC.get(type_name)
+    if exc_cls is not None:
+        return exc_cls(f"[{source_name}] 子进程网络异常[{type_name}]: {err}")
+    return DataParseError(f"[{source_name}] 子进程执行失败[{type_name}]: {err}")
+
+
 class BaseAdapter(ABC):
     """所有数据源适配器的基类。"""
 
@@ -207,12 +251,16 @@ class BaseAdapter(ABC):
         )
         self.last_elapsed_ms = elapsed
         if not ok:
+            # 主进程硬超时：保留 TaskTimeoutError 分类（子进程被强制终止）
             if err and err.startswith("TASK_TIMEOUT"):
                 self.last_error = err
                 raise TaskTimeoutError(f"[{self.source_name}] {err}")
-            # 子进程回传的异常字符串：尽力按类型归类
+            # P1：依据子进程回传的「异常类型名」精确重建分类。
+            # 网络类（ConnectionError/Timeout/ConnectionRefusedError 等）保留
+            # NetworkLimitError 分类；未知异常归 DataParseError；绝不凭消息文本
+            # 中的 "network" 等字样误判为网络异常。
             self.last_error = err
-            raise DataParseError(f"[{self.source_name}] 子进程执行失败: {err}")
+            raise _rebuild_isolated_error(err, self.source_name)
         self.last_error = None
         return result
 
