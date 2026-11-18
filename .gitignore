@@ -1,0 +1,26 @@
+# 密钥与本地数据，严禁提交
+.env
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# 采集到的报告（可按需改为提交）
+data/reports/
+data/*.db
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 日志
+logs/
+*.log
+
+# 虚拟环境
+venv/
+.venv/
+env/

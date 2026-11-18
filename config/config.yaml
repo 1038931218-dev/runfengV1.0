@@ -1,0 +1,31 @@
+# 非敏感配置：路径、调度、阈值。密钥一律放 .env，不写入此文件。
+app:
+  name: 润锋投资数据中心
+  version: "1.0"
+  timezone: Asia/Shanghai
+
+database:
+  path: data/invest_center.db
+
+# 报告调度（北京时间）
+schedule:
+  pre_market: "08:50"
+  intraday: "10:00"
+  close: "15:10"
+
+# 候选股票每次最多推荐数量
+analysis:
+  max_candidates: 5
+
+# 风控约束
+risk:
+  account_cap_cny: 10000
+  single_trade_risk_min: 50
+  single_trade_risk_max: 100
+
+# 数据源开关（Token 未提供时 Tushare 保持 disabled）
+sources:
+  akshare: true
+  baostock: true
+  tushare: false
+  cninfo: true
