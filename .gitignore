@@ -5,9 +5,8 @@
 *.db-wal
 *.db-shm
 
-# 采集到的报告（可按需改为提交）
-data/reports/
-data/*.db
+# 运行产物：本地数据库 / 采集样本 / 报告，一律不提交
+data/
 
 # Python 缓存
 __pycache__/

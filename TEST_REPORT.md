@@ -58,10 +58,24 @@
 
 ---
 
-## 三、累计测试结果
-- 两个阶段合计：**36 / 37 通过，1 跳过（环境限制），0 失败。**
+## 三、审查修复后测试结果（最新）
 
-## 四、已知限制
-1. 当前沙箱 BaoStock 私有端口（10030/10031）被封锁，无法真实采集；代码已实现，放行端口即可用。
-2. 已在 `adapters/base.py` 设置全局 `socket.setdefaulttimeout(12)`，解决第三方库内部无超时请求导致的挂起。
+按测试分层独立执行：
+
+| 类别 | 命令 | 结果 |
+|---|---|---|
+| 单元测试 | `pytest -m "not network and not integration"` | 30 passed |
+| 数据库集成测试 | `pytest -m integration` | 6 passed |
+| 网络测试 | `pytest -m network` | 2 passed, 1 skipped |
+| 全量 | `pytest tests/ -q` | **38 passed, 1 skipped, 0 failed** |
+
+修复要点：测试隔离（移除真实库依赖）、显式 connect/read 超时+进程隔离硬超时、BaoStock 异常分类、交叉验证重复检测、daily_quote 增加 period 字段与安全迁移、测试重命名。详见 `reports/phase2/acceptance-audit.md`。
+
+## 四、累计测试结果
+- 修复后全量：**38 / 39 通过，1 跳过（环境限制），0 失败。**
+- 全新环境（无预置数据库）非网络测试：**35 passed**，独立运行成功。
+
+## 五、已知限制
+1. 当前沙箱 BaoStock 私有端口（10030/10031）被封锁，无法真实采集；异常分类已就位，仅此项按规则 skip。
+2. 超时机制：可控调用用显式 `(connect,read)`；不可中断调用用进程隔离硬超时；socket 默认超时仅兜底；重试有限（0~5）。
 3. 历史行情均为 `data_type=history`，未涉及实时行情，不拿历史缓存冒充实时。

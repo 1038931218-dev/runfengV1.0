@@ -14,7 +14,7 @@ from utils.timezone import fmt_cn
 
 DAILY_QUOTE_COLUMNS = [
     "code", "name", "trade_date", "open", "high", "low", "close",
-    "volume", "amount", "adjust_type", "source", "quote_time",
+    "volume", "amount", "adjust_type", "period", "source", "quote_time",
     "collected_at", "data_type",
 ]
 
@@ -43,6 +43,7 @@ class DailyQuoteRepo:
             r = dict(rec)
             r.setdefault("collected_at", fmt_cn())
             r.setdefault("adjust_type", "none")
+            r.setdefault("period", "daily")
             r.setdefault("data_type", "history")
             return r
 
@@ -56,7 +57,7 @@ class DailyQuoteRepo:
     @staticmethod
     def query(code: str | None = None, start: str | None = None,
               end: str | None = None, source: str | None = None,
-              limit: int = 1000) -> list[sqlite3.Row]:
+              period: str | None = None, limit: int = 1000) -> list[sqlite3.Row]:
         clauses, params = [], []
         if code:
             clauses.append("code = ?"); params.append(code)
@@ -66,6 +67,8 @@ class DailyQuoteRepo:
             clauses.append("trade_date <= ?"); params.append(end)
         if source:
             clauses.append("source = ?"); params.append(source)
+        if period:
+            clauses.append("period = ?"); params.append(period)
         where = (" WHERE " + " AND ".join(clauses)) if clauses else ""
         sql = f"SELECT * FROM daily_quote{where} ORDER BY trade_date DESC LIMIT ?"
         params.append(limit)
@@ -135,8 +138,10 @@ class FetchLogRepo:
             return cur.lastrowid
 
     @staticmethod
-    def finish(log_id: int, status: str, rows: int = 0, error_msg: str | None = None) -> None:
+    def finish(log_id: int, status: str, rows: int = 0, error_msg: str | None = None,
+               elapsed_ms: int = 0) -> None:
         with transaction() as c:
             c.execute(
-                "UPDATE fetch_log SET status = ?, rows = ?, error_msg = ?, finished_at = ? "
-                "WHERE id = ?", (status, rows, error_msg, fmt_cn(), log_id))
+                "UPDATE fetch_log SET status = ?, rows = ?, error_msg = ?, "
+                "elapsed_ms = ?, finished_at = ? WHERE id = ?",
+                (status, rows, error_msg, elapsed_ms, fmt_cn(), log_id))

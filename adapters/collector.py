@@ -13,6 +13,7 @@ from storage.repository import (
 )
 from storage.db import connect
 from utils.logger import get_logger
+from utils.timeout import ElapsedTimer
 
 log = get_logger("collector")
 
@@ -42,6 +43,7 @@ from storage.db import transaction  # noqa: E402
 def collect_and_store(start: str, end: str, source: str = "akshare") -> dict:
     """采集并入库，返回结果统计。source 仅支持 akshare（本环境可用源）。"""
     stats = {"stocks": 0, "indices": 0, "errors": [], "samples": []}
+    total_timer = ElapsedTimer()  # 总任务耗时
 
     if source != "akshare":
         raise ValueError("本阶段入库采集仅使用 akshare（baostock 端口不可达）")
@@ -63,7 +65,8 @@ def collect_and_store(start: str, end: str, source: str = "akshare") -> dict:
                 conn.commit()
             finally:
                 conn.close()
-            FetchLogRepo.finish(log_id, "success", rows=n)
+            FetchLogRepo.finish(log_id, "success", rows=n,
+                                elapsed_ms=adapter.last_elapsed_ms)
             stats["stocks"] += n
             if quotes:
                 stats["samples"].append({
@@ -74,7 +77,8 @@ def collect_and_store(start: str, end: str, source: str = "akshare") -> dict:
                 })
             log.info(f"个股 {code} {name} 入库 {n} 行")
         except AdapterError as e:
-            FetchLogRepo.finish(log_id, "failed", error_msg=str(e))
+            FetchLogRepo.finish(log_id, "failed", error_msg=str(e),
+                                elapsed_ms=adapter.last_elapsed_ms)
             stats["errors"].append(f"stock:{code}: {e}")
             log.error(f"个股 {code} 失败: {e}")
 
@@ -95,7 +99,8 @@ def collect_and_store(start: str, end: str, source: str = "akshare") -> dict:
                 conn.commit()
             finally:
                 conn.close()
-            FetchLogRepo.finish(log_id, "success", rows=n)
+            FetchLogRepo.finish(log_id, "success", rows=n,
+                                elapsed_ms=adapter.last_elapsed_ms)
             stats["indices"] += n
             if quotes:
                 stats["samples"].append({
@@ -106,8 +111,11 @@ def collect_and_store(start: str, end: str, source: str = "akshare") -> dict:
                 })
             log.info(f"指数 {sym} {idx_name} 入库 {n} 行")
         except AdapterError as e:
-            FetchLogRepo.finish(log_id, "failed", error_msg=str(e))
+            FetchLogRepo.finish(log_id, "failed", error_msg=str(e),
+                                elapsed_ms=adapter.last_elapsed_ms)
             stats["errors"].append(f"index:{sym}: {e}")
             log.error(f"指数 {sym} 失败: {e}")
 
+    stats["total_elapsed_ms"] = total_timer.elapsed_ms()
+    log.info(f"采集任务总耗时 {stats['total_elapsed_ms']}ms")
     return stats

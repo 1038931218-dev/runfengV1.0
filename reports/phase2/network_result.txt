@@ -1,0 +1,15 @@
+/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pylama/lint/__init__.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import iter_entry_points
+============================= test session starts ==============================
+platform linux -- Python 3.11.1, pytest-9.0.2, pluggy-1.6.0 -- /root/.pyenv/versions/3.11.1/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/runfeng-invest-center
+configfile: pytest.ini
+plugins: anyio-4.12.1, pylama-8.4.1, Faker-40.1.2
+collecting ... collected 39 items / 36 deselected / 3 selected
+
+tests/test_network.py::test_akshare_history_stock_fetch PASSED           [ 33%]
+tests/test_network.py::test_akshare_history_index_fetch PASSED           [ 66%]
+tests/test_network.py::test_baostock_fetch_classified SKIPPED (环境...)  [100%]
+
+================= 2 passed, 1 skipped, 36 deselected in 24.80s =================
