@@ -6,10 +6,10 @@ cachedir: .pytest_cache
 rootdir: /workspace/runfeng-invest-center
 configfile: pytest.ini
 plugins: anyio-4.12.1, pylama-8.4.1, Faker-40.1.2
-collecting ... collected 39 items / 36 deselected / 3 selected
+collecting ... collected 45 items / 42 deselected / 3 selected
 
 tests/test_network.py::test_akshare_history_stock_fetch PASSED           [ 33%]
 tests/test_network.py::test_akshare_history_index_fetch PASSED           [ 66%]
 tests/test_network.py::test_baostock_fetch_classified SKIPPED (环境...)  [100%]
 
-================= 2 passed, 1 skipped, 36 deselected in 24.80s =================
+================= 2 passed, 1 skipped, 42 deselected in 8.80s ==================

@@ -1,25 +1,28 @@
 """BaoStock 数据适配器：历史行情辅助 / 交叉验证源。
 
-异常分类（对应审查问题3）：
-- 连接超时 -> ConnectionTimeoutError（NetworkLimitError，可 skip）
-- 登录/网络接收错误且判定为端口封锁 -> ConnectionRefusedError（可 skip）
-- 账号/凭证类登录失败 -> LoginError（不可 skip，须 fail）
-- 参数错误 -> ParameterError（不可 skip）
-- 数据解析失败 -> DataParseError（不可 skip）
+进程隔离（第四轮修复问题3）：
+- BaoStock 使用私有 TCP SDK，login/query/logout 可能长期卡死且无法安全中断，
+  因此完整过程封装为子进程任务 _baostock_query_task()，由 run_isolated() 执行，
+  超时强制终止子进程（硬超时），杜绝主线程无限等待。
+- 子进程内部完成异常分类，以结构化结果回传；主进程据此重建对应异常类型，
+  保留登录失败/参数错误/数据解析错误/网络限制的区分。
+- 未知错误一律归为 DataParseError（不可 skip），绝不归类为网络限制。
 
-本沙箱中私有端口 10030/10031 被封锁，login 返回 10002007「网络接收错误」，
-结合特征判定为环境网络限制。采集失败时明确抛错并记录，绝不返回模拟数据。
+异常分类：
+- 连接超时/网络接收错误/拒绝 -> NetworkLimitError 子类（测试可 skip）
+- 账号/凭证类登录失败 -> LoginError（不可 skip）
+- 参数错误 -> ParameterError（不可 skip）
+- 数据解析失败/未知错误 -> DataParseError（不可 skip）
 """
 from __future__ import annotations
-
-import baostock as bs
 
 from adapters.base import (
     BaseAdapter, StandardQuote, StandardIndexQuote,
     ADJ_NONE, ADJ_QFQ, ADJ_HFQ, DATA_HISTORY,
     ConnectionTimeoutError, ConnectionRefusedError,
-    LoginError, ParameterError, DataParseError,
+    LoginError, ParameterError, DataParseError, TaskTimeoutError,
 )
+from utils.timeout import run_isolated
 from utils.logger import get_logger
 
 log = get_logger("baostock_adapter")
@@ -35,6 +38,15 @@ INDEX_NAME = {
 # 登录错误码分类：网络类（可判为环境限制）vs 账号凭证类（必须失败）
 _LOGIN_NETWORK_CODES = {"10002007"}  # 网络接收错误（端口封锁/接收超时）
 _LOGIN_AUTH_KEYWORDS = ("密码", "账号", "用户名", "user", "password", "auth", "账户")
+
+# 子进程回传的 error_type -> 异常类映射（未知类型一律落 DataParseError，绝不归网络限制）
+_EXC_CLASS_MAP = {
+    "ConnectionTimeoutError": ConnectionTimeoutError,
+    "ConnectionRefusedError": ConnectionRefusedError,
+    "LoginError": LoginError,
+    "ParameterError": ParameterError,
+    "DataParseError": DataParseError,
+}
 
 
 def classify_login_error(code: str, msg: str) -> Exception:
@@ -52,36 +64,83 @@ def classify_login_error(code: str, msg: str) -> Exception:
     return LoginError(f"[baostock] 登录失败(未归类) {code}: {msg}")
 
 
+def classify_query_error(code: str, msg: str) -> Exception:
+    """根据 BaoStock 查询错误码/消息归类异常。未知错误归 DataParseError。"""
+    text = (msg or "").lower()
+    if "参数" in msg or "param" in text or "date" in text:
+        return ParameterError(f"[baostock] 参数错误 {code}: {msg}")
+    if "network" in text or "网络" in msg or "timeout" in text or "timed out" in text:
+        return ConnectionRefusedError(f"[baostock] 网络错误 {code}: {msg}")
+    # 未知查询错误：归 DataParseError（不可 skip），绝不当作网络限制
+    return DataParseError(f"[baostock] 查询失败(未归类) {code}: {msg}")
+
+
+def _baostock_query_task(code: str, fields: str, start: str, end: str,
+                         adjust: str) -> dict:
+    """子进程任务：完整执行 login -> query -> logout，返回结构化结果。
+
+    返回格式：
+    - 成功: {"ok": True, "rows": [[...], ...]}
+    - 失败: {"ok": False, "error_type": 类名, "error_msg": 描述}
+
+    在子进程内完成异常分类，避免把异常对象 pickle 回主进程；主进程按
+    error_type 重建对应异常类型。未知执行错误一律标记 DataParseError。
+    """
+    import baostock as bs  # 子进程内导入，避免主进程持有 SDK 全局状态
+
+    try:
+        lg = bs.login()
+        if lg.error_code != "0":
+            exc = classify_login_error(lg.error_code, lg.error_msg)
+            return {"ok": False, "error_type": type(exc).__name__, "error_msg": str(exc)}
+        try:
+            rs = bs.query_history_k_data_plus(
+                code, fields, start_date=start, end_date=end,
+                frequency="d", adjustflag=_BS_ADJ_MAP.get(adjust, "3"))
+            if rs.error_code != "0":
+                exc = classify_query_error(rs.error_code, rs.error_msg)
+                return {"ok": False, "error_type": type(exc).__name__, "error_msg": str(exc)}
+            rows = []
+            while rs.error_code == "0" and rs.next():
+                rows.append(rs.get_row_data())
+            return {"ok": True, "rows": rows}
+        finally:
+            bs.logout()
+    except Exception as exc:  # noqa: BLE001 - 子进程内兜底，未知错误不归网络限制
+        return {
+            "ok": False, "error_type": "DataParseError",
+            "error_msg": f"[baostock] 未归类执行错误 {type(exc).__name__}: {exc}",
+        }
+
+
 class BaoStockAdapter(BaseAdapter):
     source_name = "baostock"
 
     def _fetch(self, code: str, fields: str, start: str, end: str, adjust: str):
-        """登录 -> 查询 -> 登出，返回原始行。带有限重试。"""
-        def do():
-            lg = bs.login()
-            if lg.error_code != "0":
-                raise classify_login_error(lg.error_code, lg.error_msg)
-            try:
-                rs = bs.query_history_k_data_plus(
-                    code, fields, start_date=start, end_date=end,
-                    frequency="d", adjustflag=_BS_ADJ_MAP.get(adjust, "3"))
-                if rs.error_code != "0":
-                    msg = (rs.error_msg or "").lower()
-                    if "参数" in msg or "param" in msg or "date" in msg:
-                        raise ParameterError(
-                            f"[baostock] 参数错误 {rs.error_code}: {rs.error_msg}")
-                    if "network" in msg or "网络" in msg or "timeout" in msg:
-                        raise ConnectionRefusedError(
-                            f"[baostock] 网络错误 {rs.error_code}: {rs.error_msg}")
-                    raise DataParseError(
-                        f"[baostock] 查询失败(未归类) {rs.error_code}: {rs.error_msg}")
-                rows = []
-                while rs.error_code == "0" and rs.next():
-                    rows.append(rs.get_row_data())
-                return rows
-            finally:
-                bs.logout()
-        return self._call_with_retry(do)
+        """用进程隔离执行完整查询流程，超时强制终止子进程。"""
+        ok, result, err, elapsed = run_isolated(
+            _baostock_query_task,
+            args=(code, fields, start, end, adjust),
+            timeout=self.timeout.total,
+        )
+        self.last_elapsed_ms = elapsed
+
+        if not ok:
+            if err and err.startswith("TASK_TIMEOUT"):
+                self.last_error = err
+                raise TaskTimeoutError(f"[baostock] {err}")
+            if isinstance(result, dict) and not result.get("ok"):
+                etype = result.get("error_type", "DataParseError")
+                msg = result.get("error_msg", str(err))
+                self.last_error = msg
+                exc_cls = _EXC_CLASS_MAP.get(etype, DataParseError)
+                raise exc_cls(msg)
+            # 其他未知情况：归 DataParseError，绝不归类为网络限制
+            self.last_error = err or "未知子进程错误"
+            raise DataParseError(f"[baostock] 子进程执行失败(未归类): {err}")
+
+        self.last_error = None
+        return result["rows"]
 
     @staticmethod
     def _to_date(s: str) -> str:

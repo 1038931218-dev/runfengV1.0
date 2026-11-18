@@ -15,7 +15,9 @@ from dataclasses import dataclass, asdict
 from typing import Callable
 
 from utils.timezone import fmt_cn
-from utils.timeout import TimeoutConfig, run_isolated, ElapsedTimer
+from utils.timeout import (
+    TimeoutConfig, run_isolated, ElapsedTimer, remaining_timeout,
+)
 
 # 兜底：全局 socket 默认超时，防止库内部无显式超时的请求永久挂起
 socket.setdefaulttimeout(12)
@@ -115,29 +117,70 @@ class BaseAdapter(ABC):
 
     source_name = "base"
     timeout = TimeoutConfig()
-    # 记录最近一次调用的耗时（毫秒），供上层写入 fetch_log
+    # 记录最近一次调用的耗时（毫秒）与失败原因，供上层写入 fetch_log
     last_elapsed_ms = 0
+    last_error: str | None = None
 
     def _call_with_retry(self, func: Callable, *args, **kwargs):
-        """有限重试 + 指数退避，记录单次与总耗时。
+        """有限重试 + 指数退避 + 真实总耗时 deadline（问题2）。
 
-        显式可中断的调用走此路径。全部失败后抛出最后一次原始异常
-        （保留异常分类，便于上层区分是否可 skip）。
+        deadline 语义（第四轮修复）：
+        - 以 self.timeout.total 作为整个任务的总预算，用单调时钟 ElapsedTimer 计时。
+        - 每次发起请求/每次重试前都检查剩余预算；耗尽则停止并抛 TaskTimeoutError。
+        - 单次请求的 requests 超时通过 remaining_timeout() 收敛到剩余预算，
+          保证「请求超时不超过剩余总时间」。
+        - 达到总耗时上限后不再重试，抛出明确的 TaskTimeoutError；
+          last_elapsed_ms 记录最终总耗时，last_error 记录失败原因。
+        - 注意：requests 的 connect/read 是两个阶段的限制，二者之和不是硬截止；
+          对无法保证硬截止的 SDK 调用，必须使用 _call_isolated() 进程隔离。
         """
-        timer = ElapsedTimer()
-        last_exc = None
-        for attempt in range(self.timeout.max_retries + 1):
-            single = ElapsedTimer()
+        total = ElapsedTimer()
+        self.last_error = None
+        last_exc: Exception | None = None
+        attempt = 0
+        max_attempts = self.timeout.max_retries + 1
+
+        while attempt < max_attempts:
+            remaining = total.remaining(self.timeout.total)
+            if remaining <= 0:
+                self.last_elapsed_ms = total.elapsed_ms()
+                self.last_error = (
+                    f"TaskTimeoutError: 总耗时达上限 {self.timeout.total}s，"
+                    f"已尝试 {attempt} 次后停止重试")
+                raise TaskTimeoutError(
+                    f"[{self.source_name}] {self.last_error}；最后一次异常: {last_exc}")
+
+            # 若调用带 requests 风格 timeout，收敛到剩余预算内
+            call_kwargs = dict(kwargs)
+            if "timeout" in call_kwargs:
+                call_kwargs["timeout"] = remaining_timeout(
+                    call_kwargs["timeout"], remaining)
+            # 退避等待也不得突破总 deadline
+            if attempt > 0:
+                sleep_for = min(self.timeout.backoff_base ** (attempt - 1),
+                                max(remaining, 0.0))
+                if sleep_for > 0:
+                    time.sleep(sleep_for)
+                    if total.remaining(self.timeout.total) <= 0:
+                        self.last_elapsed_ms = total.elapsed_ms()
+                        self.last_error = (
+                            f"TaskTimeoutError: 退避后总耗时达上限 {self.timeout.total}s")
+                        raise TaskTimeoutError(f"[{self.source_name}] {self.last_error}")
+
             try:
-                result = func(*args, **kwargs)
-                self.last_elapsed_ms = single.elapsed_ms()
+                result = func(*args, **call_kwargs)
+                self.last_elapsed_ms = total.elapsed_ms()  # 记录最终总耗时
+                self.last_error = None
                 return result
             except Exception as exc:  # noqa: BLE001 - 保留原始类型供分类
                 last_exc = exc
-                if attempt < self.timeout.max_retries:
-                    time.sleep(self.timeout.backoff_base ** attempt)
-        self.last_elapsed_ms = timer.elapsed_ms()
-        raise last_exc
+                self.last_error = f"{type(exc).__name__}: {exc}"
+                attempt += 1
+
+        # 重试次数用尽（非超时）：记录总耗时与失败原因，抛最后一次原始异常保留分类
+        self.last_elapsed_ms = total.elapsed_ms()
+        self.last_error = f"重试{self.timeout.max_retries}次后失败: {self.last_error}"
+        raise last_exc  # type: ignore[misc]
 
     def _call_isolated(self, func: Callable, *args, **kwargs):
         """进程隔离调用：无法安全中断的 SDK 用此路径，硬超时强制终止。"""
@@ -147,9 +190,12 @@ class BaseAdapter(ABC):
         self.last_elapsed_ms = elapsed
         if not ok:
             if err and err.startswith("TASK_TIMEOUT"):
+                self.last_error = err
                 raise TaskTimeoutError(f"[{self.source_name}] {err}")
             # 子进程回传的异常字符串：尽力按类型归类
+            self.last_error = err
             raise DataParseError(f"[{self.source_name}] 子进程执行失败: {err}")
+        self.last_error = None
         return result
 
     def _now(self) -> str:

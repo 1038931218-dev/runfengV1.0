@@ -81,6 +81,25 @@ def run_isolated(func: Callable, args: tuple = (), kwargs: dict | None = None,
     return bool(ok), result, err, elapsed_ms
 
 
+def remaining_timeout(requested, remaining_seconds: float):
+    """将单次请求的 timeout 收敛到剩余总预算内（问题2要求3）。
+
+    requests 的 timeout 可以是 (connect, read) 二元组或单个秒数。
+    - 单个秒数：返回值不超过 remaining_seconds。
+    - 元组：connect/read 各自不超过 remaining_seconds，且保证为正数。
+
+    注意：connect/read 是「两个阶段」的上限，二者之和小数是整个请求可能
+    耗时的理论上限，但网络抖动下并不严格等于硬截止。真正的硬截止仍依赖
+    run_isolated() 进程隔离。本函数只是把单次请求预算约束在总 deadline 内。
+    """
+    if remaining_seconds <= 0:
+        raise TimeoutError("剩余总预算已耗尽，不得发起新请求")
+    if isinstance(requested, tuple):
+        c, r = requested
+        return (min(float(c), remaining_seconds), min(float(r), remaining_seconds))
+    return min(float(requested), remaining_seconds)
+
+
 class ElapsedTimer:
     """记录单次请求与总任务耗时。"""
     def __init__(self):
@@ -88,6 +107,10 @@ class ElapsedTimer:
 
     def elapsed_ms(self) -> int:
         return int((time.monotonic() - self._t0) * 1000)
+
+    def remaining(self, total_seconds: float) -> float:
+        """返回距总预算耗尽还剩多少秒（可能为负）。"""
+        return total_seconds - (time.monotonic() - self._t0)
 
     def reset(self) -> None:
         self._t0 = time.monotonic()

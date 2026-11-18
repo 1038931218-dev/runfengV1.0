@@ -3,9 +3,11 @@
 - 项目：润锋投资数据中心 V1.0
 - 仓库：`1038931218-dev/runfengV1.0`（main 分支）
 - 审计时间：2026-11-18（Asia/Shanghai）
-- 性质：针对指挥部提出的 6 项审查问题的逐项修复与实测验证
+- 性质：针对指挥部提出的审查问题的逐项修复与实测验证
+- 轮次：**第三轮（6 项）已验收通过；本文档含第四轮（4 项，最终复核）修复记录**
 
 > 本报告数据均来自本环境实际执行结果，非任务书复制。测试明细见 `reports/phase2/*_result.txt`。
+> **最新测试结果（第四轮后全量）：44 passed, 1 skipped, 0 failed。**
 
 ---
 
@@ -139,3 +141,124 @@
 - 检查 `adapters/base.py` 异常层级与 `utils/timeout.py` 硬超时实现。
 - 检查 `storage/db.py::_migrate` 的事务与行数校验逻辑（历史数据保护）。
 - 在干净环境执行 `pytest -m "not network and not integration"`，确认无需真实数据即可通过。
+
+---
+---
+
+# 第四轮修复（最终复核 4 项问题）
+
+- 审计时间：2026-11-18 14:xx（Asia/Shanghai）
+- 基线提交：`1c3c3c8ae0190674cc94f8bd5964ff4a5482f229`
+- 性质：仅针对指挥部最终复核提出的 4 个问题定点修复，不大规模重构、不进入第三阶段。
+
+## 八、第四轮 4 项问题修复结论
+
+| # | 问题 | 状态 | 关键改动 |
+|---|---|---|---|
+| 1 | 迁移事务安全 | ✅ | `storage/db.py`：行数/period/关键历史数据校验全部移到 `commit()` 前；失败即 `rollback`；新增故意失败回滚测试 |
+| 2 | AKShare 总耗时 deadline | ✅ | `base.py::_call_with_retry` + `utils/timeout.py::remaining_timeout`：单调时钟总预算、重试前检查、单次超时收敛到剩余预算、超限抛 `TaskTimeoutError` |
+| 3 | BaoStock 进程隔离 | ✅ | `baostock_adapter.py`：login/query/logout 封装为子进程任务，`run_isolated()` 执行，硬超时终止；异常分类保留，未知错误不归网络限制 |
+| 4 | 组合旧库迁移 | ✅ | `storage/db.py::_migrate` 在 v1→v2 事务内补齐 `fetch_log.elapsed_ms`；新增组合场景测试（两表均有历史数据） |
+
+## 九、问题1 — 迁移事务安全（实测）
+
+修复前缺陷：原逻辑先 `conn.commit()` 再比较 `new_count != old_count`，校验失败时事务已提交，`rollback()` 无效。
+
+修复后流程（单事务）：
+1. 迁移前读取 `old_count` 与关键历史数据快照 `_snapshot_daily_quote()`（13 个业务字段的有序列表）。
+2. `BEGIN` → 执行迁移 DDL → 补齐其他表/索引 → 补 `fetch_log.elapsed_ms`。
+3. **在 commit 之前**调用 `_validate_v1_v2_migration()` 校验四项：
+   - period 字段存在；
+   - `new_count == old_count`；
+   - 所有 `period == 'daily'`；
+   - 关键历史数据逐字段与快照完全一致。
+4. 全部通过 → `commit()`；任一失败 → `rollback()` 并抛出。
+
+**故意制造迁移失败的实测结果**（monkeypatch 校验函数抛 `RuntimeError`）：
+```
+[B回滚] 已抛异常: 故意制造迁移失败
+[B回滚] daily_quote存在: True | 残留v1临时表: False | 仍无period列(旧表): True
+         行数: 3 | close: [10.5, 11.5, 12.5] | user_version: 0
+✅ rollback 后旧表结构与历史数据完整保留
+```
+结论：回滚后仍为 v1 旧表（无 period）、3 行历史数据与收盘价原样、无 `daily_quote_v1` 临时表残留、版本号未推进。对应测试 `test_migration_failure_rolls_back_preserves_history` 通过。
+
+## 十、问题2 — AKShare 总耗时 deadline（实测）
+
+关键认知（严格遵循指挥部提示）：**requests 的 connect/read 是两个阶段的限制，二者之和不是整个任务的硬截止时间**；网络抖动下无法保证硬截止。因此采用两层机制：
+
+1. **逻辑总 deadline（本问题实现）**：
+   - `_call_with_retry` 用单调时钟 `ElapsedTimer` 记录整个重试过程的总耗时，预算 `self.timeout.total`。
+   - 每次发起请求前检查剩余预算，耗尽即停；退避等待也从剩余预算扣除。
+   - `remaining_timeout()` 把单次请求的 requests 超时收敛到「不超过剩余总时间」。
+   - 达到上限抛 `TaskTimeoutError`；`last_elapsed_ms` 记录最终总耗时、`last_error` 记录失败原因。
+2. **硬截止（保留）**：对无法保证硬截止的调用（AKShare 指数接口、BaoStock），继续用 `_call_isolated()` → `run_isolated()` 进程隔离强制终止。
+
+模拟慢请求实测（`total=1.2s`、单次 sleep 0.5s、`max_retries=5`）：
+```
+抛TaskTimeoutError: 总耗时达上限 1.2s
+墙钟耗时=1.20s | last_elapsed_ms=1200ms | 请求次数=1
+✅ 重试过程受总 deadline 约束，未无限重试
+```
+`TimeoutConfig` 仍拒绝 `connect/read/total<=0` 与 `max_retries>5`，禁止无限等待/重试。
+
+## 十一、问题3 — BaoStock 进程隔离（实测）
+
+BaoStock 使用私有 TCP SDK，login/query/logout 可能长期卡死且无法安全中断。修复：
+- 完整流程封装为子进程任务 `_baostock_query_task()`，由 `run_isolated()` 以 `total` 为超时执行，超时强制 `terminate/kill` 子进程。
+- 子进程内部完成异常分类并以结构化结果 `{"ok", "error_type", "error_msg"}` 回传；主进程按 `error_type` 映射重建对应异常类。
+- 分类映射：网络接收错误/超时/拒绝 → `NetworkLimitError` 子类；凭证错误 → `LoginError`；参数错误 → `ParameterError`；**数据解析错误及未知错误 → `DataParseError`（不可 skip，绝不归网络限制）**。
+
+异常分类实测：
+```
+✅ 异常分类: 网络限制/登录/参数/解析/未知 全部正确
+```
+模拟 SDK 卡死实测（`stuck_task` sleep 30s、`total=1.0s`）：
+```
+卡死任务: ok=False err=TASK_TIMEOUT 墙钟=1.01s
+✅ SDK卡死被子进程硬超时终止
+✅ Adapter硬超时: [baostock] TASK_TIMEOUT | 墙钟=1.00s
+```
+对应测试 `test_baostock_isolated_hard_timeout`、`test_baostock_query_error_classification` 通过。
+
+## 十二、问题4 — 组合旧库迁移（实测）
+
+构造真实组合场景：`daily_quote` 为 v1 旧表（无 period）+ `fetch_log` 为旧表（无 elapsed_ms），两表均已有历史数据。修复 `db.py::_migrate` 使 v1→v2 事务内对 `fetch_log` 执行 `_ensure_column(...elapsed_ms...)`。
+
+`init_db()` 后实测验证（测试 `test_combined_old_db_migration`）：
+1. daily_quote 历史数据完整：`close = [10.5, 11.5, 12.5]`，3 行 ✅
+2. period 自动填 daily：`{daily}` ✅
+3. fetch_log 历史完整：`{old_task_1, old_task_2}`，2 行 ✅
+4. elapsed_ms 自动补齐：列存在且旧行值为 0 ✅
+5. user_version 正确：2 ✅
+6. 再次 `init_db()` 幂等：行数不变、版本不变 ✅
+
+## 十三、第四轮测试执行结果（三类独立）
+
+| 类别 | 命令 | 结果 |
+|---|---|---|
+| 单元测试 | `pytest tests/ -m "not network and not integration" -q` | **34 passed**, 11 deselected |
+| 数据库集成测试 | `pytest tests/ -m "integration" -q` | **8 passed**, 37 deselected |
+| 网络测试 | `pytest tests/ -m "network" -v` | **2 passed, 1 skipped**, 42 deselected |
+| 全量 | `pytest tests/ -q` | **44 passed, 1 skipped, 0 failed** |
+
+唯一跳过项仍为 `test_baostock_fetch_classified`（沙箱私有端口 10030 封锁，`NetworkLimitError`，按规则允许跳过）。测试明细见 `reports/phase2/{unit,integration,network}_result.txt`（已更新为第四轮结果）。
+
+## 十四、真实数据库查询结果（第四轮修复后，未变动）
+
+| 检查项 | 结果 |
+|---|---|
+| user_version | 2 |
+| daily_quote 字段数 | 16（含 period） |
+| 行情行数 / period 分布 | 30 / `daily`:30 |
+| 重复组数 | 0 |
+| 血缘字段为空行数 | 0 |
+| fetch_log 含 elapsed_ms | 是（9 列） |
+
+历史数据未删除、未覆盖：真实库迁移前后均 30 行，AKShare 采集路径改动后复测仍正常返回 10 行（`stock_zh_a_hist`，period=daily，总耗时 38ms）。
+
+## 十五、边界声明
+
+- 未接入 Tushare、未索取 Token、未进入第三阶段。
+- 未删除历史数据、未覆盖原始数据、未伪造测试结果。
+- 本轮为定点修复，未做大规模重构。

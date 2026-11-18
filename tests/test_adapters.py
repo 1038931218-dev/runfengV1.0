@@ -177,3 +177,75 @@ def test_baostock_login_error_classification():
     assert isinstance(classify_login_error("-1", "timed out"), NetworkLimitError)
     assert isinstance(classify_login_error("10002001", "密码错误"), LoginError)
     assert isinstance(classify_login_error("9999", "未知错误"), LoginError)  # 未知不 skip
+
+
+def test_baostock_query_error_classification():
+    """问题3：查询错误分类，未知错误必须落 DataParseError，绝不归网络限制。"""
+    from adapters.baostock_adapter import classify_query_error
+    assert isinstance(classify_query_error("1001", "参数错误 date"), ParameterError)
+    assert isinstance(classify_query_error("1002", "网络错误 network"), NetworkLimitError)
+    unknown = classify_query_error("9999", "未知查询异常")
+    assert isinstance(unknown, DataParseError)
+    assert not isinstance(unknown, NetworkLimitError)
+
+
+# ---------- 总耗时 deadline 单元测试（第四轮问题2）----------
+def test_remaining_timeout_clamps_to_budget():
+    """单次请求超时不得超过剩余总预算。"""
+    from utils.timeout import remaining_timeout
+    assert remaining_timeout(15, 3.2) == 3.2
+    assert remaining_timeout((5, 15), 2.5) == (2.5, 2.5)
+    with pytest.raises(TimeoutError):
+        remaining_timeout(5, 0)
+
+
+def test_retry_respects_total_deadline():
+    """模拟慢请求：重试过程不得突破总耗时上限，抛 TaskTimeoutError。"""
+    import time as _t
+    from adapters.base import BaseAdapter
+
+    class SlowAdapter(BaseAdapter):
+        source_name = "slow"
+        timeout = TimeoutConfig(connect=1, read=1, total=1.0,
+                                max_retries=5, backoff_base=0.01)
+        def fetch_stock_daily(self, *a, **k): pass
+        def fetch_index_daily(self, *a, **k): pass
+
+    a = SlowAdapter()
+    calls = {"n": 0}
+    def slow_request(timeout_value):
+        calls["n"] += 1
+        _t.sleep(0.4)  # 单次慢请求
+        raise ConnectionError("模拟慢请求超时")
+
+    t0 = _t.monotonic()
+    with pytest.raises(TaskTimeoutError):
+        a._call_with_retry(slow_request, timeout=(1, 1))
+    wall = _t.monotonic() - t0
+    assert wall < 2.5, f"总耗时突破 deadline: {wall}s"
+    assert a.last_elapsed_ms < 2500
+    assert a.last_error and "TaskTimeoutError" in a.last_error
+
+
+# ---------- BaoStock 进程隔离硬超时测试（第四轮问题3）----------
+def test_baostock_isolated_hard_timeout(monkeypatch):
+    """模拟 SDK 卡死，BaoStock 路径必须硬超时退出，子进程被终止。"""
+    import time as _t
+    import adapters.baostock_adapter as bmod
+
+    def stuck_task(*a, **k):
+        _t.sleep(30)  # 模拟 login/query 永久卡死
+        return {"ok": True, "rows": []}
+
+    # fork 模式下子进程继承 patch；_fetch 引用的模块级函数被替换为卡死任务
+    monkeypatch.setattr(bmod, "_baostock_query_task", stuck_task)
+    b = bmod.BaoStockAdapter()
+    b.timeout = TimeoutConfig(connect=1, read=1, total=1.0, max_retries=0)
+    t0 = _t.monotonic()
+    with pytest.raises(TaskTimeoutError):
+        b.fetch_stock_daily("600519", "20251101", "20251114")
+    wall = _t.monotonic() - t0
+    assert wall < 3.0, f"BaoStock 卡死未被硬超时终止: {wall}s"
+    assert b.last_error and "TASK_TIMEOUT" in b.last_error
+
+
