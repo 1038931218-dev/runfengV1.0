@@ -81,3 +81,9 @@ python -m pytest tests/ -v
 ## 当前阶段的已知限制
 
 当前沙箱环境中，Python 数据源 SDK 直连外网 socket 被网络策略拦截（curl 可达但 Python 取数超时），因此**后续数据源实盘采集测试可能受限**；相关阶段会如实记录测试结果，不以缓存冒充实时数据，不编造结论。
+
+## 仓库协作方式
+
+- 仓库地址：`https://github.com/1038931218-dev/runfengV1.0`（public）
+- 主分支：`main`
+- 协作方式：共享写入密钥（deploy key，write access），可直接 `git push`
