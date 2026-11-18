@@ -6,7 +6,7 @@ cachedir: .pytest_cache
 rootdir: /workspace/runfeng-invest-center
 configfile: pytest.ini
 plugins: Faker-40.1.2, anyio-4.12.1, pylama-8.4.1
-collecting ... collected 53 items / 50 deselected / 3 selected
+collecting ... collected 63 items / 60 deselected / 3 selected
 
 tests/test_network.py::test_akshare_history_stock_fetch FAILED           [ 33%]
 tests/test_network.py::test_akshare_history_index_fetch FAILED           [ 66%]
@@ -15,7 +15,7 @@ tests/test_network.py::test_baostock_fetch_classified SKIPPED (环境...)  [100%
 =================================== FAILURES ===================================
 _______________________ test_akshare_history_stock_fetch _______________________
 
-self = <urllib3.connectionpool.HTTPSConnectionPool object at 0x7fd259b79fd0>
+self = <urllib3.connectionpool.HTTPSConnectionPool object at 0x7fa8d2df9bd0>
 method = 'GET'
 url = '/api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=0&secid=1.600519&beg=20251101&end=20251114'
 body = None
@@ -254,7 +254,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                               ^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <http.client.HTTPResponse object at 0x7fd299e330a0>
+self = <http.client.HTTPResponse object at 0x7fa9130b5ff0>
 
     def _read_status(self):
         line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
@@ -273,7 +273,7 @@ E           http.client.RemoteDisconnected: Remote end closed connection without
 
 During handling of the above exception, another exception occurred:
 
-self = <requests.adapters.HTTPAdapter object at 0x7fd259b78d50>
+self = <requests.adapters.HTTPAdapter object at 0x7fa8d2df8950>
 request = <PreparedRequest [GET]>, stream = False
 timeout = Timeout(connect=5.0, read=15.0, total=None), verify = True
 cert = None, proxies = OrderedDict([('x_ide_auth', 'auth.proxy')])
@@ -370,7 +370,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                               ^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <http.client.HTTPResponse object at 0x7fd299e330a0>
+self = <http.client.HTTPResponse object at 0x7fa9130b5ff0>
 
     def _read_status(self):
         line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
@@ -401,10 +401,10 @@ tests/test_network.py:20:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 adapters/akshare_adapter.py:48: in fetch_stock_daily
     df = self._call_with_retry(
-adapters/base.py:193: in _call_with_retry
+adapters/base.py:201: in _call_with_retry
     raise last_exc  # type: ignore[misc]
     ^^^^^^^^^^^^^^
-adapters/base.py:176: in _call_with_retry
+adapters/base.py:184: in _call_with_retry
     result = func(*args, **call_kwargs)
              ^^^^^^^^^^^^^^^^^^^^^^^^^^
 /root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock_feature/stock_hist_em.py:992: in stock_zh_a_hist
@@ -424,7 +424,7 @@ adapters/base.py:176: in _call_with_retry
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <requests.adapters.HTTPAdapter object at 0x7fd259b78d50>
+self = <requests.adapters.HTTPAdapter object at 0x7fa8d2df8950>
 request = <PreparedRequest [GET]>, stream = False
 timeout = Timeout(connect=5.0, read=15.0, total=None), verify = True
 cert = None, proxies = OrderedDict([('x_ide_auth', 'auth.proxy')])
@@ -518,12 +518,12 @@ adapters/akshare_adapter.py:94: in fetch_index_daily
     df = self._call_isolated(
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <adapters.akshare_adapter.AKShareAdapter object at 0x7fd2596294d0>
-func = <function stock_zh_index_daily_em at 0x7fd29a8807c0>, args = ()
+self = <adapters.akshare_adapter.AKShareAdapter object at 0x7fa8d28b1210>
+func = <function stock_zh_index_daily_em at 0x7fa91391db20>, args = ()
 kwargs = {'end_date': '20251114', 'start_date': '20251101', 'symbol': 'sh000300'}
 ok = False, result = None
 err = "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
-elapsed = 124
+elapsed = 127
 
     def _call_isolated(self, func: Callable, *args, **kwargs):
         """进程隔离调用：无法安全中断的 SDK 用此路径，硬超时强制终止。"""
@@ -540,8 +540,8 @@ elapsed = 124
 >           raise DataParseError(f"[{self.source_name}] 子进程执行失败: {err}")
 E           adapters.base.DataParseError: [akshare] 子进程执行失败: ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
 
-adapters/base.py:207: DataParseError
+adapters/base.py:215: DataParseError
 =========================== short test summary info ============================
 FAILED tests/test_network.py::test_akshare_history_stock_fetch - requests.exc...
 FAILED tests/test_network.py::test_akshare_history_index_fetch - adapters.bas...
-================= 2 failed, 1 skipped, 50 deselected in 12.13s =================
+================= 2 failed, 1 skipped, 60 deselected in 12.06s =================

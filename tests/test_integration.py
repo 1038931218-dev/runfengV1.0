@@ -269,6 +269,99 @@ def test_collector_records_unexpected_exception(monkeypatch, tmp_db):
     c.close()
 
 
+# ---------- collector 日志失败保护测试（补充修复 P3）----------
+def _stub_adapter():
+    """返回全部标的正常返回的假适配器。"""
+    from adapters.base import StandardQuote, StandardIndexQuote
+    class Stub:
+        last_elapsed_ms = 7
+        def fetch_stock_daily(self, code, start, end):
+            if code == "600519":
+                raise ValueError("模拟接口解析失败")
+            return [StandardQuote(
+                code=code, name=code, trade_date="2025-11-14",
+                open=1, high=2, low=0.5, close=1.5, volume=100, amount=150,
+                source="akshare", interface="stub",
+                quote_time="2025-11-14 15:00:00",
+                collected_at="2026-11-18 12:00:00 +0800")]
+        def fetch_index_daily(self, symbol, start, end):
+            return [StandardIndexQuote(
+                index_code=symbol, index_name=symbol, trade_date="2025-11-14",
+                open=1, high=2, low=0.5, close=1.5, volume=100, amount=150,
+                source="akshare", interface="stub",
+                quote_time="2025-11-14 15:00:00",
+                collected_at="2026-11-18 12:00:00 +0800")]
+    return Stub()
+
+
+@pytest.mark.integration
+def test_collector_stage_labels_distinguish_fetch_and_db(monkeypatch, tmp_db):
+    """P3：接口故障标 FETCH_ADAPTER、数据库故障标 DB_WRITE，不互相误报。"""
+    import adapters.collector as col
+    from pathlib import Path
+    monkeypatch.setattr("storage.db.get_db_path", lambda: Path(tmp_db))
+
+    # 让 bulk_insert 对第二只个股抛出数据库故障
+    orig = col.DailyQuoteRepo.bulk_insert
+    def flaky_bulk(records, conn=None):
+        recs = list(records)
+        if recs and recs[0].get("code") == "300750":
+            raise RuntimeError("sqlite disk I/O error")
+        return orig((r for r in recs), conn=conn)
+    monkeypatch.setattr(col.DailyQuoteRepo, "bulk_insert", flaky_bulk)
+
+    stats = col.collect_and_store("20251101", "20251114", adapter=_stub_adapter())
+    errs = stats["errors"]
+    assert any("FETCH_ADAPTER" in e and "600519" in e for e in errs), errs
+    assert any("DB_WRITE" in e and "300750" in e for e in errs), errs
+    # 接口故障不含 DB_WRITE 标签，数据库故障不含 FETCH_ADAPTER 标签
+    fetch_err = next(e for e in errs if "600519" in e)
+    db_err = next(e for e in errs if "300750" in e)
+    assert "DB_WRITE" not in fetch_err and "FETCH_ADAPTER" not in db_err
+    # 其余标的继续：平安银行 + 3 指数入库
+    assert stats["stocks"] == 1 and stats["indices"] == 3, stats
+
+
+@pytest.mark.integration
+def test_collector_log_write_failure_not_silent(monkeypatch, tmp_db):
+    """P3：FetchLogRepo.finish 写入自身失败须经 logger 输出原始异常与标的，不中断。"""
+    import adapters.collector as col
+    from pathlib import Path
+    monkeypatch.setattr("storage.db.get_db_path", lambda: Path(tmp_db))
+
+    # 直接拦截 logger.error 调用（logger propagate=False 时 caplog 捕获不到）
+    error_logs = []
+    orig_error = col.log.error
+    monkeypatch.setattr(col.log, "error", lambda msg, *a, **k: error_logs.append(str(msg)))
+
+    def boom_finish(*a, **k):
+        raise OSError("fetch_log disk full")
+    monkeypatch.setattr(col.FetchLogRepo, "finish", boom_finish)
+
+    stats = col.collect_and_store("20251101", "20251114", adapter=_stub_adapter())
+    monkeypatch.setattr(col.log, "error", orig_error)
+
+    assert any("FETCH_LOG_WRITE_FAIL" in m for m in error_logs), error_logs
+    assert any("fetch_log disk full" in m for m in error_logs), error_logs  # 原始异常未吞
+    assert any("600519" in m for m in error_logs), error_logs  # 对应标的被记录
+    # 日志故障不影响采集：2 只个股 + 3 指数，接口失败仍进 errors
+    assert stats["stocks"] == 2 and stats["indices"] == 3, stats
+    assert any("FETCH_ADAPTER" in e for e in stats["errors"]), stats["errors"]
+
+
+@pytest.mark.integration
+def test_collector_explicit_none_adapter(monkeypatch, tmp_db):
+    """P3：adapter 为假值对象时不得被 or 误判为缺省（显式 None 判断）。"""
+    import adapters.collector as col
+    from pathlib import Path
+    monkeypatch.setattr("storage.db.get_db_path", lambda: Path(tmp_db))
+    fake = _stub_adapter()
+    fake.__bool__ = lambda self: False  # 假值但非 None
+    stats = col.collect_and_store("20251101", "20251114", adapter=fake)
+    # 若用 `adapter or AKShareAdapter()`，假值 fake 会被真实适配器替换而触发网络
+    assert stats["stocks"] == 2 and stats["indices"] == 3, stats
+
+
 @pytest.mark.integration
 def test_duplicate_check_on_inserted_data(tmp_db):
     """入库后重复记录检查：UNIQUE 约束保证无重复日期。"""

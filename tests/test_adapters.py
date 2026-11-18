@@ -328,6 +328,82 @@ def test_retry_still_active_for_network_errors():
     assert calls["n"] == 3, "网络错误应重试"
 
 
+# ---------- 退避后重算剩余预算测试（补充修复 P2）----------
+def test_backoff_recomputes_timeout_from_latest_budget(monkeypatch):
+    """P2：退避 sleep 后必须用「最新」剩余预算收敛 requests timeout。"""
+    import adapters.base as bmod
+    from adapters.base import BaseAdapter
+
+    # 可控时钟：clock.reset() 重置起点，clock.advance() 模拟时间流逝
+    class Clock:
+        def __init__(self): self.t = 0.0
+        def reset(self): self.t = 0.0
+        def elapsed_ms(self): return int(self.t * 1000)
+        def remaining(self, total): return total - self.t
+
+    clock = Clock()
+    monkeypatch.setattr(bmod, "ElapsedTimer", lambda: clock)
+    monkeypatch.setattr(bmod.time, "sleep", lambda sec: setattr(clock, "t", clock.t + sec))
+
+    class A(BaseAdapter):
+        source_name = "clock"
+        timeout = TimeoutConfig(connect=10, read=10, total=8.0,
+                                max_retries=3, backoff_base=2.0)
+        def fetch_stock_daily(self, *a, **k): pass
+        def fetch_index_daily(self, *a, **k): pass
+
+    a = A()
+    seen_timeouts = []
+    def flaky(timeout):
+        seen_timeouts.append(timeout)
+        clock.t += 3.0  # 每次请求消耗 3s：第1次后 t=3，退避1s后 t=4
+        if len(seen_timeouts) < 2:
+            raise ConnectionError("net")
+        return "ok"  # 第2次成功，避免进入第3次预算耗尽分支
+
+    assert a._call_with_retry(flaky, timeout=(10, 10)) == "ok"
+
+    # 第1次：remaining=8 → (8,8)；第2次：sleep 1s 后 remaining=8-3-1=4 → (4,4)
+    # 旧实现会用 sleep 前的 remaining=5 → (5,5)，故此断言可精确区分新旧实现
+    assert seen_timeouts[0] == (8.0, 8.0)
+    assert seen_timeouts[1] == (4.0, 4.0), f"退避后未用最新预算收敛: {seen_timeouts}"
+
+
+def test_backoff_budget_exhausted_stops_request(monkeypatch):
+    """P2：退避 sleep 耗尽预算后不得发起新请求，抛 TaskTimeoutError。"""
+    import adapters.base as bmod
+    from adapters.base import BaseAdapter
+
+    class Clock:
+        def __init__(self): self.t = 0.0
+        def elapsed_ms(self): return int(self.t * 1000)
+        def remaining(self, total): return total - self.t
+
+    clock = Clock()
+    monkeypatch.setattr(bmod, "ElapsedTimer", lambda: clock)
+    monkeypatch.setattr(bmod.time, "sleep", lambda sec: setattr(clock, "t", clock.t + sec))
+
+    class A(BaseAdapter):
+        source_name = "clock"
+        timeout = TimeoutConfig(connect=10, read=10, total=4.0,
+                                max_retries=5, backoff_base=3.0)
+        def fetch_stock_daily(self, *a, **k): pass
+        def fetch_index_daily(self, *a, **k): pass
+
+    a = A()
+    calls = {"n": 0}
+    def never_success(timeout):
+        calls["n"] += 1
+        clock.t += 0.5
+        raise ConnectionError("net")
+
+    with pytest.raises(TaskTimeoutError):
+        a._call_with_retry(never_success, timeout=(10, 10))
+    # 退避 3s 后预算耗尽，停止重试：第1次请求后 t=0.5, sleep3 → t=3.5, remaining=0.5>0 第2次;
+    # 第2次 t=4.0, sleep3 → t=7.0 remaining<0 → 抛 TaskTimeoutError，不再发第3次
+    assert calls["n"] == 2, f"预算耗尽后仍发请求: {calls['n']} 次"
+
+
 # ---------- BaoStock 进程隔离硬超时测试（第四轮问题3）----------
 def test_baostock_isolated_hard_timeout(monkeypatch):
     """模拟 SDK 卡死，BaoStock 路径必须硬超时退出，子进程被终止。"""
@@ -348,5 +424,62 @@ def test_baostock_isolated_hard_timeout(monkeypatch):
     wall = _t.monotonic() - t0
     assert wall < 3.0, f"BaoStock 卡死未被硬超时终止: {wall}s"
     assert b.last_error and "TASK_TIMEOUT" in b.last_error
+
+
+# ---------- BaoStock 结构化业务错误重建测试（补充修复 P1）----------
+def _mock_baostock_isolated(monkeypatch, result, ok=True, err=None):
+    """替换 baostock_adapter.run_isolated，返回给定的进程隔离四元组。
+
+    模拟「子进程执行成功（ok=True）但业务字典 ok=False」的真实缺陷场景。
+    """
+    import adapters.baostock_adapter as bmod
+    monkeypatch.setattr(
+        bmod, "run_isolated",
+        lambda *a, **k: (ok, result, err, 12),
+    )
+    return bmod
+
+
+def test_baostock_login_failure_rebuilt(monkeypatch):
+    """P1：业务 ok=False(LoginError) → 主进程得到 LoginError，而非 KeyError。"""
+    bmod = _mock_baostock_isolated(monkeypatch, {
+        "ok": False, "error_type": "LoginError", "error_msg": "密码错误"})
+    with pytest.raises(LoginError):
+        bmod.BaoStockAdapter().fetch_stock_daily("600519", "20251101", "20251114")
+
+
+def test_baostock_param_error_rebuilt(monkeypatch):
+    """P1：业务 ok=False(ParameterError) → ParameterError。"""
+    bmod = _mock_baostock_isolated(monkeypatch, {
+        "ok": False, "error_type": "ParameterError", "error_msg": "invalid date"})
+    with pytest.raises(ParameterError):
+        bmod.BaoStockAdapter().fetch_stock_daily("600519", "20251101", "20251114")
+
+
+def test_baostock_network_error_rebuilt(monkeypatch):
+    """P1：网络类 error_type 必须重建为 NetworkLimitError 子类，不得退化为 DataParseError。"""
+    for etype in ("ConnectionTimeoutError", "ConnectionRefusedError"):
+        bmod = _mock_baostock_isolated(monkeypatch, {
+            "ok": False, "error_type": etype, "error_msg": "network down"})
+        with pytest.raises(NetworkLimitError) as ei:
+            bmod.BaoStockAdapter().fetch_stock_daily("600519", "20251101", "20251114")
+        assert type(ei.value).__name__ == etype
+
+
+def test_baostock_unknown_error_rebuilt(monkeypatch):
+    """P1：未知 error_type 归 DataParseError，不得误判为网络限制。"""
+    bmod = _mock_baostock_isolated(monkeypatch, {
+        "ok": False, "error_type": "WeirdError", "error_msg": "???"})
+    with pytest.raises(DataParseError) as ei:
+        bmod.BaoStockAdapter().fetch_stock_daily("600519", "20251101", "20251114")
+    assert not isinstance(ei.value, NetworkLimitError)
+
+
+def test_baostock_business_ok_rows_returned(monkeypatch):
+    """P1：业务 ok=True 且含 rows 时仍正常返回，不误判为失败。"""
+    row = ["2025-11-14", "600519", "1", "2", "0.5", "1.5", "100", "150"]
+    bmod = _mock_baostock_isolated(monkeypatch, {"ok": True, "rows": [row]})
+    qs = bmod.BaoStockAdapter().fetch_stock_daily("600519", "20251101", "20251114")
+    assert len(qs) == 1 and qs[0].close == 1.5
 
 

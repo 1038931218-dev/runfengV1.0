@@ -129,15 +129,17 @@ class BaseAdapter(ABC):
     def _call_with_retry(self, func: Callable, *args, **kwargs):
         """有限重试 + 指数退避 + 真实总耗时 deadline（问题2）。
 
-        deadline 语义（第四轮修复）：
+        deadline 语义（第四轮修复 + 补充修复 P2）：
         - 以 self.timeout.total 作为整个任务的总预算，用单调时钟 ElapsedTimer 计时。
         - 每次发起请求/每次重试前都检查剩余预算；耗尽则停止并抛 TaskTimeoutError。
         - 单次请求的 requests 超时通过 remaining_timeout() 收敛到剩余预算，
-          保证「请求超时不超过剩余总时间」。
+          且每次退避 sleep 完成后都重新计算 remaining 并据此重新收敛（P2），
+          绝不使用 sleep 之前的旧 timeout 发起请求。
         - 达到总耗时上限后不再重试，抛出明确的 TaskTimeoutError；
           last_elapsed_ms 记录最终总耗时，last_error 记录失败原因。
-        - 注意：requests 的 connect/read 是两个阶段的限制，二者之和不是硬截止；
-          对无法保证硬截止的 SDK 调用，必须使用 _call_isolated() 进程隔离。
+        - 语义澄清：requests 的 connect/read 超时只是把「单次请求预算」收敛在
+          总 deadline 内，并非绝对硬截止；它无法中断卡死的 SDK 调用，
+          真正硬截止依赖 _call_isolated() 进程隔离，二者不可混为一谈。
         """
         total = ElapsedTimer()
         self.last_error = None
@@ -146,7 +148,24 @@ class BaseAdapter(ABC):
         max_attempts = self.timeout.max_retries + 1
 
         while attempt < max_attempts:
-            remaining = total.remaining(self.timeout.total)
+            # 退避等待放在循环起始处：每次重试前先 sleep，再基于「最新」剩余预算决策（P2）
+            if attempt > 0:
+                prev_remaining = total.remaining(self.timeout.total)
+                sleep_for = min(self.timeout.backoff_base ** (attempt - 1),
+                                max(prev_remaining, 0.0))
+                if sleep_for > 0:
+                    time.sleep(sleep_for)
+                # sleep 完成后重新计算剩余预算，禁止沿用 sleep 前的旧值
+                remaining = total.remaining(self.timeout.total)
+                if remaining <= 0:
+                    self.last_elapsed_ms = total.elapsed_ms()
+                    self.last_error = (
+                        f"TaskTimeoutError: 退避后总耗时达上限 {self.timeout.total}s，"
+                        f"已尝试 {attempt} 次后停止重试")
+                    raise TaskTimeoutError(f"[{self.source_name}] {self.last_error}")
+            else:
+                remaining = total.remaining(self.timeout.total)
+
             if remaining <= 0:
                 self.last_elapsed_ms = total.elapsed_ms()
                 self.last_error = (
@@ -155,22 +174,11 @@ class BaseAdapter(ABC):
                 raise TaskTimeoutError(
                     f"[{self.source_name}] {self.last_error}；最后一次异常: {last_exc}")
 
-            # 若调用带 requests 风格 timeout，收敛到剩余预算内
+            # 发起请求前，用最新剩余预算收敛 requests timeout（P2）
             call_kwargs = dict(kwargs)
             if "timeout" in call_kwargs:
                 call_kwargs["timeout"] = remaining_timeout(
                     call_kwargs["timeout"], remaining)
-            # 退避等待也不得突破总 deadline
-            if attempt > 0:
-                sleep_for = min(self.timeout.backoff_base ** (attempt - 1),
-                                max(remaining, 0.0))
-                if sleep_for > 0:
-                    time.sleep(sleep_for)
-                    if total.remaining(self.timeout.total) <= 0:
-                        self.last_elapsed_ms = total.elapsed_ms()
-                        self.last_error = (
-                            f"TaskTimeoutError: 退避后总耗时达上限 {self.timeout.total}s")
-                        raise TaskTimeoutError(f"[{self.source_name}] {self.last_error}")
 
             try:
                 result = func(*args, **call_kwargs)

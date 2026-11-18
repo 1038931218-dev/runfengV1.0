@@ -126,7 +126,13 @@ class BaoStockAdapter(BaseAdapter):
     source_name = "baostock"
 
     def _fetch(self, code: str, fields: str, start: str, end: str, adjust: str):
-        """用进程隔离执行完整查询流程，超时强制终止子进程。"""
+        """用进程隔离执行完整查询流程，超时强制终止子进程。
+
+        双层判定（P1）：
+        - 第一层 ok：子进程执行层面是否成功（否 = 超时或子进程自身异常）；
+        - 第二层 result["ok"]：业务查询层面是否成功（否 = 登录/参数/网络/解析错误）。
+        只有两层都成功，才允许读取 result["rows"]，避免业务失败字典触发 KeyError。
+        """
         ok, result, err, elapsed = run_isolated(
             _baostock_query_task,
             args=(code, fields, start, end, adjust),
@@ -134,22 +140,32 @@ class BaoStockAdapter(BaseAdapter):
         )
         self.last_elapsed_ms = elapsed
 
+        # 第一层：子进程执行失败（超时 / 子进程自身异常）
         if not ok:
             if err and err.startswith("TASK_TIMEOUT"):
                 self.last_error = err
                 raise TaskTimeoutError(f"[baostock] {err}")
-            if isinstance(result, dict) and not result.get("ok"):
-                etype = result.get("error_type", "DataParseError")
-                msg = result.get("error_msg", str(err))
-                self.last_error = msg
-                exc_cls = _EXC_CLASS_MAP.get(etype, DataParseError)
-                raise exc_cls(msg)
-            # 其他未知情况：归 DataParseError，绝不归类为网络限制
+            # 子进程异常字符串保留原始信息；未知一律 DataParseError，绝不归网络限制
             self.last_error = err or "未知子进程错误"
             raise DataParseError(f"[baostock] 子进程执行失败(未归类): {err}")
 
-        self.last_error = None
-        return result["rows"]
+        # 第二层：子进程正常执行，但业务结果字典可能标记 ok=False
+        if isinstance(result, dict) and not result.get("ok"):
+            etype = result.get("error_type", "DataParseError")
+            msg = result.get("error_msg", str(err))
+            self.last_error = msg
+            exc_cls = _EXC_CLASS_MAP.get(etype, DataParseError)
+            raise exc_cls(msg)
+
+        # 两层均成功：确认结构完整后再读取 rows
+        if isinstance(result, dict) and result.get("ok") and "rows" in result:
+            self.last_error = None
+            return result["rows"]
+
+        # 其他未知结构：归 DataParseError，绝不归类为网络限制
+        self.last_error = err or f"子进程返回结构异常: {type(result).__name__}"
+        raise DataParseError(
+            f"[baostock] 子进程返回结果无法识别(未归类): {type(result).__name__}")
 
     @staticmethod
     def _to_date(s: str) -> str:

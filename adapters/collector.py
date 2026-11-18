@@ -40,13 +40,30 @@ INDEX_QUOTE_COLUMNS = [
 from storage.db import transaction  # noqa: E402
 
 
+def _finish_fetch_log(log_id, target: str, status: str, *, rows: int = 0,
+                      error_msg: str | None = None, elapsed_ms: int = 0) -> bool:
+    """写 fetch_log 的保护壳（P3）。
+
+    日志写入自身失败时绝不静默吞掉，也不向上传播中断其他标的；
+    通过 logger 输出原始异常类型、消息与对应标的。返回是否写入成功。
+    """
+    try:
+        FetchLogRepo.finish(log_id, status, rows=rows, error_msg=error_msg,
+                            elapsed_ms=elapsed_ms)
+        return True
+    except Exception as exc:  # noqa: BLE001 - 日志故障不得影响采集主流程
+        log.error(f"[FETCH_LOG_WRITE_FAIL][{target}] 失败日志写入异常 "
+                  f"{type(exc).__name__}: {exc}")
+        return False
+
+
 def collect_and_store(start: str, end: str, source: str = "akshare",
                       adapter=None) -> dict:
     """采集并入库，返回结果统计。source 仅支持 akshare（本环境可用源）。
 
     adapter 可注入（便于测试故障隔离）；缺省为 AKShareAdapter。
-    非预期异常（如解析 ValueError/TypeError）必须被记录到 errors 与
-    fetch_log，不得冒泡中断整批采集（本轮问题6）。
+    每个标的按「采集 -> 入库 -> 日志」分阶段捕获，阶段标签写入 errors/fetch_log，
+    单标的任何阶段失败都不中断其他标的（P3）。
     """
     stats = {"stocks": 0, "indices": 0, "errors": [], "samples": []}
     total_timer = ElapsedTimer()  # 总任务耗时
@@ -54,14 +71,32 @@ def collect_and_store(start: str, end: str, source: str = "akshare",
     if source != "akshare":
         raise ValueError("本阶段入库采集仅使用 akshare（baostock 端口不可达）")
 
-    adapter = adapter or AKShareAdapter()
+    # P3：显式 None 判断，避免假值 adapter 对象被 or 误判为缺省
+    if adapter is None:
+        adapter = AKShareAdapter()
+
+    def record_failure(log_id, target, stage, exc):
+        """统一记录失败：阶段标签明确区分接口/数据库/日志故障，不中断循环。"""
+        tag = "UNEXPECTED" if not isinstance(exc, AdapterError) else type(exc).__name__
+        err_text = (f"[{target}][{stage}][{tag}] "
+                    f"{type(exc).__name__}: {exc}")
+        stats["errors"].append(err_text)
+        log.error(f"{target} {stage}阶段失败: {err_text}")
+        # 失败日志写入自身失败不静默吞掉、不冒泡（由 _finish_fetch_log 保证）
+        _finish_fetch_log(log_id, target, "failed", error_msg=err_text,
+                          elapsed_ms=getattr(adapter, "last_elapsed_ms", 0))
 
     # 个股
     for code, name in STOCK_TARGETS:
         log_id = FetchLogRepo.start(source, f"stock:{code}")
+        # 阶段1：采集（行情接口故障）
         try:
             quotes = adapter.fetch_stock_daily(code, start, end)
-            # 用名称覆盖代码占位
+        except Exception as e:  # noqa: BLE001
+            record_failure(log_id, f"stock:{code}", "FETCH_ADAPTER", e)
+            continue  # 单标的失败不中断其他标的
+        # 阶段2：名称回填 + 数据库写入（数据库故障，与接口故障分开）
+        try:
             for q in quotes:
                 q.name = name
             conn = connect()
@@ -71,30 +106,33 @@ def collect_and_store(start: str, end: str, source: str = "akshare",
                 conn.commit()
             finally:
                 conn.close()
-            FetchLogRepo.finish(log_id, "success", rows=n,
-                                elapsed_ms=getattr(adapter, "last_elapsed_ms", 0))
-            stats["stocks"] += n
-            if quotes:
-                stats["samples"].append({
-                    "type": "stock", "code": code, "name": name,
-                    "interface": quotes[0].interface,
-                    "collected_at": quotes[0].collected_at,
-                    "rows": n, "last": quotes[-1].to_dict(),
-                })
-            log.info(f"个股 {code} {name} 入库 {n} 行")
-        except Exception as e:  # noqa: BLE001 - 兜底，防止非预期异常中断整批采集
-            tag = "UNEXPECTED" if not isinstance(e, AdapterError) else type(e).__name__
-            err_text = f"[stock:{code}][{tag}] {type(e).__name__}: {e}"
-            FetchLogRepo.finish(log_id, "failed", error_msg=err_text,
-                                elapsed_ms=getattr(adapter, "last_elapsed_ms", 0))
-            stats["errors"].append(err_text)
-            log.error(f"个股 {code} 失败: {err_text}")
+        except Exception as e:  # noqa: BLE001
+            record_failure(log_id, f"stock:{code}", "DB_WRITE", e)
+            continue
+        # 阶段3：成功日志写入（日志自身故障由保护壳处理，不影响入库结果统计）
+        _finish_fetch_log(log_id, f"stock:{code}", "success", rows=n,
+                          elapsed_ms=getattr(adapter, "last_elapsed_ms", 0))
+        stats["stocks"] += n
+        if quotes:
+            stats["samples"].append({
+                "type": "stock", "code": code, "name": name,
+                "interface": quotes[0].interface,
+                "collected_at": quotes[0].collected_at,
+                "rows": n, "last": quotes[-1].to_dict(),
+            })
+        log.info(f"个股 {code} {name} 入库 {n} 行")
 
     # 指数
     for sym, idx_name in INDEX_TARGETS:
         log_id = FetchLogRepo.start(source, f"index:{sym}")
+        # 阶段1：采集（行情接口故障）
         try:
             quotes = adapter.fetch_index_daily(sym, start, end)
+        except Exception as e:  # noqa: BLE001
+            record_failure(log_id, f"index:{sym}", "FETCH_ADAPTER", e)
+            continue
+        # 阶段2：数据库写入（数据库故障，与接口故障分开）
+        try:
             conn = connect()
             try:
                 cols = INDEX_QUOTE_COLUMNS
@@ -107,24 +145,21 @@ def collect_and_store(start: str, end: str, source: str = "akshare",
                 conn.commit()
             finally:
                 conn.close()
-            FetchLogRepo.finish(log_id, "success", rows=n,
-                                elapsed_ms=getattr(adapter, "last_elapsed_ms", 0))
-            stats["indices"] += n
-            if quotes:
-                stats["samples"].append({
-                    "type": "index", "code": sym, "name": idx_name,
-                    "interface": quotes[0].interface,
-                    "collected_at": quotes[0].collected_at,
-                    "rows": n, "last": quotes[-1].to_dict(),
-                })
-            log.info(f"指数 {sym} {idx_name} 入库 {n} 行")
-        except Exception as e:  # noqa: BLE001 - 兜底，防止非预期异常中断整批采集
-            tag = "UNEXPECTED" if not isinstance(e, AdapterError) else type(e).__name__
-            err_text = f"[index:{sym}][{tag}] {type(e).__name__}: {e}"
-            FetchLogRepo.finish(log_id, "failed", error_msg=err_text,
-                                elapsed_ms=getattr(adapter, "last_elapsed_ms", 0))
-            stats["errors"].append(err_text)
-            log.error(f"指数 {sym} 失败: {err_text}")
+        except Exception as e:  # noqa: BLE001
+            record_failure(log_id, f"index:{sym}", "DB_WRITE", e)
+            continue
+        # 阶段3：成功日志写入
+        _finish_fetch_log(log_id, f"index:{sym}", "success", rows=n,
+                          elapsed_ms=getattr(adapter, "last_elapsed_ms", 0))
+        stats["indices"] += n
+        if quotes:
+            stats["samples"].append({
+                "type": "index", "code": sym, "name": idx_name,
+                "interface": quotes[0].interface,
+                "collected_at": quotes[0].collected_at,
+                "rows": n, "last": quotes[-1].to_dict(),
+            })
+        log.info(f"指数 {sym} {idx_name} 入库 {n} 行")
 
     stats["total_elapsed_ms"] = total_timer.elapsed_ms()
     log.info(f"采集任务总耗时 {stats['total_elapsed_ms']}ms")
