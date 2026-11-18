@@ -220,6 +220,56 @@ def test_fetch_log_elapsed_column_on_old_db(tmp_path):
 
 
 @pytest.mark.integration
+def test_collector_records_unexpected_exception(monkeypatch, tmp_db):
+    """问题6：适配器抛非 AdapterError（ValueError）时不得中断整批采集，
+    错误须写入 stats.errors 与 fetch_log，其余标的仍正常入库。"""
+    import adapters.collector as col
+
+    # 将 collector/repository 使用的连接重定向到临时库
+    from pathlib import Path
+    monkeypatch.setattr("storage.db.get_db_path", lambda: Path(tmp_db))
+
+    class FaultyAdapter:
+        last_elapsed_ms = 7
+
+        def fetch_stock_daily(self, code, start, end):
+            if code == "600519":  # 仅茅台失败
+                raise ValueError("模拟解析失败")
+            from adapters.base import StandardQuote
+            return [StandardQuote(
+                code=code, name=code, trade_date="2025-11-14",
+                open=1, high=2, low=0.5, close=1.5, volume=100, amount=150,
+                source="akshare", interface="stub",
+                quote_time="2025-11-14 15:00:00",
+                collected_at="2026-11-18 12:00:00 +0800",
+            )]
+
+        def fetch_index_daily(self, symbol, start, end):
+            from adapters.base import StandardIndexQuote
+            return [StandardIndexQuote(
+                index_code=symbol, index_name=symbol, trade_date="2025-11-14",
+                open=1, high=2, low=0.5, close=1.5, volume=100, amount=150,
+                source="akshare", interface="stub",
+                quote_time="2025-11-14 15:00:00",
+                collected_at="2026-11-18 12:00:00 +0800",
+            )]
+
+    stats = col.collect_and_store("20251101", "20251114", adapter=FaultyAdapter())
+    # 任务未崩溃；1 只个股失败被记录，另 2 只 + 3 指数仍入库
+    assert any("600519" in e and "UNEXPECTED" in e and "ValueError" in e
+               for e in stats["errors"]), stats["errors"]
+    assert stats["stocks"] == 2, stats
+    assert stats["indices"] == 3, stats
+    # fetch_log 中该失败被持久化
+    c = connect(tmp_db)
+    failed = c.execute(
+        "SELECT error_msg FROM fetch_log WHERE status='failed' AND task='stock:600519'"
+    ).fetchall()
+    assert len(failed) == 1 and "UNEXPECTED" in failed[0][0]
+    c.close()
+
+
+@pytest.mark.integration
 def test_duplicate_check_on_inserted_data(tmp_db):
     """入库后重复记录检查：UNIQUE 约束保证无重复日期。"""
     c = connect(tmp_db)

@@ -65,11 +65,20 @@ def classify_login_error(code: str, msg: str) -> Exception:
 
 
 def classify_query_error(code: str, msg: str) -> Exception:
-    """根据 BaoStock 查询错误码/消息归类异常。未知错误归 DataParseError。"""
+    """根据 BaoStock 查询错误码/消息归类异常。未知错误归 DataParseError。
+
+    注意（本轮问题3）：参数关键词须精确匹配。此前用子串 "date" in text，
+    会误命中 "update"（含 date）等无关词，把非参数错误错判为 ParameterError。
+    现改为带边界的正则词匹配。
+    """
+    import re
     text = (msg or "").lower()
-    if "参数" in msg or "param" in text or "date" in text:
+    # 精确词边界：date/dates/parameter(s)/参数，避免 "update" 之类的子串误命中
+    param_pattern = r"\bparam(?:eter)?s?\b|\bdates?\b|参数"
+    net_pattern = r"\bnetwork\b|\btimeout\b|timed\s*out|网络|拒绝|refused"
+    if re.search(param_pattern, text) or "参数" in msg:
         return ParameterError(f"[baostock] 参数错误 {code}: {msg}")
-    if "network" in text or "网络" in msg or "timeout" in text or "timed out" in text:
+    if re.search(net_pattern, text):
         return ConnectionRefusedError(f"[baostock] 网络错误 {code}: {msg}")
     # 未知查询错误：归 DataParseError（不可 skip），绝不当作网络限制
     return DataParseError(f"[baostock] 查询失败(未归类) {code}: {msg}")

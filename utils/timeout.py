@@ -10,6 +10,7 @@
 from __future__ import annotations
 
 import multiprocessing as mp
+import queue as _queue
 import time
 from dataclasses import dataclass
 from typing import Callable
@@ -31,6 +32,11 @@ class TimeoutConfig:
                 raise ValueError(f"{name} 必须是正数，禁止 None/0 造成无限等待")
         if self.max_retries < 0 or self.max_retries > 5:
             raise ValueError("max_retries 必须在 0~5 之间（禁止无限重试）")
+        # 本轮问题4：backoff_base 决定退避秒数，必须为正且有上限，
+        # 否则 backoff_base<=0 会使 time.sleep 收到非正数或退避不生效，
+        # 过大值会让指数退避爆炸、突破总预算。
+        if self.backoff_base is None or self.backoff_base <= 0 or self.backoff_base > 10:
+            raise ValueError("backoff_base 必须在 (0, 10] 之间（保证退避有效且不爆炸）")
 
     def as_requests_timeout(self) -> tuple[float, float]:
         """供 requests.get(timeout=...) 使用：(connect, read)。"""
@@ -54,6 +60,13 @@ def run_isolated(func: Callable, args: tuple = (), kwargs: dict | None = None,
     - 成功: (True, result, None, 耗时ms)
     - 超时: (False, None, "TASK_TIMEOUT:...", 耗时ms) 且子进程被 terminate
     - 异常: (False, None, "异常描述", 耗时ms)
+
+    修复要点（本轮问题1）：
+    - 不用不可靠的 queue.empty()；主进程主动用 queue.get(timeout=...) 有界读取，
+      既是硬超时，又能及时清空管道（大结果时 feeder 线程才能继续写入、
+      子进程才能退出，避免"先join后get"把大结果误判为超时）。
+    - 超时后强制终止子进程（terminate -> kill 兜底）。
+    - finally 中关闭 queue 与 process，避免文件描述符泄漏。
     """
     if timeout is None or timeout <= 0:
         raise ValueError("timeout 必须为正数（禁止无限等待）")
@@ -62,23 +75,43 @@ def run_isolated(func: Callable, args: tuple = (), kwargs: dict | None = None,
     queue = ctx.Queue()
     proc = ctx.Process(target=_worker, args=(queue, func, args, kwargs))
     start = time.monotonic()
-    proc.start()
-    proc.join(timeout)
-    elapsed_ms = int((time.monotonic() - start) * 1000)
+    ok, result, err = False, None, None
+    got = False
+    try:
+        proc.start()
+        try:
+            # 先读结果：超时即硬截止；读到后管道被清空，feeder 可写完大结果
+            ok, result, err = queue.get(timeout=timeout)
+            got = True
+        except _queue.Empty:
+            got = False
 
-    if proc.is_alive():
-        proc.terminate()
-        proc.join(5)
+        if got:
+            # 结果已取回，等进程自然退出（短超时兜底）；大结果已读走不会卡 feeder
+            proc.join(timeout=2.0)
+        # 未取到结果 => 进程仍在跑或异常退出，统一强杀，保证不留后台进程
         if proc.is_alive():
-            proc.kill()
-            proc.join()
-        return False, None, f"TASK_TIMEOUT: 任务超过 {timeout}s 已强制终止", elapsed_ms
+            proc.terminate()
+            proc.join(5)
+            if proc.is_alive():
+                proc.kill()
+                proc.join()
 
-    if queue.empty():
-        return False, None, "WORKER_NO_RESULT: 子进程未返回结果（可能异常退出）", elapsed_ms
-
-    ok, result, err = queue.get()
-    return bool(ok), result, err, elapsed_ms
+        elapsed_ms = int((time.monotonic() - start) * 1000)
+        if not got:
+            return False, None, f"TASK_TIMEOUT: 任务超过 {timeout}s 未返回结果，已强制终止", elapsed_ms
+        return bool(ok), result, err, elapsed_ms
+    finally:
+        # 释放管道与进程资源，防止频繁调用导致 fd 泄漏
+        try:
+            queue.close()
+            queue.join_thread()
+        except Exception:
+            pass
+        try:
+            proc.close()
+        except Exception:
+            pass
 
 
 def remaining_timeout(requested, remaining_seconds: float):

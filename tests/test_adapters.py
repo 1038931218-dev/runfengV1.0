@@ -101,6 +101,15 @@ def test_cross_check_no_second_source():
     assert not r.executed and "未执行" in r.note
 
 
+def test_cross_check_no_first_source():
+    """问题5：第一数据源 None/空列表须明确标注未执行，不得崩溃或产出误导结果。"""
+    for empty_a in (None, []):
+        r = cross_check("600519", ADJ_NONE, empty_a,
+                        [mkquote("2025-11-03", 10)], "akshare", "baostock")
+        assert not r.executed
+        assert "第一数据源" in r.note and "未执行" in r.note
+
+
 def test_cross_check_volume_unit_normalization():
     a = [mkquote("2025-11-03", 10, volume=100)]
     b = [mkquote("2025-11-03", 10, volume=1)]
@@ -137,6 +146,17 @@ def test_timeout_config_rejects_infinite():
             TimeoutConfig(**bad)
 
 
+def test_timeout_config_rejects_bad_backoff():
+    """问题4：backoff_base 非法值（0/负/超大/None）必须被拒绝。"""
+    for bad in [dict(backoff_base=0), dict(backoff_base=-1),
+                dict(backoff_base=11), dict(backoff_base=None)]:
+        with pytest.raises(ValueError):
+            TimeoutConfig(**bad)
+    # 合法边界
+    assert TimeoutConfig(backoff_base=0.01).backoff_base == 0.01
+    assert TimeoutConfig(backoff_base=10).backoff_base == 10
+
+
 def test_timeout_config_requests_tuple():
     cfg = TimeoutConfig(connect=3, read=9)
     assert cfg.as_requests_timeout() == (3, 9)
@@ -158,6 +178,33 @@ def test_isolated_normal_and_error():
         raise ValueError("x")
     ok, _, err, _ = run_isolated(boom, timeout=5)
     assert not ok and "ValueError" in err
+
+
+def test_isolated_large_result_no_timeout():
+    """问题1：大结果（超过Queue管道缓冲）须完整取回，不得误判超时或永久阻塞。"""
+    def big():
+        return list(range(200_000))  # ~1.6MB，远超默认管道缓冲
+    ok, res, err, _ = run_isolated(big, timeout=10.0)
+    assert ok and err is None, f"大结果被误判: {err}"
+    assert len(res) == 200_000 and res[-1] == 199_999
+
+
+def test_isolated_no_fd_leak():
+    """问题1：反复调用不得泄漏文件描述符。"""
+    import os
+    def fd_count():
+        return len(os.listdir("/proc/self/fd")) if os.path.isdir("/proc/self/fd") else -1
+    if fd_count() < 0:
+        import pytest as _p
+        _p.skip("非Linux，跳过fd检查")
+    for _ in range(3):
+        run_isolated(lambda: 1, timeout=5)
+    before = fd_count()
+    for _ in range(30):
+        ok, res, _, _ = run_isolated(lambda: 1, timeout=5)
+        assert ok and res == 1
+    after = fd_count()
+    assert after - before <= 2, f"疑似fd泄漏: {before} -> {after}"
 
 
 # ---------- 异常分类测试（问题3）----------
@@ -187,6 +234,18 @@ def test_baostock_query_error_classification():
     unknown = classify_query_error("9999", "未知查询异常")
     assert isinstance(unknown, DataParseError)
     assert not isinstance(unknown, NetworkLimitError)
+
+
+def test_query_classification_no_substring_false_positive():
+    """问题3：'update'(含date) 等子串不得被误判为参数错误。"""
+    from adapters.baostock_adapter import classify_query_error
+    # "update service failed" 含 "date" 子串，但不是参数错误
+    e = classify_query_error("9001", "update service failed")
+    assert not isinstance(e, ParameterError), "子串 date 误命中 update"
+    assert isinstance(e, DataParseError)
+    # 真正的参数错误仍须正确识别
+    assert isinstance(classify_query_error("1001", "invalid date format"), ParameterError)
+    assert isinstance(classify_query_error("1001", "参数错误"), ParameterError)
 
 
 # ---------- 总耗时 deadline 单元测试（第四轮问题2）----------
@@ -225,6 +284,48 @@ def test_retry_respects_total_deadline():
     assert wall < 2.5, f"总耗时突破 deadline: {wall}s"
     assert a.last_elapsed_ms < 2500
     assert a.last_error and "TaskTimeoutError" in a.last_error
+
+
+# ---------- 确定性错误不重试测试（本轮问题2）----------
+def test_retry_skips_deterministic_errors():
+    """ParameterError/DataParseError/LoginError 是确定性错误，只调用1次即抛出。"""
+    from adapters.base import BaseAdapter
+
+    class A(BaseAdapter):
+        timeout = TimeoutConfig(connect=1, read=1, total=5, max_retries=3, backoff_base=0.01)
+        def fetch_stock_daily(self, *a, **k): pass
+        def fetch_index_daily(self, *a, **k): pass
+
+    for err_cls in (ParameterError, DataParseError, LoginError):
+        a = A()
+        calls = {"n": 0}
+        def deterministic(exc_cls=err_cls):
+            calls["n"] += 1
+            raise exc_cls("确定性错误")
+        with pytest.raises(err_cls):
+            a._call_with_retry(deterministic)
+        assert calls["n"] == 1, f"{err_cls.__name__} 被重试了 {calls['n']} 次"
+        assert "不可重试" in a.last_error
+
+
+def test_retry_still_active_for_network_errors():
+    """网络类错误仍按有限次数重试，未因问题2修复而失效。"""
+    from adapters.base import BaseAdapter
+
+    class A(BaseAdapter):
+        timeout = TimeoutConfig(connect=1, read=1, total=5, max_retries=2, backoff_base=0.01)
+        def fetch_stock_daily(self, *a, **k): pass
+        def fetch_index_daily(self, *a, **k): pass
+
+    a = A()
+    calls = {"n": 0}
+    def flaky():
+        calls["n"] += 1
+        if calls["n"] < 3:
+            raise ConnectionError("临时网络错误")
+        return "ok"
+    assert a._call_with_retry(flaky) == "ok"
+    assert calls["n"] == 3, "网络错误应重试"
 
 
 # ---------- BaoStock 进程隔离硬超时测试（第四轮问题3）----------

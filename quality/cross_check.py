@@ -74,6 +74,17 @@ def cross_check(symbol: str, adjust_type: str,
             note=f"第二数据源 {source_b} 无有效数据，跨源交叉验证未执行（不伪造结果）",
         )
 
+    # 本轮问题5：第一数据源同样可能缺失（None/空列表）。此前未校验，
+    # detect_duplicates(None) 会抛 TypeError，空列表会产出误导性的
+    # "B 全部缺失"结果。必须对称处理，明确标注未执行。
+    if not quotes_a:
+        return CrossCheckResult(
+            symbol=symbol, adjust_type=adjust_type,
+            source_a=source_a, source_b=source_b,
+            executed=False,
+            note=f"第一数据源 {source_a} 无有效数据，跨源交叉验证未执行（不伪造结果）",
+        )
+
     # 先检测重复，再构建日期映射
     dup_a, dup_dates_a = detect_duplicates(quotes_a)
     dup_b, dup_dates_b = detect_duplicates(quotes_b)

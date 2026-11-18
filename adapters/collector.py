@@ -40,15 +40,21 @@ INDEX_QUOTE_COLUMNS = [
 from storage.db import transaction  # noqa: E402
 
 
-def collect_and_store(start: str, end: str, source: str = "akshare") -> dict:
-    """采集并入库，返回结果统计。source 仅支持 akshare（本环境可用源）。"""
+def collect_and_store(start: str, end: str, source: str = "akshare",
+                      adapter=None) -> dict:
+    """采集并入库，返回结果统计。source 仅支持 akshare（本环境可用源）。
+
+    adapter 可注入（便于测试故障隔离）；缺省为 AKShareAdapter。
+    非预期异常（如解析 ValueError/TypeError）必须被记录到 errors 与
+    fetch_log，不得冒泡中断整批采集（本轮问题6）。
+    """
     stats = {"stocks": 0, "indices": 0, "errors": [], "samples": []}
     total_timer = ElapsedTimer()  # 总任务耗时
 
     if source != "akshare":
         raise ValueError("本阶段入库采集仅使用 akshare（baostock 端口不可达）")
 
-    adapter = AKShareAdapter()
+    adapter = adapter or AKShareAdapter()
 
     # 个股
     for code, name in STOCK_TARGETS:
@@ -66,7 +72,7 @@ def collect_and_store(start: str, end: str, source: str = "akshare") -> dict:
             finally:
                 conn.close()
             FetchLogRepo.finish(log_id, "success", rows=n,
-                                elapsed_ms=adapter.last_elapsed_ms)
+                                elapsed_ms=getattr(adapter, "last_elapsed_ms", 0))
             stats["stocks"] += n
             if quotes:
                 stats["samples"].append({
@@ -76,11 +82,13 @@ def collect_and_store(start: str, end: str, source: str = "akshare") -> dict:
                     "rows": n, "last": quotes[-1].to_dict(),
                 })
             log.info(f"个股 {code} {name} 入库 {n} 行")
-        except AdapterError as e:
-            FetchLogRepo.finish(log_id, "failed", error_msg=str(e),
-                                elapsed_ms=adapter.last_elapsed_ms)
-            stats["errors"].append(f"stock:{code}: {e}")
-            log.error(f"个股 {code} 失败: {e}")
+        except Exception as e:  # noqa: BLE001 - 兜底，防止非预期异常中断整批采集
+            tag = "UNEXPECTED" if not isinstance(e, AdapterError) else type(e).__name__
+            err_text = f"[stock:{code}][{tag}] {type(e).__name__}: {e}"
+            FetchLogRepo.finish(log_id, "failed", error_msg=err_text,
+                                elapsed_ms=getattr(adapter, "last_elapsed_ms", 0))
+            stats["errors"].append(err_text)
+            log.error(f"个股 {code} 失败: {err_text}")
 
     # 指数
     for sym, idx_name in INDEX_TARGETS:
@@ -100,7 +108,7 @@ def collect_and_store(start: str, end: str, source: str = "akshare") -> dict:
             finally:
                 conn.close()
             FetchLogRepo.finish(log_id, "success", rows=n,
-                                elapsed_ms=adapter.last_elapsed_ms)
+                                elapsed_ms=getattr(adapter, "last_elapsed_ms", 0))
             stats["indices"] += n
             if quotes:
                 stats["samples"].append({
@@ -110,11 +118,13 @@ def collect_and_store(start: str, end: str, source: str = "akshare") -> dict:
                     "rows": n, "last": quotes[-1].to_dict(),
                 })
             log.info(f"指数 {sym} {idx_name} 入库 {n} 行")
-        except AdapterError as e:
-            FetchLogRepo.finish(log_id, "failed", error_msg=str(e),
-                                elapsed_ms=adapter.last_elapsed_ms)
-            stats["errors"].append(f"index:{sym}: {e}")
-            log.error(f"指数 {sym} 失败: {e}")
+        except Exception as e:  # noqa: BLE001 - 兜底，防止非预期异常中断整批采集
+            tag = "UNEXPECTED" if not isinstance(e, AdapterError) else type(e).__name__
+            err_text = f"[index:{sym}][{tag}] {type(e).__name__}: {e}"
+            FetchLogRepo.finish(log_id, "failed", error_msg=err_text,
+                                elapsed_ms=getattr(adapter, "last_elapsed_ms", 0))
+            stats["errors"].append(err_text)
+            log.error(f"指数 {sym} 失败: {err_text}")
 
     stats["total_elapsed_ms"] = total_timer.elapsed_ms()
     log.info(f"采集任务总耗时 {stats['total_elapsed_ms']}ms")

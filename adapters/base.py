@@ -112,6 +112,11 @@ class TaskTimeoutError(NetworkLimitError):
     """任务整体超时（进程隔离强制终止）。"""
 
 
+# 确定性错误：重试不会改变结果，必须立即抛出并保留分类，不得退化成网络超时。
+# 其余异常（网络类 + 底层 requests.ConnectionError/Timeout 等）才进入重试。
+NON_RETRYABLE_ERRORS = (ParameterError, DataParseError, LoginError)
+
+
 class BaseAdapter(ABC):
     """所有数据源适配器的基类。"""
 
@@ -172,6 +177,11 @@ class BaseAdapter(ABC):
                 self.last_elapsed_ms = total.elapsed_ms()  # 记录最终总耗时
                 self.last_error = None
                 return result
+            except NON_RETRYABLE_ERRORS as exc:
+                # 确定性错误：重试无意义且会掩盖真实分类，立即抛出（问题2）
+                self.last_elapsed_ms = total.elapsed_ms()
+                self.last_error = f"不可重试错误立即失败: {type(exc).__name__}: {exc}"
+                raise
             except Exception as exc:  # noqa: BLE001 - 保留原始类型供分类
                 last_exc = exc
                 self.last_error = f"{type(exc).__name__}: {exc}"
