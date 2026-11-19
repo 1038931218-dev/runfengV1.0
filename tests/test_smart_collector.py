@@ -195,3 +195,84 @@ def test_default_source_is_sina_not_akshare():
     # 实例化缺省路径由 SinaAdapter/TencentAdapter 提供（在 collect_and_store 内）
     assert sc.SinaAdapter().source_name == "sina"
     assert sc.TencentAdapter().source_name == "tencent"
+
+
+# ========== P1-01 质量门禁异常降级 ==========
+def test_fallback_primary_quality_report_false_tencent_ok():
+    """主源质量检查返回 ok=False -> 记录 QUALITY_REJECT 并降级腾讯成功。"""
+    primary = FakeAdapter("sina")
+    backup = FakeAdapter("tencent")
+    stats = {"fallback_trace": []}
+
+    def qc(quotes, start, end, *, kind="stock"):
+        if quotes and quotes[0].source == "sina":
+            return QualityReport(ok=False, reasons=["主源模拟质量不合格"],
+                                 rows=len(quotes))
+        return sc.check_quality(quotes, start, end, kind=kind)
+
+    quotes, source, adapter = sc.fetch_with_fallback(
+        "stock", "600519", "20261110", "20261118",
+        primary=primary, backup=backup, quality_checker=qc, stats=stats)
+    assert source == "tencent" and adapter is backup
+    assert quotes[0].source == "tencent"
+    assert any("QUALITY_REJECT" in x and "主源模拟质量不合格" in x
+               for x in stats["fallback_trace"])
+
+
+def test_fallback_primary_quality_checker_raises_tencent_ok():
+    """主源质量检查函数抛 RuntimeError -> 记录 [QUALITY_ERROR] 原因并降级腾讯成功。"""
+    primary = FakeAdapter("sina")
+    backup = FakeAdapter("tencent")
+    stats = {"fallback_trace": []}
+
+    def qc(quotes, start, end, *, kind="stock"):
+        if quotes and quotes[0].source == "sina":
+            raise RuntimeError("主源质量检查崩溃")
+        return sc.check_quality(quotes, start, end, kind=kind)
+
+    quotes, source, adapter = sc.fetch_with_fallback(
+        "stock", "600519", "20261110", "20261118",
+        primary=primary, backup=backup, quality_checker=qc, stats=stats)
+    assert source == "tencent" and adapter is backup
+    assert any("[QUALITY_ERROR]" in x and "RuntimeError" in x
+               and "主源质量检查崩溃" in x for x in stats["fallback_trace"])
+
+
+def test_fallback_both_quality_checkers_raise_keeps_both_reasons():
+    """主源与备源质量检查都抛异常 -> 双失败且 AllSourcesFailed 保留两源原因。"""
+    primary = FakeAdapter("sina")
+    backup = FakeAdapter("tencent")
+    stats = {"fallback_trace": []}
+
+    def qc(quotes, start, end, *, kind="stock"):
+        src = quotes[0].source if quotes else "unknown"
+        raise RuntimeError(f"{src} 质量检查崩溃")
+
+    with pytest.raises(sc.AllSourcesFailed) as ei:
+        sc.fetch_with_fallback(
+            "stock", "600519", "20261110", "20261118",
+            primary=primary, backup=backup, quality_checker=qc, stats=stats)
+    msg = str(ei.value)
+    assert "sina 质量检查崩溃" in msg and "tencent 质量检查崩溃" in msg
+    assert len(stats["fallback_trace"]) == 2
+    assert all("[QUALITY_ERROR]" in x for x in stats["fallback_trace"])
+    # 质量检查异常不得被记录成成功
+    assert not any("success" in x.lower() for x in stats["fallback_trace"])
+
+
+def test_fallback_primary_quality_ok_backup_not_called():
+    """主源质量检查正常（ok=True）-> 采用主源，备源不应被调用。"""
+    primary = FakeAdapter("sina")
+    backup = FakeAdapter("tencent")
+    stats = {"fallback_trace": []}
+
+    def qc(quotes, start, end, *, kind="stock"):
+        return QualityReport(ok=True, rows=len(quotes))
+
+    quotes, source, adapter = sc.fetch_with_fallback(
+        "stock", "600519", "20261110", "20261118",
+        primary=primary, backup=backup, quality_checker=qc, stats=stats)
+    assert source == "sina" and adapter is primary
+    assert quotes[0].source == "sina"
+    assert backup.calls == []
+    assert stats["fallback_trace"] == []

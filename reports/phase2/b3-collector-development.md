@@ -28,29 +28,43 @@
 `backup=TencentAdapter()`。AKShare 适配能力保留且可注入（`primary=AKShareAdapter()`），
 但**不是默认主源**（B1 已证实其东财后端在本环境断连）。
 
-### 2.2 数据库隔离机制
+### 2.2 数据库隔离机制（能力与限制，审查后修订）
 
 `collect_and_store(..., db_path=...)` 的 `db_path` 为**必填关键字参数**：
 - 调用方必须显式指定写哪个库，`db_path=None` 直接抛 `ValueError`；
 - 测试/证据全部传 `tmp_path` 临时库，`TemporaryDirectory` 自动清理；
-- 入库前 `init_db(db_path)` 仅作用于该显式路径；所有 `connect/transaction` 都用该路径；
-- **机制上杜绝**误连 `config.yaml` 中的真实库 `data/invest_center.db`。
+- 入库前 `init_db(db_path)`、所有 `connect/transaction` 都只作用于该显式路径；
+- 集成测试 `test_b3_never_falls_back_to_default_db` 通过 monkeypatch 让 `get_db_path()`
+  抛错，证明只要显式传入 `db_path`，B3 全程**不会回落到默认真实库路径**。
+
+**能力边界（准确表述，纠正此前"机制上杜绝真实库访问"的不严谨说法）**：
+`db_path` 必填只能从机制上杜绝「隐式回落到默认库」，**不能**在机制上阻止调用方
+**显式传入**真实库路径——若调用方传入真实库路径，`init_db/transaction` 会照常作用于该库。
+因此本阶段执行以下纪律：
+1. 真实数据库路径 `data/invest_center.db` **不得**传入任何 B3 调用（开发/验收/冒烟）；
+2. 本阶段所有新增测试、冒烟、端到端验证一律使用临时库（tmp_path / TemporaryDirectory）；
+3. 未修改真实数据库、未修改正式数据库结构；真实库 sha256 全程为
+   `c5668fdac053ee1b11e713e0c598f036997951132bda7f31ad8d847d879fb8cc`；
+4. **不增加路径黑名单**：跨平台路径判断（Linux/Windows 大小写、符号链接、相对/绝对路径）
+   易误伤正常临时目录，且属本轮范围外改动；隔离完整性依靠「显式注入 + 临时库纪律 +
+   SHA256 校验」三重保障，而非路径拦截。
 
 ## 三、主备降级流程
 
 ```
-逐标的（个股/指数）：
+逐标的（个股/指数），P1-01 后每个源的 fetch 与质量门禁同处一层源级异常保护：
   1) 主源（新浪）fetch
      ├─ 异常/超时/网络错误        → 记 fallback_trace，转 2)
-     └─ 成功 → 质量门禁 check_quality
+     └─ 成功 → 质量门禁 check_quality（由 _quality_of 包裹）
+                 ├─ 检查函数自身抛异常 → 归一为 ok=False + [QUALITY_ERROR]，记原因，转 2)
                  ├─ 不合格（空/字段非法/价格逻辑错/重复日期/越界/非 history）
                  │     → 记 QUALITY_REJECT，转 2)
                  └─ 合格 → 采用新浪结果，结束
-  2) 备源（腾讯）fetch + 质量门禁
+  2) 备源（腾讯）fetch + 同样完整的质量门禁
      ├─ 合格 → 采用腾讯结果，记「从新浪降级」轨迹
-     └─ 失败/不合格 → 记原因
-  3) 主备均失败 → 抛 AllSourcesFailed（含两源完整原因）
-     → stats["errors"] 逐标的记录；fetch_log 标 failed；绝不伪装成功
+     └─ 失败/不合格/检查函数异常 → 记原因
+  3) 主备均失败 → 抛 AllSourcesFailed（含两源完整原因，质量异常原因不丢）
+     → stats["errors"] 逐标的记录；fetch_log 标 failed；绝不伪装成功、绝不跳过备源
   4) 采用结果 → 独立事务入库（INSERT OR IGNORE 幂等）→ 独立写 success 日志
 ```
 
@@ -77,11 +91,12 @@
 | 项 | 命令 | 结果 |
 |---|---|---|
 | 编译 | `python3.11 -m compileall -q adapters quality storage tests` | COMPILE_OK |
-| B3 单测 | `pytest tests/test_smart_collector.py -q` | **20 passed** |
-| B3 集成 | `pytest tests/test_smart_collector_integration.py -q` | **9 passed** |
-| 全量非网络 | `pytest -m "not network" -q` | **167 passed, 8 deselected**（零回归） |
-| 集成全集 | `pytest -m "integration" -q` | **24 passed** |
-| 网络 | `pytest -m "network" -v` | **5 passed / 2 failed / 1 skipped** |
+| B3 单测 | `pytest tests/test_smart_collector.py -q` | **24 passed**（原 20 + 审查修复新增 4） |
+| B3 集成 | `pytest tests/test_smart_collector_integration.py -q` | **12 passed**（原 9 + 审查修复新增 3） |
+| 全量非网络 | `pytest -m "not network" -q` | **174 passed, 8 deselected**（零回归） |
+| 集成全集 | `pytest -m "integration" -q` | **27 passed** |
+| B2 回归 | `pytest tests/test_new_adapters.py -q` | **68 passed**（B2 测试零回归） |
+| 网络 | `pytest -m "network" -v` | **5 passed / 2 failed / 1 skipped**（本轮未改网络代码，沿用开发阶段记录） |
 
 网络测试说明（如实记录，未伪造）：
 - 新增 2 个 B3 端到端（新浪主源、腾讯降级）+ 3 个 B2 测试 = **5 passed**；
@@ -131,5 +146,50 @@ B3 新增测试覆盖任务书全部要求：沪市(600519)/深市(000001,300750
 2. 两源仅支持不复权（qfq/hfq 由 B2 适配器明确拒绝）；如需复权须接入支持复权的源。
 3. AKShare 2 个网络失败、BaoStock 1 个 skip 是 B1 已记录的外部限制，本轮未改其代码。
 4. 主备降级为逐标的、同步串行；并发/异步调度不在本阶段范围（未开发 D/E）。
+5. **跨数据源重复数据策略：跨来源唯一（同来源幂等）**。`daily_quote` 唯一键为
+   `(code, trade_date, adjust_type, period, source)`，`index_quote` 为
+   `(index_code, trade_date, source)`，均含 `source`。因此：同一来源同标的同日重复采集 →
+   `INSERT OR IGNORE` 幂等不新增；**新浪与腾讯对同一标的同一交易日各自留存一行**，
+   属刻意的「来源留存」策略，不是跨来源覆盖。本轮未改唯一键、未做数据库迁移。
 
-本报告为开发交付说明，**不代表最终验收通过**，等待 ChatGPT 独立审查结论。
+## 十、第一轮独立审查修复记录（本轮）
+
+审查结论「有条件通过」，针对 P1-01 / P1-02 / P2-01 三项逐项修复，均不扩大范围、不碰真实库。
+
+### 10.1 P1-01 质量门禁异常必须触发备用源
+- 根因：原 `quality_checker()` 调用在 fetch 的 `try/except` 之外，检查函数自身抛异常时会
+  越过源级边界直达结束，既不降级备源，又可能被上层当成该源结果。
+- 修复（`adapters/smart_collector.py`）：
+  - 新增 `_quality_of()`，把质量检查函数自身异常统一归一为 `ok=False` 报告，
+    reasons 带 `[QUALITY_ERROR] <异常类型>: <原因>`，绝不向外抛、绝不计为成功；
+  - `fetch_with_fallback()` 将单源 `fetch` + `_quality_of` 纳入**同一 try 源级保护**，
+    三类失败（fetch 异常 / 质量不合格 / 检查函数异常）统一留痕并 `continue` 到下一源；
+  - 两源都失败时 `AllSourcesFailed` 消息用 ` || ` 拼接两源 trace，保留两边原因。
+- 新增 4 个单测（`test_smart_collector.py`）：主源 `ok=False`→腾讯成功、主源质量检查抛
+  `RuntimeError`→腾讯成功、两源质量检查都抛异常→双失败且保留两边原因、主源质量合格→
+  腾讯不被调用。新增 1 个集成测试验证端到端降级成功不误记为采集失败。
+
+### 10.2 P1-02 明确数据库隔离边界
+- 已删除报告与源码注释中「`db_path` 必填即机制上杜绝真实库访问」的不严谨表述（见 2.2 节），
+  明确其只能防「隐式回落」、不能防「显式传入真实库路径」。
+- 新增集成测试 `test_b3_never_falls_back_to_default_db`：monkeypatch `get_db_path()` 抛错，
+  验证显式传 `db_path` 时 B3 全程不解析默认真实库路径。
+- 本轮未增加路径黑名单（理由见 2.2 节第 4 条），未修改真实库与正式库结构。
+
+### 10.3 P2-01 跨数据源重复数据策略
+- 新增集成测试 `test_cross_source_unique_and_same_source_idempotent`：首次新浪成功、
+  二次新浪失败降级腾讯、三次新浪再成功；验证库内 `sina=1 / tencent=1` 两行共存、
+  同来源第三次不新增。策略定性为**跨来源唯一（同来源幂等）**，详见第九节第 5 条。
+- 未改唯一键、未做数据库迁移。
+
+### 10.4 本轮验证结果
+| 项 | 结果 |
+|---|---|
+| 新增测试 | 单测 4 + 集成 3 = **7 个全部通过** |
+| 全量非网络 | **174 passed, 8 deselected**（修复前 167，零回归） |
+| 集成全集 | **27 passed**（修复前 24） |
+| B2 回归 | **68 passed**（零回归） |
+| 真实库 SHA256 | `c5668fda...b8cc` 修复前后一致，未改动 |
+
+本轮修复分支从 `dev/b3-collector` @ `c1270b33...` 分出独立提交，不合并 main、不改
+`review/round5`、不开发 D/E、不提交凭证。等待 ChatGPT 独立复核，复核前不自行合并 main。

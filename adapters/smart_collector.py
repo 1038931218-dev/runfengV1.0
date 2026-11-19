@@ -6,8 +6,10 @@
   输出的 StandardQuote / StandardIndexQuote 标准结构。
 - AKShare 适配能力保留（可注入），但默认主源是新浪、备源是腾讯，
   绝不把未验证的 AKShare 当作默认主源。
-- 数据库全程通过 **db_path 显式注入**：调用方必须显式指定写哪个库，
-  测试传临时库，从机制上杜绝误碰用户真实数据库。
+- 数据库全程通过 **db_path 显式注入**：调用方必须显式指定写哪个库，测试传临时库。
+  该约束只阻止「隐式回落到默认真实库」；它**不能**在机制上阻止调用方显式传入真实库
+  路径。隔离边界的能力与限制见 reports/phase2/b3-collector-development.md 第 2.2 节；
+  B3 所有测试/冒烟/端到端调用一律使用临时库，真实库路径不得传入。
 
 主备降级语义：
 - 逐标的：新浪请求成功且质量合格 -> 用新浪；新浪异常 / 空数据 / 质量不合格
@@ -22,7 +24,7 @@ from __future__ import annotations
 from adapters.base import AdapterError, DataParseError, sum_real_amount
 from adapters.sina_adapter import SinaAdapter
 from adapters.tencent_adapter import TencentAdapter
-from quality.gate import check_quality
+from quality.gate import check_quality, QualityReport
 from storage.db import connect, init_db, transaction
 from storage.repository import DAILY_QUOTE_COLUMNS
 from utils.logger import get_logger
@@ -61,12 +63,34 @@ def _fetch_one(adapter, kind: str, key: str, start: str, end: str):
     return adapter.fetch_index_daily(key, start, end)
 
 
+def _quality_of(quotes, start, end, kind, quality_checker):
+    """执行单源质量门禁，把「检查函数自身异常」归一为失败报告，不向外抛。
+
+    P1-01：质量检查函数若是注入的桩 / 或其内部出错而抛异常，绝不能冒泡出源级
+    保护范围、更不能被视为该源「质量合格」；这里统一转成 ok=False 报告，
+    由调用方按不合格路径降级，并把异常类型与原因写进 reasons 留痕。
+    """
+    try:
+        return quality_checker(quotes, start, end, kind=kind)
+    except Exception as exc:  # noqa: BLE001 - 质量检查异常一律归一为不合格
+        return QualityReport(
+            ok=False,
+            reasons=[f"[QUALITY_ERROR] {type(exc).__name__}: {exc}"],
+            rows=len(quotes) if quotes else 0,
+        )
+
+
 def fetch_with_fallback(kind, key, start, end, *, primary, backup,
                         quality_checker=check_quality, stats=None):
     """按 主 -> 备 顺序取数，返回 (quotes, source_name, adapter)；全失败抛 AllSourcesFailed。
 
-    质量门禁与异常都视为「该源不可用」，降级到下一源；每个源的失败原因写入
-    stats["fallback_trace"]（若提供 stats），全程可见、不静默。
+    P1-01：单个数据源的 fetch 与质量门禁纳入同一源级异常保护范围。以下任一情形
+    都视为「该源不可用」，留痕到 stats["fallback_trace"] 并降级到下一源，绝不
+    伪装成功、绝不跳过备源：
+      - fetch 抛异常；
+      - 质量报告 ok=False（含空数据 / 数值非法 / 重复 / 越界 / 非 history）；
+      - 质量检查函数自身抛异常（归一为 ok=False + [QUALITY_ERROR] 原因）。
+    两源均失败时 AllSourcesFailed 保留两源各自的完整原因。
     """
     trace = [] if stats is None else stats.setdefault("fallback_trace", [])
     last_exc = None
@@ -74,9 +98,10 @@ def fetch_with_fallback(kind, key, start, end, *, primary, backup,
         if adapter is None:
             continue
         source = _adapter_source(adapter)
-        elapsed = getattr(adapter, "last_elapsed_ms", 0)
+        # 源级保护：fetch 与质量检查同一 try 块，任何异常都不会越过边界直达结束
         try:
             quotes = _fetch_one(adapter, kind, key, start, end)
+            report = _quality_of(quotes, start, end, kind, quality_checker)
         except Exception as exc:  # noqa: BLE001 - 任一源异常都降级，不假装成功
             reason = (f"[{kind}:{key}][{role}:{source}] "
                       f"{type(exc).__name__}: {exc}")
@@ -84,8 +109,6 @@ def fetch_with_fallback(kind, key, start, end, *, primary, backup,
             log.warning(f"主备降级：{reason}")
             last_exc = exc
             continue
-        # 质量门禁：空数据 / 数值非法 / 重复 / 非 history 都判不合格并降级
-        report = quality_checker(quotes, start, end, kind=kind)
         if not report.ok:
             reason = (f"[{kind}:{key}][{role}:{source}][QUALITY_REJECT] "
                       f"rows={report.rows}; " + "; ".join(report.reasons))

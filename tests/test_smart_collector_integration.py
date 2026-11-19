@@ -216,3 +216,82 @@ def test_collect_db_path_required(tmp_db):
     with pytest.raises(ValueError, match="db_path"):
         sc.collect_and_store("20261110", "20261118", db_path=None,
                              primary=FakeAdapter("sina"), backup=FakeAdapter("tencent"))
+
+
+# ========== P1-01 质量门禁异常降级（端到端） ==========
+@pytest.mark.integration
+def test_collect_primary_quality_error_falls_back_to_tencent(tmp_db):
+    """主源质量检查函数抛异常 -> 留痕、降级腾讯入库，不记为采集失败。"""
+    import adapters.smart_collector as scm
+    real_check = scm.check_quality
+
+    def qc(quotes, start, end, *, kind="stock"):
+        if quotes and quotes[0].source == "sina":
+            raise RuntimeError("主源质量检查崩溃")
+        return real_check(quotes, start, end, kind=kind)
+
+    stats = sc.collect_and_store(
+        "20261110", "20261118", db_path=tmp_db,
+        primary=FakeAdapter("sina"), backup=FakeAdapter("tencent"),
+        stock_targets=[("600519", "贵州茅台")], index_targets=[],
+        quality_checker=qc)
+    assert stats["stocks"] == 1
+    assert stats["sources"]["stock:600519"] == "tencent"
+    assert any("[QUALITY_ERROR]" in x and "RuntimeError" in x
+               for x in stats["fallback_trace"])
+    assert stats["errors"] == []          # 降级成功不算采集失败
+    c = connect(tmp_db)
+    assert c.execute("SELECT COUNT(*) FROM daily_quote").fetchone()[0] == 1
+    c.close()
+
+
+# ========== P2-01 跨数据源重复数据策略 ==========
+@pytest.mark.integration
+def test_cross_source_unique_and_same_source_idempotent(tmp_db):
+    """唯一键含 source：同来源幂等；跨来源（新浪/腾讯）同标的同日各自留存。
+
+    首次新浪成功入库；第二次新浪失败降级腾讯，腾讯行与新浪行并存；
+    第三次新浪再成功，同来源 INSERT OR IGNORE 不新增。
+    """
+    target = [("600519", "贵州茅台")]
+    kwargs = dict(start="20261110", end="20261118", db_path=tmp_db,
+                  backup=FakeAdapter("tencent"), stock_targets=target,
+                  index_targets=[])
+    s1 = sc.collect_and_store(primary=FakeAdapter("sina"), **kwargs)
+    s2 = sc.collect_and_store(
+        primary=FakeAdapter("sina", stock_exc=DataParseError("新浪二次失败")),
+        **kwargs)
+    s3 = sc.collect_and_store(primary=FakeAdapter("sina"), **kwargs)
+
+    assert s1["stocks"] == 1 and s1["sources"]["stock:600519"] == "sina"
+    assert s2["stocks"] == 1 and s2["sources"]["stock:600519"] == "tencent"
+    assert any("新浪二次失败" in x for x in s2["fallback_trace"])
+    assert s3["stocks"] == 0                       # 同来源重复，幂等无新增
+
+    c = connect(tmp_db)
+    by_src = {r["source"]: r["n"] for r in c.execute(
+        "SELECT source, COUNT(*) AS n FROM daily_quote WHERE code='600519' "
+        "GROUP BY source").fetchall()}
+    assert by_src == {"sina": 1, "tencent": 1}, by_src
+    assert c.execute("SELECT COUNT(*) FROM daily_quote").fetchone()[0] == 2
+    c.close()
+
+
+# ========== P1-02 数据库隔离边界能力 ==========
+@pytest.mark.integration
+def test_b3_never_falls_back_to_default_db(tmp_db, monkeypatch):
+    """隔离能力：显式传 db_path 时全程不解析默认真实库路径 get_db_path。"""
+    import config.settings as settings
+    import storage.db as dbmod
+
+    def forbidden():
+        raise AssertionError("B3 不应回落到默认真实库 get_db_path()")
+
+    monkeypatch.setattr(settings, "get_db_path", forbidden)
+    monkeypatch.setattr(dbmod, "get_db_path", forbidden)
+
+    stats = sc.collect_and_store(
+        "20261110", "20261118", db_path=tmp_db,
+        primary=FakeAdapter("sina"), backup=FakeAdapter("tencent"),
+        stock_targets=[("600519", "茅台")], index_targets=[])
+    assert stats["stocks"] == 1
