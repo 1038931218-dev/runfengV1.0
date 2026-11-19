@@ -87,3 +87,51 @@ def test_sina_tencent_cross_source_close_consistency():
     assert len(common) >= 3, f"共同交易日过少: {common}"
     for d in common:
         assert abs(sm[d] - tm[d]) < 0.01, f"{d} 双源收盘价不一致: {sm[d]} vs {tm[d]}"
+
+
+# ---------- B3 主备降级采集器真实端到端（临时库）----------
+@pytest.mark.network
+def test_b3_collector_end_to_end_sina(tmp_path):
+    """B3 端到端：新浪主源真实采集 -> 质量门禁 -> 临时库入库。"""
+    from adapters.smart_collector import collect_and_store
+    db = str(tmp_path / "b3_net.db")
+    stats = collect_and_store(
+        "20261110", "20261118", db_path=db,
+        stock_targets=[("600519", "贵州茅台"), ("000651", "格力电器")],
+        index_targets=[("000300.SH", "沪深300")])
+    assert stats["stocks"] > 0 and stats["indices"] > 0, stats
+    assert stats["sources"]["stock:600519"] == "sina"
+    assert stats["errors"] == [], stats["errors"]
+    assert stats["real_amount"] == 0.0  # 占位成交额不进统计
+    from storage.db import connect
+    c = connect(db)
+    assert c.execute("SELECT COUNT(*) FROM daily_quote").fetchone()[0] == stats["stocks"]
+    assert c.execute("SELECT COUNT(*) FROM index_quote").fetchone()[0] == stats["indices"]
+    c.close()
+
+
+@pytest.mark.network
+def test_b3_collector_fallback_to_tencent(tmp_path):
+    """B3 端到端：主源注入故障 -> 真实降级腾讯备源 -> 临时库入库。"""
+    from adapters.base import DataParseError
+    from adapters.tencent_adapter import TencentAdapter
+    from adapters.smart_collector import collect_and_store
+
+    class FailingPrimary:
+        source_name = "primary_down"
+        last_elapsed_ms = 1
+        def fetch_stock_daily(self, *a, **k):
+            raise DataParseError("模拟主源不可达")
+        def fetch_index_daily(self, *a, **k):
+            raise DataParseError("模拟主源不可达")
+
+    db = str(tmp_path / "b3_fb.db")
+    stats = collect_and_store(
+        "20261110", "20261118", db_path=db,
+        primary=FailingPrimary(), backup=TencentAdapter(),
+        stock_targets=[("600519", "贵州茅台")],
+        index_targets=[("000300.SH", "沪深300")])
+    assert stats["stocks"] > 0 and stats["indices"] > 0, stats
+    assert stats["sources"]["stock:600519"] == "tencent"
+    assert any("模拟主源不可达" in x for x in stats["fallback_trace"])
+    assert stats["errors"] == [], stats["errors"]

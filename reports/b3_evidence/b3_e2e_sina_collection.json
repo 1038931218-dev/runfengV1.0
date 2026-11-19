@@ -1,0 +1,227 @@
+{
+  "captured_at": "2026-11-19 11:44:32",
+  "note": "B3 端到端真实采集证据；新浪主源；临时库；均为 history 日线，非实时行情",
+  "db_path": "<temporary, auto-cleaned>",
+  "stats": {
+    "stocks": 14,
+    "indices": 7,
+    "sources": {
+      "stock:600519": "sina",
+      "stock:000651": "sina",
+      "index:000300.SH": "sina"
+    },
+    "errors": [],
+    "fallback_trace": [],
+    "real_amount": 0.0
+  },
+  "daily_quote_rows": 14,
+  "index_quote_rows": 7,
+  "fetch_log_rows": [
+    {
+      "task": "stock:600519",
+      "source": "sina",
+      "status": "success",
+      "rows": 7,
+      "error_msg": null
+    },
+    {
+      "task": "stock:000651",
+      "source": "sina",
+      "status": "success",
+      "rows": 7,
+      "error_msg": null
+    },
+    {
+      "task": "index:000300.SH",
+      "source": "sina",
+      "status": "success",
+      "rows": 7,
+      "error_msg": null
+    }
+  ],
+  "stock_samples": [
+    {
+      "code": "000651",
+      "trade_date": "2026-11-10",
+      "close": 39.1,
+      "volume": 25394535.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "code": "000651",
+      "trade_date": "2026-11-11",
+      "close": 38.66,
+      "volume": 24748224.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "code": "000651",
+      "trade_date": "2026-11-12",
+      "close": 38.89,
+      "volume": 34487189.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "code": "000651",
+      "trade_date": "2026-11-13",
+      "close": 39.96,
+      "volume": 78654042.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "code": "000651",
+      "trade_date": "2026-11-16",
+      "close": 40.15,
+      "volume": 48864885.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "code": "000651",
+      "trade_date": "2026-11-17",
+      "close": 40.66,
+      "volume": 63128090.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "code": "000651",
+      "trade_date": "2026-11-18",
+      "close": 40.75,
+      "volume": 48465953.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "code": "600519",
+      "trade_date": "2026-11-10",
+      "close": 1439.0,
+      "volume": 2303784.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "code": "600519",
+      "trade_date": "2026-11-11",
+      "close": 1402.3,
+      "volume": 3984791.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "code": "600519",
+      "trade_date": "2026-11-12",
+      "close": 1410.27,
+      "volume": 3237294.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "code": "600519",
+      "trade_date": "2026-11-13",
+      "close": 1435.26,
+      "volume": 4177984.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "code": "600519",
+      "trade_date": "2026-11-16",
+      "close": 1453.9,
+      "volume": 3996700.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "code": "600519",
+      "trade_date": "2026-11-17",
+      "close": 1457.7,
+      "volume": 3511645.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "code": "600519",
+      "trade_date": "2026-11-18",
+      "close": 1442.66,
+      "volume": 2984695.0,
+      "amount": 0.0,
+      "source": "sina",
+      "data_type": "history"
+    }
+  ],
+  "index_samples": [
+    {
+      "index_code": "000300.SH",
+      "trade_date": "2026-11-10",
+      "close": 4059.111,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "index_code": "000300.SH",
+      "trade_date": "2026-11-11",
+      "close": 4075.709,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "index_code": "000300.SH",
+      "trade_date": "2026-11-12",
+      "close": 4043.925,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "index_code": "000300.SH",
+      "trade_date": "2026-11-13",
+      "close": 4016.29,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "index_code": "000300.SH",
+      "trade_date": "2026-11-16",
+      "close": 3979.804,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "index_code": "000300.SH",
+      "trade_date": "2026-11-17",
+      "close": 3976.463,
+      "source": "sina",
+      "data_type": "history"
+    },
+    {
+      "index_code": "000300.SH",
+      "trade_date": "2026-11-18",
+      "close": 3983.767,
+      "source": "sina",
+      "data_type": "history"
+    }
+  ],
+  "amount_contract": {
+    "sample_source": "sina",
+    "sample_amount": 0.0,
+    "amount_available_by_source": false,
+    "note": "sina 占位 amount=0.0，不进入成交额统计"
+  }
+}

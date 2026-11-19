@@ -1,0 +1,20 @@
+{
+  "captured_at": "2026-11-19 11:44:40",
+  "note": "B3 真实降级证据：主源注入故障，备源=真实腾讯适配器，临时库",
+  "sources": {
+    "stock:600519": "tencent",
+    "stock:000651": "tencent",
+    "index:000300.SH": "tencent"
+  },
+  "errors": [],
+  "fallback_trace": [
+    "[stock:600519][primary:sina_failing] DataParseError: 模拟新浪主源不可达",
+    "[stock:000651][primary:sina_failing] DataParseError: 模拟新浪主源不可达",
+    "[index:000300.SH][primary:sina_failing] DataParseError: 模拟新浪主源不可达"
+  ],
+  "stocks": 14,
+  "indices": 7,
+  "daily_quote_sources": [
+    "tencent"
+  ]
+}

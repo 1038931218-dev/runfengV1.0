@@ -1,9 +1,10 @@
-# 本轮实际执行时间: 2026-11-19 11:06:59 (Asia/Shanghai)
-# 阶段: B2 第二轮审查补充修复（amount_available字典读取/带前缀一致性）
+# 本轮实际执行时间: 2026-11-19 11:47:33 (Asia/Shanghai)
+# 阶段: B3 采集器接入（新浪主源/腾讯备源/主备降级/临时库）
 # 命令: pytest tests/test_new_adapters.py -q
+# 说明: 网络失败均为外部接口限频/环境限制，如实记录，未伪造通过
 
 ....................................................................     [100%]
-68 passed in 1.11s
+68 passed in 1.13s
 
 [stderr]
 /root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pylama/lint/__init__.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
