@@ -48,11 +48,36 @@ INTERFACE = "sina_CN_MarketData.getKLineData"
 
 
 def to_sina_symbol(code: str) -> str:
-    """标准 A 股代码转新浪符号：6 开头为 sh，其余为 sz；已带前缀则原样返回。"""
+    """标准 A 股代码转新浪符号，规则明确（沪深京）：
+
+    - 6 开头（沪市主板/科创） -> sh
+    - 0/3 开头（深市主板/创业板） -> sz
+    - 8/4 开头（北交所） -> 本源未验证支持，抛 ParameterError，
+      **绝不错误映射到深市**
+    - 已带 sh/sz 前缀且数字部分合法 -> 原样返回；带 bj 前缀 -> 明确不支持
+    - 其它（非 6 位数字/未知前缀） -> ParameterError
+    """
     c = str(code).strip()
-    if c[:2].lower() in ("sh", "sz", "bj"):
-        return c
-    return ("sh" if c.startswith("6") else "sz") + c
+    low = c[:2].lower()
+    if low in ("sh", "sz", "bj"):
+        if low == "bj":
+            raise ParameterError(f"[sina] 暂不支持北交所代码 {code!r}")
+        body = c[2:]
+        if not (body.isdigit() and len(body) == 6):
+            raise ParameterError(f"[sina] 非法带前缀代码 {code!r}")
+        return low + body
+    if not (c.isdigit() and len(c) == 6):
+        raise ParameterError(f"[sina] 非法 A 股代码 {code!r}：须为 6 位数字")
+    if c.startswith("6"):
+        return "sh" + c
+    if c.startswith(("0", "3")):
+        return "sz" + c
+    # 8/4 北交所及其它未支持前缀：明确拒绝，绝不错误映射到深市
+    raise ParameterError(f"[sina] 不支持的代码前缀 {c[:1]!r}（仅支持沪6/深0,3）")
+
+
+_REQUIRED_ROW_FIELDS = ("day", "open", "high", "low", "close", "volume")
+_NUMERIC_ROW_FIELDS = ("open", "high", "low", "close", "volume")
 
 
 def _norm_date(v: str) -> str:
@@ -95,13 +120,47 @@ class SinaAdapter(BaseAdapter):
                                 headers={"User-Agent": UA}, timeout=timeout)
             resp.raise_for_status()
             data = resp.json()
+            # P1-01：顶层必须是 list；逐行校验 dict 与六个字段存在且有效。
             if not isinstance(data, list):
                 raise DataParseError(
                     f"[sina] 返回结构非法: 期望 list，实际 {type(data).__name__}")
-            return data
+            return self._validate_rows(data, symbol)
 
         return self._call_with_retry(
             _do_request, timeout=self.timeout.as_requests_timeout())
+
+    @staticmethod
+    def _validate_rows(data: list, symbol: str) -> list:
+        """逐行校验结构，任何畸形行统一抛 DataParseError（确定性错误，不重试）。
+
+        校验：每行是 dict；六个必需字段齐全；day 非空；五个数值字段可转 float
+        且为有限值。绝不向下游泄漏 AttributeError/TypeError/KeyError。
+        """
+        import math
+        for idx, row in enumerate(data):
+            if not isinstance(row, dict):
+                raise DataParseError(
+                    f"[sina] {symbol} 第 {idx} 行类型非法: "
+                    f"期望 dict，实际 {type(row).__name__}: {row!r}")
+            for key in _REQUIRED_ROW_FIELDS:
+                if key not in row:
+                    raise DataParseError(
+                        f"[sina] {symbol} 第 {idx} 行缺字段 {key!r}: {row!r}")
+            day = row["day"]
+            if day is None or not str(day).strip():
+                raise DataParseError(
+                    f"[sina] {symbol} 第 {idx} 行 day 为空/非法: {day!r}")
+            for key in _NUMERIC_ROW_FIELDS:
+                val = row[key]
+                try:
+                    num = float(val)
+                except (TypeError, ValueError) as exc:
+                    raise DataParseError(
+                        f"[sina] {symbol} 第 {idx} 行 {key} 数值非法: {val!r}") from exc
+                if not math.isfinite(num):
+                    raise DataParseError(
+                        f"[sina] {symbol} 第 {idx} 行 {key} 非有限值: {val!r}")
+        return data
 
     @staticmethod
     def _filter(rows: list[dict], start: str, end: str) -> list[dict]:
@@ -136,10 +195,11 @@ class SinaAdapter(BaseAdapter):
                 low=self._to_float(r, "low", symbol),
                 close=self._to_float(r, "close", symbol),
                 volume=self._to_float(r, "volume", symbol),  # 单位：股
-                amount=0.0,  # 源无成交额字段，置 0 并在 interface 标注，绝不编造
+                amount=0.0,  # 源无成交额字段，置 0 占位，绝不编造
                 source=self.source_name, interface=INTERFACE,
                 quote_time=f"{day} 15:00:00", collected_at=now,
                 data_type=DATA_HISTORY, adjust_type=adjust, period="daily",
+                amount_available=False,  # P1-02：占位成交额，下游统计须排除
             ))
         log.info(f"[sina] {code} 返回 {len(out)} 行，单次耗时 {self.last_elapsed_ms}ms")
         return out
@@ -162,9 +222,9 @@ class SinaAdapter(BaseAdapter):
                 low=self._to_float(r, "low", sina_sym),
                 close=self._to_float(r, "close", sina_sym),
                 volume=self._to_float(r, "volume", sina_sym),  # 指数量纲以源为准
-                amount=0.0,  # 源无成交额字段
+                amount=0.0,  # 源无成交额字段，置 0 占位
                 source=self.source_name, interface=INTERFACE,
                 quote_time=f"{day} 15:00:00", collected_at=now,
-                data_type=DATA_HISTORY,
+                data_type=DATA_HISTORY, amount_available=False,  # P1-02
             ))
         return out

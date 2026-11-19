@@ -52,6 +52,10 @@ class StandardQuote:
     data_type: str = DATA_HISTORY
     adjust_type: str = ADJ_NONE
     period: str = "daily"
+    # 成交额可用性（P1-02）：True=amount 为真实成交额；False=amount 为占位值
+    # （源无成交额字段），不得进入成交额统计/指标计算。默认 True 保持既有
+    # akshare/baostock 等真实成交额源向后兼容。
+    amount_available: bool = True
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -74,9 +78,52 @@ class StandardIndexQuote:
     quote_time: str
     collected_at: str
     data_type: str = DATA_HISTORY
+    # 成交额可用性（P1-02）：语义同 StandardQuote
+    amount_available: bool = True
 
     def to_dict(self) -> dict:
         return asdict(self)
+
+
+# ---------- 成交额可用性数据契约（P1-02）----------
+# 占位成交额来源：这些源的日K接口不返回成交额，amount=0.0 仅为占位，
+# 下游成交额统计/指标计算必须排除。用 source 判定可覆盖「已入库、无内存标记」
+# 的场景（数据库无需新增字段，兼容历史数据）。
+AMOUNT_PLACEHOLDER_SOURCES = frozenset({"sina", "tencent"})
+
+
+def amount_available(quote) -> bool:
+    """判断一条行情的成交额是否真实可用。
+
+    优先采用标准结构上的布尔标记 amount_available；对仅有 dict/sqlite3.Row 的
+    场景（如从数据库读出），退化为按 source 判定：占位源的 amount 一律不可用。
+    """
+    if hasattr(quote, "amount_available"):
+        return bool(quote.amount_available)
+    try:
+        source = quote["source"]
+    except (KeyError, TypeError, IndexError):
+        return True  # 无来源信息时保持默认可用，避免误伤历史真实成交额数据
+    return source not in AMOUNT_PLACEHOLDER_SOURCES
+
+
+def sum_real_amount(quotes, *, field: str = "amount") -> float:
+    """成交额统计入口：只对“真实可用”的成交额求和，排除占位值。
+
+    下游（成交额统计、指标计算）应统一走此函数，不得直接对 amount 求和。
+    """
+    total = 0.0
+    for q in quotes:
+        if not amount_available(q):
+            continue
+        try:
+            value = q[field] if not hasattr(q, field) else getattr(q, field)
+            if value is None:
+                continue
+            total += float(value)
+        except (KeyError, TypeError, ValueError, IndexError):
+            continue
+    return total
 
 
 # ---------- 异常分类（问题3）----------

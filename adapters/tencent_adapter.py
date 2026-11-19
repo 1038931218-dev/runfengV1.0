@@ -48,10 +48,28 @@ INTERFACE = "tencent_kline_kline"
 
 
 def to_tencent_symbol(code: str) -> str:
+    """标准 A 股代码转腾讯符号，规则明确（沪深京）：
+
+    - 6 -> sh；0/3 -> sz；8/4（北交所）-> 未验证支持，抛 ParameterError，
+      绝不错误映射到深市；带 bj 前缀同样明确不支持。
+    - 非法代码（非 6 位数字/未知前缀）抛 ParameterError。
+    """
     c = str(code).strip()
-    if c[:2].lower() in ("sh", "sz", "bj"):
-        return c
-    return ("sh" if c.startswith("6") else "sz") + c
+    low = c[:2].lower()
+    if low in ("sh", "sz", "bj"):
+        if low == "bj":
+            raise ParameterError(f"[tencent] 暂不支持北交所代码 {code!r}")
+        body = c[2:]
+        if not (body.isdigit() and len(body) == 6):
+            raise ParameterError(f"[tencent] 非法带前缀代码 {code!r}")
+        return low + body
+    if not (c.isdigit() and len(c) == 6):
+        raise ParameterError(f"[tencent] 非法 A 股代码 {code!r}：须为 6 位数字")
+    if c.startswith("6"):
+        return "sh" + c
+    if c.startswith(("0", "3")):
+        return "sz" + c
+    raise ParameterError(f"[tencent] 不支持的代码前缀 {c[:1]!r}（仅支持沪6/深0,3）")
 
 
 def _fmt_date(v: str) -> str:
@@ -80,16 +98,61 @@ class TencentAdapter(BaseAdapter):
             resp = requests.get(TENCENT_KLINE_URL, params=params,
                                 headers=HEADERS, timeout=timeout)
             resp.raise_for_status()
-            payload = resp.json()
-            node = (payload.get("data") or {}).get(symbol) or {}
-            rows = node.get("day") or []
-            if not isinstance(rows, list):
+            try:
+                payload = resp.json()
+            except (ValueError, TypeError) as exc:
+                # 非法 JSON 是确定性解析错误，抛 DataParseError，绝不当网络错误重试
                 raise DataParseError(
-                    f"[tencent] {symbol} day 字段结构非法: {type(rows).__name__}")
-            return rows
+                    f"[tencent] {symbol} 响应非法 JSON: {exc}") from exc
+            # P1-01：逐层校验 payload/data/symbol 节点/day，统一 DataParseError
+            return self._validate_payload(payload, symbol)
 
         return self._call_with_retry(
             _do_request, timeout=self.timeout.as_requests_timeout())
+
+    @staticmethod
+    def _validate_payload(payload, symbol: str) -> list:
+        """逐层校验腾讯响应结构，任何非法都抛 DataParseError（确定性，不重试）。"""
+        import math
+        if not isinstance(payload, dict):
+            raise DataParseError(
+                f"[tencent] {symbol} payload 类型非法: 期望 dict，"
+                f"实际 {type(payload).__name__}: {payload!r}")
+        data = payload.get("data")
+        if not isinstance(data, dict):
+            raise DataParseError(
+                f"[tencent] {symbol} data 类型非法: 期望 dict，"
+                f"实际 {type(data).__name__}: {data!r}")
+        node = data.get(symbol)
+        if not isinstance(node, dict):
+            raise DataParseError(
+                f"[tencent] {symbol} symbol 节点类型非法: 期望 dict，"
+                f"实际 {type(node).__name__}: {node!r}")
+        rows = node.get("day")
+        if not isinstance(rows, list):
+            raise DataParseError(
+                f"[tencent] {symbol} day 类型非法: 期望 list，"
+                f"实际 {type(rows).__name__}: {rows!r}")
+        for idx, row in enumerate(rows):
+            if not isinstance(row, list) or len(row) < 6:
+                raise DataParseError(
+                    f"[tencent] {symbol} 第 {idx} 行非法: 期望 >=6 列的 list，"
+                    f"实际 {type(row).__name__} len="
+                    f"{len(row) if hasattr(row, '__len__') else '?'}: {row!r}")
+            if row[0] is None or not str(row[0]).strip():
+                raise DataParseError(
+                    f"[tencent] {symbol} 第 {idx} 行 date 为空/非法: {row[0]!r}")
+            for col in range(1, 6):
+                try:
+                    num = float(row[col])
+                except (TypeError, ValueError) as exc:
+                    raise DataParseError(
+                        f"[tencent] {symbol} 第 {idx} 行第 {col} 列非法: "
+                        f"{row[col]!r}") from exc
+                if not math.isfinite(num):
+                    raise DataParseError(
+                        f"[tencent] {symbol} 第 {idx} 行第 {col} 列非有限值: {row[col]!r}")
+        return rows
 
     @staticmethod
     def _filter(rows: list[list], start: str, end: str) -> list[list]:
@@ -113,10 +176,11 @@ class TencentAdapter(BaseAdapter):
             high=self._f(r, 3, code),   # day[3]=high
             low=self._f(r, 4, code),    # day[4]=low
             volume=self._f(r, 5, code) * VOLUME_UNIT_MULTIPLIER,  # 手 -> 股
-            amount=0.0,  # 源无成交额字段，置 0 并在 interface 标注，绝不编造
+            amount=0.0,  # 源无成交额字段，置 0 占位，绝不编造
             source=self.source_name, interface=INTERFACE,
             quote_time=f"{day} 15:00:00", collected_at=now,
             data_type=DATA_HISTORY, adjust_type=adjust, period="daily",
+            amount_available=False,  # P1-02：占位成交额，下游统计须排除
         )
 
     def fetch_stock_daily(self, code: str, start: str, end: str,
@@ -148,9 +212,9 @@ class TencentAdapter(BaseAdapter):
                 open=self._f(r, 1, tx_sym), close=self._f(r, 2, tx_sym),
                 high=self._f(r, 3, tx_sym), low=self._f(r, 4, tx_sym),
                 volume=self._f(r, 5, tx_sym) * VOLUME_UNIT_MULTIPLIER,
-                amount=0.0,
+                amount=0.0,  # 源无成交额字段，置 0 占位
                 source=self.source_name, interface=INTERFACE,
                 quote_time=f"{day} 15:00:00", collected_at=now,
-                data_type=DATA_HISTORY,
+                data_type=DATA_HISTORY, amount_available=False,  # P1-02
             ))
         return out

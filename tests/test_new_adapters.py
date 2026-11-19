@@ -9,7 +9,8 @@ import pytest
 
 from adapters.base import (
     ADJ_NONE, ADJ_QFQ, DATA_HISTORY,
-    ParameterError, DataParseError, NetworkLimitError,
+    ParameterError, DataParseError,
+    amount_available, sum_real_amount, AMOUNT_PLACEHOLDER_SOURCES,
 )
 from adapters import sina_adapter as smod
 from adapters import tencent_adapter as tmod
@@ -170,3 +171,170 @@ def test_tencent_short_row_raises_parse(monkeypatch):
     monkeypatch.setattr(tmod.requests, "get", lambda *a, **k: FakeResp(payload))
     with pytest.raises(DataParseError):
         tmod.TencentAdapter().fetch_stock_daily("600519", "20261118", "20261118")
+
+
+# ========== P1-01：接口返回结构校验 ==========
+def _counting_get(monkeypatch, mod, payload):
+    """注入可控响应并统计 requests.get 调用次数（验证不重试）。"""
+    calls = {"n": 0}
+    def fake(*a, **k):
+        calls["n"] += 1
+        return FakeResp(payload)
+    monkeypatch.setattr(mod.requests, "get", fake)
+    return calls
+
+
+@pytest.mark.parametrize("bad_rows", [
+    [None],
+    ["a-string"],
+    [{}],
+    [{"day": "2026-11-18"}],  # 缺数值字段
+    [{"day": "  ", "open": "1", "high": "1", "low": "1", "close": "1", "volume": "1"}],
+    [{"day": "2026-11-18", "open": "N/A", "high": "1", "low": "1", "close": "1", "volume": "1"}],
+    [{"day": "2026-11-18", "open": "1", "high": "1", "low": "1", "close": "1",
+      "volume": "inf"}],
+])
+def test_sina_malformed_rows_raise_parse_no_retry(monkeypatch, bad_rows):
+    """P1-01：新浪列表混入 None/字符串/空字典/缺字段/非法数值 -> DataParseError，且只请求1次。"""
+    calls = _counting_get(monkeypatch, smod, bad_rows)
+    with pytest.raises(DataParseError):
+        smod.SinaAdapter().fetch_stock_daily("600519", "20261101", "20261118")
+    assert calls["n"] == 1, f"确定性解析错误不应重试，实际请求 {calls['n']} 次"
+
+
+def test_sina_top_level_not_list_no_retry(monkeypatch):
+    calls = _counting_get(monkeypatch, smod, {"bad": 1})
+    with pytest.raises(DataParseError):
+        smod.SinaAdapter().fetch_stock_daily("600519", "20261101", "20261118")
+    assert calls["n"] == 1
+
+
+@pytest.mark.parametrize("bad_payload", [
+    None,
+    [1, 2, 3],
+    {},                       # 缺 data
+    {"data": [1, 2]},         # data 类型错误
+    {"data": "str"},
+])
+def test_tencent_payload_layer_raises_parse_no_retry(monkeypatch, bad_payload):
+    """P1-01：腾讯 payload 为 None/列表/缺 data/data 类型错误 -> DataParseError，不重试。"""
+    calls = _counting_get(monkeypatch, tmod, bad_payload)
+    with pytest.raises(DataParseError):
+        tmod.TencentAdapter().fetch_stock_daily("600519", "20261101", "20261118")
+    assert calls["n"] == 1
+
+
+@pytest.mark.parametrize("bad_node", [
+    {"data": {"sh600519": None}},                       # symbol 节点 None
+    {"data": {"sh600519": [1, 2]}},                     # symbol 节点 list
+    {"data": {"sh600519": {"day": None}}},              # day 类型错误
+    {"data": {"sh600519": {"day": "not-a-list"}}},
+    {"data": {"sh600519": {"day": [{"a": 1}]}}},        # 行元素类型错误（dict）
+    {"data": {"sh600519": {"day": [["2026-11-18", "1"]]}}},  # 行 < 6 列
+    {"data": {"sh600519": {"day": [["2026-11-18", "1", "2", "3", "4", "abc"]]}}},  # 列类型错误
+])
+def test_tencent_node_and_row_raises_parse_no_retry(monkeypatch, bad_node):
+    """P1-01：腾讯 symbol 节点/day/行元素非法 -> DataParseError，不重试。"""
+    calls = _counting_get(monkeypatch, tmod, bad_node)
+    with pytest.raises(DataParseError):
+        tmod.TencentAdapter().fetch_stock_daily("600519", "20261101", "20261118")
+    assert calls["n"] == 1
+
+
+def test_tencent_invalid_json_raises_parse_no_retry(monkeypatch):
+    """P1-01：非法 JSON -> DataParseError（不当网络错误重试）。"""
+    calls = {"n": 0}
+    def fake(*a, **k):
+        calls["n"] += 1
+        r = FakeResp(None)
+        r.json = lambda: (_ for _ in ()).throw(ValueError("bad json"))
+        return r
+    monkeypatch.setattr(tmod.requests, "get", fake)
+    with pytest.raises(DataParseError):
+        tmod.TencentAdapter().fetch_stock_daily("600519", "20261101", "20261118")
+    assert calls["n"] == 1
+
+
+# ========== P1-02：成交额可用性标记与下游排除契约 ==========
+def test_placeholder_amount_marked_unavailable():
+    """新浪/腾讯标准结构 amount_available=False，真实源默认 True。"""
+    from adapters.base import StandardQuote
+    q = StandardQuote(code="600519", name="x", trade_date="2026-11-18",
+        open=1, high=1, low=1, close=1, volume=1, amount=0.0, source="sina",
+        interface="i", quote_time="t", collected_at="c", amount_available=False)
+    assert q.amount_available is False
+    # 真实源默认 True
+    q2 = StandardQuote(code="600519", name="x", trade_date="2026-11-18",
+        open=1, high=1, low=1, close=1, volume=1, amount=1000, source="akshare",
+        interface="i", quote_time="t", collected_at="c")
+    assert q2.amount_available is True
+
+
+def test_amount_available_by_source_for_db_rows():
+    """从数据库读出的 dict/sqlite3.Row 无内存标记时，按 source 判定。"""
+    assert amount_available({"source": "sina", "amount": 0.0}) is False
+    assert amount_available({"source": "tencent", "amount": 0.0}) is False
+    assert amount_available({"source": "akshare", "amount": 1000}) is True
+    assert "sina" in AMOUNT_PLACEHOLDER_SOURCES and "tencent" in AMOUNT_PLACEHOLDER_SOURCES
+
+
+def test_sum_real_amount_excludes_placeholder():
+    """成交额统计入口必须排除占位值，不得把 0.0 当真实成交额。"""
+    rows = [
+        {"source": "akshare", "amount": 1000.0},
+        {"source": "sina", "amount": 0.0},      # 占位，排除
+        {"source": "tencent", "amount": 0.0},   # 占位，排除
+        {"source": "baostock", "amount": 500.0},
+    ]
+    assert sum_real_amount(rows) == 1500.0
+    # 对比：直接求和会把占位 0.0 也纳入（虽然数值不变，但语义错误——此处验证契约函数本身就够了）
+    assert sum_real_amount([{"source": "sina", "amount": 999.0}]) == 0.0, \
+        "即使占位源出现非零脏值，也必须排除"
+
+
+def test_adapter_quotes_excluded_from_amount_stats(monkeypatch):
+    """端到端：新浪适配器产出的行情经 sum_real_amount 统计被排除。"""
+    payload = [{"day": "2026-11-18", "open": "10", "high": "11", "low": "9",
+                "close": "10", "volume": "1000"}]
+    monkeypatch.setattr(smod.requests, "get", lambda *a, **k: FakeResp(payload))
+    qs = smod.SinaAdapter().fetch_stock_daily("600519", "20261118", "20261118")
+    assert sum_real_amount(qs) == 0.0, "新浪占位成交额不得进入统计"
+    assert all(not amount_available(q) for q in qs)
+
+
+# ========== 次要清理：代码映射规则 ==========
+@pytest.mark.parametrize("code", [
+    "600519",   # 沪市
+    "000001",   # 深市
+    "300750",   # 创业板
+    "sh600519", "sz000001",
+])
+def test_supported_symbol_mapping(code):
+    assert smod.to_sina_symbol(code) and tmod.to_tencent_symbol(code)
+
+
+@pytest.mark.parametrize("code", [
+    "830001", "430047",   # 北交所（8/4 开头）
+    "bj430047",           # 带 bj 前缀
+    "60051",              # 非 6 位
+    "abcdef",             # 非数字
+    "6005190",            # 7 位
+    "shABCDEF",           # 非法带前缀
+])
+def test_unsupported_symbol_raises_parameter(code):
+    """不支持/北交所代码必须抛 ParameterError，绝不错误映射到深市。"""
+    with pytest.raises(ParameterError):
+        smod.to_sina_symbol(code)
+    with pytest.raises(ParameterError):
+        tmod.to_tencent_symbol(code)
+
+
+def test_beijing_not_mapped_to_shenzhen():
+    """北交所代码绝对不能被映射成深市 sz 前缀。"""
+    for code in ("830001", "430047"):
+        for fn in (smod.to_sina_symbol, tmod.to_tencent_symbol):
+            try:
+                result = fn(code)
+            except ParameterError:
+                continue  # 正确：明确拒绝
+            assert not str(result).startswith("sz"), f"{code} 被错误映射为 {result}"

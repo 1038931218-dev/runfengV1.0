@@ -1,10 +1,9 @@
-# 本轮实际执行时间: 2026-11-19 09:19:52 (Asia/Shanghai)
-# 阶段: B2 数据适配器开发（新浪/腾讯）
-# 命令: pytest -m integration
-# 说明: 网络失败均为外部接口限频/封锁，如实记录，未伪造通过
+# 本轮实际执行时间: 2026-11-19 10:51:34 (Asia/Shanghai)
+# 阶段: B2 独立审查修复 P1-01/P1-02（dev/b2-adapters）
+# 命令: pytest -m integration -q
 
 ...............                                                          [100%]
-15 passed, 76 deselected in 1.61s
+15 passed, 114 deselected in 1.82s
 
 [stderr]
 /root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pylama/lint/__init__.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
