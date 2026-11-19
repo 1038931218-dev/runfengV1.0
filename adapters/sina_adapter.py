@@ -20,7 +20,7 @@ import requests
 
 from adapters.base import (
     BaseAdapter, StandardQuote, StandardIndexQuote,
-    ADJ_NONE, DATA_HISTORY, ParameterError, DataParseError,
+    ADJ_NONE, DATA_HISTORY, ParameterError, DataParseError, expected_cn_prefix,
 )
 from utils.logger import get_logger
 
@@ -54,7 +54,8 @@ def to_sina_symbol(code: str) -> str:
     - 0/3 开头（深市主板/创业板） -> sz
     - 8/4 开头（北交所） -> 本源未验证支持，抛 ParameterError，
       **绝不错误映射到深市**
-    - 已带 sh/sz 前缀且数字部分合法 -> 原样返回；带 bj 前缀 -> 明确不支持
+    - 已带 sh/sz 前缀 -> 数字部分须为 6 位且前缀与段位一致，才原样返回；
+      前缀与段位矛盾（如 sz600519、sh000001）明确拒绝；带 bj 前缀 -> 明确不支持
     - 其它（非 6 位数字/未知前缀） -> ParameterError
     """
     c = str(code).strip()
@@ -65,6 +66,13 @@ def to_sina_symbol(code: str) -> str:
         body = c[2:]
         if not (body.isdigit() and len(body) == 6):
             raise ParameterError(f"[sina] 非法带前缀代码 {code!r}")
+        expected = expected_cn_prefix(body)
+        if expected is None:
+            raise ParameterError(
+                f"[sina] 带前缀代码 {code!r} 数字段位不支持（北交所8/4等）")
+        if low != expected:
+            raise ParameterError(
+                f"[sina] 前缀与段位矛盾: {code!r}，{body} 应为 {expected} 前缀，实际 {low}")
         return low + body
     if not (c.isdigit() and len(c) == 6):
         raise ParameterError(f"[sina] 非法 A 股代码 {code!r}：须为 6 位数字")

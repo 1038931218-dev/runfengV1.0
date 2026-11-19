@@ -302,6 +302,87 @@ def test_adapter_quotes_excluded_from_amount_stats(monkeypatch):
     assert all(not amount_available(q) for q in qs)
 
 
+# ========== 第二轮审查补充：amount_available 字典/Row 读取优先级 ==========
+def test_amount_available_dict_explicit_flag_priority():
+    """映射中 amount_available 显式值优先于 source 推断。"""
+    # dict: 显式 False + 真实源 akshare -> 按显式标记 False，不得因 source 翻成 True
+    assert amount_available({"amount_available": False, "source": "akshare"}) is False
+    # dict: 显式 True + 占位源 sina -> 按显式标记 True，证明优先级高于 source 兜底
+    assert amount_available({"amount_available": True, "source": "sina"}) is True
+    # StandardQuote.to_dict() 产物同样适用
+    q = {
+        "code": "600519", "amount": 0.0, "source": "sina",
+        "amount_available": False,
+    }
+    assert amount_available(q) is False
+
+
+def test_amount_available_dict_without_flag_falls_back_to_source():
+    """映射无 amount_available 字段时，按 source 兜底（历史数据库兼容）。"""
+    assert amount_available({"source": "sina", "amount": 0.0}) is False
+    assert amount_available({"source": "tencent", "amount": 0.0}) is False
+    assert amount_available({"source": "akshare", "amount": 1000}) is True
+    assert amount_available({"source": "baostock", "amount": 1000}) is True
+
+
+def test_amount_available_sqlite_row_without_flag_falls_back_to_source():
+    """sqlite3.Row 无 amount_available 列时，仍按 source 判定。"""
+    import sqlite3
+    conn = sqlite3.connect(":memory:")
+    conn.row_factory = sqlite3.Row
+    conn.execute("CREATE TABLE q (source TEXT, amount REAL)")
+    conn.execute("INSERT INTO q VALUES (?, ?)", ("sina", 0.0))
+    row = conn.execute("SELECT source, amount FROM q").fetchone()
+    assert amount_available(row) is False
+    conn.execute("DELETE FROM q")
+    conn.execute("INSERT INTO q VALUES (?, ?)", ("akshare", 1000.0))
+    row2 = conn.execute("SELECT source, amount FROM q").fetchone()
+    assert amount_available(row2) is True
+    conn.close()
+
+
+def test_amount_available_sqlite_row_with_flag_uses_flag():
+    """sqlite3.Row 含 amount_available 列时，以显式列值为准。"""
+    import sqlite3
+    conn = sqlite3.connect(":memory:")
+    conn.row_factory = sqlite3.Row
+    conn.execute("CREATE TABLE q (source TEXT, amount_available INTEGER)")
+    conn.execute("INSERT INTO q VALUES (?, ?)", ("sina", 1))  # 显式 True 覆盖占位源
+    row = conn.execute("SELECT source, amount_available FROM q").fetchone()
+    assert amount_available(row) is True
+    conn.close()
+
+
+# ========== 第二轮审查补充：带前缀代码一致性校验 ==========
+@pytest.mark.parametrize("code", ["sz600519", "sh000001", "sh300750", "sz601398"])
+def test_prefixed_code_segment_mismatch_rejected(code):
+    """前缀与数字段位矛盾（6 配 sz / 0,3 配 sh）必须抛 ParameterError。"""
+    with pytest.raises(ParameterError):
+        smod.to_sina_symbol(code)
+    with pytest.raises(ParameterError):
+        tmod.to_tencent_symbol(code)
+
+
+@pytest.mark.parametrize("code,expected", [
+    ("sh600519", "sh600519"),
+    ("sz000001", "sz000001"),
+    ("sz300750", "sz300750"),
+    ("sh601398", "sh601398"),
+])
+def test_prefixed_code_consistent_passes(code, expected):
+    """前缀与段位一致时正常通过并原样返回。"""
+    assert smod.to_sina_symbol(code) == expected
+    assert tmod.to_tencent_symbol(code) == expected
+
+
+@pytest.mark.parametrize("code", ["sh830001", "sz430047", "sh000001"])
+def test_prefixed_beijing_and_mismatch_rejected(code):
+    """带前缀的北交所段位及矛盾代码均明确拒绝，不错误映射。"""
+    for fn in (smod.to_sina_symbol, tmod.to_tencent_symbol):
+        with pytest.raises(ParameterError):
+            fn(code)
+
+
 # ========== 次要清理：代码映射规则 ==========
 @pytest.mark.parametrize("code", [
     "600519",   # 沪市

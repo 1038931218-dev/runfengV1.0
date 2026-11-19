@@ -95,11 +95,26 @@ AMOUNT_PLACEHOLDER_SOURCES = frozenset({"sina", "tencent"})
 def amount_available(quote) -> bool:
     """判断一条行情的成交额是否真实可用。
 
-    优先采用标准结构上的布尔标记 amount_available；对仅有 dict/sqlite3.Row 的
-    场景（如从数据库读出），退化为按 source 判定：占位源的 amount 一律不可用。
+    取值优先级（第二轮审查修复）：
+    1. 对象自身的 amount_available 属性（StandardQuote/StandardIndexQuote 实例）；
+    2. 映射对象（dict / sqlite3.Row / to_dict() 结果）中的 amount_available 字段，
+       存在即以其显式值为准——即使与 source 推断冲突也尊重显式标记；
+    3. 字段都不存在时，才按 source 是否属于 AMOUNT_PLACEHOLDER_SOURCES 兜底，
+       覆盖「已入库、无标记」的历史数据（真实数据库兼容逻辑）。
     """
-    if hasattr(quote, "amount_available"):
-        return bool(quote.amount_available)
+    # 1. 对象属性优先
+    attr = getattr(quote, "amount_available", None)
+    if attr is not None:
+        return bool(attr)
+    # 2. 映射字段（dict / sqlite3.Row）：存在即优先使用显式值。
+    #    sqlite3.Row 缺列会抛 IndexError，dict 缺键抛 KeyError。
+    try:
+        flag = quote["amount_available"]
+    except (KeyError, TypeError, IndexError):
+        flag = None
+    if flag is not None:
+        return bool(flag)
+    # 3. 兜底：按来源判定（兼容无标记的历史数据库行）
     try:
         source = quote["source"]
     except (KeyError, TypeError, IndexError):
@@ -149,6 +164,25 @@ class LoginError(AdapterError):
 
 class ParameterError(AdapterError):
     """参数错误（代码、日期、字段非法）。"""
+
+
+def expected_cn_prefix(body: str) -> str | None:
+    """根据 6 位数字代码的段位返回应有交易所前缀；不支持返回 None。
+
+    - 6 开头 -> sh（沪市主板/科创板）
+    - 0/3 开头 -> sz（深市主板/创业板）
+    - 8/4 开头（北交所）及其它 -> None（明确不支持，绝不错误映射到深市）
+
+    用于带前缀代码的一致性校验，防止 sz600519 / sh000001 这类前缀与段位
+    矛盾的代码被静默接受。
+    """
+    if not (body.isdigit() and len(body) == 6):
+        return None
+    if body.startswith("6"):
+        return "sh"
+    if body.startswith(("0", "3")):
+        return "sz"
+    return None
 
 
 class DataParseError(AdapterError):

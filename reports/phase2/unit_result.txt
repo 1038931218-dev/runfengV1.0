@@ -1,10 +1,10 @@
-# 本轮实际执行时间: 2026-11-19 10:51:34 (Asia/Shanghai)
-# 阶段: B2 独立审查修复 P1-01/P1-02（dev/b2-adapters）
-# 命令: pytest -m not network -q
+# 本轮实际执行时间: 2026-11-19 11:06:59 (Asia/Shanghai)
+# 阶段: B2 第二轮审查补充修复（amount_available字典读取/带前缀一致性）
+# 命令: pytest -m 'not network' -q
 
-........................................................................ [ 58%]
-...................................................                      [100%]
-123 passed, 6 deselected in 6.75s
+........................................................................ [ 52%]
+..................................................................       [100%]
+138 passed, 6 deselected in 6.66s
 
 [stderr]
 /root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pylama/lint/__init__.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
