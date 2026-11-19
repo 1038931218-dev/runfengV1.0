@@ -47,3 +47,43 @@ def test_baostock_fetch_classified():
     except (LoginError, ParameterError, DataParseError) as exc:
         pytest.fail(f"非网络限制错误，必须失败: {type(exc).__name__}: {exc}")
     assert len(rows) >= 0
+
+
+# ---------- B2 新浪/腾讯真实采集（主/备数据源）----------
+@pytest.mark.network
+def test_sina_history_stock_and_index():
+    """新浪个股+指数历史日线真实采集（B1 实测主源）。"""
+    from adapters.sina_adapter import SinaAdapter
+    a = SinaAdapter()
+    q = a.fetch_stock_daily("600519", "20261110", "20261118")
+    assert q and q[0].source == "sina" and q[0].data_type == "history"
+    assert all(x.amount == 0.0 for x in q)  # 源无成交额，不编造
+    idx = a.fetch_index_daily("000300.SH", "20261110", "20261118")
+    assert idx and idx[0].index_code == "000300.SH"
+
+
+@pytest.mark.network
+def test_tencent_history_stock_and_index():
+    """腾讯个股+指数历史日线真实采集（B1 实测备源）。"""
+    from adapters.tencent_adapter import TencentAdapter
+    a = TencentAdapter()
+    q = a.fetch_stock_daily("600519", "20261110", "20261118")
+    assert q and q[0].source == "tencent" and q[0].data_type == "history"
+    assert all(x.volume > 0 and x.amount == 0.0 for x in q)
+    idx = a.fetch_index_daily("000300.SH", "20261110", "20261118")
+    assert idx and idx[0].close > 0
+
+
+@pytest.mark.network
+def test_sina_tencent_cross_source_close_consistency():
+    """双源同标的同日收盘价一致性（真实数据交叉验证）。"""
+    from adapters.sina_adapter import SinaAdapter
+    from adapters.tencent_adapter import TencentAdapter
+    sq = SinaAdapter().fetch_stock_daily("600519", "20261110", "20261118")
+    tq = TencentAdapter().fetch_stock_daily("600519", "20261110", "20261118")
+    sm = {x.trade_date: x.close for x in sq}
+    tm = {x.trade_date: x.close for x in tq}
+    common = sorted(set(sm) & set(tm))
+    assert len(common) >= 3, f"共同交易日过少: {common}"
+    for d in common:
+        assert abs(sm[d] - tm[d]) < 0.01, f"{d} 双源收盘价不一致: {sm[d]} vs {tm[d]}"

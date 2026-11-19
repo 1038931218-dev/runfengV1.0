@@ -1,0 +1,165 @@
+{
+  "captured_at": "2026-11-19 09:21:28",
+  "note": "B2 真实行情验证证据；astimezone Asia/Shanghai；均为日线历史/当日收盘，非实时行情",
+  "targets": {
+    "600519": {
+      "name": "贵州茅台",
+      "symbol": "sh600519",
+      "http": 200,
+      "raw_last": {
+        "day": "2026-11-18",
+        "open": "1450.000",
+        "high": "1456.000",
+        "low": "1431.700",
+        "close": "1442.660",
+        "volume": "2984695"
+      },
+      "standard_last": {
+        "code": "600519",
+        "name": "600519",
+        "trade_date": "2026-11-18",
+        "open": 1450.0,
+        "high": 1456.0,
+        "low": 1431.7,
+        "close": 1442.66,
+        "volume": 2984695.0,
+        "amount": 0.0,
+        "source": "sina",
+        "interface": "sina_CN_MarketData.getKLineData",
+        "quote_time": "2026-11-18 15:00:00",
+        "collected_at": "2026-11-19 09:21:28 +0800",
+        "data_type": "history",
+        "adjust_type": "none",
+        "period": "daily"
+      },
+      "standard_rows": 7
+    },
+    "300750": {
+      "name": "宁德时代",
+      "symbol": "sz300750",
+      "http": 200,
+      "raw_last": {
+        "day": "2026-11-18",
+        "open": "238.240",
+        "high": "242.660",
+        "low": "237.280",
+        "close": "241.010",
+        "volume": "28786794"
+      },
+      "standard_last": {
+        "code": "300750",
+        "name": "300750",
+        "trade_date": "2026-11-18",
+        "open": 238.24,
+        "high": 242.66,
+        "low": 237.28,
+        "close": 241.01,
+        "volume": 28786794.0,
+        "amount": 0.0,
+        "source": "sina",
+        "interface": "sina_CN_MarketData.getKLineData",
+        "quote_time": "2026-11-18 15:00:00",
+        "collected_at": "2026-11-19 09:21:28 +0800",
+        "data_type": "history",
+        "adjust_type": "none",
+        "period": "daily"
+      },
+      "standard_rows": 7
+    },
+    "000651": {
+      "name": "格力电器",
+      "symbol": "sz000651",
+      "http": 200,
+      "raw_last": {
+        "day": "2026-11-18",
+        "open": "40.600",
+        "high": "41.160",
+        "low": "40.300",
+        "close": "40.750",
+        "volume": "48465953"
+      },
+      "standard_last": {
+        "code": "000651",
+        "name": "000651",
+        "trade_date": "2026-11-18",
+        "open": 40.6,
+        "high": 41.16,
+        "low": 40.3,
+        "close": 40.75,
+        "volume": 48465953.0,
+        "amount": 0.0,
+        "source": "sina",
+        "interface": "sina_CN_MarketData.getKLineData",
+        "quote_time": "2026-11-18 15:00:00",
+        "collected_at": "2026-11-19 09:21:28 +0800",
+        "data_type": "history",
+        "adjust_type": "none",
+        "period": "daily"
+      },
+      "standard_rows": 7
+    },
+    "000300.SH": {
+      "name": "沪深300",
+      "symbol": "sh000300",
+      "http": 200,
+      "raw_last": {
+        "day": "2026-11-18",
+        "open": "3991.164",
+        "high": "3991.164",
+        "low": "3948.495",
+        "close": "3983.767",
+        "volume": "16731827100"
+      },
+      "standard_last": {
+        "index_code": "000300.SH",
+        "index_name": "沪深300",
+        "trade_date": "2026-11-18",
+        "open": 3991.164,
+        "high": 3991.164,
+        "low": 3948.495,
+        "close": 3983.767,
+        "volume": 16731827100.0,
+        "amount": 0.0,
+        "source": "sina",
+        "interface": "sina_CN_MarketData.getKLineData",
+        "quote_time": "2026-11-18 15:00:00",
+        "collected_at": "2026-11-19 09:21:29 +0800",
+        "data_type": "history"
+      },
+      "standard_rows": 7
+    }
+  },
+  "cross_source": {
+    "code": "600519",
+    "source_a": "sina",
+    "source_b": "tencent",
+    "dates": [
+      "2026-11-10",
+      "2026-11-11",
+      "2026-11-12",
+      "2026-11-13",
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18"
+    ],
+    "close_a": [
+      1439.0,
+      1402.3,
+      1410.27,
+      1435.26,
+      1453.9,
+      1457.7,
+      1442.66
+    ],
+    "close_b": [
+      1439.0,
+      1402.3,
+      1410.27,
+      1435.26,
+      1453.9,
+      1457.7,
+      1442.66
+    ],
+    "max_abs_diff": 0.0
+  }
+}
