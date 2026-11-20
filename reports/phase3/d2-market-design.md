@@ -114,6 +114,21 @@ MarketAnalysisResult
 
 ---
 
+## 四·补：R1 独立审查修复（算法版本 v1 → v2）
+
+ChatGPT 第一轮独立审查发现 2 项 P1 + 1 项 P2，均已修复。`ALGORITHM_VERSION_D2` 递增为 `d2-market-v2`。
+
+| 编号 | 问题 | 修复口径 |
+|---|---|---|
+| P1-01 交易日连续性 | 指数/个股各自取「自身最近一条历史记录」当前收，可跨过缺失交易日算多日涨跌幅 | 新增 `observable_trading_dates()`（优先指数行情日期、退回股票日期）建立本次分析的**可观察交易日序列**，编排层统一注入指数与个股；前收必须取该序列中严格前一交易日，且**必须验证该标的当日有合格行情**，缺失/无法验证 → unavailable（`previous_trading_day_missing` / `previous_trading_day_unverifiable`），**禁止取更早日期代替**。明确声明该序列非交易所法定交易日历（`trading_calendar_basis`）。血缘新增 `observable_trading_dates` / `prev_td_missing_symbols` 字段。 |
+| P1-02 成交量归一失败仍 OK | `sample_volume_total` 对归一异常仅记 warning，仍把部分合计标为 OK | 任一纳入样本记录归一失败 → `sample_volume_total` 整体 unavailable（`volume_normalization_failed`），`params.failures` 披露失败标的/来源/原因，不把部分合计当完整样本。 |
+| P2-01 成交额静默漏算 | `sum_real_amount()` 静默跳过缺失/None/非法 amount，部分合计仍标 OK | 复用 `amount_available()` 判定可用性后，**统计前逐条验证**每条真实成交额记录的 amount 存在、有限、非负；任一条无法确认 → `sample_amount_total` unavailable（`amount_invalid_in_sample`），披露失败标的/来源/原因；全部通过仍走 `sum_real_amount()` 求和，不绕过 B3 契约。 |
+
+新增原因码：`previous_trading_day_missing`、`previous_trading_day_unverifiable`、`volume_normalization_failed`、`amount_invalid_in_sample`。
+新增测试（13 项）：指数/个股中间交易日缺失不回退、前一交易日存在正常计算、无可观察前日 unverifiable、编排层日历血缘、`volume_total` 归一失败不可用/全正常可用、成交额缺字段/None/非法/负数/正常混合/全有效复用契约。D2 测试 28 → 41 全通过。
+
+---
+
 ## 五、开发纪律
 
 - 只改 D2 涉及文件（`analysis/market*.py`、`analysis/__init__.py` 导出、`tests/test_analysis_market.py`、本报告）；

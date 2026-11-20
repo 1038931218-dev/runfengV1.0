@@ -18,6 +18,9 @@ from analysis.contracts import (
 from analysis.market_contracts import (
     ALGORITHM_VERSION_D2, REASON_UNIVERSE_BASE, REASON_AMOUNT_PLACEHOLDER,
     REASON_NO_AMOUNT, REASON_INDEX_VOL_UNVERIFIED,
+    REASON_PREV_TD_MISSING, REASON_PREV_TD_UNVERIFIABLE,
+    REASON_VOLUME_NORM_FAILED, REASON_AMOUNT_INVALID,
+    TRADING_CALENDAR_BASIS,
 )
 
 
@@ -307,3 +310,150 @@ def test_empty_everything_no_crash():
     assert r.index_results == {}
     assert r.values["sample_advancers"].status == STATUS_UNAVAILABLE
     assert r.market_coverage_ratio.status == STATUS_UNAVAILABLE
+
+
+# ============ P1-01：交易日连续性（禁止跨缺失交易日） ============
+def test_index_prev_observable_day_missing_no_earlier_fallback():
+    """指数在 d3、d5 有数据但 d4 缺失；cal 含 d4 → 请求 d5 必须 unavailable，
+    不得拿 d3 当前一交易日算两日涨跌幅。"""
+    recs = [idx("000001.SH", "2025-11-03", 3000),
+            idx("000001.SH", "2025-11-05", 3060)]
+    cal = ["2025-11-03", "2025-11-04", "2025-11-05"]
+    iv = index_pct_change(recs, index_code="000001.SH", trade_date="2025-11-05",
+                          calendar=cal)
+    assert iv.status == STATUS_UNAVAILABLE
+    assert iv.reason == REASON_PREV_TD_MISSING
+    assert iv.params["previous_observable_day"] == "2025-11-04"
+
+
+def test_index_prev_observable_day_present_ok():
+    """前一可观察交易日有合格行情 → 正常计算（回归基线行为）。"""
+    recs = [idx("000001.SH", "2025-11-03", 3000),
+            idx("000001.SH", "2025-11-04", 3030)]
+    cal = ["2025-11-03", "2025-11-04"]
+    iv = index_pct_change(recs, index_code="000001.SH", trade_date="2025-11-04",
+                          calendar=cal)
+    assert iv.status == STATUS_OK
+    assert iv.value == Decimal("1.0000")
+    assert iv.params["previous_observable_day"] == "2025-11-03"
+
+
+def test_stock_middle_trading_day_missing_no_earlier_fallback():
+    """A 在 d3、d5 有数据；B 在 d3、d4、d5 → cal 含 d4。A 缺 d4 →
+    请求 d5 时 A 被排除，不得拿 d3 当前收。"""
+    recs = [stk("A", "2025-11-03", 10), stk("A", "2025-11-05", 11),
+            stk("B", "2025-11-03", 20), stk("B", "2025-11-04", 20),
+            stk("B", "2025-11-05", 21)]
+    b = sample_breadth(recs, trade_date="2025-11-05")
+    assert b.sample_size == 1  # 仅 B
+    assert any(x["symbol"] == "A" and x["reason"] == REASON_PREV_TD_MISSING
+               for x in b.prev_td_missing_symbols)
+    assert any(e["symbol"] == "A" and REASON_PREV_TD_MISSING in e["reason"]
+               for e in b.excluded_symbols)
+
+
+def test_stock_no_earlier_observable_day_unverifiable():
+    """cal 中 td 之前无任何交易日 → 前收无法验证，标的排除且不臆造。"""
+    recs = [stk("A", "2025-11-04", 10)]
+    b = sample_breadth(recs, trade_date="2025-11-04")
+    assert b.sample_size == 0
+    assert any(x["reason"] == REASON_PREV_TD_UNVERIFIABLE
+               for x in b.prev_td_missing_symbols)
+
+
+def test_analyze_market_uses_index_dates_as_calendar_and_discloses():
+    """编排层优先用指数日期建立 cal，并随结果披露口径声明（非法定日历）。"""
+    idxrecs = [idx("000001.SH", "2025-11-03", 3000),
+               idx("000001.SH", "2025-11-04", 3030)]
+    recs = two_day("000001", 10)
+    r = analyze_market(index_records=idxrecs, stock_records=recs,
+                       trade_date="2025-11-04")
+    assert r.observable_trading_dates == ["2025-11-03", "2025-11-04"]
+    assert r.trading_calendar_basis == TRADING_CALENDAR_BASIS
+    assert "未接入交易所法定交易日历" in r.trading_calendar_basis
+    d = r.to_dict()
+    assert "observable_trading_dates" in d and "trading_calendar_basis" in d
+
+
+# ============ P1-02：成交量归一失败不得返回完整 OK ============
+def test_volume_total_unavailable_on_one_c_state_failure():
+    """两条正常记录 + 一条 C 态异常记录：成交量合计必须 unavailable，
+    不得把部分合计标为完整样本 OK，并披露失败标的/来源/原因。"""
+    a = stk("A", "2025-11-03", 10, vol=1000)
+    a2 = stk("A", "2025-11-04", 11, vol=1000)
+    a2["volume_normalized"] = True
+    a2["volume_std"] = None  # normalized=true 但 std=None → C 态归一失败
+    b = sample_breadth([a, a2], trade_date="2025-11-04")
+    iv = b.values["sample_volume_total"]
+    assert iv.status == STATUS_UNAVAILABLE
+    assert iv.reason == REASON_VOLUME_NORM_FAILED
+    failures = iv.params["failures"]
+    assert any(f["symbol"] == "A" and "InvalidInputError" in f["reason"] for f in failures)
+    assert any("成交量归一失败" in w and "A" in w for w in b.warnings)
+
+
+def test_volume_total_ok_when_all_normalized():
+    """全部记录成交量归一正常 → OK（回归基线，不因本修复全盘拒绝）。"""
+    recs = two_day("000001", 10, vol=1000, src="akshare")
+    b = sample_breadth(recs, trade_date="2025-11-04")
+    iv = b.values["sample_volume_total"]
+    assert iv.status == STATUS_OK
+    assert iv.value == Decimal("100000")
+
+
+# ============ P2-01：成交额静默漏算 ============
+def _amount_case(second_mutator):
+    """构造一条正常 + 一条异常真实成交额记录（amount_available=True）。"""
+    r1 = stk("A", "2025-11-03", 10, amt=100)
+    r2 = stk("A", "2025-11-04", 11, amt=100)
+    r2["amount_available"] = True  # 明确真实可用，排除占位分支
+    second_mutator(r2)
+    return sample_breadth([r1, r2], trade_date="2025-11-04").values["sample_amount_total"]
+
+
+def test_amount_missing_field_not_partial_ok():
+    iv = _amount_case(lambda r: r.pop("amount"))
+    assert iv.status == STATUS_UNAVAILABLE
+    assert iv.reason == REASON_AMOUNT_INVALID
+    assert any(f["reason"] == "缺 amount 字段" for f in iv.params["failures"])
+
+
+def test_amount_none_not_partial_ok():
+    iv = _amount_case(lambda r: r.__setitem__("amount", None))
+    assert iv.status == STATUS_UNAVAILABLE
+    assert iv.reason == REASON_AMOUNT_INVALID
+
+
+def test_amount_illegal_value_not_partial_ok():
+    iv = _amount_case(lambda r: r.__setitem__("amount", "not-a-number"))
+    assert iv.status == STATUS_UNAVAILABLE
+    assert iv.reason == REASON_AMOUNT_INVALID
+
+
+def test_amount_negative_not_partial_ok():
+    iv = _amount_case(lambda r: r.__setitem__("amount", -1))
+    assert iv.status == STATUS_UNAVAILABLE
+    assert iv.reason == REASON_AMOUNT_INVALID
+
+
+def test_amount_mixed_valid_and_invalid_not_partial_ok():
+    """一条正常 + 一条非法真实成交额 → 不得只合计正常那条标 OK。"""
+    r1 = stk("A", "2025-11-03", 10, amt=100)
+    r2 = stk("A", "2025-11-04", 11, amt=200)
+    r2["amount_available"] = True
+    r2["amount"] = None
+    r3 = stk("B", "2025-11-03", 20, amt=500)
+    r4 = stk("B", "2025-11-04", 21, amt=600)
+    r4["amount_available"] = True
+    iv = sample_breadth([r1, r2, r3, r4], trade_date="2025-11-04").values["sample_amount_total"]
+    assert iv.status == STATUS_UNAVAILABLE
+    assert iv.reason == REASON_AMOUNT_INVALID
+    assert any(f["symbol"] == "A" for f in iv.params["failures"])
+
+
+def test_amount_all_valid_ok_reuses_contract():
+    """全部真实成交额有效 → OK，且结果仍来自 sum_real_amount（100.50）。"""
+    recs = two_day("000001", 10, avail=True, amt=100.5)
+    iv = sample_breadth(recs, trade_date="2025-11-04").values["sample_amount_total"]
+    assert iv.status == STATUS_OK
+    assert iv.value == Decimal("100.50")

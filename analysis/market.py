@@ -25,7 +25,9 @@ from analysis.market_contracts import (
     Q_RATIO, Q_AMOUNT,
     REASON_UNIVERSE_BASE, REASON_BEIJING, REASON_LISTING_DATE,
     REASON_AMOUNT_PLACEHOLDER, REASON_NO_AMOUNT, REASON_INDEX_VOL_UNVERIFIED,
-    UNIVERSE_DEFAULT, COVERAGE_DEFAULT,
+    REASON_PREV_TD_MISSING, REASON_PREV_TD_UNVERIFIABLE,
+    REASON_VOLUME_NORM_FAILED, REASON_AMOUNT_INVALID,
+    TRADING_CALENDAR_BASIS, UNIVERSE_DEFAULT, COVERAGE_DEFAULT,
 )
 from analysis.units import normalize_volume, from_raw_volume, VolumeRecord
 
@@ -132,6 +134,35 @@ def _volume_std_of(rec: Any) -> Decimal:
     return vr.volume_std
 
 
+# ---------- 可观察交易日序列（P1-01：禁止跨缺失交易日） ----------
+def observable_trading_dates(index_records: Sequence = (),
+                             stock_records: Sequence = ()) -> list[str]:
+    """建立本次分析「可观察」的交易日期序列（升序去重）。
+
+    口径（审查修复 P1-01）：
+    - 优先利用输入指数行情日期；指数无数据时退回股票行情日期；
+    - 只包含通过 _quality_of 的合格记录日期，异常记录不贡献交易日；
+    - 这是「输入可观察」序列，**不是交易所法定交易日历**（见 trading_calendar_basis）。
+    """
+    idx_dates = {_norm_date(_get(r, "trade_date")) for r in index_records
+                 if _quality_of(r)[0] and _valid_date(_norm_date(_get(r, "trade_date")))}
+    if idx_dates:
+        return sorted(idx_dates)
+    stk_dates = {_norm_date(_get(r, "trade_date")) for r in stock_records
+                 if _quality_of(r)[0] and _valid_date(_norm_date(_get(r, "trade_date")))}
+    return sorted(stk_dates)
+
+
+def _previous_observable_day(td: str, cal: Sequence[str]) -> str | None:
+    """返回可观察序列 cal 中严格早于 td 的最近交易日；无则 None。
+
+    调用方必须验证目标标的在该返回日确有合格行情；缺则返回 unavailable，
+    不得沿 cal 继续向前取更早日期代替（禁止跨缺失交易日）。
+    """
+    earlier = [d for d in cal if d < td]
+    return earlier[-1] if earlier else None
+
+
 # ---------- 来源择选（D0 4A.1：逐标的逐日，禁止跨源拼 OHLCV） ----------
 def _pick_source(rows: Sequence, *, divergence_threshold: Decimal, notes: list[str],
                  warnings: list[str]) -> tuple[Any | None, str]:
@@ -173,13 +204,21 @@ def _pick_source(rows: Sequence, *, divergence_threshold: Decimal, notes: list[s
 
 # ---------- 指数日涨跌幅 ----------
 def index_pct_change(index_records: Sequence, *, index_code: str,
-                     trade_date: str, divergence_threshold: Decimal = Decimal("0.01")) -> IndicatorValue:
-    """单指数相邻交易日 close 涨跌幅，公式同 D1 5.2（adjust_type=none，指数无复权）。
+                     trade_date: str, divergence_threshold: Decimal = Decimal("0.01"),
+                     calendar: Sequence[str] | None = None) -> IndicatorValue:
+    """单指数相邻「可观察交易日」close 涨跌幅，公式同 D1 5.2（adjust_type=none）。
+
+    交易日连续性（P1-01）：
+    - cal 为本次分析可观察交易日序列（analyze_market 注入，指数优先）；
+      未注入时退回该指数自身合格日期序列；
+    - 前一交易日取 cal 中严格早于 td 的最近交易日，并**必须**验证该指数在该日
+      有合格行情；若缺失/无法验证 → unavailable，禁止取更早日期代替。
+    - 口径声明：可观察序列非交易所法定交易日历（见 trading_calendar_basis）。
 
     状态：
     - ok：正常返回 Decimal 百分比（4 位）；
-    - insufficient_data：样本 <2；
-    - unavailable：无该指数 / 当日或前一交易日缺失 / 来源择选失败；
+    - insufficient_data：无更早可观察交易日；
+    - unavailable：无该指数 / 当日缺失 / 前一交易日无合格行情 / 来源择选失败；
     - rejected：价格非法。
     """
     params = {"index_code": index_code, "trade_date": trade_date, "basis": "previous_close"}
@@ -191,19 +230,25 @@ def index_pct_change(index_records: Sequence, *, index_code: str,
     by_date: dict[str, list] = {}
     for r in rows:
         by_date.setdefault(_norm_date(_get(r, "trade_date")), []).append(r)
-    dates = sorted(by_date)
+    cal = sorted(set(calendar)) if calendar is not None else sorted(by_date)
     td = _norm_date(trade_date)
-    if td not in dates:
+    if td not in by_date:
         return unavailable("INDEX_PCT_CHANGE", params, "target_date_missing_or_unqualified")
-    pos = dates.index(td)
-    if pos < 1:
+
+    prev_day = _previous_observable_day(td, cal)
+    if prev_day is None:
         return insufficient("INDEX_PCT_CHANGE", params, 2, 1, "no_previous_trading_day")
+    if prev_day not in by_date:
+        # 前一可观察交易日该指数无合格行情 → 禁止跨过它取更早日期（P1-01 核心）
+        prev_params = {**params, "previous_observable_day": prev_day,
+                       "trading_calendar_basis": TRADING_CALENDAR_BASIS}
+        return unavailable("INDEX_PCT_CHANGE", prev_params, REASON_PREV_TD_MISSING)
 
     notes: list[str] = []
     warnings: list[str] = []
     chosen, _ = _pick_source(by_date[td], divergence_threshold=divergence_threshold,
                              notes=notes, warnings=warnings)
-    prev, _ = _pick_source(by_date[dates[pos - 1]], divergence_threshold=divergence_threshold,
+    prev, _ = _pick_source(by_date[prev_day], divergence_threshold=divergence_threshold,
                            notes=notes, warnings=warnings)
     if chosen is None or prev is None:
         return unavailable("INDEX_PCT_CHANGE", params, "source_pick_failed")
@@ -213,7 +258,9 @@ def index_pct_change(index_records: Sequence, *, index_code: str,
         return IndicatorValue(name="INDEX_PCT_CHANGE", params=params,
                               status=STATUS_REJECTED, reason="invalid_price")
     value = q((cur_close - prev_close) / prev_close * Decimal(100), Q_PRICE)
-    return IndicatorValue(name="INDEX_PCT_CHANGE", params=params, value=value, status=STATUS_OK)
+    value_params = {**params, "previous_observable_day": prev_day}
+    return IndicatorValue(name="INDEX_PCT_CHANGE", params=value_params,
+                          value=value, status=STATUS_OK)
 
 
 # ---------- 样本级宽度 ----------
@@ -223,10 +270,13 @@ def sample_breadth(stock_records: Sequence, *, trade_date: str,
                    bullish_ratio: Decimal = Decimal("0.6"),
                    bearish_ratio: Decimal = Decimal("0.6"),
                    universe_definition: str | None = None,
-                   coverage_note: str | None = None) -> SampleBreadth:
+                   coverage_note: str | None = None,
+                   calendar: Sequence[str] | None = None) -> SampleBreadth:
     """样本级涨跌平家数 / 涨跌比例 / 趋势状态 / 量能 / 成交额。
 
     全部字段 sample_* 前缀。当日无行情标的列入 missing_quote_symbols，不计入样本。
+    交易日连续性（P1-01）：前收价必须取 cal 中严格前一「可观察交易日」的合格行情，
+    缺失/无法验证 → 排除并披露，禁止取更早日期代替。
     """
     out = SampleBreadth(
         universe_definition=universe_definition or UNIVERSE_DEFAULT,
@@ -234,6 +284,15 @@ def sample_breadth(stock_records: Sequence, *, trade_date: str,
     )
     td = _norm_date(trade_date)
     out.values["sample_date"] = IndicatorValue(name="sample_date", value=td, status=STATUS_OK)
+
+    # 可观察交易日序列（P1-01）：优先指数行情日期，由 analyze_market 注入；
+    # 未注入时退回股票合格日期。明确记录口径：非交易所法定交易日历。
+    cal = sorted(set(calendar)) if calendar is not None else observable_trading_dates(
+        [], stock_records)
+    out.observable_trading_dates = list(cal)
+    out.trading_calendar_basis = TRADING_CALENDAR_BASIS
+    out.notes.append(
+        f"可观察交易日序列={cal}（来源：输入行情，指数优先）；{TRADING_CALENDAR_BASIS}")
 
     # 全市场覆盖率恒不可用（stock_info 空 / 无全市场基数）
     out.values["market_coverage_ratio"] = unavailable(
@@ -261,34 +320,52 @@ def sample_breadth(stock_records: Sequence, *, trade_date: str,
         by_symbol.setdefault(sym, []).append(r)
 
     # 当日样本：每标的按日期建索引、择源
+    # 交易日连续性（P1-01）：前一交易日以全局可观察序列 cal 为准，
+    # 且必须验证该标的在该日确有合格行情；缺失则排除，禁止沿序列向前取更早日期。
+    prev_day = _previous_observable_day(td, cal)
     chosen_today: dict[str, Any] = {}
     prev_close_by_symbol: dict[str, Decimal] = {}
     for sym, recs in sorted(by_symbol.items()):
         by_date: dict[str, list] = {}
         for r in recs:
             by_date.setdefault(_norm_date(_get(r, "trade_date")), []).append(r)
-        dates = sorted(by_date)
-        if td not in dates:
+        if td not in by_date:
             out.missing_quote_symbols.append(sym)
             continue
-        pos = dates.index(td)
-        if pos < 1:
-            # 有当日但无前一交易日 → 无前收，排除出涨跌统计并披露
-            out.excluded_symbols.append({"symbol": sym, "reason": "缺前一交易日收盘价"})
+        if prev_day is None:
+            # 可观察序列中无更早交易日 → 无法确认前收，排除并披露（不臆造）
+            reason = REASON_PREV_TD_UNVERIFIABLE
+            out.excluded_symbols.append({"symbol": sym, "reason": reason})
+            out.prev_td_missing_symbols.append(
+                {"symbol": sym, "trade_date": td, "previous_observable_day": None,
+                 "reason": reason})
+            continue
+        if prev_day not in by_date:
+            # 前一可观察交易日该标的无合格行情 → 禁止拿更早日期代替（P1-01 核心）
+            out.excluded_symbols.append(
+                {"symbol": sym, "reason": f"{REASON_PREV_TD_MISSING}({prev_day})"})
+            out.prev_td_missing_symbols.append(
+                {"symbol": sym, "trade_date": td, "previous_observable_day": prev_day,
+                 "reason": REASON_PREV_TD_MISSING})
             continue
         chosen, why = _pick_source(by_date[td], divergence_threshold=divergence_threshold,
                                    notes=out.notes, warnings=out.warnings)
         if chosen is None:
             out.excluded_symbols.append({"symbol": sym, "reason": f"来源择选失败({why})"})
             continue
-        prev, _ = _pick_source(by_date[dates[pos - 1]], divergence_threshold=divergence_threshold,
+        prev, _ = _pick_source(by_date[prev_day], divergence_threshold=divergence_threshold,
                                notes=out.notes, warnings=out.warnings)
         if prev is None:
-            out.excluded_symbols.append({"symbol": sym, "reason": "前一交易日来源择选失败"})
+            reason = REASON_PREV_TD_MISSING
+            out.excluded_symbols.append({"symbol": sym, "reason": f"{reason}({prev_day}来源择选失败)"})
+            out.prev_td_missing_symbols.append(
+                {"symbol": sym, "trade_date": td, "previous_observable_day": prev_day,
+                 "reason": reason})
             continue
         pc = _dec(_get(prev, "close"))
         if pc is None or pc <= 0:
-            out.excluded_symbols.append({"symbol": sym, "reason": "前一交易日收盘价非法"})
+            out.excluded_symbols.append(
+                {"symbol": sym, "reason": f"前一交易日({prev_day})收盘价非法"})
             continue
         chosen_today[sym] = chosen
         prev_close_by_symbol[sym] = pc
@@ -359,28 +436,74 @@ def sample_breadth(stock_records: Sequence, *, trade_date: str,
     out.notes.append("sample_trend_state 仅描述样本，非全市场趋势信号")
 
     # 样本成交量合计（归一为股，Q_VOL 整数）
+    # P1-02：任一纳入样本的记录成交量归一失败 → 不得把部分合计标为完整样本 OK，
+    #        整体返回 unavailable 并披露失败标的/来源/具体原因。
     vol_std_total = Decimal(0)
-    for rec in chosen_today.values():
+    vol_failures: list[dict] = []
+    for sym, rec in sorted(chosen_today.items()):
         try:
             vol_std_total += _volume_std_of(rec)
-        except Exception as exc:  # noqa: BLE001 - C 态等归一异常须显式处理，不静默
-            out.warnings.append(f"成交量归一失败: {type(exc).__name__}: {exc}")
-    out.values["sample_volume_total"] = IndicatorValue(
-        name="sample_volume_total", params={"unit": "股"},
-        value=q(vol_std_total, Q_VOL), status=STATUS_OK)
+        except Exception as exc:  # noqa: BLE001 - C 态等归一异常须显式处理
+            vol_failures.append({
+                "symbol": sym, "source": _source_of(rec),
+                "reason": f"{type(exc).__name__}: {exc}",
+            })
+    if vol_failures:
+        out.values["sample_volume_total"] = unavailable(
+            "sample_volume_total",
+            {"unit": "股", "failures": vol_failures},
+            REASON_VOLUME_NORM_FAILED)
+        for f in vol_failures:
+            out.warnings.append(
+                f"成交量归一失败({f['symbol']}, source={f['source']}): {f['reason']} "
+                f"→ sample_volume_total unavailable，不把部分合计当完整样本")
+    else:
+        out.values["sample_volume_total"] = IndicatorValue(
+            name="sample_volume_total", params={"unit": "股"},
+            value=q(vol_std_total, Q_VOL), status=STATUS_OK)
 
     # 样本成交额合计：仅全部 amount_available=True 才算（复用 B3 契约）
+    # P2-01：sum_real_amount 会静默跳过缺失/None/非法 amount；统计前必须逐条验证
+    #        每条「真实成交额可用」记录的 amount 存在且有限、非负。任一条无法确认 →
+    #        不得将部分合计标为完整样本 OK，整体 unavailable 并披露标的/来源/原因。
     sample_rows = list(chosen_today.values())
     unavailable_sources = sorted({_source_of(r) for r in sample_rows if not amount_available(r)})
+    amount_failures: list[dict] = []
+    if not unavailable_sources:
+        for sym, rec in sorted(chosen_today.items()):
+            # 仅验证真实成交额记录（占位来源走上面的 PLACEHOLDER 分支）
+            if not amount_available(rec):
+                continue
+            if not _has_field(rec, "amount"):
+                amount_failures.append({"symbol": sym, "source": _source_of(rec),
+                                        "reason": "缺 amount 字段"})
+                continue
+            av = _dec(_get(rec, "amount"))
+            if av is None:
+                amount_failures.append({"symbol": sym, "source": _source_of(rec),
+                                        "reason": f"amount 非法/非有限 {_get(rec, 'amount')!r}"})
+            elif av < 0:
+                amount_failures.append({"symbol": sym, "source": _source_of(rec),
+                                        "reason": f"amount 为负 {av}"})
+
     if unavailable_sources:
         out.values["sample_amount_total"] = unavailable(
             "sample_amount_total", {}, REASON_AMOUNT_PLACEHOLDER)
         out.warnings.append(
             f"sample_amount_total 含占位成交额来源 {unavailable_sources} → unavailable，不把占位当真实成交额")
+    elif amount_failures:
+        # 逐条验证失败 → 部分合计不得标 OK（P2-01 核心）
+        out.values["sample_amount_total"] = unavailable(
+            "sample_amount_total", {"failures": amount_failures}, REASON_AMOUNT_INVALID)
+        for f in amount_failures:
+            out.warnings.append(
+                f"成交额无法确认({f['symbol']}, source={f['source']}): {f['reason']} "
+                f"→ sample_amount_total unavailable，不把部分合计当完整样本")
     elif not any(_has_field(r, "amount") or _has_field(r, "amount_available") for r in sample_rows):
         out.values["sample_amount_total"] = unavailable(
             "sample_amount_total", {}, REASON_NO_AMOUNT)
     else:
+        # 逐条验证通过后，仍复用 B3 sum_real_amount 求和（不绕过契约）
         total = Decimal(str(sum_real_amount(sample_rows, field="amount")))
         out.values["sample_amount_total"] = IndicatorValue(
             name="sample_amount_total", params={"field": "amount", "unit": "CNY"},
@@ -405,6 +528,10 @@ def analyze_market(*, index_records: Sequence, stock_records: Sequence,
         period="daily",
     )
 
+    # 本次分析可观察交易日序列（P1-01）：优先指数行情日期，注入给指数与股票共用，
+    # 确保两者「前一交易日」判定一致，禁止各自取更早日期跨缺失交易日。
+    cal = observable_trading_dates(index_records, stock_records)
+
     # 指数：逐指数日涨跌幅（指数无复权，adjust_type 固定 none）
     codes = list(index_codes) if index_codes is not None else sorted(
         {_symbol_of(r) for r in index_records if _symbol_of(r)})
@@ -412,7 +539,7 @@ def analyze_market(*, index_records: Sequence, stock_records: Sequence,
         result.index_results[code] = {
             "INDEX_PCT_CHANGE": index_pct_change(
                 index_records, index_code=code, trade_date=td,
-                divergence_threshold=divergence_threshold),
+                divergence_threshold=divergence_threshold, calendar=cal),
         }
         # 指数量能单位未核实 → 显式标记，不产出量能指标
         result.index_results[code]["INDEX_VOLUME_UNIT"] = IndicatorValue(
@@ -423,8 +550,12 @@ def analyze_market(*, index_records: Sequence, stock_records: Sequence,
     breadth = sample_breadth(
         stock_records, trade_date=td, adjust_type=adjust_type,
         divergence_threshold=divergence_threshold,
-        universe_definition=universe_definition, coverage_note=coverage_note)
+        universe_definition=universe_definition, coverage_note=coverage_note,
+        calendar=cal)
     result.values = breadth.values
+    result.observable_trading_dates = breadth.observable_trading_dates
+    result.trading_calendar_basis = breadth.trading_calendar_basis
+    result.prev_td_missing_symbols = breadth.prev_td_missing_symbols
     result.sample_size = breadth.sample_size
     result.universe_definition = breadth.universe_definition
     result.coverage_note = breadth.coverage_note

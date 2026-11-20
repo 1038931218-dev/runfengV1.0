@@ -14,7 +14,7 @@ from decimal import Decimal
 from analysis.contracts import IndicatorValue, STATUS_OK, unavailable
 
 # D2 算法版本（口径/参数变更须递增）
-ALGORITHM_VERSION_D2 = "d2-market-v1"
+ALGORITHM_VERSION_D2 = "d2-market-v2"
 
 # D2 专用精度
 Q_RATIO = Decimal("0.0001")   # 涨跌比例：4 位
@@ -27,6 +27,17 @@ REASON_NO_AMOUNT = "amount_data_unavailable"               # 无成交额数据
 REASON_BEIJING = "beijing_exchange_not_supported"          # 北交所不支持
 REASON_LISTING_DATE = "listing_date_unavailable"           # 缺上市日期
 REASON_INDEX_VOL_UNVERIFIED = "volume_unit_unverified"     # 指数量能单位未核实
+# —— 审查修复 v2：交易日连续性 / 部分合计禁止标完整 ——
+REASON_PREV_TD_MISSING = "previous_trading_day_missing"     # 前一可观察交易日该标的无合格行情（禁止跨日取更早）
+REASON_PREV_TD_UNVERIFIABLE = "previous_trading_day_unverifiable"  # 无法建立可观察交易日序列
+REASON_VOLUME_NORM_FAILED = "volume_normalization_failed"   # 成交量归一失败，部分合计禁止标完整
+REASON_AMOUNT_INVALID = "amount_invalid_in_sample"          # 样本内真实成交额无法逐条确认
+
+# 可观察交易日序列口径声明：来自输入行情日期，非交易所法定交易日历。
+TRADING_CALENDAR_BASIS = (
+    "可观察交易日序列仅由本次输入行情日期推导（指数优先、合并股票），"
+    "未接入交易所法定交易日历、未验证法定交易日；不得据此宣称已核对官方日历。"
+)
 
 USAGE_LIMITATION = (
     "sample_* 统计仅描述当前 daily_quote 去重样本（非全市场），"
@@ -51,6 +62,10 @@ class SampleBreadth:
     source_by_symbol: dict[str, str] = field(default_factory=dict)
     sources_used: list[str] = field(default_factory=list)
     source_divergence: list[dict] = field(default_factory=list)
+    # —— 审查修复 v2：交易日连续性血缘 ——
+    observable_trading_dates: list[str] = field(default_factory=list)  # 本次输入行情推导的可观察交易日序列
+    trading_calendar_basis: str = TRADING_CALENDAR_BASIS              # 口径声明：非法定日历
+    prev_td_missing_symbols: list[dict] = field(default_factory=list)  # 前一交易日无合格行情/无法验证的标的
     notes: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
 
@@ -65,6 +80,9 @@ class SampleBreadth:
             "source_by_symbol": dict(self.source_by_symbol),
             "sources_used": list(self.sources_used),
             "source_divergence": [dict(x) for x in self.source_divergence],
+            "observable_trading_dates": list(self.observable_trading_dates),
+            "trading_calendar_basis": self.trading_calendar_basis,
+            "prev_td_missing_symbols": [dict(x) for x in self.prev_td_missing_symbols],
             "notes": list(self.notes),
             "warnings": list(self.warnings),
         }
@@ -98,6 +116,11 @@ class MarketAnalysisResult:
     index_volume_unit: str = "unverified"
     usage_limitation: str = USAGE_LIMITATION
 
+    # —— 审查修复 v2：交易日连续性血缘 ——
+    observable_trading_dates: list[str] = field(default_factory=list)
+    trading_calendar_basis: str = TRADING_CALENDAR_BASIS
+    prev_td_missing_symbols: list[dict] = field(default_factory=list)
+
     # —— 血缘 ——
     sources_used: list[str] = field(default_factory=list)
     source_by_symbol: dict[str, str] = field(default_factory=dict)
@@ -126,6 +149,9 @@ class MarketAnalysisResult:
             "listing_date_limitation": self.listing_date_limitation,
             "index_volume_unit": self.index_volume_unit,
             "usage_limitation": self.usage_limitation,
+            "observable_trading_dates": list(self.observable_trading_dates),
+            "trading_calendar_basis": self.trading_calendar_basis,
+            "prev_td_missing_symbols": [dict(x) for x in self.prev_td_missing_symbols],
             "sources_used": list(self.sources_used),
             "source_by_symbol": dict(self.source_by_symbol),
             "source_divergence": [dict(x) for x in self.source_divergence],
