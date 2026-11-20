@@ -10,12 +10,25 @@
 - 第五轮修订：2026-11-19 (Asia/Shanghai)，针对 ChatGPT 最终验收发现的 3 个边界问题做补充修订
 - 第六轮修订：2026-11-19 (Asia/Shanghai)，针对 ChatGPT 最终验收前发现的 3 个问题做补充修订
 - 第七轮修订：2026-11-20 (Asia/Shanghai)，针对 ChatGPT 第六轮复核发现的 2 个计算口径问题做补充修订
+- 第八轮修订：2026-11-20 (Asia/Shanghai)，针对 ChatGPT 第七轮复核发现的 2 个口径一致性问题做最终补充修订
 - 仓库：https://github.com/1038931218-dev/runfengV1.0
-- 状态：**第七轮（补充）设计修订稿，等待 ChatGPT 最终独立验收；D1 尚未启动，审查通过前不实现 D1–D5**
+- 状态：**第八轮（补充）设计修订稿，等待 ChatGPT 最终独立验收；D1 尚未启动，审查通过前不实现 D1–D5**
 
 ---
 
-## 0F. 第七轮审查修订对照表（本次修订）
+## 0G. 第八轮审查修订对照表（本次修订）
+
+第八轮针对 ChatGPT 对第七轮提交的复核意见所发现的 2 个口径一致性问题，仅补充本设计报告，
+未改业务代码、数据库、真实数据，未启动 D1–D5；P1-03 成交量状态机保持不变。
+
+| 审查项 | 修订落点 | 处理摘要 |
+|---|---|---|
+| P1-01 统一 40% 边界 | 9.3A（仓位判定段、搜索上限段、建仓失败段）、9.6、测试清单 | 全文统一三分支：`>` → `rejected(position_limit_breached)`；`==` → 0 股 `cannot_establish_position`；`<` → 正常逐档。清除第 696 行 `≥` 判 rejected 的旧矛盾 |
+| P1-02 当前市值一致性校验 | 9.1、9.5、9.6、测试清单 | 明确 `existing_market_value = existing_shares × quote_price` 三字段均须提供、按人民币分校验、不一致 `rejected(invalid_existing_position)`、不得任选单字段作依据；`existing_cost_value` 仅辅助；补一致/不一致两种边界测试 |
+
+---
+
+## 0F. 第七轮审查修订对照表（历史记录）
 
 第七轮针对 ChatGPT 对第六轮提交的复核意见所发现的 2 个计算口径问题，仅补充本设计报告，
 未改业务代码、数据库、真实数据，未启动 D1–D5；P1-03 成交量状态机已通过，保持不变。
@@ -585,15 +598,22 @@ AKShare 行不参与计算，即使真实库现有数据全是 akshare（后果�
     `existing_market_value = existing_shares × 当前行情价`，由调用方按同一时点行情计算后传入；
   - `quote_price`：用于计算当前市值的**当前行情价**（Decimal，>0），与 `existing_shares` 一起
     明确输入口径；40% 仓位限制**只接受当前市值口径**；
+  - **三字段一致性校验（第八轮补充，P1-02）**：`existing_shares`、`quote_price`、
+    `existing_market_value` 三个字段**均须提供**、均须为合法数值（股数为非负整数、
+    行情价为 >0、市值为 ≥0）；且必须满足
+    `existing_market_value = existing_shares × quote_price`，金额精度**按人民币分（0.01 元，
+    Decimal `ROUND_HALF_UP`）校验一致性**。任一字段缺失/非法，或等式不成立（不一致）
+    → 直接 `rejected(invalid_existing_position)`；
+  - **不得任选单字段作计算依据**：市值、股数、行情价三者必须自洽后才可采用，
+    **禁止**仅凭 `existing_market_value` 或仅凭 `existing_shares × quote_price` 单方面取值而
+    忽略另两字段的一致性核验；校验通过后方可将 `existing_market_value` 用于仓位约束。
   - **不允许成本口径替代**：删除原 `value_basis=cost` 选项，**不得**用持仓成本价
     代替当前市值参与 40% 仓位约束（高成本/低成本持仓会使仓位限制失真）；
   - 若调用方**只能提供成本价、无法提供当前市值/当前行情价** → 直接 `rejected`，
     原因 `invalid_existing_position_valuation`，**不猜测、不反推当前市值**；
-  - `existing_cost_value`（可选）：如调用方需保留**持仓成本**，另设此字段仅作辅助信息输出，
-    **不参与 40% 仓位计算**、不参与任何约束判定；
-  - 缺失/非法（负、非数值、`existing_shares` 与 `quote_price` 不一致）→ `rejected`
-    （`invalid_existing_position`）；已有持仓**参与仓位约束**（见 9.3A），
-    但不参与本次买入的现金占用（现金只算本次买入）。
+  - `existing_cost_value`（可选）：如调用方需保留**持仓成本**，另设此字段**仅作辅助信息输出**，
+    **不参与 40% 仓位计算**、不参与任何约束判定、不参与三字段一致性校验；
+  - 已有持仓**参与仓位约束**（见 9.3A），但不参与本次买入的现金占用（现金只算本次买入）。
 
 ### 9.2 计算纪律
 - **全程 Decimal（D0-05-8）**：所有资金核心计算禁止 float 参与；输入以字符串转 `Decimal`，
@@ -662,8 +682,12 @@ max_loss = (买入金额 - 卖出金额) + buy_fees + sell_fees
   ```
   仓位约束判定：`买入后该股票总仓位 ≤ 账户总资产 × 40%`。
   - 已有持仓市值**必须计入**该股票仓位；不得仅用本次买入金额判断单股仓位；
-  - 若 `existing_market_value > 账户总资产 × 40%`（已有持仓已超上限），
+  - **40% 边界三分支（第八轮统一，全文唯一口径）**：
+    ① `existing_market_value > 账户总资产×40%`（已超上限）→
     **直接 `rejected`（`position_limit_breached`），不得放行任何新增买入**；
+    ② `existing_market_value == 账户总资产×40%`（恰好触线）→
+    剩余空间为 0，**返回 0 股、原因 `cannot_establish_position`**（不判为 `position_limit_breached`）；
+    ③ `existing_market_value < 账户总资产×40%` → 进入正常逐档计算；
   - 现金、仓位、风险三项约束**仍须同时成立**，已有持仓只影响仓位约束；
 - 滑点影响（第四轮统一口径，**恒计入风险、无开关**）：`s_buy` 通过买入成交价进入买入金额，
   从而进入现金占用、仓位与最大亏损（买入侧）；`s_sell` 通过卖出成交价进入卖出金额，
@@ -693,8 +717,11 @@ max_loss = (买入金额 - 卖出金额) + buy_fees + sell_fees
 - **仓位对应的股数上限**（第七轮修订，P1-01，分母不含费用）：
   `新增金额上限 = max(0, 账户总资产×40% − existing_market_value)`（current 市值口径），
   `Q_pos_cap = floor(新增金额上限 / 买入成交价 / 100) * 100`。
-  同样不含费用，为宽松上界。若 `existing_market_value ≥ 账户总资产×40%`，
-  则 `新增金额上限 ≤ 0` → 直接 `rejected`（`position_limit_breached`），无搜索空间。
+  同样不含费用，为宽松上界。此处按第八轮统一的 40% 边界三分支处理：
+  `existing_market_value > 账户总资产×40%` → 此前已直接 `rejected(position_limit_breached)`；
+  `existing_market_value == 账户总资产×40%` → `新增金额上限 = 0`，返回 0 股、
+  原因 `cannot_establish_position`（**不是** `position_limit_breached`）；
+  `existing_market_value < 账户总资产×40%` → 按上式得到正的 `Q_pos_cap`，进入正常逐档计算。
 - **风险约束的处理（第六轮明确，P1-01）**：因最低佣金、卖出佣金、印花税、过户费、双向滑点
   均依赖 Q 且分段非线性，**风险约束不解析地给出股数上限**，而是在逐档搜索中对每个候选 Q
   用 9.3A 完整公式计算 `max_loss`：含 `买入滑点`（经买入成交价）、`卖出滑点`（经卖出成交价）、
@@ -738,11 +765,14 @@ max_loss = (买入金额 - 卖出金额) + buy_fees + sell_fees
   ② 验证下一档 `Q*+100` **确实违反至少一项约束**（否则 `Q*` 不是最大值）；
   两者都成立才输出 `Q*`。
 
-**零股/建仓失败**：若连 `Q=100` 都不能同时满足三约束（或 `Q_cap<100`、
-或已有持仓已超 40%），返回 `max_buy_shares=0`，
-并给出 `status="rejected"`（或 `no_trade`）、原因 `cannot_establish_position`
-（已有持仓超限则 `position_limit_breached`），
-明确"当前参数下不能建立该笔交易"，**不得放宽任何风险限制来凑出可买股数**。
+**零股/建仓失败（40% 边界严格区分，第八轮统一）**：
+- 若 `existing_market_value > 账户总资产×40%` → **不属"建仓失败"而是仓位违规**：
+  直接 `rejected(position_limit_breached)`，不放行任何新增买入（见上 9.3A 仓位判定段①）。
+- 若 `existing_market_value == 账户总资产×40%`，或连 `Q=100` 都不能同时满足三约束
+  （或 `Q_cap<100`），返回 `max_buy_shares=0`，
+  给出 `status="no_trade"`（或 `rejected`）、原因 `cannot_establish_position`，
+  明确"当前参数下不能建立该笔交易"，**不得放宽任何风险限制来凑出可买股数**。
+- 二者原因码不同、不可混用：超限用 `position_limit_breached`，无空间/无解用 `cannot_establish_position`。
 
 **参数化与纪律（不得写死费率）**：
 - `r_comm`、`F_min`、`r_stamp`、`r_transfer`、`s_buy`、`s_sell` **全部由配置提供**，
@@ -761,9 +791,10 @@ max_loss = (买入金额 - 卖出金额) + buy_fees + sell_fees
 滑点参数 `s_buy`/`s_sell`（**恒定计入风险**的说明）。
 - **持仓与仓位字段（第七轮修订，P1-02）**：
   - `existing_shares`：买入前该股票持仓股数；
-  - `existing_market_value`：买入前该股票**当前持仓市值**（按当前行情价 × 股数计算），
-    **这是唯一参与 40% 仓位约束的持仓口径**；
-  - `existing_cost_value`（可选）：持仓成本，仅作辅助展示，**不参与仓位约束**；
+  - `quote_price`：用于计算当前市值的当前行情价；
+  - `existing_market_value`：买入前该股票**当前持仓市值**（`= existing_shares × quote_price`，
+    已按人民币分通过三字段一致性校验），**这是唯一参与 40% 仓位约束的持仓口径**；
+  - `existing_cost_value`（可选）：持仓成本，仅作辅助展示，**不参与仓位约束、不参与一致性校验**；
   - `position_after_buy`：**买入后该股票预计持仓金额**
     `= existing_market_value + 买入金额 + 本次买入侧全部费用`；
   - `position_ratio_after_buy`：`position_after_buy / 账户总资产`，
@@ -784,12 +815,16 @@ max_loss = (买入金额 - 卖出金额) + buy_fees + sell_fees
   验证连 100 股都不满足时返回 0 且不放宽风险限制；
   **验证搜索上限分母仅为不含费用的买入成交价 `P_buy×(1+s_buy)`（无"单股费用估计"）、
   现金/仓位上限均为股数再取 min、Q_cap 仅是搜索上界、逐档重算 11 项完整项**（第七轮 P1-01）。
-- **已有持仓仓位测试（第七轮修订，P1-02）**：
+- **已有持仓仓位测试（第七轮修订，第八轮补强一致性，P1-02）**：
   ① 已有持仓**超过 40%** → 直接 `rejected`（`position_limit_breached`），不放行任何新增买入；
-  ② 已有持仓**恰好 40%** → 新增金额上限为 0，返回 0 股（`cannot_establish_position`）；
+  ② 已有持仓**恰好 40%** → 新增金额上限为 0，返回 0 股（`cannot_establish_position`，
+     **不是** `position_limit_breached`，两原因码不可混用）；
   ③ 已有持仓**接近 40%** → 计入 `existing_market_value` 后正确限制新增股数（买入后总仓位 ≤ 40%）；
   ④ 只提供成本价、无法提供当前市值/行情价 → `rejected`（`invalid_existing_position_valuation`），
      不猜测当前市值；⑤ `existing_cost_value` 存在但不参与 40% 计算；
+  ⑥ **市值一致**：`existing_market_value = existing_shares × quote_price`（按人民币分）→ 校验通过；
+  ⑦ **市值不一致**：等式不成立（或三字段任一缺失/非法）→ `rejected(invalid_existing_position)`，
+     不得任选单字段作计算依据；
   验证即便仓位允许，现金与风险约束仍同时成立。
 
 ---
@@ -823,11 +858,14 @@ max_loss = (买入金额 - 卖出金额) + buy_fees + sell_fees
 | 12 | 候选股数满足全部约束、下一档 100 股违反至少一项 | D5 | 三 |
 | 13 | 连 100 股都不满足 → 返回 0 且不放宽风险限制 | D5 | 三 |
 | 14 | 搜索上限分母仅为 `P_buy×(1+s_buy)`（不含任何单股费用估计）；现金/仓位上限均为股数取 min；Q_cap 仅为搜索上界；逐档重算 11 项完整项 | D5 | 七-P1-01 |
-| 15 | 已有持仓**超过 40%** → `rejected(position_limit_breached)` 不放行 | D5 | 七-P1-02 |
-| 16 | 已有持仓**恰好 40%** → 返回 0 股（`cannot_establish_position`） | D5 | 七-P1-02 |
+| 15 | 已有持仓**超过 40%** → `rejected(position_limit_breached)` 不放行 | D5 | 七/八-P1-01 |
+| 16 | 已有持仓**恰好 40%** → 返回 0 股（`cannot_establish_position`，非 `position_limit_breached`） | D5 | 七/八-P1-01 |
 | 17 | 已有持仓**接近 40%** → 计入 `existing_market_value` 限制新增股数，买入后总仓位 ≤ 40% | D5 | 七-P1-02 |
 | 18 | 只有成本价、无当前市值/行情价 → `rejected(invalid_existing_position_valuation)`；`existing_cost_value` 不参与 40% 计算 | D5 | 七-P1-02 |
+| 19 | **市值一致**：`existing_market_value = existing_shares × quote_price`（按人民币分校验）→ 通过 | D5 | 八-P1-02 |
+| 20 | **市值不一致**（或三字段任一缺失/非法）→ `rejected(invalid_existing_position)`，不任选单字段作依据 | D5 | 八-P1-02 |
 
+- 累积测试清单：第五轮 13 项 + 第六轮 2 项 + 第七轮 3 项（第 14 及仓位边界）+ 第八轮 2 项 = **20 项**。
 - 全程 `tmp_db` 临时库 + 注入 db_path，不读写真实库；真实库 SHA256 保持不变。
 - 每子阶段：独立提交 + 推送 GitHub + 保留测试输出 + 等待审查。
 
@@ -846,7 +884,7 @@ max_loss = (买入金额 - 卖出金额) + buy_fees + sell_fees
 
 ---
 
-## 12. 决策点状态（第七轮修订后）
+## 12. 决策点状态（第八轮修订后）
 
 **已定稿（第一、二轮审查意见全部落实）**：
 1. 来源优先级 → 默认 `sina_primary`，AKShare 可配置非默认（D0-01）。
@@ -869,10 +907,15 @@ max_loss = (买入金额 - 卖出金额) + buy_fees + sell_fees
    仓位约束计入已有持仓市值、已超 40% 不放行、输出买入前后持仓与仓位比例（P1-02）；
    成交量 A/B/C 字段规则统一（A 态 `volume_std` 存在且为 null）、清除"缺任一字段拒绝"矛盾（P1-03）
    ——全部修订到位。
-11. 第七轮 2 项（本次）→ 搜索上限分母改为不含费用的买入成交价 `P_buy×(1+s_buy)`、
+11. 第七轮 2 项 → 搜索上限分母改为不含费用的买入成交价 `P_buy×(1+s_buy)`、
    取消"单股费用估计"、Q_cap 仅为搜索上界、逐档重算 11 项（P1-01）；
    `existing_market_value` 仅用当前行情市值、删除 `value_basis=cost`、仅成本价返回 rejected、
-   成本另设辅助字段、补三边界测试（P1-02）——全部修订到位，累计 18 项测试。
+   成本另设辅助字段、补三边界测试（P1-02）——全部修订到位。
+12. 第八轮 2 项（本次）→ 全文统一 40% 边界三分支：`>` → `rejected(position_limit_breached)`、
+   `==` → 0 股 `cannot_establish_position`、`<` → 正常逐档，清除 `≥` 判 rejected 的旧矛盾（P1-01）；
+   补 `existing_market_value = existing_shares × quote_price` 三字段一致性校验（人民币分）、
+   不一致 `rejected(invalid_existing_position)`、不得任选单字段、`existing_cost_value` 仅辅助、
+   补一致/不一致两测试（P1-02）——全部修订到位，累计 20 项测试。
    P1-03 成交量状态机已通过复核，本轮保持不变。
 
 **仍作为实现期配置参数的开放项（不影响设计定稿，实现时按配置提供）**：
@@ -884,6 +927,6 @@ max_loss = (买入金额 - 卖出金额) + buy_fees + sell_fees
 
 ---
 
-本文件为 D0 第七轮（补充）设计修订交付，**不代表验收通过**。
+本文件为 D0 第八轮（补充）设计修订交付，**不代表验收通过**。
 **D1 尚未启动**；本轮仅修改本设计报告，未改任何业务代码/数据库/真实数据。
 等待 ChatGPT 最终独立验收后再决定是否进入 D1。
