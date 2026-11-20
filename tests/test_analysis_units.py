@@ -1,6 +1,7 @@
 """成交量单位归一与 A/B/C 状态机测试（D0 4A.2 / 任务书重点 9、10）。"""
 import json
 import math
+from decimal import Decimal
 
 import pytest
 
@@ -130,3 +131,88 @@ def test_normalize_many():
     recs = [from_raw_volume(10, "sina"), from_raw_volume(10, "tencent")]
     outs = normalize_many(recs)
     assert [o.volume_std for o in outs] == [10, 1000]
+
+
+# ============ P1-01：字段存在性检查（严禁缺字段绕过 C 态） ============
+def test_p1_missing_volume_std_field_is_c():
+    """缺 volume_std 字段（不是值为 None）→ C 拒绝。"""
+    rec = {"volume": 100, "volume_normalized": False, "source": "sina"}
+    assert classify_state(rec) == "C"
+    with pytest.raises(InvalidInputError):
+        normalize_volume(rec)
+
+
+def test_p1_missing_volume_normalized_field_is_c():
+    """缺 volume_normalized 字段 → C 拒绝（不得当 None 补成 A 态）。"""
+    rec = {"volume": 100, "volume_std": None, "source": "sina"}
+    assert classify_state(rec) == "C"
+    with pytest.raises(InvalidInputError):
+        normalize_volume(rec)
+
+
+def test_p1_missing_volume_field_is_c():
+    """缺 volume 字段 → C 拒绝。"""
+    rec = {"volume_std": None, "volume_normalized": False, "source": "sina"}
+    assert classify_state(rec) == "C"
+    with pytest.raises(InvalidInputError):
+        normalize_volume(rec)
+
+
+def test_p1_a_state_null_std_false_normalized_normalizes():
+    """volume_std 字段存在且值为 None、normalized=false → A 态正常归一。"""
+    rec = {"volume": 100, "volume_std": None, "volume_normalized": False, "source": "sina"}
+    assert classify_state(rec) == "A"
+    out = normalize_volume(rec)
+    assert out.volume_std == Decimal("100") and out.volume_normalized is True
+
+
+def test_p1_b_state_with_std_true_normalized_reused():
+    """volume_std 有值且 normalized=true → B 态幂等复用，不重复×100。"""
+    rec = {"volume": 100, "volume_std": 10000, "volume_normalized": True, "source": "tencent"}
+    assert classify_state(rec) == "B"
+    out = normalize_volume(rec)
+    assert out.volume_std == Decimal("10000")  # 幂等，不是 100*100
+
+
+def test_p1_normalized_true_null_std_is_c():
+    """normalized=true 但 volume_std=null → C 拒绝。"""
+    rec = {"volume": 100, "volume_std": None, "volume_normalized": True, "source": "sina"}
+    assert classify_state(rec) == "C"
+    with pytest.raises(InvalidInputError):
+        normalize_volume(rec)
+
+
+def test_p1_normalized_false_with_std_is_c():
+    """normalized=false 但 volume_std 有值 → C 拒绝（状态不一致）。"""
+    rec = {"volume": 100, "volume_std": 500, "volume_normalized": False, "source": "sina"}
+    assert classify_state(rec) == "C"
+    with pytest.raises(InvalidInputError):
+        normalize_volume(rec)
+
+
+def test_p1_normalized_nonstrict_bool_is_c():
+    """volume_normalized 字段存在但取值非严格 bool → C 拒绝。"""
+    for bad in (None, "true", 1, 0):
+        rec = {"volume": 100, "volume_std": None, "volume_normalized": bad, "source": "sina"}
+        assert classify_state(rec) == "C"
+        with pytest.raises(InvalidInputError):
+            normalize_volume(rec)
+
+
+def test_p1_json_roundtrip_abc_states_preserved():
+    """JSON 往返后 A/B/C 状态保持正确。"""
+    from analysis.contracts import InvalidInputError as IIE
+    # A 态往返后仍 A，归一正确
+    a = json.loads(json.dumps(from_raw_volume(200, "sina").to_dict()))
+    assert classify_state(a) == "A"
+    assert normalize_volume(a).volume_std == Decimal("200")
+    # B 态往返后仍 B，不重复放大
+    norm = normalize_volume(from_raw_volume(200, "tencent"))
+    b = json.loads(json.dumps(norm.to_dict()))
+    assert classify_state(b) == "B"
+    assert normalize_volume(b).volume_std == Decimal("20000")
+    # C 态（缺 volume_std 字段）往返后仍 C
+    c = json.loads(json.dumps({"volume": 200, "volume_normalized": False, "source": "sina"}))
+    assert classify_state(c) == "C"
+    with pytest.raises(IIE):
+        normalize_volume(c)

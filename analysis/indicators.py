@@ -16,13 +16,63 @@
 """
 from __future__ import annotations
 
-from decimal import Decimal, ROUND_HALF_UP, localcontext
+from decimal import Decimal, ROUND_HALF_UP, localcontext, InvalidOperation
 from typing import Sequence
 
 from analysis.contracts import (
-    IndicatorValue, STATUS_OK, insufficient, unavailable,
-    q, Q_PRICE, Q_RSI, Q_VOL, Q_VOLATILITY,
+    IndicatorValue, STATUS_OK, STATUS_REJECTED, insufficient, unavailable,
+    q, Q_PRICE, Q_RSI, Q_VOL, Q_VOLATILITY, InvalidInputError,
 )
+
+
+# ---------- P1-04：统一纯函数输入校验层 ----------
+# 纪律：纯函数独立调用也必须安全，不依赖 engine 预校验。
+# - 数据序列非法（None/NaN/Inf/非正价格/负成交量）→ rejected（reason 明确），
+#   不抛底层 Decimal InvalidOperation，不转 0，不静默删样本；
+# - 参数非法（非正整数窗口/period、fast>=slow、未知 warmup_policy）→ InvalidInputError。
+
+def _finite(v) -> Decimal | None:
+    """严格转有限 Decimal；bool/None/NaN/Inf/非法类型返回 None。"""
+    if v is None or isinstance(v, bool):
+        return None
+    if isinstance(v, Decimal):
+        return v if v.is_finite() else None
+    try:
+        d = Decimal(str(v))
+    except (InvalidOperation, ValueError, TypeError):
+        return None
+    return d if d.is_finite() else None
+
+
+def _validate_prices(values: Sequence, name: str) -> tuple[list[Decimal], "IndicatorValue | None"]:
+    """校验价格序列：全部有限且严格 >0。返回 (seq, rejected或None)。"""
+    seq: list[Decimal] = []
+    for v in values:
+        d = _finite(v)
+        if d is None or d <= 0:
+            return [], IndicatorValue(name=name, status=STATUS_REJECTED,
+                                      reason="invalid_price")
+        seq.append(d)
+    return seq, None
+
+
+def _validate_volumes(values: Sequence, name: str) -> tuple[list[Decimal], "IndicatorValue | None"]:
+    """校验成交量序列：全部有限且 >=0。返回 (seq, rejected或None)。"""
+    seq: list[Decimal] = []
+    for v in values:
+        d = _finite(v)
+        if d is None or d < 0:
+            return [], IndicatorValue(name=name, status=STATUS_REJECTED,
+                                      reason="invalid_volume")
+        seq.append(d)
+    return seq, None
+
+
+def _positive_int(value, label: str) -> int:
+    """参数必须为正整数（拒绝 bool / 0 / 负数 / 非整数 / 非数值）。"""
+    if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+        raise InvalidInputError(f"{label} 必须为正整数: {value!r}")
+    return value
 
 
 def _D(v) -> Decimal:
@@ -41,9 +91,10 @@ def sma(values: Sequence, window: int, *, name: str = "MA") -> IndicatorValue:
     样本不足 window → insufficient_data(required=window, actual=len(values))。
     """
     params = {"window": window}
-    seq = _to_decimal_seq(values)
-    if window <= 0:
-        return unavailable(name, params, "invalid_window")
+    _positive_int(window, "MA window")
+    seq, bad = _validate_prices(values, name)
+    if bad is not None:
+        return bad
     if len(seq) < window:
         return insufficient(name, params, window, len(seq))
     window_vals = seq[-window:]
@@ -58,17 +109,8 @@ def ma60(values): return sma(values, 60, name="MA60")
 
 
 # ---------- EMA / MACD ----------
-def ema_series(values: Sequence, period: int) -> list[Decimal]:
-    """EMA 序列，首值法初始化（第 1 值 = 第 1 个输入）。
-
-    递归：EMA_t = α*x_t + (1-α)*EMA_{t-1}, α=2/(period+1)。
-    返回与输入等长的序列（第 0 项为首个输入）。period<=0 抛 ValueError。
-    """
-    if period <= 0:
-        raise ValueError("EMA period must be positive")
-    seq = _to_decimal_seq(values)
-    if not seq:
-        return []
+def _ema_raw(seq: Sequence[Decimal], period: int) -> list[Decimal]:
+    """EMA 原始递归（内部用，入参已是合法有限 Decimal，可含负值如 DIF）。"""
     alpha = Decimal(2) / Decimal(period + 1)
     out = [seq[0]]
     prev = seq[0]
@@ -76,6 +118,22 @@ def ema_series(values: Sequence, period: int) -> list[Decimal]:
         prev = alpha * x + (Decimal(1) - alpha) * prev
         out.append(prev)
     return out
+
+
+def ema_series(values: Sequence, period: int) -> list[Decimal]:
+    """EMA 序列，首值法初始化（第 1 值 = 第 1 个输入）。
+
+    递归：EMA_t = α*x_t + (1-α)*EMA_{t-1}, α=2/(period+1)。
+    返回与输入等长的序列（第 0 项为首个输入）。period<=0 抛 InvalidInputError。
+    价格序列必须有限且为正，否则抛 InvalidInputError。
+    """
+    _positive_int(period, "EMA period")
+    seq, bad = _validate_prices(values, "EMA")
+    if bad is not None:
+        raise InvalidInputError("EMA 输入序列非法: " + str(bad.reason))
+    if not seq:
+        return []
+    return _ema_raw(seq, period)
 
 
 def macd(closes: Sequence, fast: int = 12, slow: int = 26, signal: int = 9,
@@ -94,10 +152,22 @@ def macd(closes: Sequence, fast: int = 12, slow: int = 26, signal: int = 9,
     """
     params = {"fast": fast, "slow": slow, "signal": signal,
               "warmup_policy": warmup_policy}
-    seq = _to_decimal_seq(closes)
+    # 参数校验：正整数、fast<slow、warmup_policy 白名单
+    _positive_int(fast, "MACD fast")
+    _positive_int(slow, "MACD slow")
+    _positive_int(signal, "MACD signal")
+    if not fast < slow:
+        raise InvalidInputError(f"MACD fast 必须小于 slow: fast={fast}, slow={slow}")
+    if warmup_policy not in ("strict", "keep_warmup"):
+        raise InvalidInputError(f"未知 MACD warmup_policy: {warmup_policy!r}")
+    seq, bad = _validate_prices(closes, "MACD_DIF")
+    prefixes = {"DIF": "MACD_DIF", "DEA": "MACD_DEA", "HIST": "MACD_HIST"}
+    if bad is not None:
+        return {k: IndicatorValue(name=prefixes[k], params=dict(params),
+                                  status=STATUS_REJECTED, reason=bad.reason)
+                for k in prefixes}
     n = len(seq)
     required = slow + signal - 1  # 34
-    prefixes = {"DIF": "MACD_DIF", "DEA": "MACD_DEA", "HIST": "MACD_HIST"}
 
     if warmup_policy == "strict" and n < required:
         return {k: insufficient(prefixes[k], params, required, n) for k in prefixes}
@@ -105,10 +175,10 @@ def macd(closes: Sequence, fast: int = 12, slow: int = 26, signal: int = 9,
     if n < 1:
         return {k: insufficient(prefixes[k], params, required, n) for k in prefixes}
 
-    ema_f = ema_series(seq, fast)
-    ema_s = ema_series(seq, slow)
+    ema_f = _ema_raw(seq, fast)
+    ema_s = _ema_raw(seq, slow)
     dif_series = [f - s for f, s in zip(ema_f, ema_s)]
-    dea_series = ema_series(dif_series, signal)
+    dea_series = _ema_raw(dif_series, signal)
     dif = dif_series[-1]
     dea = dea_series[-1]
     hist = Decimal(2) * (dif - dea)
@@ -136,10 +206,11 @@ def rsi_wilder(closes: Sequence, period: int = 14) -> IndicatorValue:
       两者皆 0→50 并标 reason=flat_window。
     """
     params = {"period": period}
-    seq = _to_decimal_seq(closes)
+    _positive_int(period, "RSI period")
+    seq, bad = _validate_prices(closes, "RSI")
+    if bad is not None:
+        return bad
     needed = period + 1
-    if period <= 0:
-        return unavailable("RSI", params, "invalid_period")
     if len(seq) < needed:
         return insufficient("RSI", params, needed, len(seq))
 
@@ -173,9 +244,10 @@ def rsi_wilder(closes: Sequence, period: int = 14) -> IndicatorValue:
 def volume_ma(volumes_std: Sequence, window: int, *, name: str = "VOL_MA") -> IndicatorValue:
     """标准化成交量（股）简单移动平均，输出整数股。"""
     params = {"window": window, "volume_basis": "volume_std"}
-    seq = [_D(v) for v in volumes_std]
-    if window <= 0:
-        return unavailable(name, params, "invalid_window")
+    _positive_int(window, "VOL_MA window")
+    seq, bad = _validate_volumes(volumes_std, name)
+    if bad is not None:
+        return bad
     if len(seq) < window:
         return insufficient(name, params, window, len(seq))
     result = sum(seq[-window:]) / Decimal(window)
@@ -198,10 +270,11 @@ def volume_ratio(volumes_std: Sequence, window: int = 5) -> IndicatorValue:
     """
     params = {"window": window, "denominator_excludes_today": True,
               "volume_basis": "volume_std"}
-    seq = [_D(v) for v in volumes_std]
+    _positive_int(window, "VOL_RATIO window")
+    seq, bad = _validate_volumes(volumes_std, "VOL_RATIO")
+    if bad is not None:
+        return bad
     needed = window + 1
-    if window <= 0:
-        return unavailable("VOL_RATIO", params, "invalid_window")
     if len(seq) < needed:
         return insufficient("VOL_RATIO", params, needed, len(seq))
     today = seq[-1]
@@ -223,13 +296,17 @@ def pct_change(closes: Sequence, *, jump_threshold: Decimal | None = Decimal("0.
       （不复权跳变提示，照常计算、不剔除，D0 5.4.4）。
     """
     params = {"basis": "previous_close", "jump_threshold": str(jump_threshold)}
-    seq = _to_decimal_seq(closes)
+    seq, bad = _validate_prices(closes, "PCT_CHANGE")
+    if bad is not None:
+        return bad
+    if jump_threshold is not None:
+        jt = _finite(jump_threshold)
+        if jt is None or jt < 0:
+            raise InvalidInputError(f"PCT_CHANGE jump_threshold 非法: {jump_threshold!r}")
+        jump_threshold = jt
     if len(seq) < 2:
         return insufficient("PCT_CHANGE", params, 2, len(seq))
     prev, cur = seq[-2], seq[-1]
-    if prev <= 0 or cur <= 0:
-        return IndicatorValue(name="PCT_CHANGE", params=params, status="rejected",
-                              reason="invalid_price")
     with localcontext() as ctx:
         ctx.prec = 40
         ratio = (cur / prev - Decimal(1)) * Decimal(100)
@@ -243,13 +320,12 @@ def pct_change(closes: Sequence, *, jump_threshold: Decimal | None = Decimal("0.
 def interval_return(closes: Sequence) -> IndicatorValue:
     """区间涨跌幅 = (close_end/close_start - 1) * 100%。起点必须为正。"""
     params = {"basis": "first_to_last"}
-    seq = _to_decimal_seq(closes)
+    seq, bad = _validate_prices(closes, "INTERVAL_RETURN")
+    if bad is not None:
+        return bad
     if len(seq) < 2:
         return insufficient("INTERVAL_RETURN", params, 2, len(seq))
     start, end = seq[0], seq[-1]
-    if start <= 0 or end <= 0:
-        return IndicatorValue(name="INTERVAL_RETURN", params=params,
-                              status="rejected", reason="invalid_price")
     with localcontext() as ctx:
         ctx.prec = 40
         result = (end / start - Decimal(1)) * Decimal(100)
@@ -267,17 +343,15 @@ def volatility(closes: Sequence, window: int = 20) -> IndicatorValue:
     """
     params = {"window": window, "annualized": False, "ddof": 1,
               "return_type": "log"}
-    seq = _to_decimal_seq(closes)
+    _positive_int(window, "VOLATILITY window")
+    seq, bad = _validate_prices(closes, "VOLATILITY")
+    if bad is not None:
+        return bad
     needed = window + 1
-    if window <= 0:
-        return unavailable("VOLATILITY", params, "invalid_window")
     if len(seq) < needed:
         return insufficient("VOLATILITY", params, needed, len(seq))
     # 取最近 needed 个 close 计算 window 个对数收益
     tail = seq[-needed:]
-    if any(p <= 0 for p in tail):
-        return IndicatorValue(name="VOLATILITY", params=params,
-                              status="rejected", reason="invalid_price")
     with localcontext() as ctx:
         ctx.prec = 40
         log_returns = [tail[i].ln() - tail[i - 1].ln() for i in range(1, len(tail))]

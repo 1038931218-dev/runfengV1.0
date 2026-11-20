@@ -86,36 +86,41 @@ def _get(rec: Any, field: str):
     return getattr(rec, field)
 
 
-def classify_state(rec: Any, *, require_volume_std_field: bool = True) -> str:
+def classify_state(rec: Any) -> str:
     """判定记录处于 A/B/C 哪个状态（不修改入参）。
 
-    require_volume_std_field=False 用于兼容从 dict 构造记录前的宽松判定，
-    但归一化入口 normalize_volume 恒按 True 严格要求。
+    严格按 D0 4A.2：三字段（volume / volume_std / volume_normalized）必须**全部真实存在**，
+    字段存在性用 _has_field 判定（dict 键 / 对象属性），不看取值默认值：
+    - 任一字段缺失 → C；
+    - volume_normalized 必须严格为 bool（True→B，False→A），None/字符串/数字 → C；
+    - 不允许把"字段缺失"当成"值为 None"再隐式补成 A 态。
     """
+    # 三字段必须全部真实存在（存在性检查，非取值检查）
+    for f in ("volume", "volume_std", "volume_normalized"):
+        if not _has_field(rec, f):
+            return "C"
+
     # volume 字段必须存在且有效非负
-    if not _has_field(rec, "volume"):
-        return "C"
     vol = _to_decimal(_get(rec, "volume"))
     if vol is None or vol < 0:
         return "C"
-    # volume_std 字段必须存在（A 态存 None，不是字段缺失）
-    if require_volume_std_field and not _has_field(rec, "volume_std"):
-        return "C"
-    vstd_raw = _get(rec, "volume_std") if _has_field(rec, "volume_std") else None
-    normalized_raw = _get(rec, "volume_normalized") if _has_field(rec, "volume_normalized") else None
+
+    vstd_raw = _get(rec, "volume_std")
+    normalized_raw = _get(rec, "volume_normalized")
 
     if normalized_raw is True:
-        # B 态：volume_std 必须有效非负
+        # B 态：volume_std 必须有效非负（三字段已确认存在）
         vstd = _to_decimal(vstd_raw)
         if vstd is None or vstd < 0:
             return "C"
         return "B"
-    if normalized_raw is False or normalized_raw is None:
-        # A 态：volume_std 必须为 None（尚未归一）
+    if normalized_raw is False:
+        # A 态：volume_std 字段存在且值为 None（尚未归一）
         if vstd_raw is None:
             return "A"
         # normalized=false 却有非 None 的 volume_std → 状态不一致
         return "C"
+    # normalized 字段存在但取值非严格 bool → C
     return "C"
 
 
@@ -126,9 +131,8 @@ def normalize_volume(rec: Any) -> VolumeRecord:
     - B 态：直接返回已有 volume_std，绝不重复乘 100；
     - C 态：抛 InvalidInputError，不猜测、不补值。
     """
-    state = classify_state(rec, require_volume_std_field=True)
+    state = classify_state(rec)
     source = str(_get(rec, "source")) if _has_field(rec, "source") else ""
-    volume = _to_decimal(_get(rec, "volume"))
 
     if state == "C":
         raise InvalidInputError(
@@ -137,6 +141,13 @@ def normalize_volume(rec: Any) -> VolumeRecord:
             f"volume_std={_get(rec, 'volume_std') if _has_field(rec, 'volume_std') else '<字段缺失>'!r}, "
             f"volume_normalized={_get(rec, 'volume_normalized') if _has_field(rec, 'volume_normalized') else '<缺失>'!r}"
         )
+
+    # A/B 态：三字段已确认存在，此时安全取值
+    volume = _to_decimal(_get(rec, "volume"))
+
+    # source 必须受支持，A/B 态都校验（C 态已在上方拒绝）
+    if source not in VOLUME_UNIT_ORIGINAL_BY_SOURCE:
+        raise InvalidInputError(f"不支持的成交量来源/单位未知: source={source!r}")
 
     if state == "B":
         # 已归一：直接返回现有 volume_std，不重复乘 100
@@ -147,9 +158,7 @@ def normalize_volume(rec: Any) -> VolumeRecord:
             source=source,
         )
 
-    # A 态：依 source 归一一次
-    if source not in VOLUME_UNIT_ORIGINAL_BY_SOURCE:
-        raise InvalidInputError(f"不支持的成交量来源/单位未知: source={source!r}")
+    # A 态：依 source 归一一次（source 受支持已在公共段校验）
     multiplier = VOLUME_UNIT_MULTIPLIER if VOLUME_UNIT_ORIGINAL_BY_SOURCE[source] == "手" else 1
     return VolumeRecord(
         volume=volume,

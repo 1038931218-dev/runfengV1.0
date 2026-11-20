@@ -8,7 +8,10 @@ from decimal import Decimal
 import pytest
 
 from analysis import indicators as ind
-from analysis.contracts import STATUS_OK, STATUS_INSUFFICIENT, STATUS_UNAVAILABLE, STATUS_REJECTED
+from analysis.contracts import (
+    STATUS_OK, STATUS_INSUFFICIENT, STATUS_UNAVAILABLE, STATUS_REJECTED,
+    InvalidInputError,
+)
 
 
 # ============ 手工复算对照 ============
@@ -191,3 +194,117 @@ def test_volatility_manual_sample_std():
     iv_alt = ind.volatility(alt, 20)
     assert iv_alt.status == STATUS_OK
     assert iv_alt.value > Decimal("0.01")
+
+
+# ============ P1-04：统一纯函数输入验证 ============
+NAN = float("nan")
+INF = float("inf")
+
+
+def assert_rejected(iv):
+    assert iv.status == STATUS_REJECTED
+    assert iv.value is None
+
+
+# --- 1. SMA 输入负价格、NaN、Infinity、None ---
+@pytest.mark.parametrize("bad", [-1, NAN, INF, -INF, None, "abc", True])
+def test_p1_04_sma_rejects_bad_prices(bad):
+    assert_rejected(ind.ma5([100, bad, 100, 100, 100]))
+
+
+# --- 2. MACD 输入非法价格、NaN、Infinity ---
+@pytest.mark.parametrize("bad", [-1, 0, NAN, INF, None])
+def test_p1_04_macd_rejects_bad_prices(bad):
+    out = ind.macd([100] * 10 + [bad])
+    for key in ("DIF", "DEA", "HIST"):
+        assert_rejected(out[key])
+
+
+# --- 3. RSI 输入零/负价格及非有限值 ---
+@pytest.mark.parametrize("bad", [0, -5, NAN, INF, None])
+def test_p1_04_rsi_rejects_bad_prices(bad):
+    assert_rejected(ind.rsi_wilder([100] * 10 + [bad], 14))
+
+
+# --- 4. VOL_MA 输入负成交量、非有限值 ---
+@pytest.mark.parametrize("bad", [-1, NAN, INF, None])
+def test_p1_04_vol_ma_rejects_bad_volumes(bad):
+    assert_rejected(ind.volume_ma([10] * 4 + [bad], 5))
+
+
+# --- 5. 量比输入负成交量、非有限值 ---
+@pytest.mark.parametrize("bad", [-1, NAN, INF, None])
+def test_p1_04_volume_ratio_rejects_bad_volumes(bad):
+    assert_rejected(ind.volume_ratio([10] * 5 + [bad], 5))
+
+
+# --- 6. 波动率非法价格 ---
+@pytest.mark.parametrize("bad", [0, -1, NAN, INF, None])
+def test_p1_04_volatility_rejects_bad_prices(bad):
+    assert_rejected(ind.volatility([100] * 20 + [bad], 20))
+
+
+# --- 7. fast >= slow ---
+@pytest.mark.parametrize("fast,slow", [(26, 26), (30, 26)])
+def test_p1_04_macd_fast_not_less_than_slow(fast, slow):
+    with pytest.raises(InvalidInputError):
+        ind.macd(list(range(1, 40)), fast=fast, slow=slow)
+
+
+# --- 8. MACD 参数为 0 或负数 ---
+@pytest.mark.parametrize("fast,slow,signal", [(0, 26, 9), (12, 0, 9), (12, 26, 0),
+                                              (-1, 26, 9), (12, -2, 9)])
+def test_p1_04_macd_nonpositive_params(fast, slow, signal):
+    with pytest.raises(InvalidInputError):
+        ind.macd(list(range(1, 40)), fast=fast, slow=slow, signal=signal)
+
+
+# --- 9. 未知 warmup_policy ---
+def test_p1_04_macd_unknown_warmup_policy():
+    with pytest.raises(InvalidInputError):
+        ind.macd(list(range(1, 40)), warmup_policy="bogus")
+
+
+# --- 10. 各窗口参数为 0、负数或非整数 ---
+@pytest.mark.parametrize("window", [0, -1, 2.5, "5", True])
+def test_p1_04_sma_window_invalid(window):
+    with pytest.raises(InvalidInputError):
+        ind.sma([1, 2, 3], window)
+
+
+@pytest.mark.parametrize("period", [0, -1, 3.2, "14"])
+def test_p1_04_rsi_period_invalid(period):
+    with pytest.raises(InvalidInputError):
+        ind.rsi_wilder([float(i) for i in range(1, 30)], period)
+
+
+@pytest.mark.parametrize("window", [0, -5, 1.5, "5"])
+def test_p1_04_vol_ma_window_invalid(window):
+    with pytest.raises(InvalidInputError):
+        ind.volume_ma([10] * 10, window)
+
+
+@pytest.mark.parametrize("window", [0, -1, 2.7, "5"])
+def test_p1_04_vol_ratio_window_invalid(window):
+    with pytest.raises(InvalidInputError):
+        ind.volume_ratio([10] * 10, window)
+
+
+@pytest.mark.parametrize("window", [0, -1, 1.3, "20"])
+def test_p1_04_volatility_window_invalid(window):
+    with pytest.raises(InvalidInputError):
+        ind.volatility([100] * 30, window)
+
+
+def test_p1_04_ema_series_rejects_bad_input():
+    """EMA 直接调用也安全：非法序列/周期抛 InvalidInputError，不泄漏底层异常。"""
+    with pytest.raises(InvalidInputError):
+        ind.ema_series([1, NAN, 3], 2)
+    with pytest.raises(InvalidInputError):
+        ind.ema_series([1, 2, 3], 0)
+
+
+def test_p1_04_no_decimal_invalidoperation_leak():
+    """非法字符串不得泄漏 decimal.InvalidOperation。"""
+    iv = ind.ma5([100, "not-a-number", 100, 100, 100])
+    assert_rejected(iv)

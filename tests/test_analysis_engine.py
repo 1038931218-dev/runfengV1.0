@@ -28,6 +28,8 @@ def make_records(n, *, source="sina", base=100, step=1, start="2026-01-01"):
             "code": "000651", "trade_date": dt.isoformat(),
             "open": c - 1, "high": c + 1, "low": c - 2, "close": c,
             "volume": vol + i, "amount": 0.0, "source": source,
+            # A 态三字段契约：volume_std 字段存在且为 None、normalized=False
+            "volume_std": None, "volume_normalized": False,
             "adjust_type": "none", "period": "daily", "amount_available": False,
         })
     return recs
@@ -112,11 +114,15 @@ def test_amount_placeholder_no_amount_indicator():
 
 
 # ============ 混用拒绝（重点20/21/19） ============
-def test_mixed_adjust_type_rejected():
+def test_mixed_adjust_type_excluded_not_global_rejected():
+    """P1-03：复权口径不一致的来源应被逐来源排除，不再全局抛异常。"""
     recs = make_records(40)
     recs[10]["adjust_type"] = "qfq"
-    with pytest.raises(MixedAdjustTypeError):
-        calculate_indicators(recs, symbol="000651", adjust_type="none")
+    result = calculate_indicators(recs, symbol="000651", adjust_type="none")
+    # 第10日 sina 因口径不符被排除 → unavailable，原因进入 notes/warnings
+    assert result.source_by_trade_date[recs[10]["trade_date"]] == "unavailable"
+    # 排除原因进入血缘（单源被排除时走 warnings 的双源均不合格分支）
+    assert any("复权口径不一致" in w for w in result.warnings)
 
 
 def test_mixed_period_rejected():
@@ -212,6 +218,43 @@ def test_volume_c_state_rejected():
         calculate_indicators(recs, symbol="000651")
 
 
+def test_p1_engine_missing_volume_field_quality_excluded():
+    """缺 volume 字段 → P1-02 质量门禁不合格 → 该日 unavailable（非异常、不填 0）。"""
+    recs = make_records(10, source="sina")
+    del recs[0]["volume"]
+    result = calculate_indicators(recs, symbol="000651")
+    assert result.source_by_trade_date[recs[0]["trade_date"]] == "unavailable"
+    assert any("缺必需字段" in w for w in result.warnings)
+
+
+def test_p1_engine_missing_volume_std_field_rejected():
+    """调用方记录缺 volume_std 字段 → C 态拒绝。"""
+    recs = make_records(10, source="sina")
+    del recs[0]["volume_std"]
+    with pytest.raises(InvalidInputError):
+        calculate_indicators(recs, symbol="000651")
+
+
+def test_p1_engine_missing_volume_normalized_field_rejected():
+    """调用方记录缺 volume_normalized 字段 → C 态拒绝。"""
+    recs = make_records(10, source="sina")
+    del recs[0]["volume_normalized"]
+    with pytest.raises(InvalidInputError):
+        calculate_indicators(recs, symbol="000651")
+
+
+def test_p1_engine_b_state_reused_no_double_multiply():
+    """B 态记录整段进入 engine，量能基于 volume_std 不再×100。"""
+    recs = make_records(40, source="tencent")
+    for i, r in enumerate(recs):
+        r["volume_std"] = (10 + i) * 100
+        r["volume_normalized"] = True
+    result = calculate_indicators(recs, symbol="000651")
+    # VOL_MA5 应等于最后 5 个 volume_std 均值，而非再×100
+    expected = sum((10 + i) * 100 for i in range(35, 40)) / 5
+    assert result.values["VOL_MA5"].value == int(expected)
+
+
 # ============ 数据不足不填零（重点24） ============
 def test_short_series_insufficient_not_zero():
     result = calculate_indicators(make_records(5), symbol="000651")
@@ -219,3 +262,125 @@ def test_short_series_insufficient_not_zero():
     assert result.values["MA60"].value is None
     assert result.values["MACD_DIF"].required == 34
     assert result.values["RSI"].status == STATUS_INSUFFICIENT
+
+
+# ============ P1-02 / P1-03 来源质量门禁与逐来源筛选（双源同日 close 一致） ============
+def make_dual(n=3, *, start="2026-01-01", base=100, step=1):
+    """构造 n 天双源记录，两源 close 完全一致（偏差 0）。前 n 条 sina，后 n 条 tencent。"""
+    return (make_records(n, source="sina", base=base, step=step, start=start)
+            + make_records(n, source="tencent", base=base, step=step, start=start))
+
+
+# ---- P1-02：质量门禁 6 场景 ----
+def test_p1_02_sina_bad_volume_tencent_ok_selects_tencent():
+    """场景1：新浪 OHLC 合格但 volume 非法，腾讯合格 → 排除新浪选腾讯。"""
+    recs = make_dual(3)
+    recs[0]["volume"] = -1  # sina 第0天 volume 非法
+    result = calculate_indicators(recs, symbol="000651")
+    assert result.source_by_trade_date[recs[0]["trade_date"]] == "tencent"
+    assert any("新浪被排除" in n and "volume 为负" in n for n in result.notes)
+
+
+def test_p1_02_sina_missing_field_tencent_ok_selects_tencent():
+    """场景2：新浪缺必要字段，腾讯合格 → 选腾讯。"""
+    recs = make_dual(3)
+    del recs[0]["close"]
+    result = calculate_indicators(recs, symbol="000651")
+    assert result.source_by_trade_date[recs[0]["trade_date"]] == "tencent"
+
+
+def test_p1_02_both_unqualified_unavailable_with_both_reasons():
+    """场景3：双源都不合格 → unavailable，分别记录两源失败原因。"""
+    recs = make_dual(3)
+    recs[0]["volume"] = -1   # sina 第0天
+    recs[3]["volume"] = -1   # tencent 第0天
+    result = calculate_indicators(recs, symbol="000651")
+    assert result.source_by_trade_date[recs[0]["trade_date"]] == "unavailable"
+    joined = " ; ".join(result.warnings)
+    assert "sina=质量不合格" in joined and "tencent=质量不合格" in joined
+
+
+def test_p1_02_sina_ok_tencent_bad_selects_sina_with_reason():
+    """场景4：新浪合格、腾讯不合格 → 选新浪并记录腾讯排除原因。"""
+    recs = make_dual(3)
+    recs[3]["volume"] = -1  # tencent 第0天
+    result = calculate_indicators(recs, symbol="000651")
+    assert result.source_by_trade_date[recs[0]["trade_date"]] == "sina"
+    assert any("腾讯被排除" in n and "质量不合格" in n for n in result.notes)
+
+
+def test_p1_02_both_ok_compute_divergence_then_pick_sina():
+    """场景5：双源都合格 → 先算偏差（=0），选新浪；偏差记录可空但择源已走偏差步骤。"""
+    recs = make_dual(3)
+    result = calculate_indicators(recs, symbol="000651")
+    assert all(v == "sina" for v in result.source_by_trade_date.values())
+    assert result.source_divergence == []
+
+
+def test_p1_02_selected_bad_volume_state_no_silent_fallback():
+    """场景6：选中来源成交量状态非法 → 明确拒绝，不静默回退腾讯、不填零。"""
+    recs = make_dual(3)
+    recs[0]["volume_normalized"] = True  # sina 第0天 C 态：normalized=true 但 std=None
+    recs[0]["volume_std"] = None
+    # 双源 close 一致 → 选 sina → C 态必须抛拒绝，不能改用 tencent
+    with pytest.raises(InvalidInputError):
+        calculate_indicators(recs, symbol="000651")
+
+
+# ---- P1-03：复权来源筛选顺序 6 场景 ----
+def test_p1_03_sina_qfq_tencent_none_request_none_selects_tencent():
+    """场景1：新浪 qfq、腾讯 none，请求 none → 选腾讯，记新浪口径排除原因。"""
+    recs = make_dual(3)
+    recs[0]["adjust_type"] = "qfq"  # sina 第0天
+    result = calculate_indicators(recs, symbol="000651", adjust_type="none")
+    assert result.source_by_trade_date[recs[0]["trade_date"]] == "tencent"
+    assert any("新浪被排除" in n and "复权口径不一致" in n for n in result.notes)
+
+
+def test_p1_03_sina_none_tencent_qfq_request_none_selects_sina():
+    """场景2：新浪 none、腾讯 qfq，请求 none → 选新浪，记腾讯口径排除原因。"""
+    recs = make_dual(3)
+    recs[3]["adjust_type"] = "qfq"  # tencent 第0天
+    result = calculate_indicators(recs, symbol="000651", adjust_type="none")
+    assert result.source_by_trade_date[recs[0]["trade_date"]] == "sina"
+    assert any("腾讯被排除" in n and "复权口径不一致" in n for n in result.notes)
+
+
+def test_p1_03_both_qfq_request_none_unavailable():
+    """场景3：双源均 qfq，请求 none → unavailable。"""
+    recs = make_dual(3)
+    recs[0]["adjust_type"] = "qfq"
+    recs[3]["adjust_type"] = "qfq"
+    result = calculate_indicators(recs, symbol="000651", adjust_type="none")
+    assert result.source_by_trade_date[recs[0]["trade_date"]] == "unavailable"
+    assert "复权口径不一致" in " ; ".join(result.warnings)
+
+
+def test_p1_03_both_none_divergence_over_limit_unavailable():
+    """场景4：双源均 none 且偏差超限 → unavailable 并记 source_divergence。"""
+    sina = make_records(3, source="sina", base=100)
+    tencent = make_records(3, source="tencent", base=200)
+    result = calculate_indicators(sina + tencent, symbol="000651", adjust_type="none")
+    assert all(v == "unavailable" for v in result.source_by_trade_date.values())
+    assert len(result.source_divergence) == 3
+
+
+def test_p1_03_selected_records_all_same_adjust_type():
+    """场景5：混合口径输入，真正进入序列的记录全部同一 adjust_type。"""
+    recs = make_dual(5)
+    for i in range(5):
+        recs[i]["adjust_type"] = "qfq"  # 所有 sina 行改 qfq，tencent 行保持 none
+    result = calculate_indicators(recs, symbol="000651", adjust_type="none")
+    # 每天都只能选 tencent（none），不得混入 qfq；也不得抛 MixedAdjustTypeError
+    assert all(v == "tencent" for v in result.source_by_trade_date.values())
+    assert all(r["adjust_type"] == "none" for r in recs[5:])
+
+
+def test_p1_03_exclusion_reason_in_lineage():
+    """场景6：复权排除原因进入血缘（notes/warnings/to_dict）。"""
+    import json
+    recs = make_dual(3)
+    recs[0]["adjust_type"] = "qfq"
+    result = calculate_indicators(recs, symbol="000651", adjust_type="none")
+    blob = json.dumps(result.to_dict(), ensure_ascii=False)
+    assert "复权口径不一致" in blob

@@ -15,6 +15,7 @@
 """
 from __future__ import annotations
 
+from datetime import date
 from decimal import Decimal
 from typing import Any, Mapping, Sequence
 
@@ -25,7 +26,7 @@ from analysis.contracts import (
     ALGORITHM_VERSION,
 )
 from analysis.units import (
-    normalize_volume, from_raw_volume, VolumeRecord,
+    normalize_volume, VolumeRecord,
     VOLUME_UNIT_ORIGINAL_BY_SOURCE,
 )
 
@@ -53,19 +54,74 @@ def _dec(v) -> Decimal | None:
     return d if d.is_finite() else None
 
 
-def _valid_ohlc(rec: Any) -> bool:
+def _has_field(rec: Any, field: str) -> bool:
+    """字段是否真实存在（dict 键 / 对象属性）。"""
+    if isinstance(rec, Mapping):
+        return field in rec
+    return hasattr(rec, field)
+
+
+def _valid_date(dn: str) -> bool:
+    """日期格式是否合法（YYYY-MM-DD，含真实日历校验）。"""
+    try:
+        date.fromisoformat(dn)
+        return True
+    except (ValueError, TypeError):
+        return False
+
+
+def _quality_of(rec: Any) -> tuple[bool, str]:
+    """逐记录质量门禁（B3 check_quality 等价规则，D0 4A.1 第 1 步）。
+
+    完整复用 B3 质量维度，逐来源判定，返回 (合格, 失败原因)：
+    - 必需字段完整：trade_date/open/high/low/close/volume/source 都存在；
+    - OHLC 有限、为正且逻辑自洽（high>=max(o,c,l)、low<=min(o,c,h)）；
+    - volume 有限且非负；
+    - 日期格式合法（YYYY-MM-DD，真实日历）；
+    - data_type：若该标准模型带此字段，必须为 history。
+    adjust_type 一致性由 P1-03 的来源筛选顺序单独处理，不在此处。
+    本函数纯判定、不抛异常、不吞程序错误（程序错误由调用方传播）。
+    """
+    required = ("trade_date", "open", "high", "low", "close", "volume", "source")
+    missing = [f for f in required if not _has_field(rec, f) or _get(rec, f) is None]
+    if missing:
+        return False, f"缺必需字段 {missing}"
+
+    dn = _norm_date(_get(rec, "trade_date"))
+    if not _valid_date(dn):
+        return False, f"日期格式非法 {_get(rec, 'trade_date')!r}"
+
     vals = [_dec(_get(rec, f)) for f in ("open", "high", "low", "close")]
     if any(v is None for v in vals):
-        return False
+        return False, "OHLC 含非有限/非法值"
     o, h, l, c = vals
     if min(o, h, l, c) <= 0:
-        return False
-    return h >= max(o, c, l) and l <= min(o, c, h)
+        return False, "OHLC 存在非正价格"
+    if h < max(o, c, l) or l > min(o, c, h):
+        return False, f"OHLC 逻辑非法 high={h} low={l}"
+
+    vol = _dec(_get(rec, "volume"))
+    if vol is None:
+        return False, f"volume 非有限/非法值 {_get(rec, 'volume')!r}"
+    if vol < 0:
+        return False, f"volume 为负 {vol}"
+
+    if _has_field(rec, "data_type"):
+        dt = _get(rec, "data_type")
+        if dt is not None and str(dt) != "history":
+            return False, f"data_type 非 history: {dt!r}"
+
+    return True, ""
 
 
 # ---------- 数据准备 ----------
-def _check_uniform(records, *, symbol, adjust_type, period, source_policy):
-    """校验标的/复权/周期一致性，单源策略的来源纯度。"""
+def _check_uniform(records, *, symbol, period, source_policy):
+    """校验标的/周期一致性，单源策略的来源纯度。
+
+    P1-03：adjust_type 不再在此处全局拒绝——D0 4A.1 要求「逐来源筛选」，
+    复权口径不一致的来源应被排除并记录原因（可能同日多源口径不同），
+    因此改由 _source_candidate 逐来源判定；进入序列的记录仍强制同一口径。
+    """
     if not records:
         raise InvalidInputError("空输入：无行情记录")
     allowed_single = {"sina_only": "sina", "tencent_only": "tencent",
@@ -75,10 +131,6 @@ def _check_uniform(records, *, symbol, adjust_type, period, source_policy):
         code = _get(rec, "code") or _get(rec, "symbol") or _get(rec, "index_code")
         if symbol is not None and code is not None and str(code) != str(symbol):
             raise InvalidInputError(f"第{i}行标的不一致: {code!r} != {symbol!r}")
-        at = _get(rec, "adjust_type", "none")
-        if str(at) != str(adjust_type):
-            raise MixedAdjustTypeError(
-                f"第{i}行复权口径 {at!r} 与请求 {adjust_type!r} 不一致")
         pd = _get(rec, "period", "daily")
         if str(pd) != str(period):
             raise MixedPeriodError(f"第{i}行周期 {pd!r} 与请求 {period!r} 不一致")
@@ -89,11 +141,34 @@ def _check_uniform(records, *, symbol, adjust_type, period, source_policy):
                     f"单源策略 {source_policy} 下混入来源 {src!r}（第{i}行）")
 
 
-def _select_records(records, *, source_policy, divergence_threshold, notes, warnings,
-                    source_divergence):
+def _source_candidate(rows, src: str, adjust_type: str):
+    """逐来源判定当日候选：返回 (candidate|None, 排除原因)。
+
+    D0 4A.1 第 1 步「先筛合格来源」= 复权口径一致 + B3 质量门禁 ok，
+    逐来源独立判定：任一条不合格只排除该来源，不影响整日或其他来源。
+    不捕获所有异常吞掉错误——质量判定走纯函数 _quality_of（返回原因），
+    程序错误照常向上抛出。
+    """
+    matches = [r for r in rows if str(_get(r, "source", "")) == src]
+    if not matches:
+        return None, "缺失"
+    rec = matches[0]  # 同日同源重复已在 _select_records 中拒绝
+    at = _get(rec, "adjust_type", "none")
+    if str(at) != str(adjust_type):
+        return None, f"复权口径不一致({at}!={adjust_type})"
+    ok, why = _quality_of(rec)
+    if not ok:
+        return None, f"质量不合格({why})"
+    return rec, ""
+
+
+def _select_records(records, *, source_policy, adjust_type, divergence_threshold,
+                    notes, warnings, source_divergence):
     """按交易日择源，返回 (selected_by_date, source_by_trade_date)。
 
-    selected_by_date: {date: record}（整行来自单一来源）。
+    selected_by_date: {date: record}（整行来自单一来源，禁跨源拼接 OHLCV）。
+    严格按 D0 4A.1：先逐来源筛「口径一致 + 质量合格」，再双源算偏差，
+    最后按阈值择源；单源不合格只排除该源并记录原因。
     """
     by_date: dict[str, list] = {}
     for rec in records:
@@ -116,27 +191,26 @@ def _select_records(records, *, source_policy, divergence_threshold, notes, warn
         if any(n > 1 for n in seen_src.values()):
             raise InvalidInputError(f"交易日 {d} 存在同日同源重复记录: {seen_src}")
 
-        valid_rows = [r for r in rows if _valid_ohlc(r)]
-
         if source_policy in allowed_single:
             src = allowed_single[source_policy]
-            chosen = next((r for r in valid_rows if str(_get(r, "source")) == src), None)
+            chosen, why = _source_candidate(rows, src, adjust_type)
             if chosen is None:
                 source_by_date[d] = "unavailable"
-                warnings.append(f"{d} 单源 {src} 无合格数据 → unavailable")
-                continue
-            selected[d] = chosen
-            source_by_date[d] = src
+                warnings.append(f"{d} 单源 {src} 被排除（{why}）→ unavailable")
+            else:
+                selected[d] = chosen
+                source_by_date[d] = src
             continue
 
         # sina_primary（默认）：sina 优先、tencent 备；其他源不参与
-        sina = next((r for r in valid_rows if str(_get(r, "source")) == "sina"), None)
-        tencent = next((r for r in valid_rows if str(_get(r, "source")) == "tencent"), None)
+        sina, sina_why = _source_candidate(rows, "sina", adjust_type)
+        tencent, tencent_why = _source_candidate(rows, "tencent", adjust_type)
         others = [r for r in rows if str(_get(r, "source")) not in configured_sources]
         if others:
             notes.append(f"{d} 未配置来源 {sorted({str(_get(r,'source')) for r in others})} 不参与计算")
 
         if sina is not None and tencent is not None:
+            # 双源都合格：先算偏差，不得提前择源（D0 4A.1 第 3/4/5 步）
             cs = _dec(_get(sina, "close"))
             ct = _dec(_get(tencent, "close"))
             denom = max(cs, ct)
@@ -155,44 +229,47 @@ def _select_records(records, *, source_policy, divergence_threshold, notes, warn
                 warnings.append(f"{d} 双源价格偏差 {deviation} 超阈值 {divergence_threshold} → 放弃该日")
             continue
         if sina is not None:
+            # 仅新浪合格：选新浪，记腾讯排除原因（P1-03 血缘要求）
             selected[d] = sina
             source_by_date[d] = "sina"
-            if any(str(_get(r, "source")) == "tencent" for r in rows):
-                notes.append(f"{d} 腾讯被排除（质量不合格）")
+            notes.append(f"{d} 腾讯被排除（{tencent_why}）")
             continue
         if tencent is not None:
+            # 仅腾讯合格：选腾讯，记新浪排除原因
             selected[d] = tencent
             source_by_date[d] = "tencent"
-            if any(str(_get(r, "source")) == "sina" for r in rows):
-                notes.append(f"{d} 新浪被排除（质量不合格）")
+            notes.append(f"{d} 新浪被排除（{sina_why}）")
             continue
-        # 双源均不合格/缺失
+        # 双源均不合格/缺失（D0 4A.1 第 8 步）：分别记两源失败原因
         source_by_date[d] = "unavailable"
-        reasons = []
-        for src in ("sina", "tencent"):
-            present = any(str(_get(r, "source")) == src for r in rows)
-            reasons.append(f"{src}={'质量不合格' if present else '缺失'}")
-        warnings.append(f"{d} 双源均不合格/缺失（{'; '.join(reasons)}）→ unavailable，不参与计算")
+        warnings.append(
+            f"{d} 双源均不合格（sina={sina_why}; tencent={tencent_why}）→ unavailable，不参与计算")
+
+    # 显式混用保护（P1-03）：真正进入序列的记录必须全部同 adjust_type，
+    # 不能为了降级而允许混合复权数据。逐来源筛选已保证口径一致，此处为最终防线。
+    for d, rec in selected.items():
+        at = _get(rec, "adjust_type", "none")
+        if str(at) != str(adjust_type):
+            raise MixedAdjustTypeError(
+                f"交易日 {d} 选中记录复权口径 {at!r} 与请求 {adjust_type!r} 不一致")
     return selected, source_by_date
 
 
 def _normalize_selected(selected: dict[str, Any]):
-    """对选中记录按 A/B/C 状态机归一成交量，返回 (dates, closes, vol_stds, units_original)。"""
+    """对选中记录按 A/B/C 状态机归一成交量，返回 (dates, closes, vol_stds, units_original)。
+
+    P1-01：不再用 `_get(..., None) is not None` 这类「按取值」判断字段是否存在，
+    也不在字段缺失时隐式 `from_raw_volume()` 构造 A 态——那会绕过 C 拒绝。
+    选中记录必须自身携带完整三字段契约（A 态 volume_std 字段存在且为 None、
+    normalized=False；B 态三字段齐全且一致），由 normalize_volume 的状态机严格判定。
+    只有调用方显式经 from_raw_volume() 适配入口构造的 A 态记录才能首次归一。
+    """
     dates, closes, vol_stds = [], [], []
     units: dict[str, str] = {}
     for d in sorted(selected):
         rec = selected[d]
         src = str(_get(rec, "source", ""))
-        # 构造归一化入参：只要任一归一化状态字段显式出现，就交给状态机判定
-        # （含 C 态非法组合，如 normalized=true 但 volume_std=null 必须被拒绝）；
-        # 只有两个字段都完全不存在时，才视为数据库原始 A 态记录。
-        has_norm_field = (_get(rec, "volume_normalized", None) is not None
-                          or _get(rec, "volume_std", None) is not None)
-        if has_norm_field:
-            norm_input = rec
-        else:
-            norm_input = from_raw_volume(_get(rec, "volume"), src)
-        vr: VolumeRecord = normalize_volume(norm_input)
+        vr: VolumeRecord = normalize_volume(rec)
         dates.append(d)
         closes.append(_dec(_get(rec, "close")))
         vol_stds.append(vr.volume_std)
@@ -229,10 +306,10 @@ def calculate_indicators(
     warnings: list[str] = []
     source_divergence: list[dict] = []
 
-    _check_uniform(records, symbol=symbol, adjust_type=adjust_type,
-                   period=period, source_policy=source_policy)
+    _check_uniform(records, symbol=symbol, period=period, source_policy=source_policy)
     selected, source_by_date = _select_records(
-        records, source_policy=source_policy, divergence_threshold=divergence_threshold,
+        records, source_policy=source_policy, adjust_type=adjust_type,
+        divergence_threshold=divergence_threshold,
         notes=notes, warnings=warnings, source_divergence=source_divergence)
     dates, closes, vol_stds, units = _normalize_selected(selected)
 
