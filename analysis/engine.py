@@ -19,6 +19,7 @@ from datetime import date
 from decimal import Decimal
 from typing import Any, Mapping, Sequence
 
+from adapters.base import DATA_HISTORY, amount_available
 from analysis import indicators as ind
 from analysis.contracts import (
     AnalysisResult, IndicatorValue, STATUS_OK, STATUS_UNAVAILABLE, STATUS_REJECTED,
@@ -78,7 +79,10 @@ def _quality_of(rec: Any) -> tuple[bool, str]:
     - OHLC 有限、为正且逻辑自洽（high>=max(o,c,l)、low<=min(o,c,h)）；
     - volume 有限且非负；
     - 日期格式合法（YYYY-MM-DD，真实日历）；
-    - data_type：若该标准模型带此字段，必须为 history。
+    - data_type 字段必须真实存在且严格等于 DATA_HISTORY（B3 quality/gate.py 规则）：
+      缺字段 / None / realtime / delayed / 其他未知值一律质量不合格；
+    - 成交额契约：复用 B3 amount_available() 判定成交额可用性，能判定即可；
+      amount_available=False（占位源）是合法状态，不因此拒绝行情（D0/重点22）。
     adjust_type 一致性由 P1-03 的来源筛选顺序单独处理，不在此处。
     本函数纯判定、不抛异常、不吞程序错误（程序错误由调用方传播）。
     """
@@ -106,10 +110,21 @@ def _quality_of(rec: Any) -> tuple[bool, str]:
     if vol < 0:
         return False, f"volume 为负 {vol}"
 
-    if _has_field(rec, "data_type"):
-        dt = _get(rec, "data_type")
-        if dt is not None and str(dt) != "history":
-            return False, f"data_type 非 history: {dt!r}"
+    # data_type：字段必须真实存在且严格等于 DATA_HISTORY（对齐 B3 规则）。
+    # 缺字段、None、realtime、delayed、其他未知值一律判质量不合格。
+    if not _has_field(rec, "data_type"):
+        return False, "缺字段 data_type（要求 history）"
+    dt = _get(rec, "data_type")
+    if dt != DATA_HISTORY:
+        return False, f"data_type 非 history: {dt!r}"
+
+    # 成交额契约（B3）：复用 amount_available() 确保可用性可被正确判定。
+    # False（占位源 sina/tencent）是合法状态，不因此拒绝行情；
+    # D1 不产出任何成交额指标，占位 amount 不会被当作真实成交额参与计算。
+    try:
+        amount_available(rec)
+    except Exception as exc:  # noqa: BLE001 - 契约字段异常须转为质量问题，不泄漏
+        return False, f"成交额契约字段异常: {type(exc).__name__}: {exc}"
 
     return True, ""
 

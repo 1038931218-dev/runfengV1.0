@@ -31,6 +31,8 @@ def make_records(n, *, source="sina", base=100, step=1, start="2026-01-01"):
             # A 态三字段契约：volume_std 字段存在且为 None、normalized=False
             "volume_std": None, "volume_normalized": False,
             "adjust_type": "none", "period": "daily", "amount_available": False,
+            # B2 标准模型字段：data_type 默认 history（P1-02 严格校验要求字段真实存在）
+            "data_type": "history",
         })
     return recs
 
@@ -384,3 +386,107 @@ def test_p1_03_exclusion_reason_in_lineage():
     result = calculate_indicators(recs, symbol="000651", adjust_type="none")
     blob = json.dumps(result.to_dict(), ensure_ascii=False)
     assert "复权口径不一致" in blob
+
+
+# ============ P1-02 第二轮：data_type 严格校验 + 成交额契约 ============
+def test_p1_02_r2_data_type_history_qualified():
+    """测试1：data_type=history → 质量合格，正常进入指标序列。"""
+    recs = make_records(3, source="sina")
+    for r in recs:
+        r["data_type"] = "history"
+    result = calculate_indicators(recs, symbol="000651", source_policy="sina_only")
+    assert all(v == "sina" for v in result.source_by_trade_date.values())
+    assert result.values["MA5"].status == STATUS_INSUFFICIENT  # 3 条 < 5，但非 unavailable
+    assert result.quality_status != STATUS_UNAVAILABLE
+
+
+def test_p1_02_r2_data_type_realtime_unqualified():
+    """测试2：data_type=realtime → 质量不合格 → unavailable，原因明确。"""
+    recs = make_records(3, source="sina")
+    for r in recs:
+        r["data_type"] = "realtime"
+    result = calculate_indicators(recs, symbol="000651", source_policy="sina_only")
+    assert all(v == "unavailable" for v in result.source_by_trade_date.values())
+    assert any("data_type 非 history" in w for w in result.warnings)
+    assert result.quality_status == STATUS_UNAVAILABLE
+
+
+def test_p1_02_r2_data_type_delayed_unqualified():
+    """测试3：data_type=delayed → 质量不合格。"""
+    recs = make_records(3, source="sina")
+    for r in recs:
+        r["data_type"] = "delayed"
+    result = calculate_indicators(recs, symbol="000651", source_policy="sina_only")
+    assert all(v == "unavailable" for v in result.source_by_trade_date.values())
+    assert any("data_type 非 history" in w for w in result.warnings)
+
+
+def test_p1_02_r2_data_type_none_unqualified():
+    """测试4：data_type=None → 质量不合格（旧漏洞：None 曾通过）。"""
+    recs = make_records(3, source="sina")
+    for r in recs:
+        r["data_type"] = None
+    result = calculate_indicators(recs, symbol="000651", source_policy="sina_only")
+    assert all(v == "unavailable" for v in result.source_by_trade_date.values())
+    assert any("data_type 非 history" in w for w in result.warnings)
+
+
+def test_p1_02_r2_data_type_field_missing_unqualified():
+    """测试5：完全缺少 data_type 字段 → 质量不合格（旧漏洞：缺字段曾通过）。"""
+    recs = make_records(3, source="sina")
+    for r in recs:
+        del r["data_type"]
+    result = calculate_indicators(recs, symbol="000651", source_policy="sina_only")
+    assert all(v == "unavailable" for v in result.source_by_trade_date.values())
+    assert any("缺字段 data_type" in w for w in result.warnings)
+
+
+def test_p1_02_r2_sina_bad_data_type_tencent_ok_selects_tencent():
+    """测试6：新浪 data_type 非 history、腾讯 history → 排除新浪选腾讯，记原因。"""
+    recs = make_dual(3)
+    for r in recs[:3]:  # sina 三条
+        r["data_type"] = "realtime"
+    result = calculate_indicators(recs, symbol="000651")
+    assert all(v == "tencent" for v in result.source_by_trade_date.values())
+    assert any("新浪被排除" in n and "data_type 非 history" in n for n in result.notes)
+
+
+def test_p1_02_r2_both_bad_data_type_unavailable_with_reasons():
+    """测试7：双源 data_type 均非 history → unavailable，分别记录两源原因。"""
+    recs = make_dual(3)
+    for r in recs:
+        r["data_type"] = "delayed"
+    result = calculate_indicators(recs, symbol="000651")
+    assert all(v == "unavailable" for v in result.source_by_trade_date.values())
+    joined = " ; ".join(result.warnings)
+    assert "sina=质量不合格" in joined and "tencent=质量不合格" in joined
+    assert joined.count("data_type 非 history") >= 2
+
+
+def test_p1_02_r2_amount_unavailable_still_computes_price_volume():
+    """测试8：amount_available=False → 仍正常参与价格、成交量指标计算。"""
+    recs = make_records(40, source="sina")
+    for r in recs:
+        r["amount_available"] = False
+        r["amount"] = 0.0  # 占位成交额
+    result = calculate_indicators(recs, symbol="000651")
+    assert all(v == "sina" for v in result.source_by_trade_date.values())
+    assert result.values["MA5"].status == STATUS_OK
+    assert result.values["MA5"].value is not None
+    assert result.values["VOL_MA5"].value is not None
+    assert result.values["VOL_RATIO"].status == STATUS_OK
+    # 占位 amount 不得生成成交额类指标
+    assert not any("AMOUNT" in n or "TURNOVER" in n for n in result.values)
+
+
+def test_p1_02_r2_amount_available_true_passes_contract():
+    """测试9：amount_available=True → 正常通过成交额契约验证并参与计算。"""
+    recs = make_records(40, source="akshare")
+    for r in recs:
+        r["amount_available"] = True
+        r["amount"] = 1_000_000.0  # 真实成交额
+    # akshare 用 *_only 策略参与（避免与 sina_primary 默认择源冲突）
+    result = calculate_indicators(recs, symbol="000651", source_policy="akshare_only")
+    assert all(v == "akshare" for v in result.source_by_trade_date.values())
+    assert result.values["MA5"].status == STATUS_OK
+    assert result.values["VOL_MA5"].value is not None
