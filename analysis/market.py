@@ -135,22 +135,55 @@ def _volume_std_of(rec: Any) -> Decimal:
 
 
 # ---------- 可观察交易日序列（P1-01：禁止跨缺失交易日） ----------
+def _qualified_dates(records: Sequence) -> set[str]:
+    """提取记录集合中通过质量门禁且日期合法的合格交易日集合。"""
+    out: set[str] = set()
+    for r in records:
+        if not _quality_of(r)[0]:
+            continue
+        dn = _norm_date(_get(r, "trade_date"))
+        if _valid_date(dn):
+            out.add(dn)
+    return out
+
+
 def observable_trading_dates(index_records: Sequence = (),
                              stock_records: Sequence = ()) -> list[str]:
     """建立本次分析「可观察」的交易日期序列（升序去重）。
 
-    口径（审查修复 P1-01）：
-    - 优先利用输入指数行情日期；指数无数据时退回股票行情日期；
+    口径（第二轮复核修复 P1-01 残留）：
+    - **纳入本次输入中指数与股票的全部合格行情日期**，取并集、去重、升序；
+      不再「指数有日期就忽略股票」——指数缺某交易日但股票有该日数据时必须保留。
     - 只包含通过 _quality_of 的合格记录日期，异常记录不贡献交易日；
+    - 指数优先仅作数据来源说明（见 trading_calendar_source），不用于剔除股票日期；
     - 这是「输入可观察」序列，**不是交易所法定交易日历**（见 trading_calendar_basis）。
     """
-    idx_dates = {_norm_date(_get(r, "trade_date")) for r in index_records
-                 if _quality_of(r)[0] and _valid_date(_norm_date(_get(r, "trade_date")))}
-    if idx_dates:
-        return sorted(idx_dates)
-    stk_dates = {_norm_date(_get(r, "trade_date")) for r in stock_records
-                 if _quality_of(r)[0] and _valid_date(_norm_date(_get(r, "trade_date")))}
-    return sorted(stk_dates)
+    idx_dates = _qualified_dates(index_records)
+    stk_dates = _qualified_dates(stock_records)
+    return sorted(idx_dates | stk_dates)
+
+
+def trading_calendar_breakdown(index_records: Sequence = (),
+                               stock_records: Sequence = ()) -> dict:
+    """披露可观察交易日序列的来源构成（血缘，第二轮复核要求）。
+
+    - index_dates / stock_dates：各自合格日期（升序）；
+    - merged_dates：并集序列（与 observable_trading_dates 一致）；
+    - index_only / stock_only：仅单一来源覆盖的日期（差异披露）；
+    - index_first：说明指数作为基准来源，但不剔除股票日期。
+    """
+    idx = sorted(_qualified_dates(index_records))
+    stk = sorted(_qualified_dates(stock_records))
+    idx_set, stk_set = set(idx), set(stk)
+    return {
+        "index_dates": idx,
+        "stock_dates": stk,
+        "merged_dates": sorted(idx_set | stk_set),
+        "index_only": sorted(idx_set - stk_set),
+        "stock_only": sorted(stk_set - idx_set),
+        "index_first": True,
+        "note": "指数作基准、股票合格日期一并纳入并集；差异日期全部保留并披露。",
+    }
 
 
 def _previous_observable_day(td: str, cal: Sequence[str]) -> str | None:
@@ -208,9 +241,9 @@ def index_pct_change(index_records: Sequence, *, index_code: str,
                      calendar: Sequence[str] | None = None) -> IndicatorValue:
     """单指数相邻「可观察交易日」close 涨跌幅，公式同 D1 5.2（adjust_type=none）。
 
-    交易日连续性（P1-01）：
-    - cal 为本次分析可观察交易日序列（analyze_market 注入，指数优先）；
-      未注入时退回该指数自身合格日期序列；
+    交易日连续性（P1-01 / P1-01 残留）：
+    - cal 为本次分析可观察交易日序列（analyze_market 注入：指数与股票全部合格
+      日期并集，指数仅作基准不剔除股票日期）；未注入时退回该指数自身合格日期序列；
     - 前一交易日取 cal 中严格早于 td 的最近交易日，并**必须**验证该指数在该日
       有合格行情；若缺失/无法验证 → unavailable，禁止取更早日期代替。
     - 口径声明：可观察序列非交易所法定交易日历（见 trading_calendar_basis）。
@@ -285,14 +318,20 @@ def sample_breadth(stock_records: Sequence, *, trade_date: str,
     td = _norm_date(trade_date)
     out.values["sample_date"] = IndicatorValue(name="sample_date", value=td, status=STATUS_OK)
 
-    # 可观察交易日序列（P1-01）：优先指数行情日期，由 analyze_market 注入；
-    # 未注入时退回股票合格日期。明确记录口径：非交易所法定交易日历。
-    cal = sorted(set(calendar)) if calendar is not None else observable_trading_dates(
-        [], stock_records)
+    # 可观察交易日序列（P1-01/P1-01 残留）：由 analyze_market 注入指数+股票并集序列；
+    # 独立调用（未注入）时退回本函数可见的股票合格日期。口径：非交易所法定交易日历。
+    if calendar is not None:
+        cal = sorted(set(calendar))
+        cal_src_note = "来源：编排层注入的指数+股票合格日期并集"
+    else:
+        cal = observable_trading_dates([], stock_records)
+        cal_src_note = "来源：独立调用仅可见的股票合格日期（无指数输入）"
     out.observable_trading_dates = list(cal)
     out.trading_calendar_basis = TRADING_CALENDAR_BASIS
+    if not out.trading_calendar_source:
+        out.trading_calendar_source = trading_calendar_breakdown([], stock_records)
     out.notes.append(
-        f"可观察交易日序列={cal}（来源：输入行情，指数优先）；{TRADING_CALENDAR_BASIS}")
+        f"可观察交易日序列={cal}（{cal_src_note}）；{TRADING_CALENDAR_BASIS}")
 
     # 全市场覆盖率恒不可用（stock_info 空 / 无全市场基数）
     out.values["market_coverage_ratio"] = unavailable(
@@ -530,7 +569,9 @@ def analyze_market(*, index_records: Sequence, stock_records: Sequence,
 
     # 本次分析可观察交易日序列（P1-01）：优先指数行情日期，注入给指数与股票共用，
     # 确保两者「前一交易日」判定一致，禁止各自取更早日期跨缺失交易日。
+    # 第二轮复核：序列 = 指数与股票全部合格日期并集，并披露来源构成。
     cal = observable_trading_dates(index_records, stock_records)
+    cal_source = trading_calendar_breakdown(index_records, stock_records)
 
     # 指数：逐指数日涨跌幅（指数无复权，adjust_type 固定 none）
     codes = list(index_codes) if index_codes is not None else sorted(
@@ -555,6 +596,8 @@ def analyze_market(*, index_records: Sequence, stock_records: Sequence,
     result.values = breadth.values
     result.observable_trading_dates = breadth.observable_trading_dates
     result.trading_calendar_basis = breadth.trading_calendar_basis
+    result.trading_calendar_source = cal_source
+    breadth.trading_calendar_source = cal_source
     result.prev_td_missing_symbols = breadth.prev_td_missing_symbols
     result.sample_size = breadth.sample_size
     result.universe_definition = breadth.universe_definition
@@ -576,5 +619,10 @@ def analyze_market(*, index_records: Sequence, stock_records: Sequence,
     result.notes.append(f"北交所覆盖={REASON_BEIJING}：适配器不支持且无交易所字段")
     result.notes.append(f"上市时间限制={REASON_LISTING_DATE}：缺 list_date，无法判定上市未满窗口")
     result.notes.append(f"指数成交量单位={REASON_INDEX_VOL_UNVERIFIED}：不套用个股×100规则")
+    result.notes.append(
+        f"可观察交易日序列来源：指数日期={cal_source['index_dates']}，"
+        f"股票日期={cal_source['stock_dates']}，合并={cal_source['merged_dates']}，"
+        f"仅指数={cal_source['index_only']}，仅股票={cal_source['stock_only']}；"
+        f"{cal_source['note']}")
 
     return result

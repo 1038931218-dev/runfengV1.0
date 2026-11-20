@@ -12,6 +12,7 @@ import pytest
 from analysis import (
     index_pct_change, sample_breadth, analyze_market,
 )
+from analysis.market import observable_trading_dates, trading_calendar_breakdown
 from analysis.contracts import (
     STATUS_OK, STATUS_INSUFFICIENT, STATUS_UNAVAILABLE, STATUS_REJECTED,
 )
@@ -457,3 +458,100 @@ def test_amount_all_valid_ok_reuses_contract():
     iv = sample_breadth(recs, trade_date="2025-11-04").values["sample_amount_total"]
     assert iv.status == STATUS_OK
     assert iv.value == Decimal("100.50")
+
+
+# ============ 第二轮复核 P1-01 残留：指数+股票日期并集 ============
+def test_observable_dates_merges_index_and_stock():
+    """指数 d3/d5、股票 d3/d4/d5 → 全局序列必须包含 d4（来自股票）。"""
+    idxr = [idx("000001.SH", "2025-11-03", 3000), idx("000001.SH", "2025-11-05", 3060)]
+    stkr = [stk("A", "2025-11-03", 10), stk("A", "2025-11-04", 10.5),
+            stk("A", "2025-11-05", 11)]
+    cal = observable_trading_dates(idxr, stkr)
+    assert cal == ["2025-11-03", "2025-11-04", "2025-11-05"]
+    assert "2025-11-04" in cal  # 指数缺 d4，但股票有 → 必须保留
+
+
+def test_calendar_breakdown_discloses_source_diff():
+    """血缘披露：stock_only 含 d4，index_dates/stock_dates/merged 均正确。"""
+    idxr = [idx("000001.SH", "2025-11-03", 3000), idx("000001.SH", "2025-11-05", 3060)]
+    stkr = [stk("A", "2025-11-03", 10), stk("A", "2025-11-04", 10.5),
+            stk("A", "2025-11-05", 11)]
+    bd = trading_calendar_breakdown(idxr, stkr)
+    assert bd["index_dates"] == ["2025-11-03", "2025-11-05"]
+    assert bd["stock_dates"] == ["2025-11-03", "2025-11-04", "2025-11-05"]
+    assert bd["merged_dates"] == ["2025-11-03", "2025-11-04", "2025-11-05"]
+    assert bd["stock_only"] == ["2025-11-04"]
+    assert bd["index_only"] == []
+    assert bd["index_first"] is True
+
+
+def test_stock_uses_d4_as_prev_observable_day():
+    """股票 d5 计算涨跌幅使用 d4 作为前一可观察交易日（来自股票并集）。"""
+    idxr = [idx("000001.SH", "2025-11-03", 3000), idx("000001.SH", "2025-11-05", 3060)]
+    stkr = [stk("A", "2025-11-03", 10), stk("A", "2025-11-04", 10.5),
+            stk("A", "2025-11-05", 11)]
+    b = analyze_market(index_records=idxr, stock_records=stkr, trade_date="2025-11-05")
+    assert b.sample_size == 1
+    # A: d4=10.5 → d5=11，涨 → 计入 advancers（证明用了 d4 而非 d3 当前收）
+    assert b.values["sample_advancers"].value == 1
+    assert b.observable_trading_dates == ["2025-11-03", "2025-11-04", "2025-11-05"]
+    assert "2025-11-04" in b.trading_calendar_source["stock_only"]
+
+
+def test_index_missing_d4_cannot_use_d3():
+    """指数缺 d4（股票有 d4），请求 d5 → unavailable，previous_observable_day=d4，不用 d3。"""
+    idxr = [idx("000001.SH", "2025-11-03", 3000), idx("000001.SH", "2025-11-05", 3060)]
+    stkr = [stk("A", "2025-11-03", 10), stk("A", "2025-11-04", 10.5),
+            stk("A", "2025-11-05", 11)]
+    r = analyze_market(index_records=idxr, stock_records=stkr, trade_date="2025-11-05")
+    iv = r.index_results["000001.SH"]["INDEX_PCT_CHANGE"]
+    assert iv.status == STATUS_UNAVAILABLE
+    assert iv.reason == REASON_PREV_TD_MISSING
+    assert iv.params["previous_observable_day"] == "2025-11-04"  # 不是 d3
+
+
+def test_global_calendar_keeps_date_present_only_in_stock():
+    """指数目标日 d5 缺失、股票有 d5 → 全局序列仍保留 d5。"""
+    idxr = [idx("000001.SH", "2025-11-03", 3000), idx("000001.SH", "2025-11-04", 3030)]
+    stkr = [stk("A", "2025-11-03", 10), stk("A", "2025-11-04", 10.5),
+            stk("A", "2025-11-05", 11)]
+    cal = observable_trading_dates(idxr, stkr)
+    assert "2025-11-05" in cal
+    bd = trading_calendar_breakdown(idxr, stkr)
+    assert bd["stock_only"] == ["2025-11-05"]
+
+
+def test_index_dates_fully_cover_stock_no_regression():
+    """指数与股票日期完全一致 → 合并结果不变，原有计算无回归。"""
+    idxr = [idx("000001.SH", "2025-11-03", 3000), idx("000001.SH", "2025-11-04", 3030)]
+    stkr = [stk("A", "2025-11-03", 10), stk("A", "2025-11-04", 11)]
+    cal = observable_trading_dates(idxr, stkr)
+    assert cal == ["2025-11-03", "2025-11-04"]
+    bd = trading_calendar_breakdown(idxr, stkr)
+    assert bd["index_only"] == [] and bd["stock_only"] == []
+    iv = index_pct_change(idxr, index_code="000001.SH", trade_date="2025-11-04", calendar=cal)
+    assert iv.status == STATUS_OK
+    assert iv.value == Decimal("1.0000")
+
+
+def test_empty_index_stock_dates_still_build_calendar():
+    """空指数数据时，股票日期仍建立可观察序列。"""
+    stkr = [stk("A", "2025-11-03", 10), stk("A", "2025-11-04", 10.5),
+            stk("A", "2025-11-05", 11)]
+    cal = observable_trading_dates([], stkr)
+    assert cal == ["2025-11-03", "2025-11-04", "2025-11-05"]
+    b = sample_breadth(stkr, trade_date="2025-11-05")
+    assert b.sample_size == 1
+    assert b.values["sample_advancers"].value == 1  # 用 d4=10.5 → d5=11 涨
+
+
+def test_calendar_source_in_to_dict_and_not_statutory():
+    """to_dict 带来源披露字段，且口径声明不称为法定交易日历。"""
+    idxr = [idx("000001.SH", "2025-11-03", 3000), idx("000001.SH", "2025-11-04", 3030)]
+    stkr = two_day("000001", 10)
+    r = analyze_market(index_records=idxr, stock_records=stkr, trade_date="2025-11-04")
+    d = r.to_dict()
+    assert "trading_calendar_source" in d
+    assert d["trading_calendar_source"]["merged_dates"] == ["2025-11-03", "2025-11-04"]
+    assert "未接入交易所法定交易日历" in r.trading_calendar_basis
+    assert "法定" in r.trading_calendar_basis

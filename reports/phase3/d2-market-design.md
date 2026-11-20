@@ -129,6 +129,21 @@ ChatGPT 第一轮独立审查发现 2 项 P1 + 1 项 P2，均已修复。`ALGORI
 
 ---
 
+## 四·补 2：R2 独立复核修复 — P1-01 残留（算法版本 v2 → v3）
+
+ChatGPT 第二轮复核发现 P1-01 残留缺陷：`observable_trading_dates()` 原实现「指数有合格日期就直接返回、忽略股票日期」，与 `TRADING_CALENDAR_BASIS` 声明的「指数优先、合并股票」不一致；当指数缺某交易日而股票有该日数据时，全局序列遗漏该日，个股前收仍可能跨日计算。已修复，`ALGORITHM_VERSION_D2` 递增为 `d2-market-v3`。
+
+| 项 | 修复口径 |
+|---|---|
+| 日期并集 | `observable_trading_dates()` 改为纳入本次输入中**指数与股票全部合格行情日期的并集**（去重、升序），不再「指数非空即忽略股票」；指数优先仅作数据来源说明，不剔除股票已有日期。 |
+| 来源披露 | 新增 `trading_calendar_breakdown()` 返回 `index_dates`/`stock_dates`/`merged_dates`/`index_only`/`stock_only`/`index_first`；血缘新增 `trading_calendar_source` 字段，`to_dict()` 输出，编排层 notes 追加序列来源说明。 |
+| 共用序列 | `analyze_market` 计算一次并集 `cal` 同时注入 `index_pct_change()` 与 `sample_breadth()`，两者判定一致。 |
+| 契约一致 | 同步更新 `TRADING_CALENDAR_BASIS` 文本、函数 docstring、注释、设计报告：明确「并集、非交易所法定交易日历」；前一交易日缺目标标的合格行情仍 unavailable，禁止取更早日期。 |
+
+新增测试（8 项）：并集含股票独有 d4、来源差异披露、股票 d5 用 d4 当前收、指数缺 d4 不用 d3、指数目标日缺失但股票有则全局保留、日期一致无回归、空指数时股票建序列、to_dict 来源披露与非法定日历声明。D2 测试 41 → 49 全通过。
+
+---
+
 ## 五、开发纪律
 
 - 只改 D2 涉及文件（`analysis/market*.py`、`analysis/__init__.py` 导出、`tests/test_analysis_market.py`、本报告）；
