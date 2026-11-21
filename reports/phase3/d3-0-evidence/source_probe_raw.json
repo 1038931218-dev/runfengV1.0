@@ -1,0 +1,1521 @@
+{
+  "note": "D3-0外部数据源能力核验脱敏证据。URL为公开接口，响应仅保留字段结构与前几条样例,不含任何密钥令牌。",
+  "d3_probe_result": {
+    "collected_at": "2026-11-21T08:01:48.756047+08:00",
+    "probes": [
+      {
+        "interface": "stock_board_industry_name_em",
+        "category": "1.AKShare-行业分类",
+        "request_time": "2026-11-21T08:01:49.461445+08:00",
+        "params": {},
+        "source": "",
+        "http_status": "",
+        "return_status": "error",
+        "fields": [],
+        "sample": [],
+        "row_count": null,
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "network_unreachable",
+        "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+        "columns_check": {}
+      },
+      {
+        "interface": "stock_board_industry_cons_em",
+        "category": "1.AKShare-板块成分",
+        "request_time": "2026-11-21T08:01:55.398761+08:00",
+        "params": {
+          "symbol": "银行"
+        },
+        "source": "",
+        "http_status": "",
+        "return_status": "error",
+        "fields": [],
+        "sample": [],
+        "row_count": null,
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "network_unreachable",
+        "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+        "columns_check": {}
+      },
+      {
+        "interface": "stock_industry_category_cninfo",
+        "category": "1.AKShare-巨潮行业分类",
+        "request_time": "2026-11-21T08:02:01.414734+08:00",
+        "params": {},
+        "source": "akshare/stock_industry_category_cninfo",
+        "http_status": "",
+        "return_status": "ok",
+        "fields": [
+          "类目编码",
+          "类目名称",
+          "终止日期",
+          "行业类型",
+          "行业类型编码",
+          "类目名称英文",
+          "父类编码",
+          "分级"
+        ],
+        "sample": [
+          {
+            "类目编码": "Z",
+            "类目名称": "巨潮行业分类标准",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "CNINF Industry Classification Standard",
+            "父类编码": "008",
+            "分级": 0
+          },
+          {
+            "类目编码": "Z01",
+            "类目名称": "能源",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "Energy",
+            "父类编码": "Z",
+            "分级": 1
+          },
+          {
+            "类目编码": "Z0101",
+            "类目名称": "能源",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "Energy",
+            "父类编码": "Z01",
+            "分级": 2
+          }
+        ],
+        "row_count": 294,
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "missing_required_fields",
+        "error_detail": "字段缺口: has_code_field",
+        "columns_check": {
+          "has_code_field": false,
+          "has_name_field": true,
+          "has_level_field": false,
+          "has_date_field": true
+        }
+      },
+      {
+        "interface": "stock_industry_change_cninfo",
+        "category": "1.AKShare-巨潮行业变更",
+        "request_time": "2026-11-21T08:02:01.777471+08:00",
+        "params": {
+          "symbol": "000001"
+        },
+        "source": "akshare/stock_industry_change_cninfo",
+        "http_status": "",
+        "return_status": "ok",
+        "fields": [
+          "新证券简称",
+          "行业中类",
+          "行业大类",
+          "行业次类",
+          "行业门类",
+          "机构名称",
+          "行业编码",
+          "分类标准",
+          "分类标准编码",
+          "证券代码",
+          "变更日期"
+        ],
+        "sample": [
+          {
+            "新证券简称": "平安银行",
+            "行业中类": "综合性银行",
+            "行业大类": "银行",
+            "行业次类": "银行",
+            "行业门类": "金融",
+            "机构名称": "平安银行股份有限公司",
+            "行业编码": "Z07010101",
+            "分类标准": "巨潮行业分类标准",
+            "分类标准编码": "008002",
+            "证券代码": "000001",
+            "变更日期": "2019-05-08"
+          },
+          {
+            "新证券简称": "平安银行",
+            "行业中类": "综合性银行",
+            "行业大类": "商业银行",
+            "行业次类": "银行",
+            "行业门类": "金融地产",
+            "机构名称": "平安银行股份有限公司",
+            "行业编码": "06010101",
+            "分类标准": "中证行业分类标准(旧)",
+            "分类标准编码": "008019",
+            "证券代码": "000001",
+            "变更日期": "2020-03-16"
+          },
+          {
+            "新证券简称": "平安银行",
+            "行业中类": "股份制银行Ⅲ",
+            "行业大类": "股份制银行Ⅲ",
+            "行业次类": "股份制银行Ⅱ",
+            "行业门类": "银行",
+            "机构名称": "平安银行股份有限公司",
+            "行业编码": "S480301",
+            "分类标准": "申银万国行业分类标准",
+            "分类标准编码": "008003",
+            "证券代码": "000001",
+            "变更日期": "2021-07-30"
+          }
+        ],
+        "row_count": 4,
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "missing_required_fields",
+        "error_detail": "字段缺口: has_code_field",
+        "columns_check": {
+          "has_code_field": false,
+          "has_name_field": true,
+          "has_level_field": false,
+          "has_date_field": true
+        }
+      },
+      {
+        "interface": "stock_industry_clf_hist_sw",
+        "category": "1.AKShare-申万行业分类历史",
+        "request_time": "2026-11-21T08:02:02.091349+08:00",
+        "params": {
+          "symbol": "801010(申万行业代码)"
+        },
+        "source": "",
+        "http_status": "",
+        "return_status": "error",
+        "fields": [],
+        "sample": [],
+        "row_count": null,
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "auth_required",
+        "error_detail": "TypeError: stock_industry_clf_hist_sw() got an unexpected keyword argument 'symbol'",
+        "columns_check": {}
+      },
+      {
+        "interface": "sw_index_first_info",
+        "category": "5.申万行业分类",
+        "request_time": "2026-11-21T08:02:02.091381+08:00",
+        "params": {},
+        "source": "",
+        "http_status": "",
+        "return_status": "error",
+        "fields": [],
+        "sample": [],
+        "row_count": null,
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "interface_missing",
+        "error_detail": "AttributeError: 'NoneType' object has no attribute 'find_all'",
+        "columns_check": {}
+      },
+      {
+        "interface": "sw_index_second_info",
+        "category": "5.申万行业分类",
+        "request_time": "2026-11-21T08:02:02.185836+08:00",
+        "params": {
+          "symbol": "801010"
+        },
+        "source": "",
+        "http_status": "",
+        "return_status": "error",
+        "fields": [],
+        "sample": [],
+        "row_count": null,
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "auth_required",
+        "error_detail": "TypeError: sw_index_second_info() got an unexpected keyword argument 'symbol'",
+        "columns_check": {}
+      },
+      {
+        "interface": "sw_index_third_cons",
+        "category": "5.申万行业分类",
+        "request_time": "2026-11-21T08:02:02.185879+08:00",
+        "params": {
+          "symbol": "80101071"
+        },
+        "source": "",
+        "http_status": "",
+        "return_status": "error",
+        "fields": [],
+        "sample": [],
+        "row_count": null,
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "other",
+        "error_detail": "ValueError: No tables found",
+        "columns_check": {}
+      },
+      {
+        "interface": "index_stock_cons_csindex",
+        "category": "4.中证指数",
+        "request_time": "2026-11-21T08:02:02.302937+08:00",
+        "params": {
+          "symbol": "000300"
+        },
+        "source": "akshare/index_stock_cons_csindex",
+        "http_status": "",
+        "return_status": "ok",
+        "fields": [
+          "日期",
+          "指数代码",
+          "指数名称",
+          "指数英文名称",
+          "成分券代码",
+          "成分券名称",
+          "成分券英文名称",
+          "交易所",
+          "交易所英文名称"
+        ],
+        "sample": [
+          {
+            "日期": "2026-11-20",
+            "指数代码": "000300",
+            "指数名称": "沪深300",
+            "指数英文名称": "CSI 300",
+            "成分券代码": "000001",
+            "成分券名称": "平安银行",
+            "成分券英文名称": "Ping An Bank Co., Ltd.",
+            "交易所": "深圳证券交易所",
+            "交易所英文名称": "Shenzhen Stock Exchange"
+          },
+          {
+            "日期": "2026-11-20",
+            "指数代码": "000300",
+            "指数名称": "沪深300",
+            "指数英文名称": "CSI 300",
+            "成分券代码": "000002",
+            "成分券名称": "万科A",
+            "成分券英文名称": "China Vanke Co Ltd",
+            "交易所": "深圳证券交易所",
+            "交易所英文名称": "Shenzhen Stock Exchange"
+          },
+          {
+            "日期": "2026-11-20",
+            "指数代码": "000300",
+            "指数名称": "沪深300",
+            "指数英文名称": "CSI 300",
+            "成分券代码": "000063",
+            "成分券名称": "中兴通讯",
+            "成分券英文名称": "ZTE Corporation",
+            "交易所": "深圳证券交易所",
+            "交易所英文名称": "Shenzhen Stock Exchange"
+          }
+        ],
+        "row_count": 300,
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "",
+        "error_detail": "",
+        "columns_check": {
+          "has_code_field": true,
+          "has_name_field": true,
+          "has_level_field": false,
+          "has_date_field": true
+        }
+      },
+      {
+        "interface": "index_stock_info",
+        "category": "4.中证指数",
+        "request_time": "2026-11-21T08:02:02.494849+08:00",
+        "params": {},
+        "source": "",
+        "http_status": "",
+        "return_status": "error",
+        "fields": [],
+        "sample": [],
+        "row_count": null,
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "other",
+        "error_detail": "ValueError: No tables found",
+        "columns_check": {}
+      },
+      {
+        "interface": "stock_board_industry_hist_em",
+        "category": "板块指数日线",
+        "request_time": "2026-11-21T08:02:02.674329+08:00",
+        "params": {
+          "symbol": "银行",
+          "period": "日k",
+          "start_date": "20251101",
+          "end_date": "20251114"
+        },
+        "source": "",
+        "http_status": "",
+        "return_status": "error",
+        "fields": [],
+        "sample": [],
+        "row_count": null,
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "network_unreachable",
+        "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+        "columns_check": {}
+      },
+      {
+        "interface": "sw_index_daily",
+        "category": "申万指数日线",
+        "request_time": "2026-11-21T08:02:08.703146+08:00",
+        "params": {
+          "indicator": "申万一级行业指数",
+          "symbol": "801010"
+        },
+        "source": "",
+        "http_status": "",
+        "return_status": "error",
+        "fields": [],
+        "sample": [],
+        "row_count": null,
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "interface_missing",
+        "error_detail": "AttributeError: module 'akshare' has no attribute 'sw_index_daily'",
+        "columns_check": {}
+      }
+    ]
+  },
+  "d3_probe_http_result": {
+    "collected_at": "2026-11-21T08:03:04.247534+08:00",
+    "probes": [
+      {
+        "interface": "sina_hq_index",
+        "category": "2.新浪-行情对照",
+        "request_time": "2026-11-21T08:03:04.247548+08:00",
+        "url": "https://hq.sinajs.cn/list=sh000001",
+        "params": {},
+        "http_status": 200,
+        "return_status": "ok",
+        "fields": [
+          "<text-lines>"
+        ],
+        "sample": [
+          "var hq_str_sh000001=\"上证指数,3527.3036,3577.6174,3533.7929,3538.2674,3500.8324,0,0,499711727,702573853116,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2026-11-20,15:43:57,00,\";"
+        ],
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "missing_required_fields",
+        "error_detail": "响应不含行业/板块分类字段",
+        "note": "对照：仅行情，非行业分类",
+        "columns_check": {
+          "industry_or_sector_kw": false,
+          "code_field": false,
+          "history_effective": false
+        }
+      },
+      {
+        "interface": "sina_sector行业分类",
+        "category": "2.新浪-行业分类",
+        "request_time": "2026-11-21T08:03:04.282412+08:00",
+        "url": "https://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData",
+        "params": {
+          "node": "hangye_ZA01",
+          "num": 3
+        },
+        "http_status": 200,
+        "return_status": "ok",
+        "fields": [
+          "symbol",
+          "code",
+          "name",
+          "trade",
+          "pricechange",
+          "changepercent",
+          "buy",
+          "sell",
+          "settlement",
+          "open",
+          "high",
+          "low",
+          "volume",
+          "amount",
+          "ticktime",
+          "per",
+          "pb",
+          "mktcap",
+          "nmc",
+          "turnoverratio"
+        ],
+        "sample": [
+          "[{'symbol': 'bj920403', 'code': '920403', 'name': '康农种业', 'trade': '17.100', 'pricechange': 0.05, 'changepercent': 0.293, 'buy': '17.070', 'sell': '17.100', 'settlement': '17.050', 'open': '16.900', 'high': '17.960', 'low': '16.700', 'volume': 1571554, 'amount': 27245530, 'ticktime': '15:30:02', 'pe"
+        ],
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "missing_required_fields",
+        "error_detail": "响应不含行业/板块分类字段",
+        "note": "新浪行业分类板块成分(node=hangye_*)",
+        "columns_check": {
+          "industry_or_sector_kw": false,
+          "code_field": true,
+          "history_effective": false
+        }
+      },
+      {
+        "interface": "sina_sector_list",
+        "category": "2.新浪-行业列表",
+        "request_time": "2026-11-21T08:03:04.343283+08:00",
+        "url": "https://vip.stock.finance.sina.com.cn/q/view/newSinaHy.php",
+        "params": {},
+        "http_status": 200,
+        "return_status": "ok",
+        "fields": [
+          "<text-lines>"
+        ],
+        "sample": [
+          "var S_Finance_bankuai_sinaindustry = {\"new_blhy\":\"new_blhy,玻璃行业,19,11.911578947368,-0.61421052631579,-4.9035673767805,466667809,5992027134,sz002571,1.833,8.890,0.160,德力股份\",\"new_cbzz\":\"new_cbzz,船舶制造,8,"
+        ],
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "",
+        "error_detail": "",
+        "note": "新浪行业分类列表页",
+        "columns_check": {
+          "industry_or_sector_kw": true,
+          "code_field": false,
+          "history_effective": false
+        }
+      },
+      {
+        "interface": "tencent_hq",
+        "category": "3.腾讯-行情对照",
+        "request_time": "2026-11-21T08:03:04.458615+08:00",
+        "url": "https://qt.gtimg.cn/q=sh000001",
+        "params": {},
+        "http_status": 200,
+        "return_status": "ok",
+        "fields": [
+          "<text-lines>"
+        ],
+        "sample": [
+          "v_sh000001=\"1~上证指数~000001~3533.79~3577.62~3527.30~499711727~0~0~0.00~0~0.00~0~0.00~0~0.00~0~0.00~0~0.00~0~0.00~0~0.00~0~0.00~0~0.00~0~~20261120161427~-43.83~-1.23~3538.27~3500.83~3533.79/499711727/702"
+        ],
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "missing_required_fields",
+        "error_detail": "响应不含行业/板块分类字段",
+        "note": "对照：仅行情，非行业分类",
+        "columns_check": {
+          "industry_or_sector_kw": false,
+          "code_field": false,
+          "history_effective": false
+        }
+      },
+      {
+        "interface": "tencent_sector_try",
+        "category": "3.腾讯-行业分类尝试",
+        "request_time": "2026-11-21T08:03:04.634746+08:00",
+        "url": "https://proxy.finance.qq.com/cgi/cgi-bin/rank/pt/getRank",
+        "params": {
+          "board_type": "hy",
+          "sort_type": "price",
+          "offset": 0,
+          "limit": 3
+        },
+        "http_status": 400,
+        "return_status": "http_error",
+        "fields": [],
+        "sample": [],
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "other",
+        "error_detail": "HTTP 400",
+        "note": "腾讯财经行业板块排行(公开试探)"
+      },
+      {
+        "interface": "csindex_cons",
+        "category": "4.中证指数",
+        "request_time": "2026-11-21T08:03:04.740796+08:00",
+        "url": "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info",
+        "params": {
+          "indexCode": "000300"
+        },
+        "http_status": 404,
+        "return_status": "http_error",
+        "fields": [],
+        "sample": [],
+        "has_history_effective_date": false,
+        "supports_historical_point_classification": false,
+        "failure_category": "other",
+        "error_detail": "HTTP 404",
+        "note": "中证指数官网接口试探"
+      }
+    ]
+  },
+  "d3_deep_cninfo_result": {
+    "collected_at": "2026-11-21T08:03:25.285839+08:00",
+    "probes": [
+      {
+        "interface": "stock_industry_change_cninfo",
+        "params": {
+          "symbol": "000001"
+        },
+        "request_time": "2026-11-21T08:03:25.959770+08:00",
+        "status": "ok",
+        "fields": [
+          "新证券简称",
+          "行业中类",
+          "行业大类",
+          "行业次类",
+          "行业门类",
+          "机构名称",
+          "行业编码",
+          "分类标准",
+          "分类标准编码",
+          "证券代码",
+          "变更日期"
+        ],
+        "sample": [
+          {
+            "新证券简称": "平安银行",
+            "行业中类": "综合性银行",
+            "行业大类": "银行",
+            "行业次类": "银行",
+            "行业门类": "金融",
+            "机构名称": "平安银行股份有限公司",
+            "行业编码": "Z07010101",
+            "分类标准": "巨潮行业分类标准",
+            "分类标准编码": "008002",
+            "证券代码": "000001",
+            "变更日期": "2019-05-08"
+          },
+          {
+            "新证券简称": "平安银行",
+            "行业中类": "综合性银行",
+            "行业大类": "商业银行",
+            "行业次类": "银行",
+            "行业门类": "金融地产",
+            "机构名称": "平安银行股份有限公司",
+            "行业编码": "06010101",
+            "分类标准": "中证行业分类标准(旧)",
+            "分类标准编码": "008019",
+            "证券代码": "000001",
+            "变更日期": "2020-03-16"
+          },
+          {
+            "新证券简称": "平安银行",
+            "行业中类": "股份制银行Ⅲ",
+            "行业大类": "股份制银行Ⅲ",
+            "行业次类": "股份制银行Ⅱ",
+            "行业门类": "银行",
+            "机构名称": "平安银行股份有限公司",
+            "行业编码": "S480301",
+            "分类标准": "申银万国行业分类标准",
+            "分类标准编码": "008003",
+            "证券代码": "000001",
+            "变更日期": "2021-07-30"
+          },
+          {
+            "新证券简称": "平安银行",
+            "行业中类": "综合性银行",
+            "行业大类": "商业银行",
+            "行业次类": "银行",
+            "行业门类": "金融",
+            "机构名称": "平安银行股份有限公司",
+            "行业编码": "40101010",
+            "分类标准": "中证行业分类标准",
+            "分类标准编码": "008014",
+            "证券代码": "000001",
+            "变更日期": "2021-12-17"
+          }
+        ],
+        "row_count": 4,
+        "failure_category": "",
+        "error_detail": "",
+        "field_semantics": {
+          "has_stock_code": true,
+          "has_change_date": true,
+          "has_hierarchy": true,
+          "has_standard": true,
+          "standards": [
+            "中证行业分类标准",
+            "中证行业分类标准(旧)",
+            "巨潮行业分类标准",
+            "申银万国行业分类标准"
+          ],
+          "date_range": [
+            "2019-05-08",
+            "2021-12-17"
+          ]
+        }
+      },
+      {
+        "interface": "stock_industry_change_cninfo",
+        "params": {
+          "symbol": "600519"
+        },
+        "request_time": "2026-11-21T08:03:26.175561+08:00",
+        "status": "ok",
+        "fields": [
+          "新证券简称",
+          "行业中类",
+          "行业大类",
+          "行业次类",
+          "行业门类",
+          "机构名称",
+          "行业编码",
+          "分类标准",
+          "分类标准编码",
+          "证券代码",
+          "变更日期"
+        ],
+        "sample": [
+          {
+            "新证券简称": "贵州茅台",
+            "行业中类": "白酒",
+            "行业大类": "饮料",
+            "行业次类": "食品饮料与烟草",
+            "行业门类": "主要消费",
+            "机构名称": "贵州茅台酒股份有限公司",
+            "行业编码": "Z05030201",
+            "分类标准": "巨潮行业分类标准",
+            "分类标准编码": "008002",
+            "证券代码": "600519",
+            "变更日期": "2019-11-12"
+          },
+          {
+            "新证券简称": "贵州茅台",
+            "行业中类": "白酒",
+            "行业大类": "饮料",
+            "行业次类": "食品、饮料与烟草",
+            "行业门类": "主要消费",
+            "机构名称": "贵州茅台酒股份有限公司",
+            "行业编码": "04020101",
+            "分类标准": "中证行业分类标准(旧)",
+            "分类标准编码": "008019",
+            "证券代码": "600519",
+            "变更日期": "2020-03-16"
+          },
+          {
+            "新证券简称": "贵州茅台",
+            "行业中类": "白酒Ⅲ",
+            "行业大类": "白酒Ⅲ",
+            "行业次类": "白酒Ⅱ",
+            "行业门类": "食品饮料",
+            "机构名称": "贵州茅台酒股份有限公司",
+            "行业编码": "S340501",
+            "分类标准": "申银万国行业分类标准",
+            "分类标准编码": "008003",
+            "证券代码": "600519",
+            "变更日期": "2021-07-30"
+          },
+          {
+            "新证券简称": "贵州茅台",
+            "行业中类": "白酒",
+            "行业大类": "酒",
+            "行业次类": "食品、饮料与烟草",
+            "行业门类": "主要消费",
+            "机构名称": "贵州茅台酒股份有限公司",
+            "行业编码": "30101010",
+            "分类标准": "中证行业分类标准",
+            "分类标准编码": "008014",
+            "证券代码": "600519",
+            "变更日期": "2021-12-17"
+          }
+        ],
+        "row_count": 4,
+        "failure_category": "",
+        "error_detail": "",
+        "field_semantics": {
+          "has_stock_code": true,
+          "has_change_date": true,
+          "has_hierarchy": true,
+          "has_standard": true,
+          "standards": [
+            "中证行业分类标准",
+            "中证行业分类标准(旧)",
+            "巨潮行业分类标准",
+            "申银万国行业分类标准"
+          ],
+          "date_range": [
+            "2019-11-12",
+            "2021-12-17"
+          ]
+        }
+      },
+      {
+        "interface": "stock_industry_change_cninfo",
+        "params": {
+          "symbol": "300750"
+        },
+        "request_time": "2026-11-21T08:03:26.439717+08:00",
+        "status": "ok",
+        "fields": [
+          "新证券简称",
+          "行业中类",
+          "行业大类",
+          "行业次类",
+          "行业门类",
+          "机构名称",
+          "行业编码",
+          "分类标准",
+          "分类标准编码",
+          "证券代码",
+          "变更日期"
+        ],
+        "sample": [
+          {
+            "新证券简称": "宁德时代",
+            "行业中类": "储能设备",
+            "行业大类": "储能设备",
+            "行业次类": "电源设备",
+            "行业门类": "电气设备",
+            "机构名称": "宁德时代新能源科技股份有限公司",
+            "行业编码": "S630305",
+            "分类标准": "申银万国行业分类标准(旧)",
+            "分类标准编码": "008018",
+            "证券代码": "300750",
+            "变更日期": "2018-05-22"
+          },
+          {
+            "新证券简称": "宁德时代",
+            "行业中类": "nan",
+            "行业大类": "电气机械和器材制造业",
+            "行业次类": "nan",
+            "行业门类": "制造业",
+            "机构名称": "宁德时代新能源科技股份有限公司",
+            "行业编码": "C38",
+            "分类标准": "证监会行业分类标准（2012）",
+            "分类标准编码": "008021",
+            "证券代码": "300750",
+            "变更日期": "2018-05-22"
+          },
+          {
+            "新证券简称": "宁德时代",
+            "行业中类": "电气部件与设备",
+            "行业大类": "电气部件与设备",
+            "行业次类": "工业品",
+            "行业门类": "工业",
+            "机构名称": "宁德时代新能源科技股份有限公司",
+            "行业编码": "Z03010301",
+            "分类标准": "巨潮行业分类标准(旧)",
+            "分类标准编码": "008013",
+            "证券代码": "300750",
+            "变更日期": "2018-06-08"
+          },
+          {
+            "新证券简称": "宁德时代",
+            "行业中类": "电气部件与设备",
+            "行业大类": "电气部件与设备",
+            "行业次类": "工业品",
+            "行业门类": "工业",
+            "机构名称": "宁德时代新能源科技股份有限公司",
+            "行业编码": "Z03010301",
+            "分类标准": "巨潮行业分类标准",
+            "分类标准编码": "008002",
+            "证券代码": "300750",
+            "变更日期": "2019-05-08"
+          },
+          {
+            "新证券简称": "宁德时代",
+            "行业中类": "新能源设备",
+            "行业大类": "电气设备",
+            "行业次类": "资本品",
+            "行业门类": "工业",
+            "机构名称": "宁德时代新能源科技股份有限公司",
+            "行业编码": "02010403",
+            "分类标准": "中证行业分类标准(旧)",
+            "分类标准编码": "008019",
+            "证券代码": "300750",
+            "变更日期": "2020-03-16"
+          },
+          {
+            "新证券简称": "宁德时代",
+            "行业中类": "锂电池",
+            "行业大类": "锂电池",
+            "行业次类": "电池",
+            "行业门类": "电力设备",
+            "机构名称": "宁德时代新能源科技股份有限公司",
+            "行业编码": "S630701",
+            "分类标准": "申银万国行业分类标准",
+            "分类标准编码": "008003",
+            "证券代码": "300750",
+            "变更日期": "2021-07-30"
+          },
+          {
+            "新证券简称": "宁德时代",
+            "行业中类": "电池",
+            "行业大类": "储能设备",
+            "行业次类": "电力设备",
+            "行业门类": "工业",
+            "机构名称": "宁德时代新能源科技股份有限公司",
+            "行业编码": "20303010",
+            "分类标准": "中证行业分类标准",
+            "分类标准编码": "008014",
+            "证券代码": "300750",
+            "变更日期": "2021-12-17"
+          }
+        ],
+        "row_count": 7,
+        "failure_category": "",
+        "error_detail": "",
+        "field_semantics": {
+          "has_stock_code": true,
+          "has_change_date": true,
+          "has_hierarchy": true,
+          "has_standard": true,
+          "standards": [
+            "中证行业分类标准",
+            "中证行业分类标准(旧)",
+            "巨潮行业分类标准",
+            "巨潮行业分类标准(旧)",
+            "申银万国行业分类标准",
+            "申银万国行业分类标准(旧)",
+            "证监会行业分类标准（2012）"
+          ],
+          "date_range": [
+            "2018-05-22",
+            "2021-12-17"
+          ]
+        }
+      },
+      {
+        "interface": "stock_industry_change_cninfo",
+        "params": {
+          "symbol": "000002"
+        },
+        "request_time": "2026-11-21T08:03:26.654243+08:00",
+        "status": "ok",
+        "fields": [
+          "新证券简称",
+          "行业中类",
+          "行业大类",
+          "行业次类",
+          "行业门类",
+          "机构名称",
+          "行业编码",
+          "分类标准",
+          "分类标准编码",
+          "证券代码",
+          "变更日期"
+        ],
+        "sample": [
+          {
+            "新证券简称": "万  科Ａ",
+            "行业中类": "住宅地产开发和管理",
+            "行业大类": "房地产开发和管理",
+            "行业次类": "房地产",
+            "行业门类": "金融地产",
+            "机构名称": "万科企业股份有限公司",
+            "行业编码": "Z07030101",
+            "分类标准": "巨潮行业分类标准(旧)",
+            "分类标准编码": "008013",
+            "证券代码": "000002",
+            "变更日期": "2017-10-16"
+          },
+          {
+            "新证券简称": "万  科Ａ",
+            "行业中类": "房地产开发",
+            "行业大类": "房地产开发与园区",
+            "行业次类": "房地产",
+            "行业门类": "金融地产",
+            "机构名称": "万科企业股份有限公司",
+            "行业编码": "06050101",
+            "分类标准": "中证行业分类标准(旧)",
+            "分类标准编码": "008019",
+            "证券代码": "000002",
+            "变更日期": "2020-03-16"
+          },
+          {
+            "新证券简称": "万  科Ａ",
+            "行业中类": "住宅地产开发和管理",
+            "行业大类": "住宅地产开发和管理",
+            "行业次类": "房地产开发和管理",
+            "行业门类": "房地产",
+            "机构名称": "万科企业股份有限公司",
+            "行业编码": "Z11010101",
+            "分类标准": "巨潮行业分类标准",
+            "分类标准编码": "008002",
+            "证券代码": "000002",
+            "变更日期": "2020-06-15"
+          },
+          {
+            "新证券简称": "万  科Ａ",
+            "行业中类": "nan",
+            "行业大类": "地产发展商",
+            "行业次类": "地产",
+            "行业门类": "地产建筑业",
+            "机构名称": "万科企业股份有限公司",
+            "行业编码": "601020",
+            "分类标准": "恒生行业分类",
+            "分类标准编码": "008016",
+            "证券代码": "000002",
+            "变更日期": "2021-06-21"
+          },
+          {
+            "新证券简称": "万  科Ａ",
+            "行业中类": "房地产开发",
+            "行业大类": "房地产开发与园区",
+            "行业次类": "房地产",
+            "行业门类": "房地产",
+            "机构名称": "万科企业股份有限公司",
+            "行业编码": "60101010",
+            "分类标准": "中证行业分类标准",
+            "分类标准编码": "008014",
+            "证券代码": "000002",
+            "变更日期": "2021-12-17"
+          }
+        ],
+        "row_count": 5,
+        "failure_category": "",
+        "error_detail": "",
+        "field_semantics": {
+          "has_stock_code": true,
+          "has_change_date": true,
+          "has_hierarchy": true,
+          "has_standard": true,
+          "standards": [
+            "中证行业分类标准",
+            "中证行业分类标准(旧)",
+            "巨潮行业分类标准",
+            "巨潮行业分类标准(旧)",
+            "恒生行业分类"
+          ],
+          "date_range": [
+            "2017-10-16",
+            "2021-12-17"
+          ]
+        }
+      },
+      {
+        "interface": "stock_industry_change_cninfo",
+        "params": {
+          "symbol": "600036"
+        },
+        "request_time": "2026-11-21T08:03:26.906758+08:00",
+        "status": "ok",
+        "fields": [
+          "新证券简称",
+          "行业中类",
+          "行业大类",
+          "行业次类",
+          "行业门类",
+          "机构名称",
+          "行业编码",
+          "分类标准",
+          "分类标准编码",
+          "证券代码",
+          "变更日期"
+        ],
+        "sample": [
+          {
+            "新证券简称": "招商银行",
+            "行业中类": "股份制银行",
+            "行业大类": "银行",
+            "行业次类": "银行",
+            "行业门类": "金融地产",
+            "机构名称": "招商银行股份有限公司",
+            "行业编码": "Z07010102",
+            "分类标准": "巨潮行业分类标准(旧)",
+            "分类标准编码": "008013",
+            "证券代码": "600036",
+            "变更日期": "2017-10-16"
+          },
+          {
+            "新证券简称": "招商银行",
+            "行业中类": "综合性银行",
+            "行业大类": "银行",
+            "行业次类": "银行",
+            "行业门类": "金融",
+            "机构名称": "招商银行股份有限公司",
+            "行业编码": "Z07010101",
+            "分类标准": "巨潮行业分类标准",
+            "分类标准编码": "008002",
+            "证券代码": "600036",
+            "变更日期": "2019-05-28"
+          },
+          {
+            "新证券简称": "招商银行",
+            "行业中类": "综合性银行",
+            "行业大类": "商业银行",
+            "行业次类": "银行",
+            "行业门类": "金融地产",
+            "机构名称": "招商银行股份有限公司",
+            "行业编码": "06010101",
+            "分类标准": "中证行业分类标准(旧)",
+            "分类标准编码": "008019",
+            "证券代码": "600036",
+            "变更日期": "2020-03-16"
+          },
+          {
+            "新证券简称": "招商银行",
+            "行业中类": "nan",
+            "行业大类": "银行",
+            "行业次类": "银行",
+            "行业门类": "金融业",
+            "机构名称": "招商银行股份有限公司",
+            "行业编码": "501010",
+            "分类标准": "恒生行业分类",
+            "分类标准编码": "008016",
+            "证券代码": "600036",
+            "变更日期": "2021-06-21"
+          },
+          {
+            "新证券简称": "招商银行",
+            "行业中类": "股份制银行Ⅲ",
+            "行业大类": "股份制银行Ⅲ",
+            "行业次类": "股份制银行Ⅱ",
+            "行业门类": "银行",
+            "机构名称": "招商银行股份有限公司",
+            "行业编码": "S480301",
+            "分类标准": "申银万国行业分类标准",
+            "分类标准编码": "008003",
+            "证券代码": "600036",
+            "变更日期": "2021-07-30"
+          },
+          {
+            "新证券简称": "招商银行",
+            "行业中类": "综合性银行",
+            "行业大类": "商业银行",
+            "行业次类": "银行",
+            "行业门类": "金融",
+            "机构名称": "招商银行股份有限公司",
+            "行业编码": "40101010",
+            "分类标准": "中证行业分类标准",
+            "分类标准编码": "008014",
+            "证券代码": "600036",
+            "变更日期": "2021-12-17"
+          }
+        ],
+        "row_count": 6,
+        "failure_category": "",
+        "error_detail": "",
+        "field_semantics": {
+          "has_stock_code": true,
+          "has_change_date": true,
+          "has_hierarchy": true,
+          "has_standard": true,
+          "standards": [
+            "中证行业分类标准",
+            "中证行业分类标准(旧)",
+            "巨潮行业分类标准",
+            "巨潮行业分类标准(旧)",
+            "恒生行业分类",
+            "申银万国行业分类标准"
+          ],
+          "date_range": [
+            "2017-10-16",
+            "2021-12-17"
+          ]
+        }
+      },
+      {
+        "interface": "stock_industry_category_cninfo",
+        "params": {},
+        "request_time": "2026-11-21T08:03:27.155115+08:00",
+        "status": "ok",
+        "fields": [
+          "类目编码",
+          "类目名称",
+          "终止日期",
+          "行业类型",
+          "行业类型编码",
+          "类目名称英文",
+          "父类编码",
+          "分级"
+        ],
+        "sample": [
+          {
+            "类目编码": "Z",
+            "类目名称": "巨潮行业分类标准",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "CNINF Industry Classification Standard",
+            "父类编码": "008",
+            "分级": "0"
+          },
+          {
+            "类目编码": "Z01",
+            "类目名称": "能源",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "Energy",
+            "父类编码": "Z",
+            "分级": "1"
+          },
+          {
+            "类目编码": "Z0101",
+            "类目名称": "能源",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "Energy",
+            "父类编码": "Z01",
+            "分级": "2"
+          },
+          {
+            "类目编码": "Z010101",
+            "类目名称": "能源设备与服务",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "Energy Equipment and Services",
+            "父类编码": "Z0101",
+            "分级": "3"
+          },
+          {
+            "类目编码": "Z01010101",
+            "类目名称": "能源设备",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "Energy Equipment",
+            "父类编码": "Z010101",
+            "分级": "4"
+          },
+          {
+            "类目编码": "Z01010102",
+            "类目名称": "能源服务",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "Energy Services",
+            "父类编码": "Z010101",
+            "分级": "4"
+          },
+          {
+            "类目编码": "Z010102",
+            "类目名称": "石油天然气",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "Oil and Gas",
+            "父类编码": "Z0101",
+            "分级": "3"
+          },
+          {
+            "类目编码": "Z01010201",
+            "类目名称": "石油天然气的勘探与生产",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "Oil and Gas Exploration and Production",
+            "父类编码": "Z010102",
+            "分级": "4"
+          }
+        ],
+        "row_count": 294,
+        "failure_category": "",
+        "error_detail": "",
+        "field_semantics": {
+          "has_stock_code": false,
+          "has_change_date": true,
+          "has_hierarchy": true,
+          "has_standard": false,
+          "standards": [],
+          "date_range": []
+        }
+      }
+    ],
+    "cninfo_funcs": [
+      "bond_corporate_issue_cninfo",
+      "bond_cov_issue_cninfo",
+      "bond_cov_stock_issue_cninfo",
+      "bond_local_government_issue_cninfo",
+      "bond_treasure_issue_cninfo",
+      "fund_report_asset_allocation_cninfo",
+      "fund_report_industry_allocation_cninfo",
+      "fund_report_stock_cninfo",
+      "stock_allotment_cninfo",
+      "stock_cg_equity_mortgage_cninfo",
+      "stock_cg_guarantee_cninfo",
+      "stock_cg_lawsuit_cninfo",
+      "stock_dividend_cninfo",
+      "stock_hold_change_cninfo",
+      "stock_hold_control_cninfo",
+      "stock_hold_management_detail_cninfo",
+      "stock_hold_num_cninfo",
+      "stock_industry_category_cninfo",
+      "stock_industry_change_cninfo",
+      "stock_industry_pe_ratio_cninfo",
+      "stock_ipo_summary_cninfo",
+      "stock_irm_ans_cninfo",
+      "stock_irm_cninfo",
+      "stock_new_gh_cninfo",
+      "stock_new_ipo_cninfo",
+      "stock_profile_cninfo",
+      "stock_rank_forecast_cninfo",
+      "stock_share_change_cninfo",
+      "stock_zh_a_disclosure_relation_cninfo",
+      "stock_zh_a_disclosure_report_cninfo"
+    ]
+  },
+  "d3_probe_extra_result": {
+    "collected_at": "2026-11-21T08:04:42.834564+08:00",
+    "probes": [
+      {
+        "interface": "stock_industry_clf_hist_sw",
+        "category": "5.申万",
+        "params": {},
+        "request_time": "2026-11-21T08:04:43.567524+08:00",
+        "status": "error",
+        "fields": [],
+        "sample": [],
+        "row_count": null,
+        "failure_category": "network_unreachable",
+        "error_detail": "SSLError: HTTPSConnectionPool(host='www.swsresearch.com', port=443): Max retries exceeded with url: /swindex/pdf/SwClass2021/StockClassifyUse_stock.xls (Caused by SSLError(SSLCertVerificatio"
+      },
+      {
+        "interface": "sw_index_first_info",
+        "category": "5.申万",
+        "params": {},
+        "request_time": "2026-11-21T08:04:43.644938+08:00",
+        "status": "error",
+        "fields": [],
+        "sample": [],
+        "row_count": null,
+        "failure_category": "interface_missing",
+        "error_detail": "AttributeError: 'NoneType' object has no attribute 'find_all'"
+      },
+      {
+        "interface": "sw_index_second_info",
+        "category": "5.申万",
+        "params": {},
+        "request_time": "2026-11-21T08:04:43.733478+08:00",
+        "status": "ok",
+        "fields": [
+          "行业代码",
+          "行业名称",
+          "上级行业",
+          "成份个数",
+          "静态市盈率",
+          "TTM(滚动)市盈率",
+          "市净率",
+          "静态股息率"
+        ],
+        "sample": [
+          {
+            "行业代码": "801016.SI",
+            "行业名称": "种植业",
+            "上级行业": "农林牧渔",
+            "成份个数": "20",
+            "静态市盈率": "30.5",
+            "TTM(滚动)市盈率": "31.97",
+            "市净率": "1.69",
+            "静态股息率": "1.99"
+          },
+          {
+            "行业代码": "801015.SI",
+            "行业名称": "渔业",
+            "上级行业": "农林牧渔",
+            "成份个数": "6",
+            "静态市盈率": "76.31",
+            "TTM(滚动)市盈率": "48.53",
+            "市净率": "1.89",
+            "静态股息率": "0.54"
+          },
+          {
+            "行业代码": "801011.SI",
+            "行业名称": "林业Ⅱ",
+            "上级行业": "农林牧渔",
+            "成份个数": "4",
+            "静态市盈率": "202.03",
+            "TTM(滚动)市盈率": "42.0",
+            "市净率": "2.42",
+            "静态股息率": "0.46"
+          },
+          {
+            "行业代码": "801014.SI",
+            "行业名称": "饲料",
+            "上级行业": "农林牧渔",
+            "成份个数": "18",
+            "静态市盈率": "20.3",
+            "TTM(滚动)市盈率": "30.44",
+            "市净率": "2.87",
+            "静态股息率": "1.85"
+          }
+        ],
+        "row_count": 131,
+        "failure_category": "",
+        "error_detail": "",
+        "has_code": true,
+        "has_name": true,
+        "has_date": false
+      },
+      {
+        "interface": "sw_index_third_info",
+        "category": "5.申万",
+        "params": {},
+        "request_time": "2026-11-21T08:04:45.112231+08:00",
+        "status": "ok",
+        "fields": [
+          "行业代码",
+          "行业名称",
+          "上级行业",
+          "成份个数",
+          "静态市盈率",
+          "TTM(滚动)市盈率",
+          "市净率",
+          "静态股息率"
+        ],
+        "sample": [
+          {
+            "行业代码": "850111.SI",
+            "行业名称": "种子",
+            "上级行业": "种植业",
+            "成份个数": "8",
+            "静态市盈率": "64.45",
+            "TTM(滚动)市盈率": "59.87",
+            "市净率": "2.14",
+            "静态股息率": "0.64"
+          },
+          {
+            "行业代码": "850112.SI",
+            "行业名称": "粮食种植",
+            "上级行业": "种植业",
+            "成份个数": "2",
+            "静态市盈率": "19.32",
+            "TTM(滚动)市盈率": "22.04",
+            "市净率": "1.46",
+            "静态股息率": "4.07"
+          },
+          {
+            "行业代码": "850113.SI",
+            "行业名称": "其他种植业",
+            "上级行业": "种植业",
+            "成份个数": "6",
+            "静态市盈率": "22.56",
+            "TTM(滚动)市盈率": "21.1",
+            "市净率": "1.6",
+            "静态股息率": "1.1"
+          },
+          {
+            "行业代码": "850114.SI",
+            "行业名称": "食用菌",
+            "上级行业": "种植业",
+            "成份个数": "4",
+            "静态市盈率": "16.11",
+            "TTM(滚动)市盈率": "21.95",
+            "市净率": "1.06",
+            "静态股息率": "3.12"
+          }
+        ],
+        "row_count": 336,
+        "failure_category": "",
+        "error_detail": "",
+        "has_code": true,
+        "has_name": true,
+        "has_date": false
+      },
+      {
+        "interface": "stock_sector_spot",
+        "category": "2.新浪行业",
+        "params": "indicator=新浪行业",
+        "request_time": "2026-11-21T08:04:46.468244+08:00",
+        "status": "ok",
+        "fields": [
+          "label",
+          "板块",
+          "公司家数",
+          "平均价格",
+          "涨跌额",
+          "涨跌幅",
+          "总成交量",
+          "总成交额",
+          "股票代码",
+          "个股-涨跌幅",
+          "个股-当前价",
+          "个股-涨跌额",
+          "股票名称"
+        ],
+        "sample": [
+          {
+            "label": "new_blhy",
+            "板块": "玻璃行业",
+            "公司家数": "19",
+            "平均价格": "11.911578947368",
+            "涨跌额": "-0.61421052631579",
+            "涨跌幅": "-4.9035673767805",
+            "总成交量": "466667809",
+            "总成交额": "5992027134",
+            "股票代码": "sz002571",
+            "个股-涨跌幅": "1.833",
+            "个股-当前价": "8.89",
+            "个股-涨跌额": "0.16",
+            "股票名称": "德力股份"
+          },
+          {
+            "label": "new_cbzz",
+            "板块": "船舶制造",
+            "公司家数": "8",
+            "平均价格": "12.69",
+            "涨跌额": "-0.27",
+            "涨跌幅": "-2.0833333333333",
+            "总成交量": "190942438",
+            "总成交额": "3345358499",
+            "股票代码": "sz002608",
+            "个股-涨跌幅": "1.414",
+            "个股-当前价": "7.89",
+            "个股-涨跌额": "0.11",
+            "股票名称": "江苏国信"
+          },
+          {
+            "label": "new_cmyl",
+            "板块": "传媒娱乐",
+            "公司家数": "40",
+            "平均价格": "7.2791666666667",
+            "涨跌额": "-0.21388888888889",
+            "涨跌幅": "-2.8544949026877",
+            "总成交量": "1836119669",
+            "总成交额": "12252957841",
+            "股票代码": "sz000607",
+            "个股-涨跌幅": "10.029",
+            "个股-当前价": "3.73",
+            "个股-涨跌额": "0.34",
+            "股票名称": "华媒控股"
+          },
+          {
+            "label": "new_dlhy",
+            "板块": "电力行业",
+            "公司家数": "62",
+            "平均价格": "7.4831666666667",
+            "涨跌额": "-0.147",
+            "涨跌幅": "-1.9265634215067",
+            "总成交量": "2276653195",
+            "总成交额": "19685981563",
+            "股票代码": "sh600886",
+            "个股-涨跌幅": "3.956",
+            "个股-当前价": "16.82",
+            "个股-涨跌额": "0.64",
+            "股票名称": "国投电力"
+          }
+        ],
+        "row_count": 49,
+        "failure_category": "",
+        "error_detail": "",
+        "has_code": true,
+        "has_name": true,
+        "has_date": false
+      },
+      {
+        "interface": "stock_board_industry_hist_em",
+        "category": "板块指数日线",
+        "params": {
+          "symbol": "银行"
+        },
+        "request_time": "2026-11-21T08:04:46.546579+08:00",
+        "status": "error",
+        "fields": [],
+        "sample": [],
+        "row_count": null,
+        "failure_category": "network_unreachable",
+        "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+      }
+    ],
+    "signatures": {
+      "stock_industry_clf_hist_sw": "() -> pandas.DataFrame",
+      "sw_index_first_info": "() -> pandas.DataFrame",
+      "sw_index_second_info": "() -> pandas.DataFrame",
+      "sw_index_third_info": "() -> pandas.DataFrame",
+      "sw_index_third_cons": "(symbol: str = '801120.SI') -> pandas.DataFrame",
+      "stock_sector_spot": "(indicator: str = '新浪行业') -> pandas.DataFrame",
+      "stock_sector_detail": "(sector: str = 'gn_gfgn') -> pandas.DataFrame"
+    }
+  }
+}
