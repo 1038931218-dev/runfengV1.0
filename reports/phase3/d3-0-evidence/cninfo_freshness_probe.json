@@ -1,0 +1,621 @@
+{
+  "collected_at": "2026-11-21T08:18:12.107265+08:00",
+  "note": "D3-0第四轮。底层HTTP经monkey-patch requests.post捕获原始请求/响应; Accept-Enckey为JS动态反爬key已脱敏; 响应正文保留结构判断信息。",
+  "http_captures": [
+    {
+      "capture_time": "2026-11-21T08:18:12.857524+08:00",
+      "method": "POST",
+      "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+      "params": {
+        "scode": "000001",
+        "sdate": "2022-01-01",
+        "edate": "2022-12-31"
+      },
+      "request_headers_subset": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate",
+        "Content-Length": "0",
+        "Host": "webapi.cninfo.com.cn",
+        "Origin": "https://webapi.cninfo.com.cn",
+        "Referer": "https://webapi.cninfo.com.cn/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept-Enckey": "<dynamic-enckey present, len=24>"
+      },
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "response_body_raw": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}",
+      "response_body_len": 73,
+      "response_body_truncated": false,
+      "request_error": null
+    },
+    {
+      "capture_time": "2026-11-21T08:18:13.127114+08:00",
+      "method": "POST",
+      "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+      "params": {
+        "scode": "000001",
+        "sdate": "2023-01-01",
+        "edate": "2023-12-31"
+      },
+      "request_headers_subset": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate",
+        "Content-Length": "0",
+        "Host": "webapi.cninfo.com.cn",
+        "Origin": "https://webapi.cninfo.com.cn",
+        "Referer": "https://webapi.cninfo.com.cn/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept-Enckey": "<dynamic-enckey present, len=24>"
+      },
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "response_body_raw": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}",
+      "response_body_len": 73,
+      "response_body_truncated": false,
+      "request_error": null
+    },
+    {
+      "capture_time": "2026-11-21T08:18:13.457845+08:00",
+      "method": "POST",
+      "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+      "params": {
+        "scode": "000001",
+        "sdate": "2024-01-01",
+        "edate": "2024-12-31"
+      },
+      "request_headers_subset": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate",
+        "Content-Length": "0",
+        "Host": "webapi.cninfo.com.cn",
+        "Origin": "https://webapi.cninfo.com.cn",
+        "Referer": "https://webapi.cninfo.com.cn/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept-Enckey": "<dynamic-enckey present, len=24>"
+      },
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "response_body_raw": "{\"total\":1,\"records\":[{\"F008C\":\"1\",\"SECNAME\":\"平安银行\",\"F007V\":null,\"F006V\":\"货币金融服务\",\"F005V\":null,\"F004V\":\"金融业\",\"ORGNAME\":\"平安银行股份有限公司\",\"F003V\":\"J66\",\"F002V\":\"中国上市公司协会上市公司行业分类标准\",\"F001V\":\"008001\",\"SECCODE\":\"000001\",\"VARYDATE\":\"2024-02-08\"}],\"resultmsg\":\"success\",\"count\":1,\"resultcode\":200}",
+      "response_body_len": 286,
+      "response_body_truncated": false,
+      "request_error": null
+    },
+    {
+      "capture_time": "2026-11-21T08:18:13.693670+08:00",
+      "method": "POST",
+      "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+      "params": {
+        "scode": "000001",
+        "sdate": "2025-01-01",
+        "edate": "2025-12-31"
+      },
+      "request_headers_subset": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate",
+        "Content-Length": "0",
+        "Host": "webapi.cninfo.com.cn",
+        "Origin": "https://webapi.cninfo.com.cn",
+        "Referer": "https://webapi.cninfo.com.cn/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept-Enckey": "<dynamic-enckey present, len=24>"
+      },
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "response_body_raw": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}",
+      "response_body_len": 73,
+      "response_body_truncated": false,
+      "request_error": null
+    },
+    {
+      "capture_time": "2026-11-21T08:18:13.949125+08:00",
+      "method": "POST",
+      "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+      "params": {
+        "scode": "000001",
+        "sdate": "2026-01-01",
+        "edate": "2026-11-21"
+      },
+      "request_headers_subset": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate",
+        "Content-Length": "0",
+        "Host": "webapi.cninfo.com.cn",
+        "Origin": "https://webapi.cninfo.com.cn",
+        "Referer": "https://webapi.cninfo.com.cn/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept-Enckey": "<dynamic-enckey present, len=24>"
+      },
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "response_body_raw": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}",
+      "response_body_len": 73,
+      "response_body_truncated": false,
+      "request_error": null
+    },
+    {
+      "capture_time": "2026-11-21T08:18:14.189547+08:00",
+      "method": "POST",
+      "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+      "params": {
+        "scode": "000001",
+        "sdate": "2009-12-27",
+        "edate": "2022-07-13"
+      },
+      "request_headers_subset": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate",
+        "Content-Length": "0",
+        "Host": "webapi.cninfo.com.cn",
+        "Origin": "https://webapi.cninfo.com.cn",
+        "Referer": "https://webapi.cninfo.com.cn/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept-Enckey": "<dynamic-enckey present, len=24>"
+      },
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "response_body_raw": "{\"total\":4,\"records\":[{\"F008C\":\"1\",\"SECNAME\":\"平安银行\",\"F007V\":\"综合性银行\",\"F006V\":\"银行\",\"F005V\":\"银行\",\"F004V\":\"金融\",\"ORGNAME\":\"平安银行股份有限公司\",\"F003V\":\"Z07010101\",\"F002V\":\"巨潮行业分类标准\",\"F001V\":\"008002\",\"SECCODE\":\"000001\",\"VARYDATE\":\"2019-05-08\"},{\"F008C\":\"1\",\"SECNAME\":\"平安银行\",\"F007V\":\"综合性银行\",\"F006V\":\"商业银行\",\"F005V\":\"银行\",\"F004V\":\"金融地产\",\"ORGNAME\":\"平安银行股份有限公司\",\"F003V\":\"06010101\",\"F002V\":\"中证行业分类标准(旧)\",\"F001V\":\"008019\",\"SECCODE\":\"000001\",\"VARYDATE\":\"2020-03-16\"},{\"F008C\":\"1\",\"SECNAME\":\"平安银行\",\"F007V\":\"股份制银行Ⅲ\",\"F006V\":\"股份制银行Ⅲ\",\"F005V\":\"股份制银行Ⅱ\",\"F004V\":\"银行\",\"ORGNAME\":\"平安银行股份有限公司\",\"F003V\":\"S480301\",\"F002V\":\"申银万国行业分类标准\",\"F001V\":\"008003\",\"SECCODE\":\"000001\",\"VARYDATE\":\"2021-07-30\"},{\"F008C\":\"1\",\"SECNAME\":\"平安银行\",\"F007V\":\"综合性银行\",\"F006V\":\"商业银行\",\"F005V\":\"银行\",\"F004V\":\"金融\",\"ORGNAME\":\"平安银行股份有限公司\",\"F003V\":\"40101010\",\"F002V\":\"中证行业分类标准\",\"F001V\":\"008014\",\"SECCODE\":\"000001\",\"VARYDATE\":\"2021-12-17\"}],\"resultmsg\":\"success\",\"count\":4,\"resultcode\":200}",
+      "response_body_len": 920,
+      "response_body_truncated": false,
+      "request_error": null
+    },
+    {
+      "capture_time": "2026-11-21T08:18:14.424596+08:00",
+      "method": "POST",
+      "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+      "params": {
+        "scode": "600036",
+        "sdate": "2009-12-27",
+        "edate": "2022-07-13"
+      },
+      "request_headers_subset": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate",
+        "Content-Length": "0",
+        "Host": "webapi.cninfo.com.cn",
+        "Origin": "https://webapi.cninfo.com.cn",
+        "Referer": "https://webapi.cninfo.com.cn/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept-Enckey": "<dynamic-enckey present, len=24>"
+      },
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "response_body_raw": "{\"total\":6,\"records\":[{\"F008C\":\"1\",\"SECNAME\":\"招商银行\",\"F007V\":\"股份制银行\",\"F006V\":\"银行\",\"F005V\":\"银行\",\"F004V\":\"金融地产\",\"ORGNAME\":\"招商银行股份有限公司\",\"F003V\":\"Z07010102\",\"F002V\":\"巨潮行业分类标准(旧)\",\"F001V\":\"008013\",\"SECCODE\":\"600036\",\"VARYDATE\":\"2017-10-16\"},{\"F008C\":\"1\",\"SECNAME\":\"招商银行\",\"F007V\":\"综合性银行\",\"F006V\":\"银行\",\"F005V\":\"银行\",\"F004V\":\"金融\",\"ORGNAME\":\"招商银行股份有限公司\",\"F003V\":\"Z07010101\",\"F002V\":\"巨潮行业分类标准\",\"F001V\":\"008002\",\"SECCODE\":\"600036\",\"VARYDATE\":\"2019-05-28\"},{\"F008C\":\"1\",\"SECNAME\":\"招商银行\",\"F007V\":\"综合性银行\",\"F006V\":\"商业银行\",\"F005V\":\"银行\",\"F004V\":\"金融地产\",\"ORGNAME\":\"招商银行股份有限公司\",\"F003V\":\"06010101\",\"F002V\":\"中证行业分类标准(旧)\",\"F001V\":\"008019\",\"SECCODE\":\"600036\",\"VARYDATE\":\"2020-03-16\"},{\"F008C\":\"1\",\"SECNAME\":\"招商银行\",\"F007V\":null,\"F006V\":\"银行\",\"F005V\":\"银行\",\"F004V\":\"金融业\",\"ORGNAME\":\"招商银行股份有限公司\",\"F003V\":\"501010\",\"F002V\":\"恒生行业分类\",\"F001V\":\"008016\",\"SECCODE\":\"600036\",\"VARYDATE\":\"2021-06-21\"},{\"F008C\":\"1\",\"SECNAME\":\"招商银行\",\"F007V\":\"股份制银行Ⅲ\",\"F006V\":\"股份制银行Ⅲ\",\"F005V\":\"股份制银行Ⅱ\",\"F004V\":\"银行\",\"ORGNAME\":\"招商银行股份有限公司\",\"F003V\":\"S480301\",\"F002V\":\"申银万国行业分类标准\",\"F001V\":\"008003\",\"SECCODE\":\"600036\",\"VARYDATE\":\"2021-07-30\"},{\"F008C\":\"1\",\"SECNAME\":\"招商银行\",\"F007V\":\"综合性银行\",\"F006V\":\"商业银行\",\"F005V\":\"银行\",\"F004V\":\"金融\",\"ORGNAME\":\"招商银行股份有限公司\",\"F003V\":\"40101010\",\"F002V\":\"中证行业分类标准\",\"F001V\":\"008014\",\"SECCODE\":\"600036\",\"VARYDATE\":\"2021-12-17\"}],\"resultmsg\":\"success\",\"count\":6,\"resultcode\":200}",
+      "response_body_len": 1334,
+      "response_body_truncated": false,
+      "request_error": null
+    },
+    {
+      "capture_time": "2026-11-21T08:18:14.637569+08:00",
+      "method": "POST",
+      "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+      "params": {
+        "scode": "300750",
+        "sdate": "2009-12-27",
+        "edate": "2022-07-13"
+      },
+      "request_headers_subset": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate",
+        "Content-Length": "0",
+        "Host": "webapi.cninfo.com.cn",
+        "Origin": "https://webapi.cninfo.com.cn",
+        "Referer": "https://webapi.cninfo.com.cn/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept-Enckey": "<dynamic-enckey present, len=24>"
+      },
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "response_body_raw": "{\"total\":7,\"records\":[{\"F008C\":\"1\",\"SECNAME\":\"宁德时代\",\"F007V\":\"储能设备\",\"F006V\":\"储能设备\",\"F005V\":\"电源设备\",\"F004V\":\"电气设备\",\"ORGNAME\":\"宁德时代新能源科技股份有限公司\",\"F003V\":\"S630305\",\"F002V\":\"申银万国行业分类标准(旧)\",\"F001V\":\"008018\",\"SECCODE\":\"300750\",\"VARYDATE\":\"2018-05-22\"},{\"F008C\":\"1\",\"SECNAME\":\"宁德时代\",\"F007V\":null,\"F006V\":\"电气机械和器材制造业\",\"F005V\":null,\"F004V\":\"制造业\",\"ORGNAME\":\"宁德时代新能源科技股份有限公司\",\"F003V\":\"C38\",\"F002V\":\"证监会行业分类标准（2012）\",\"F001V\":\"008021\",\"SECCODE\":\"300750\",\"VARYDATE\":\"2018-05-22\"},{\"F008C\":\"1\",\"SECNAME\":\"宁德时代\",\"F007V\":\"电气部件与设备\",\"F006V\":\"电气部件与设备\",\"F005V\":\"工业品\",\"F004V\":\"工业\",\"ORGNAME\":\"宁德时代新能源科技股份有限公司\",\"F003V\":\"Z03010301\",\"F002V\":\"巨潮行业分类标准(旧)\",\"F001V\":\"008013\",\"SECCODE\":\"300750\",\"VARYDATE\":\"2018-06-08\"},{\"F008C\":\"1\",\"SECNAME\":\"宁德时代\",\"F007V\":\"电气部件与设备\",\"F006V\":\"电气部件与设备\",\"F005V\":\"工业品\",\"F004V\":\"工业\",\"ORGNAME\":\"宁德时代新能源科技股份有限公司\",\"F003V\":\"Z03010301\",\"F002V\":\"巨潮行业分类标准\",\"F001V\":\"008002\",\"SECCODE\":\"300750\",\"VARYDATE\":\"2019-05-08\"},{\"F008C\":\"1\",\"SECNAME\":\"宁德时代\",\"F007V\":\"新能源设备\",\"F006V\":\"电气设备\",\"F005V\":\"资本品\",\"F004V\":\"工业\",\"ORGNAME\":\"宁德时代新能源科技股份有限公司\",\"F003V\":\"02010403\",\"F002V\":\"中证行业分类标准(旧)\",\"F001V\":\"008019\",\"SECCODE\":\"300750\",\"VARYDATE\":\"2020-03-16\"},{\"F008C\":\"1\",\"SECNAME\":\"宁德时代\",\"F007V\":\"锂电池\",\"F006V\":\"锂电池\",\"F005V\":\"电池\",\"F004V\":\"电力设备\",\"ORGNAME\":\"宁德时代新能源科技股份有限公司\",\"F003V\":\"S630701\",\"F002V\":\"申银万国行业分类标准\",\"F001V\":\"008003\",\"SECCODE\":\"300750\",\"VARYDATE\":\"2021-07-30\"},{\"F008C\":\"1\",\"SECNAME\":\"宁德时代\",\"F007V\":\"电池\",\"F006V\":\"储能设备\",\"F005V\":\"电力设备\",\"F004V\":\"工业\",\"ORGNAME\":\"宁德时代新能源科技股份有限公司\",\"F003V\":\"20303010\",\"F002V\":\"中证行业分类标准\",\"F001V\":",
+      "response_body_len": 1603,
+      "response_body_truncated": true,
+      "request_error": null
+    },
+    {
+      "capture_time": "2026-11-21T08:18:14.896259+08:00",
+      "method": "POST",
+      "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+      "params": {
+        "scode": "000002",
+        "sdate": "2009-12-27",
+        "edate": "2022-07-13"
+      },
+      "request_headers_subset": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate",
+        "Content-Length": "0",
+        "Host": "webapi.cninfo.com.cn",
+        "Origin": "https://webapi.cninfo.com.cn",
+        "Referer": "https://webapi.cninfo.com.cn/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept-Enckey": "<dynamic-enckey present, len=24>"
+      },
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "response_body_raw": "{\"total\":5,\"records\":[{\"F008C\":\"1\",\"SECNAME\":\"万  科Ａ\",\"F007V\":\"住宅地产开发和管理\",\"F006V\":\"房地产开发和管理\",\"F005V\":\"房地产\",\"F004V\":\"金融地产\",\"ORGNAME\":\"万科企业股份有限公司\",\"F003V\":\"Z07030101\",\"F002V\":\"巨潮行业分类标准(旧)\",\"F001V\":\"008013\",\"SECCODE\":\"000002\",\"VARYDATE\":\"2017-10-16\"},{\"F008C\":\"1\",\"SECNAME\":\"万  科Ａ\",\"F007V\":\"房地产开发\",\"F006V\":\"房地产开发与园区\",\"F005V\":\"房地产\",\"F004V\":\"金融地产\",\"ORGNAME\":\"万科企业股份有限公司\",\"F003V\":\"06050101\",\"F002V\":\"中证行业分类标准(旧)\",\"F001V\":\"008019\",\"SECCODE\":\"000002\",\"VARYDATE\":\"2020-03-16\"},{\"F008C\":\"1\",\"SECNAME\":\"万  科Ａ\",\"F007V\":\"住宅地产开发和管理\",\"F006V\":\"住宅地产开发和管理\",\"F005V\":\"房地产开发和管理\",\"F004V\":\"房地产\",\"ORGNAME\":\"万科企业股份有限公司\",\"F003V\":\"Z11010101\",\"F002V\":\"巨潮行业分类标准\",\"F001V\":\"008002\",\"SECCODE\":\"000002\",\"VARYDATE\":\"2020-06-15\"},{\"F008C\":\"1\",\"SECNAME\":\"万  科Ａ\",\"F007V\":null,\"F006V\":\"地产发展商\",\"F005V\":\"地产\",\"F004V\":\"地产建筑业\",\"ORGNAME\":\"万科企业股份有限公司\",\"F003V\":\"601020\",\"F002V\":\"恒生行业分类\",\"F001V\":\"008016\",\"SECCODE\":\"000002\",\"VARYDATE\":\"2021-06-21\"},{\"F008C\":\"1\",\"SECNAME\":\"万  科Ａ\",\"F007V\":\"房地产开发\",\"F006V\":\"房地产开发与园区\",\"F005V\":\"房地产\",\"F004V\":\"房地产\",\"ORGNAME\":\"万科企业股份有限公司\",\"F003V\":\"60101010\",\"F002V\":\"中证行业分类标准\",\"F001V\":\"008014\",\"SECCODE\":\"000002\",\"VARYDATE\":\"2021-12-17\"}],\"resultmsg\":\"success\",\"count\":5,\"resultcode\":200}",
+      "response_body_len": 1167,
+      "response_body_truncated": false,
+      "request_error": null
+    },
+    {
+      "capture_time": "2026-11-21T08:18:15.144088+08:00",
+      "method": "POST",
+      "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+      "params": {
+        "scode": "600519",
+        "sdate": "2009-12-27",
+        "edate": "2022-07-13"
+      },
+      "request_headers_subset": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate",
+        "Content-Length": "0",
+        "Host": "webapi.cninfo.com.cn",
+        "Origin": "https://webapi.cninfo.com.cn",
+        "Referer": "https://webapi.cninfo.com.cn/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept-Enckey": "<dynamic-enckey present, len=24>"
+      },
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "response_body_raw": "{\"total\":4,\"records\":[{\"F008C\":\"1\",\"SECNAME\":\"贵州茅台\",\"F007V\":\"白酒\",\"F006V\":\"饮料\",\"F005V\":\"食品饮料与烟草\",\"F004V\":\"主要消费\",\"ORGNAME\":\"贵州茅台酒股份有限公司\",\"F003V\":\"Z05030201\",\"F002V\":\"巨潮行业分类标准\",\"F001V\":\"008002\",\"SECCODE\":\"600519\",\"VARYDATE\":\"2019-11-12\"},{\"F008C\":\"1\",\"SECNAME\":\"贵州茅台\",\"F007V\":\"白酒\",\"F006V\":\"饮料\",\"F005V\":\"食品、饮料与烟草\",\"F004V\":\"主要消费\",\"ORGNAME\":\"贵州茅台酒股份有限公司\",\"F003V\":\"04020101\",\"F002V\":\"中证行业分类标准(旧)\",\"F001V\":\"008019\",\"SECCODE\":\"600519\",\"VARYDATE\":\"2020-03-16\"},{\"F008C\":\"1\",\"SECNAME\":\"贵州茅台\",\"F007V\":\"白酒Ⅲ\",\"F006V\":\"白酒Ⅲ\",\"F005V\":\"白酒Ⅱ\",\"F004V\":\"食品饮料\",\"ORGNAME\":\"贵州茅台酒股份有限公司\",\"F003V\":\"S340501\",\"F002V\":\"申银万国行业分类标准\",\"F001V\":\"008003\",\"SECCODE\":\"600519\",\"VARYDATE\":\"2021-07-30\"},{\"F008C\":\"1\",\"SECNAME\":\"贵州茅台\",\"F007V\":\"白酒\",\"F006V\":\"酒\",\"F005V\":\"食品、饮料与烟草\",\"F004V\":\"主要消费\",\"ORGNAME\":\"贵州茅台酒股份有限公司\",\"F003V\":\"30101010\",\"F002V\":\"中证行业分类标准\",\"F001V\":\"008014\",\"SECCODE\":\"600519\",\"VARYDATE\":\"2021-12-17\"}],\"resultmsg\":\"success\",\"count\":4,\"resultcode\":200}",
+      "response_body_len": 924,
+      "response_body_truncated": false,
+      "request_error": null
+    }
+  ],
+  "freshness_calls": [
+    {
+      "label": "000001_2022",
+      "request_time": "2026-11-21T08:18:12.848466+08:00",
+      "response_status": "exception",
+      "ak_result_rows": null,
+      "ak_result_fields": [],
+      "ak_sample_first3": [],
+      "exception_type": "KeyError",
+      "exception_msg": "'变更日期'",
+      "traceback_tail": "change_cninfo(symbol=\"000001\", start_date=s, end_date=e),\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock/stock_industry_cninfo.py\", line 169, in stock_industry_change_cninfo\n    temp_df[\"变更日期\"] = pd.to_datetime(temp_df[\"变更日期\"], errors=\"coerce\").dt.date\n                                     ~~~~~~~^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pandas/core/frame.py\", line 4378, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pandas/core/indexes/base.py\", line 3648, in get_loc\n    raise KeyError(key) from err\nKeyError: '变更日期'\n",
+      "http_capture_index": 0,
+      "body_shape": {
+        "type": "dict",
+        "keys": [
+          "total",
+          "records",
+          "resultmsg",
+          "count",
+          "resultcode"
+        ],
+        "records_type": "list",
+        "records_len": 0,
+        "is_empty_data": true
+      },
+      "is_empty_data": true,
+      "freshness_status": "empty_response_confirmed",
+      "params": {
+        "symbol": "000001",
+        "start_date": "20220101",
+        "end_date": "20221231"
+      }
+    },
+    {
+      "label": "000001_2023",
+      "request_time": "2026-11-21T08:18:13.119571+08:00",
+      "response_status": "exception",
+      "ak_result_rows": null,
+      "ak_result_fields": [],
+      "ak_sample_first3": [],
+      "exception_type": "KeyError",
+      "exception_msg": "'变更日期'",
+      "traceback_tail": "change_cninfo(symbol=\"000001\", start_date=s, end_date=e),\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock/stock_industry_cninfo.py\", line 169, in stock_industry_change_cninfo\n    temp_df[\"变更日期\"] = pd.to_datetime(temp_df[\"变更日期\"], errors=\"coerce\").dt.date\n                                     ~~~~~~~^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pandas/core/frame.py\", line 4378, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pandas/core/indexes/base.py\", line 3648, in get_loc\n    raise KeyError(key) from err\nKeyError: '变更日期'\n",
+      "http_capture_index": 1,
+      "body_shape": {
+        "type": "dict",
+        "keys": [
+          "total",
+          "records",
+          "resultmsg",
+          "count",
+          "resultcode"
+        ],
+        "records_type": "list",
+        "records_len": 0,
+        "is_empty_data": true
+      },
+      "is_empty_data": true,
+      "freshness_status": "empty_response_confirmed",
+      "params": {
+        "symbol": "000001",
+        "start_date": "20230101",
+        "end_date": "20231231"
+      }
+    },
+    {
+      "label": "000001_2024",
+      "request_time": "2026-11-21T08:18:13.450308+08:00",
+      "response_status": "ok",
+      "ak_result_rows": 1,
+      "ak_result_fields": [
+        "新证券简称",
+        "行业中类",
+        "行业大类",
+        "行业次类",
+        "行业门类",
+        "机构名称",
+        "行业编码",
+        "分类标准",
+        "分类标准编码",
+        "证券代码",
+        "变更日期"
+      ],
+      "ak_sample_first3": [
+        {
+          "新证券简称": "平安银行",
+          "行业中类": null,
+          "行业大类": "货币金融服务",
+          "行业次类": null,
+          "行业门类": "金融业",
+          "机构名称": "平安银行股份有限公司",
+          "行业编码": "J66",
+          "分类标准": "中国上市公司协会上市公司行业分类标准",
+          "分类标准编码": "008001",
+          "证券代码": "000001",
+          "变更日期": "2024-02-08"
+        }
+      ],
+      "exception_type": null,
+      "exception_msg": null,
+      "traceback_tail": null,
+      "http_capture_index": 2,
+      "body_shape": {
+        "type": "dict",
+        "keys": [
+          "total",
+          "records",
+          "resultmsg",
+          "count",
+          "resultcode"
+        ],
+        "records_type": "list",
+        "records_len": 1,
+        "is_empty_data": false
+      },
+      "is_empty_data": false,
+      "freshness_status": "has_records_in_range",
+      "params": {
+        "symbol": "000001",
+        "start_date": "20240101",
+        "end_date": "20241231"
+      }
+    },
+    {
+      "label": "000001_2025",
+      "request_time": "2026-11-21T08:18:13.686242+08:00",
+      "response_status": "exception",
+      "ak_result_rows": null,
+      "ak_result_fields": [],
+      "ak_sample_first3": [],
+      "exception_type": "KeyError",
+      "exception_msg": "'变更日期'",
+      "traceback_tail": "change_cninfo(symbol=\"000001\", start_date=s, end_date=e),\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock/stock_industry_cninfo.py\", line 169, in stock_industry_change_cninfo\n    temp_df[\"变更日期\"] = pd.to_datetime(temp_df[\"变更日期\"], errors=\"coerce\").dt.date\n                                     ~~~~~~~^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pandas/core/frame.py\", line 4378, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pandas/core/indexes/base.py\", line 3648, in get_loc\n    raise KeyError(key) from err\nKeyError: '变更日期'\n",
+      "http_capture_index": 3,
+      "body_shape": {
+        "type": "dict",
+        "keys": [
+          "total",
+          "records",
+          "resultmsg",
+          "count",
+          "resultcode"
+        ],
+        "records_type": "list",
+        "records_len": 0,
+        "is_empty_data": true
+      },
+      "is_empty_data": true,
+      "freshness_status": "empty_response_confirmed",
+      "params": {
+        "symbol": "000001",
+        "start_date": "20250101",
+        "end_date": "20251231"
+      }
+    },
+    {
+      "label": "000001_2026_to_current",
+      "request_time": "2026-11-21T08:18:13.941630+08:00",
+      "response_status": "exception",
+      "ak_result_rows": null,
+      "ak_result_fields": [],
+      "ak_sample_first3": [],
+      "exception_type": "KeyError",
+      "exception_msg": "'变更日期'",
+      "traceback_tail": "change_cninfo(symbol=\"000001\", start_date=s, end_date=e),\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock/stock_industry_cninfo.py\", line 169, in stock_industry_change_cninfo\n    temp_df[\"变更日期\"] = pd.to_datetime(temp_df[\"变更日期\"], errors=\"coerce\").dt.date\n                                     ~~~~~~~^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pandas/core/frame.py\", line 4378, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pandas/core/indexes/base.py\", line 3648, in get_loc\n    raise KeyError(key) from err\nKeyError: '变更日期'\n",
+      "http_capture_index": 4,
+      "body_shape": {
+        "type": "dict",
+        "keys": [
+          "total",
+          "records",
+          "resultmsg",
+          "count",
+          "resultcode"
+        ],
+        "records_type": "list",
+        "records_len": 0,
+        "is_empty_data": true
+      },
+      "is_empty_data": true,
+      "freshness_status": "empty_response_confirmed",
+      "params": {
+        "symbol": "000001",
+        "start_date": "20260101",
+        "end_date": "20261121"
+      }
+    }
+  ],
+  "cninfo_standard_stats": [
+    {
+      "stock_code": "000001",
+      "desc": "银行/深",
+      "all_standard_rows": 4,
+      "cninfo_standard_row_count": 1,
+      "earliest_date": "2019-05-08",
+      "latest_date": "2019-05-08",
+      "null_counts_by_field": {
+        "行业门类": 0,
+        "行业次类": 0,
+        "行业大类": 0,
+        "行业中类": 0,
+        "行业编码": 0
+      },
+      "classification_code_null_count": 0,
+      "sample_first3": [
+        {
+          "新证券简称": "平安银行",
+          "行业中类": "综合性银行",
+          "行业大类": "银行",
+          "行业次类": "银行",
+          "行业门类": "金融",
+          "机构名称": "平安银行股份有限公司",
+          "行业编码": "Z07010101",
+          "分类标准": "巨潮行业分类标准",
+          "分类标准编码": "008002",
+          "证券代码": "000001",
+          "变更日期": "2019-05-08"
+        }
+      ]
+    },
+    {
+      "stock_code": "600036",
+      "desc": "银行/沪",
+      "all_standard_rows": 6,
+      "cninfo_standard_row_count": 1,
+      "earliest_date": "2019-05-28",
+      "latest_date": "2019-05-28",
+      "null_counts_by_field": {
+        "行业门类": 0,
+        "行业次类": 0,
+        "行业大类": 0,
+        "行业中类": 0,
+        "行业编码": 0
+      },
+      "classification_code_null_count": 0,
+      "sample_first3": [
+        {
+          "新证券简称": "招商银行",
+          "行业中类": "综合性银行",
+          "行业大类": "银行",
+          "行业次类": "银行",
+          "行业门类": "金融",
+          "机构名称": "招商银行股份有限公司",
+          "行业编码": "Z07010101",
+          "分类标准": "巨潮行业分类标准",
+          "分类标准编码": "008002",
+          "证券代码": "600036",
+          "变更日期": "2019-05-28"
+        }
+      ]
+    },
+    {
+      "stock_code": "300750",
+      "desc": "锂电/创业板",
+      "all_standard_rows": 7,
+      "cninfo_standard_row_count": 1,
+      "earliest_date": "2019-05-08",
+      "latest_date": "2019-05-08",
+      "null_counts_by_field": {
+        "行业门类": 0,
+        "行业次类": 0,
+        "行业大类": 0,
+        "行业中类": 0,
+        "行业编码": 0
+      },
+      "classification_code_null_count": 0,
+      "sample_first3": [
+        {
+          "新证券简称": "宁德时代",
+          "行业中类": "电气部件与设备",
+          "行业大类": "电气部件与设备",
+          "行业次类": "工业品",
+          "行业门类": "工业",
+          "机构名称": "宁德时代新能源科技股份有限公司",
+          "行业编码": "Z03010301",
+          "分类标准": "巨潮行业分类标准",
+          "分类标准编码": "008002",
+          "证券代码": "300750",
+          "变更日期": "2019-05-08"
+        }
+      ]
+    },
+    {
+      "stock_code": "000002",
+      "desc": "地产/深",
+      "all_standard_rows": 5,
+      "cninfo_standard_row_count": 1,
+      "earliest_date": "2020-06-15",
+      "latest_date": "2020-06-15",
+      "null_counts_by_field": {
+        "行业门类": 0,
+        "行业次类": 0,
+        "行业大类": 0,
+        "行业中类": 0,
+        "行业编码": 0
+      },
+      "classification_code_null_count": 0,
+      "sample_first3": [
+        {
+          "新证券简称": "万  科Ａ",
+          "行业中类": "住宅地产开发和管理",
+          "行业大类": "住宅地产开发和管理",
+          "行业次类": "房地产开发和管理",
+          "行业门类": "房地产",
+          "机构名称": "万科企业股份有限公司",
+          "行业编码": "Z11010101",
+          "分类标准": "巨潮行业分类标准",
+          "分类标准编码": "008002",
+          "证券代码": "000002",
+          "变更日期": "2020-06-15"
+        }
+      ]
+    },
+    {
+      "stock_code": "600519",
+      "desc": "食品/沪",
+      "all_standard_rows": 4,
+      "cninfo_standard_row_count": 1,
+      "earliest_date": "2019-11-12",
+      "latest_date": "2019-11-12",
+      "null_counts_by_field": {
+        "行业门类": 0,
+        "行业次类": 0,
+        "行业大类": 0,
+        "行业中类": 0,
+        "行业编码": 0
+      },
+      "classification_code_null_count": 0,
+      "sample_first3": [
+        {
+          "新证券简称": "贵州茅台",
+          "行业中类": "白酒",
+          "行业大类": "饮料",
+          "行业次类": "食品饮料与烟草",
+          "行业门类": "主要消费",
+          "机构名称": "贵州茅台酒股份有限公司",
+          "行业编码": "Z05030201",
+          "分类标准": "巨潮行业分类标准",
+          "分类标准编码": "008002",
+          "证券代码": "600519",
+          "变更日期": "2019-11-12"
+        }
+      ]
+    }
+  ]
+}
