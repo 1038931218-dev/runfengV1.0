@@ -108,7 +108,9 @@
         "公司简称",
         "上市日期",
         "暂停上市日期"
-      ]
+      ],
+      "note": "161原始记录,按证券代码去重155;6代码各2条,证券代码/简称/暂停上市日期相同但上市日期不同;成因unknown(无交易所官方解释,不认定重复登记)",
+      "duplicate_record_count_definition": "额外记录数=原始-唯一=161-155=6"
     },
     "SZ": {
       "total_raw": 213,
@@ -134,7 +136,8 @@
       "raw_records": 161,
       "unique_securities": 155,
       "duplicate_records": 6,
-      "note": "161原始!=161只;6代码各2条系同证券上市日期不同重复登记"
+      "note": "161原始!=161只;6代码各2条,代码/简称/暂停上市日期相同但上市日期不同;成因unknown(无交易所官方解释,不认定重复登记)",
+      "duplicate_records_definition": "额外记录数=原始-唯一=161-155=6"
     },
     "SZ": {
       "raw_records": 213,
@@ -144,7 +147,11 @@
     "BJ": {
       "status": "unknown",
       "note": "无退市名单接口"
-    }
+    },
+    "note": "161原始!=161只;6代码各2条,证券代码/简称/暂停上市日期相同但上市日期不同;成因unknown(无交易所官方解释)",
+    "duplicate_record_count_definition": "额外记录数=原始-唯一=161-155=6",
+    "duplicate_cause": "unknown：同一证券代码存在两条上市日期不同的记录，现有证据无法确定数据源形成该记录的具体原因。",
+    "r5_revise_time": "2026-11-21T18:02:40.280891+08:00"
   },
   "r4_denominator_set_verified": {
     "collect_time": "2026-11-21T08:48:08.742017+08:00",
@@ -153,5 +160,9 @@
     "em_code_name": 5580,
     "sets_identical": true,
     "note": "5580由完整代码集合逐只相等验证,非仅数量相等"
+  },
+  "r5_revision": {
+    "revise_time": "2026-11-21T18:02:40.280891+08:00",
+    "scope": "仅修正P2-01重复原因表述(去重复登记判断改unknown);统计161/155/6不变;SZ 213/213/0与BJ unknown不变"
   }
 }

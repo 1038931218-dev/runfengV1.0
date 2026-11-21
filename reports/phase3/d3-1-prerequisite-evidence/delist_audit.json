@@ -8,7 +8,7 @@
       "label": "上交所退市",
       "interface": "ak.stock_info_sh_delist(symbol='全部')",
       "code_col": "公司代码",
-      "note": "重复原因待查:同一公司代码可能因多次暂停上市/不同批次记录重复出现",
+      "note": "unknown：同一证券代码存在两条上市日期不同的记录，现有证据无法确定数据源形成该记录的具体原因。按证券代码去重后唯一代码数为155，不对历史记录成因作未经证实的判断。",
       "collect_time": "2026-11-21T08:46:17.451627+08:00",
       "raw_record_count": 161,
       "unique_security_count": 155,
@@ -130,7 +130,9 @@
         "上市日期",
         "暂停上市日期"
       ],
-      "dedup_status": "原始记录数 != 唯一证券数"
+      "dedup_status": "原始记录数 != 唯一证券数",
+      "duplicate_record_count_definition": "额外记录数=原始记录数-唯一证券数=161-155=6;非重复代码个数",
+      "duplicate_cause": "unknown：同一证券代码存在两条上市日期不同的记录，现有证据无法确定数据源形成该记录的具体原因。"
     },
     "SZ": {
       "label": "深交所终止上市",
@@ -149,7 +151,9 @@
         "上市日期",
         "终止上市日期"
       ],
-      "dedup_status": "一致"
+      "dedup_status": "一致",
+      "duplicate_record_count_definition": "额外记录数=原始记录数-唯一证券数=213-213=0",
+      "duplicate_cause": "无重复记录(0),不适用"
     },
     "SZ_paused": {
       "error": "KeyError: '证券代码'"
@@ -162,5 +166,26 @@
       "status": "unknown",
       "note": "未发现北交所退市名单接口;上一轮已标记unknown,本轮确认函数清单。"
     }
+  },
+  "r5_revision": {
+    "revise_time": "2026-11-21T18:02:16.014450+08:00",
+    "scope": "仅修正P2-01重复原因表述;统计数字不变(161原始/155唯一/6额外重复)",
+    "reason": "第四轮将6条额外重复记录归因为\"同一证券重复登记\"超过现有证据;交易所未提供官方解释,改标unknown",
+    "duplicate_record_count_definition": "超过每个证券代码首次出现次数的额外记录数(即原始记录数-唯一证券数),不等于重复代码个数",
+    "duplicate_record_count_value": 6,
+    "duplicate_code_count_value": 6,
+    "duplicate_cause": "unknown：同一证券代码存在两条上市日期不同的记录，现有证据无法确定数据源形成该记录的具体原因。",
+    "verified_facts": [
+      "两条记录证券代码相同",
+      "公司简称相同",
+      "暂停上市日期相同",
+      "上市日期不同"
+    ],
+    "not_asserted": [
+      "不认定为同一证券重复登记",
+      "不推断具体历史上市原因"
+    ],
+    "SZ_unchanged": "213原始/213唯一/0重复",
+    "BJ_unchanged": "无退市名单接口,unknown"
   }
 }
