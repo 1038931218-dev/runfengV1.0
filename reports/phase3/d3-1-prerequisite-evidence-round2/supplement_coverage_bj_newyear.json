@@ -129,7 +129,14 @@
         "name": "曙光数创"
       }
     ],
-    "note": "北交所股票在stock_profile_cninfo的覆盖率采样估算"
+    "note": "北交所股票在stock_profile_cninfo的覆盖率采样估算",
+    "sampling_method": {
+      "algorithm": "Python random.sample 无放回简单随机抽样",
+      "random_seed": 20261121,
+      "stratified": false,
+      "deduplicated": true,
+      "note": "seed=20261121 后首个 random.sample(北交所官网名单356,20);与200样本共用同一随机流"
+    }
   },
   "universe_coverage_sample": {
     "universe_size": 5580,
@@ -1141,7 +1148,42 @@
         "status": "ok",
         "industry": "化学原料和化学制品制造业"
       }
-    ]
+    ],
+    "sampling_method": {
+      "population": "full_universe_code_audit.json 的 three_market_union.code_list_sorted (三市官网去重5580)",
+      "algorithm": "Python random.sample 无放回简单随机抽样",
+      "implementation": "random.seed(20261121) 后,先 random.sample(北交所名单,20) 用于bj_coverage,再 random.sample(universe,200) 用于本200样本",
+      "random_seed": 20261121,
+      "seed_source": "采集脚本 r2_supplement.py 显式 random.seed(20261121);非事后编造",
+      "seed_reproduced": true,
+      "reproduction_evidence": "以 seed=20261121 先抽20(占位)再对5580列表抽200,复现的200代码序列与落盘样本逐位完全一致(first3=002438/300555/600602;exact_identical=true)",
+      "stratified": false,
+      "stratification_note": "200样本从5580全集做简单随机抽样,未按市场/板块分层;另有30样本(另一文件)才是按5市场分组各6只",
+      "deduplicated": true,
+      "dedup_note": "random.sample 无放回,样本内无重复(已验证200唯一);母体5580本身为三市官网去重并集",
+      "sample_code_digest": {
+        "count": 200,
+        "first_5": [
+          "002438",
+          "300555",
+          "600602",
+          "002110",
+          "601882"
+        ],
+        "last_5": [
+          "300650",
+          "301001",
+          "000989",
+          "688468",
+          "002145"
+        ],
+        "sha256_of_ordered_code_list": "38c8ddc94c97185a812c17fe979c343e6c85a476456536b8fa3111eb70e5db07",
+        "note": "完整200只代码明细见本对象 samples 数组(逐只含code/status/industry),摘要仅作快速核对"
+      }
+    },
+    "coverage_scope_note": "200/200=100.00% 仅为样本覆盖率(200只随机样本的行业名称字段非空映射率),不得表述为全市场精确覆盖率;全市场精确覆盖率 unavailable",
+    "classification_standard": "unknown",
+    "classification_standard_note": "profile '所属行业' 字段未直接返回分类标准编码/版本/生效日期;无官方依据前不认定为证监会行业分类,标记unknown"
   },
   "sina_newyear_check": {
     "code": "000932",

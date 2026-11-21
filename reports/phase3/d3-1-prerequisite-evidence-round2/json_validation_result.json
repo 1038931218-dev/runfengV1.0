@@ -1,0 +1,45 @@
+{
+  "task": "D3-1 phase2 round5 - four evidence JSON strict validation",
+  "validation_time": "2026-11-21",
+  "validator": "Python3 json.loads(parse_constant=raise) + allow_nan=False dump",
+  "note": "严格JSON解析器拒绝NaN/Infinity/-Infinity;四份证据JSON均须strict_json_valid=true。P1-01已把new_interfaces_probe.json的6处NaN转null。",
+  "results": [
+    {
+      "file": "new_interfaces_probe.json",
+      "size_bytes": 28521,
+      "sha256": "3d692097d166d0163c522a17bedc5e68f6fc3c09d8d1eeb6b34b0ef8b00817af",
+      "strict_json_valid": true,
+      "nonfinite_tokens": 0,
+      "parse_error": null,
+      "top_level_type": "dict"
+    },
+    {
+      "file": "sector_index_history.json",
+      "size_bytes": 3262648,
+      "sha256": "b9e72fe0cbd175725fd8683d233ceb89cae02c115e5f9381d5cea825d3ba73a3",
+      "strict_json_valid": true,
+      "nonfinite_tokens": 0,
+      "parse_error": null,
+      "top_level_type": "dict"
+    },
+    {
+      "file": "classification_sample_30.json",
+      "size_bytes": 101855,
+      "sha256": "f51034d6ad7f8c64a25422ddf58e3ff7af393cbac4be1773f9936b35dfced02a",
+      "strict_json_valid": true,
+      "nonfinite_tokens": 0,
+      "parse_error": null,
+      "top_level_type": "dict"
+    },
+    {
+      "file": "supplement_coverage_bj_newyear.json",
+      "size_bytes": 28238,
+      "sha256": "0b4cc0705cad75c2a5c91519264521205d90a1152c57949f3de068be79441951",
+      "strict_json_valid": true,
+      "nonfinite_tokens": 0,
+      "parse_error": null,
+      "top_level_type": "dict"
+    }
+  ],
+  "all_valid": true
+}

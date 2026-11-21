@@ -2,7 +2,7 @@
   "task": "R2 classification sample 30 stocks",
   "collect_time": "2026-11-21T20:09:08.354821+08:00",
   "akshare_version": "1.18.22",
-  "note": "30只样本覆盖5市场+6行业;逐只调用stock_profile_cninfo(所属行业=证监会行业名称);巨潮change历史按区间;严格区分目录vs映射。",
+  "note": "30只样本覆盖5市场+6行业;逐只调用stock_profile_cninfo(返回所属行业名称字段,未返回标准编码/版本/生效日期,classification_standard=unknown,不认定为证监会行业分类);巨潮change历史按区间;严格区分目录vs映射。",
   "sample_design": "5市场各6只;行业标签为人读用途,分类以接口返回为准",
   "samples": [
     {
@@ -1686,6 +1686,8 @@
       "832000"
     ],
     "cninfo_change_ok": 25,
-    "note": "profile所属行业为证监会行业名称(单级,非标准编码);cninfo_change含多标准变更历史但止于2022-07"
+    "note": "profile所属行业字段为单级行业名称,无编码/标准标识/版本/生效日期,classification_standard=unknown,不认定为证监会行业分类;cninfo_change含多标准变更历史但止于2022-07",
+    "classification_standard": "unknown",
+    "classification_standard_note": "stock_profile_cninfo 未直接返回分类标准编码/版本/生效日期;无官方依据前标unknown,不与巨潮008002合并计算覆盖率"
   }
 }
