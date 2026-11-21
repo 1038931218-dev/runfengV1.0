@@ -1,0 +1,1142 @@
+{
+  "task": "D3-1 prerequisite: supplementary index daily + cross-source sample",
+  "akshare_version": "1.18.22",
+  "collect_time": "2026-11-21T08:38:46.993605+08:00",
+  "note": "补充指数日线源实测 + 30只证券多源交叉核验;只读;敏感字段脱敏。",
+  "index_daily_extra": [
+    {
+      "interface": "ak.stock_zh_index_daily(symbol='sh000001')",
+      "source": "新浪",
+      "params": {
+        "symbol": "sh000001"
+      },
+      "request_time": "2026-11-21T08:38:46.993640+08:00",
+      "response_status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 8768,
+      "fields": [
+        "date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume"
+      ],
+      "sample_first5": [
+        {
+          "date": "1990-12-19",
+          "open": 96.05,
+          "high": 99.98,
+          "low": 95.79,
+          "close": 99.98,
+          "volume": 126000
+        },
+        {
+          "date": "1990-12-20",
+          "open": 104.3,
+          "high": 104.39,
+          "low": 99.98,
+          "close": 104.39,
+          "volume": 19700
+        },
+        {
+          "date": "1990-12-21",
+          "open": 109.07,
+          "high": 109.13,
+          "low": 103.73,
+          "close": 109.13,
+          "volume": 2800
+        },
+        {
+          "date": "1990-12-24",
+          "open": 113.57,
+          "high": 114.55,
+          "low": 109.13,
+          "close": 114.55,
+          "volume": 3200
+        },
+        {
+          "date": "1990-12-25",
+          "open": 120.09,
+          "high": 120.25,
+          "low": 114.55,
+          "close": 120.25,
+          "volume": 1500
+        }
+      ],
+      "has_ohlc": true,
+      "has_volume": true,
+      "has_amount": false,
+      "date_min": "1990-12-19",
+      "date_max": "2026-11-20",
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://finance.sina.com.cn/realstock/company/sh000001/hisdata/klc_kl.js",
+          "params": "{'d': '2020_2_4'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:46.993739+08:00",
+          "http_status": 200,
+          "content_type": "application/x-javascript",
+          "body_len": 146340,
+          "body_sample": "var KLC_KL_sh000001=\"HX/DAAAg8/FycXa9AEEQrHwwe68gDRLAcIaBEDmaIJhHgbK8A837KYFh6BrIUPQGKkWBUg0KgCclOcOBAAcOBAgmQIAAQBAAQBAX5u7WR8AWR8ANINuBaQQRDCJ6lCAwZCAOTUUNAAUUAgiCxJaqRqSNSV8zGamIGhDxI0C7ewI8AwI8gGRIesJoAsJog2KIeOJoAOJog1YNYAKAgM2nwLKfW44QAAwIsiswh04SIUASIQZx7ca3mIyQG8HpNG3EJUgIhGdda3mIegDBNKHfk3cIoAcI8uoe43II8AAgj06ca3mIeAA0FScQ3wIoAAomSYQ3UgCAAj2EYy2aBAAAOEFYC4UAAAAcp0cC4+HeAAQArMC4SIAAFclcq4WHyQBM+7c04SIAAAAFFYW4UwDUgQcYemIUAuQKgzI6eYJyAYJyAiPya6IeQHhCUDqecIyASIygtqYe6IUA6IClYFveEJAAEJ2H5/3YiJAwcAA0iH4DOJUAFKAmR6c0HoA0HFgtqe6IoA6IoA0JHa6IUQHhCcDFYM40HFeg3A4cM4cIAwDw7GcW4cIAwDAhqeg4SIKAUAO"
+        }
+      ],
+      "elapsed_ms": 185,
+      "label": "sina_sh000001"
+    },
+    {
+      "interface": "ak.stock_zh_index_daily(symbol='sh000922')",
+      "source": "新浪-中证红利",
+      "params": {
+        "symbol": "sh000922"
+      },
+      "request_time": "2026-11-21T08:38:47.182454+08:00",
+      "response_status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 3423,
+      "fields": [
+        "date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume"
+      ],
+      "sample_first5": [
+        {
+          "date": "2005-01-04",
+          "open": 996.377,
+          "high": 996.377,
+          "low": 981.555,
+          "close": 981.555,
+          "volume": 180302622
+        },
+        {
+          "date": "2005-01-05",
+          "open": 981.105,
+          "high": 986.535,
+          "low": 981.105,
+          "close": 986.535,
+          "volume": 164649599
+        },
+        {
+          "date": "2005-01-06",
+          "open": 987.008,
+          "high": 987.008,
+          "low": 975.526,
+          "close": 975.526,
+          "volume": 160063142
+        },
+        {
+          "date": "2005-01-07",
+          "open": 975.578,
+          "high": 982.043,
+          "low": 975.578,
+          "close": 980.717,
+          "volume": 174006153
+        },
+        {
+          "date": "2005-01-10",
+          "open": 979.749,
+          "high": 989.529,
+          "low": 979.749,
+          "close": 989.529,
+          "volume": 147843280
+        }
+      ],
+      "has_ohlc": true,
+      "has_volume": true,
+      "has_amount": false,
+      "date_min": "2005-01-04",
+      "date_max": "2019-01-30",
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://finance.sina.com.cn/realstock/company/sh000922/hisdata/klc_kl.js",
+          "params": "{'d': '2020_2_4'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:47.182569+08:00",
+          "http_status": 200,
+          "content_type": "application/x-javascript",
+          "body_len": 58486,
+          "body_sample": "var KLC_KL_sh000922=\"HX/DKQBYz/mZQzDAAAmnDaY8eMzvKy8+43mKAA2UJsTi4MZHAAazykpnQguS0AIoMAATQZcgpGS4wnGTAA0Y6okhzXL/HlJHAlJbbR4SOmWUKAAiSZEs64Xs6vIEAofQzvLMEoDIFMLKnuehyuUo5FAQ9cWYEHsMXIyylMJyLlMR9zHUMwHAAlK9vGXRNuUi/GAQFLWn28TvR2twp/fDHAAfDHts9tIShJjsEAAkl4PrhJQYZfnJuvYnJYb+/5SeKHAAWvqQ/yhLmU02HAQoV+Sdzg8vMAAAAVsZdybgUhUPXHAQPSZEG8CkGSqrvoTAALIZxEmK6tiL4bgBAAfDM8n6zQU4IAAQjRmz9pqtO+t5rnuvAAguvArBJ5zI3aJkRAA7dyT104cFGAAAHDpyIDE64Uf7HAwRcyd80Hgp+9WBIxkAAIxkwV0wQWWOA7BFAA7BFHeFUO9840mJ/exMp4IYKVvmfypjPTOn9Tj6TcPYATuIS35JxdEct0AAubRi0AnsX2UtqHAosL1suPZmk2tTGAAAYpi1q7KRE2IaRnqYivSFTqH9u2U4GAAgdIU82Bu"
+        }
+      ],
+      "elapsed_ms": 153,
+      "label": "sina_sh000922"
+    },
+    {
+      "interface": "ak.stock_zh_index_daily_tx(symbol='sz980017')",
+      "source": "腾讯",
+      "params": {
+        "symbol": "sz980017"
+      },
+      "request_time": "2026-11-21T08:38:47.337144+08:00",
+      "response_status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 640,
+      "fields": [
+        "date",
+        "open",
+        "close",
+        "high",
+        "low",
+        "amount"
+      ],
+      "sample_first5": [
+        {
+          "date": "2024-04-01",
+          "open": 6227.96,
+          "close": 6273.7,
+          "high": 6300.74,
+          "low": 6210.76,
+          "amount": 3675339.0
+        },
+        {
+          "date": "2024-04-02",
+          "open": 6276.64,
+          "close": 6161.03,
+          "high": 6277.36,
+          "low": 6125.3,
+          "amount": 3299629.0
+        },
+        {
+          "date": "2024-04-03",
+          "open": 6155.97,
+          "close": 6107.08,
+          "high": 6208.76,
+          "low": 6055.62,
+          "amount": 3406373.0
+        },
+        {
+          "date": "2024-04-08",
+          "open": 6105.46,
+          "close": 5966.14,
+          "high": 6118.15,
+          "low": 5966.14,
+          "amount": 3285369.0
+        },
+        {
+          "date": "2024-04-09",
+          "open": 5962.42,
+          "close": 6016.51,
+          "high": 6018.05,
+          "low": 5910.25,
+          "amount": 2591939.0
+        }
+      ],
+      "has_ohlc": true,
+      "has_volume": false,
+      "has_amount": true,
+      "date_min": "2024-04-01",
+      "date_max": "2026-11-20",
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+          "params": "{'code': 'sz980017', 'type': 'qfq', '_var': 'trend_qfq', 'r': '0.3506048543943414'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:47.337255+08:00",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "body_len": 41,
+          "body_sample": "trend_qfq={\"code\":0,\"msg\":\"ok\",\"data\":[]}"
+        },
+        {
+          "method": "get",
+          "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+          "params": "{'_var': 'kline_dayqfq', 'param': 'sz980017,day,,,320,qfq', 'r': '0.751892490072597'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:47.460680+08:00",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "body_len": 37086,
+          "body_sample": "kline_dayqfq={\"code\":0,\"msg\":\"\",\"data\":{\"sz980017\":{\"day\":[[\"2025-07-28\",\"9407.60\",\"9384.67\",\"9417.82\",\"9316.44\",\"5896531.00\",{},\"1.69\",\"3912905.15\",\"0.00\",\"0.00\"],[\"2025-07-29\",\"9351.97\",\"9516.42\",\"9519.23\",\"9347.67\",\"6509090.00\",{},\"1.85\",\"4659999.08\",\"0.00\",\"0.00\"],[\"2025-07-30\",\"9494.50\",\"9421.14\",\"9571.38\",\"9352.33\",\"6212417.00\",{},\"1.77\",\"4390578.64\",\"0.00\",\"0.00\"],[\"2025-07-31\",\"9392.88\",\"9290.03\",\"9506.04\",\"9260.99\",\"6893316.00\",{},\"1.96\",\"5116446.66\",\"0.00\",\"0.00\"],[\"2025-08-01\",\"9266.45\",\"9177.08\",\"9374.22\",\"9120.23\",\"6075656.00\",{},\"1.73\",\"3868580.20\",\"0.00\",\"0.00\"],[\"2025-08-04\",\"9"
+        },
+        {
+          "method": "get",
+          "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+          "params": "{'_var': 'kline_dayqfq', 'param': 'sz980017,day,2025-01-01,2026-12-31,640,qfq', 'r': '0.8205512681390605'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:47.714852+08:00",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "body_len": 70740,
+          "body_sample": "kline_dayqfq={\"code\":0,\"msg\":\"\",\"data\":{\"sz980017\":{\"day\":[[\"2024-04-01\",\"6227.96\",\"6273.70\",\"6300.74\",\"6210.76\",\"3675339.00\",{},\"1.14\",\"1776725.34\",\"0.00\",\"0.00\"],[\"2024-04-02\",\"6276.64\",\"6161.03\",\"6277.36\",\"6125.30\",\"3299629.00\",{},\"1.02\",\"1651705.83\",\"0.00\",\"0.00\"],[\"2024-04-03\",\"6155.97\",\"6107.08\",\"6208.76\",\"6055.62\",\"3406373.00\",{},\"1.06\",\"1698775.46\",\"0.00\",\"0.00\"],[\"2024-04-08\",\"6105.46\",\"5966.14\",\"6118.15\",\"5966.14\",\"3285369.00\",{},\"1.02\",\"1526297.51\",\"0.00\",\"0.00\"],[\"2024-04-09\",\"5962.42\",\"6016.51\",\"6018.05\",\"5910.25\",\"2591939.00\",{},\"0.80\",\"1212572.50\",\"0.00\",\"0.00\"],[\"2024-04-10\",\"6"
+        },
+        {
+          "method": "get",
+          "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+          "params": "{'_var': 'kline_dayqfq', 'param': 'sz980017,day,2026-01-01,2027-12-31,640,qfq', 'r': '0.8205512681390605'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:48.047719+08:00",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "body_len": 70740,
+          "body_sample": "kline_dayqfq={\"code\":0,\"msg\":\"\",\"data\":{\"sz980017\":{\"day\":[[\"2024-04-01\",\"6227.96\",\"6273.70\",\"6300.74\",\"6210.76\",\"3675339.00\",{},\"1.14\",\"1776725.34\",\"0.00\",\"0.00\"],[\"2024-04-02\",\"6276.64\",\"6161.03\",\"6277.36\",\"6125.30\",\"3299629.00\",{},\"1.02\",\"1651705.83\",\"0.00\",\"0.00\"],[\"2024-04-03\",\"6155.97\",\"6107.08\",\"6208.76\",\"6055.62\",\"3406373.00\",{},\"1.06\",\"1698775.46\",\"0.00\",\"0.00\"],[\"2024-04-08\",\"6105.46\",\"5966.14\",\"6118.15\",\"5966.14\",\"3285369.00\",{},\"1.02\",\"1526297.51\",\"0.00\",\"0.00\"],[\"2024-04-09\",\"5962.42\",\"6016.51\",\"6018.05\",\"5910.25\",\"2591939.00\",{},\"0.80\",\"1212572.50\",\"0.00\",\"0.00\"],[\"2024-04-10\",\"6"
+        }
+      ],
+      "elapsed_ms": 1039,
+      "label": "tx_sz980017"
+    },
+    {
+      "interface": "ak.stock_zh_index_hist_csindex(symbol='000928',2024-01-01~2024-04-30)",
+      "source": "中证指数官网",
+      "params": {
+        "symbol": "000928",
+        "start_date": "20240101",
+        "end_date": "20240430"
+      },
+      "request_time": "2026-11-21T08:38:48.377485+08:00",
+      "response_status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 79,
+      "fields": [
+        "日期",
+        "指数代码",
+        "指数中文全称",
+        "指数中文简称",
+        "指数英文全称",
+        "指数英文简称",
+        "开盘",
+        "最高",
+        "最低",
+        "收盘",
+        "涨跌",
+        "涨跌幅",
+        "成交量",
+        "成交金额",
+        "样本数量",
+        "滚动市盈率"
+      ],
+      "sample_first5": [
+        {
+          "日期": "2024-01-01",
+          "指数代码": "000928",
+          "指数中文全称": "中证能源指数",
+          "指数中文简称": "800能源",
+          "指数英文全称": "CSI Energy Index",
+          "指数英文简称": "800 Energy",
+          "开盘": 2656.88,
+          "最高": 2728.7,
+          "最低": 2656.88,
+          "收盘": 2717.35,
+          "涨跌": 59.76,
+          "涨跌幅": 2.25,
+          "成交量": 1399303300.0,
+          "成交金额": 126.88,
+          "样本数量": 24.0,
+          "滚动市盈率": 7.92
+        },
+        {
+          "日期": "2024-01-02",
+          "指数代码": "000928",
+          "指数中文全称": "中证能源指数",
+          "指数中文简称": "800能源",
+          "指数英文全称": "CSI Energy Index",
+          "指数英文简称": "800 Energy",
+          "开盘": 2656.88,
+          "最高": 2728.7,
+          "最低": 2656.88,
+          "收盘": 2717.35,
+          "涨跌": 59.76,
+          "涨跌幅": 2.25,
+          "成交量": 1399303300.0,
+          "成交金额": 126.88,
+          "样本数量": 24.0,
+          "滚动市盈率": 7.92
+        },
+        {
+          "日期": "2024-01-03",
+          "指数代码": "000928",
+          "指数中文全称": "中证能源指数",
+          "指数中文简称": "800能源",
+          "指数英文全称": "CSI Energy Index",
+          "指数英文简称": "800 Energy",
+          "开盘": 2709.34,
+          "最高": 2754.25,
+          "最低": 2706.27,
+          "收盘": 2754.04,
+          "涨跌": 36.69,
+          "涨跌幅": 1.35,
+          "成交量": 1214892700.0,
+          "成交金额": 111.11,
+          "样本数量": 24.0,
+          "滚动市盈率": 8.05
+        },
+        {
+          "日期": "2024-01-04",
+          "指数代码": "000928",
+          "指数中文全称": "中证能源指数",
+          "指数中文简称": "800能源",
+          "指数英文全称": "CSI Energy Index",
+          "指数英文简称": "800 Energy",
+          "开盘": 2759.78,
+          "最高": 2791.93,
+          "最低": 2756.92,
+          "收盘": 2779.82,
+          "涨跌": 25.78,
+          "涨跌幅": 0.94,
+          "成交量": 1242675600.0,
+          "成交金额": 117.65,
+          "样本数量": 24.0,
+          "滚动市盈率": 8.15
+        },
+        {
+          "日期": "2024-01-05",
+          "指数代码": "000928",
+          "指数中文全称": "中证能源指数",
+          "指数中文简称": "800能源",
+          "指数英文全称": "CSI Energy Index",
+          "指数英文简称": "800 Energy",
+          "开盘": 2774.12,
+          "最高": 2806.36,
+          "最低": 2762.62,
+          "收盘": 2774.74,
+          "涨跌": -5.09,
+          "涨跌幅": -0.18,
+          "成交量": 1215287000.0,
+          "成交金额": 113.46,
+          "样本数量": 24.0,
+          "滚动市盈率": 8.15
+        }
+      ],
+      "has_ohlc": true,
+      "has_volume": true,
+      "has_amount": false,
+      "date_min": "2024-01-01",
+      "date_max": "2024-04-30",
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": "{'indexCode': '000928', 'startDate': '20240101', 'endDate': '20240430'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:48.377582+08:00",
+          "http_status": 200,
+          "content_type": "application/json;charset=UTF-8",
+          "body_len": 26977,
+          "body_sample": "{\"code\":\"200\",\"msg\":\"Success\",\"data\":[{\"tradeDate\":\"20240101\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2656.88,\"high\":2728.7,\"low\":2656.88,\"close\":2717.35,\"change\":59.76,\"changePct\":2.25,\"tradingVol\":1.3993033E9,\"tradingValue\":126.88,\"consNumber\":24.0,\"peg\":7.92},{\"tradeDate\":\"20240102\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2656.88,\"high\":2728.7,\"low\":2656.88,\"close\""
+        }
+      ],
+      "elapsed_ms": 135,
+      "label": "csindex_000928"
+    },
+    {
+      "interface": "ak.stock_zh_index_daily_em(symbol='csi931151',1990~2050)",
+      "source": "东财-中证指数",
+      "params": {
+        "symbol": "csi931151"
+      },
+      "request_time": "2026-11-21T08:38:48.514282+08:00",
+      "response_status": "error",
+      "failure_category": "network_unreachable",
+      "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+      "row_count": 0,
+      "fields": [],
+      "sample_first5": [],
+      "has_ohlc": false,
+      "has_volume": false,
+      "has_amount": false,
+      "date_min": null,
+      "date_max": null,
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://push2his.eastmoney.com/api/qt/stock/kline/get",
+          "params": "{'secid': '2.931151', 'fields1': 'f1,f2,f3,f4,f5', 'fields2': 'f51,f52,f53,f54,f55,f56,f57,f58', 'klt': '101', 'fqt': '0', 'beg': '19900101', 'end': '20500101'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:48.514389+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        }
+      ],
+      "elapsed_ms": 128,
+      "traceback_tail": "ts/sessions.py\", line 703, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/adapters.py\", line 659, in send\n    raise ConnectionError(err, request=request)\nrequests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))\n",
+      "label": "em_csi931151"
+    }
+  ],
+  "cross_source": {
+    "stat": {
+      "total": 30,
+      "name_match_sina": 29,
+      "name_match_em": 30,
+      "name_mismatch": 1,
+      "missing_in_sina": 0,
+      "missing_in_em": 0,
+      "market_prefix_consistent": 30,
+      "with_list_date": 30,
+      "with_industry": 18,
+      "differences": [
+        {
+          "code": "000012",
+          "field": "name",
+          "primary": "南  玻Ａ",
+          "sina": "南 玻Ａ"
+        }
+      ]
+    },
+    "samples": [
+      {
+        "code": "603120",
+        "group": "主板_SH",
+        "primary": {
+          "name": "肯特催化",
+          "list_date": "2025-04-16",
+          "industry": null,
+          "market": "SH",
+          "board": "主板",
+          "source": "sse"
+        },
+        "sina": {
+          "name": "肯特催化",
+          "prefix": "sh",
+          "present": true
+        },
+        "em": {
+          "name": "肯特催化",
+          "present": true
+        }
+      },
+      {
+        "code": "600498",
+        "group": "主板_SH",
+        "primary": {
+          "name": "烽火通信",
+          "list_date": "2001-08-23",
+          "industry": null,
+          "market": "SH",
+          "board": "主板",
+          "source": "sse"
+        },
+        "sina": {
+          "name": "烽火通信",
+          "prefix": "sh",
+          "present": true
+        },
+        "em": {
+          "name": "烽火通信",
+          "present": true
+        }
+      },
+      {
+        "code": "600761",
+        "group": "主板_SH",
+        "primary": {
+          "name": "安徽合力",
+          "list_date": "1996-10-09",
+          "industry": null,
+          "market": "SH",
+          "board": "主板",
+          "source": "sse"
+        },
+        "sina": {
+          "name": "安徽合力",
+          "prefix": "sh",
+          "present": true
+        },
+        "em": {
+          "name": "安徽合力",
+          "present": true
+        }
+      },
+      {
+        "code": "600960",
+        "group": "主板_SH",
+        "primary": {
+          "name": "渤海汽车",
+          "list_date": "2004-04-07",
+          "industry": null,
+          "market": "SH",
+          "board": "主板",
+          "source": "sse"
+        },
+        "sina": {
+          "name": "渤海汽车",
+          "prefix": "sh",
+          "present": true
+        },
+        "em": {
+          "name": "渤海汽车",
+          "present": true
+        }
+      },
+      {
+        "code": "605099",
+        "group": "主板_SH",
+        "primary": {
+          "name": "共创草坪",
+          "list_date": "2020-09-30",
+          "industry": null,
+          "market": "SH",
+          "board": "主板",
+          "source": "sse"
+        },
+        "sina": {
+          "name": "共创草坪",
+          "prefix": "sh",
+          "present": true
+        },
+        "em": {
+          "name": "共创草坪",
+          "present": true
+        }
+      },
+      {
+        "code": "603335",
+        "group": "主板_SH",
+        "primary": {
+          "name": "迪生力",
+          "list_date": "2017-06-20",
+          "industry": null,
+          "market": "SH",
+          "board": "主板",
+          "source": "sse"
+        },
+        "sina": {
+          "name": "迪生力",
+          "prefix": "sh",
+          "present": true
+        },
+        "em": {
+          "name": "迪生力",
+          "present": true
+        }
+      },
+      {
+        "code": "000612",
+        "group": "主板_SZ",
+        "primary": {
+          "name": "焦作万方",
+          "list_date": "1996-09-26",
+          "industry": "C 制造业",
+          "market": "SZ",
+          "board": "主板",
+          "source": "szse"
+        },
+        "sina": {
+          "name": "焦作万方",
+          "prefix": "sz",
+          "present": true
+        },
+        "em": {
+          "name": "焦作万方",
+          "present": true
+        }
+      },
+      {
+        "code": "002169",
+        "group": "主板_SZ",
+        "primary": {
+          "name": "智光电气",
+          "list_date": "2007-09-19",
+          "industry": "C 制造业",
+          "market": "SZ",
+          "board": "主板",
+          "source": "szse"
+        },
+        "sina": {
+          "name": "智光电气",
+          "prefix": "sz",
+          "present": true
+        },
+        "em": {
+          "name": "智光电气",
+          "present": true
+        }
+      },
+      {
+        "code": "000590",
+        "group": "主板_SZ",
+        "primary": {
+          "name": "古汉医药",
+          "list_date": "1996-01-19",
+          "industry": "C 制造业",
+          "market": "SZ",
+          "board": "主板",
+          "source": "szse"
+        },
+        "sina": {
+          "name": "古汉医药",
+          "prefix": "sz",
+          "present": true
+        },
+        "em": {
+          "name": "古汉医药",
+          "present": true
+        }
+      },
+      {
+        "code": "000012",
+        "group": "主板_SZ",
+        "primary": {
+          "name": "南  玻Ａ",
+          "list_date": "1992-02-28",
+          "industry": "C 制造业",
+          "market": "SZ",
+          "board": "主板",
+          "source": "szse"
+        },
+        "sina": {
+          "name": "南 玻Ａ",
+          "prefix": "sz",
+          "present": true
+        },
+        "em": {
+          "name": "南  玻Ａ",
+          "present": true
+        }
+      },
+      {
+        "code": "000935",
+        "group": "主板_SZ",
+        "primary": {
+          "name": "四川双马",
+          "list_date": "1999-08-24",
+          "industry": "C 制造业",
+          "market": "SZ",
+          "board": "主板",
+          "source": "szse"
+        },
+        "sina": {
+          "name": "四川双马",
+          "prefix": "sz",
+          "present": true
+        },
+        "em": {
+          "name": "四川双马",
+          "present": true
+        }
+      },
+      {
+        "code": "000882",
+        "group": "主板_SZ",
+        "primary": {
+          "name": "华联股份",
+          "list_date": "1998-06-16",
+          "industry": "L 商务服务",
+          "market": "SZ",
+          "board": "主板",
+          "source": "szse"
+        },
+        "sina": {
+          "name": "华联股份",
+          "prefix": "sz",
+          "present": true
+        },
+        "em": {
+          "name": "华联股份",
+          "present": true
+        }
+      },
+      {
+        "code": "688456",
+        "group": "科创板",
+        "primary": {
+          "name": "有研粉材",
+          "list_date": "2021-03-17",
+          "industry": null,
+          "market": "SH",
+          "board": "科创板",
+          "source": "sse"
+        },
+        "sina": {
+          "name": "有研粉材",
+          "prefix": "sh",
+          "present": true
+        },
+        "em": {
+          "name": "有研粉材",
+          "present": true
+        }
+      },
+      {
+        "code": "688426",
+        "group": "科创板",
+        "primary": {
+          "name": "康为世纪",
+          "list_date": "2022-10-25",
+          "industry": null,
+          "market": "SH",
+          "board": "科创板",
+          "source": "sse"
+        },
+        "sina": {
+          "name": "康为世纪",
+          "prefix": "sh",
+          "present": true
+        },
+        "em": {
+          "name": "康为世纪",
+          "present": true
+        }
+      },
+      {
+        "code": "688199",
+        "group": "科创板",
+        "primary": {
+          "name": "久日新材",
+          "list_date": "2019-11-05",
+          "industry": null,
+          "market": "SH",
+          "board": "科创板",
+          "source": "sse"
+        },
+        "sina": {
+          "name": "久日新材",
+          "prefix": "sh",
+          "present": true
+        },
+        "em": {
+          "name": "久日新材",
+          "present": true
+        }
+      },
+      {
+        "code": "688192",
+        "group": "科创板",
+        "primary": {
+          "name": "迪哲医药",
+          "list_date": "2021-12-10",
+          "industry": null,
+          "market": "SH",
+          "board": "科创板",
+          "source": "sse"
+        },
+        "sina": {
+          "name": "迪哲医药",
+          "prefix": "sh",
+          "present": true
+        },
+        "em": {
+          "name": "迪哲医药",
+          "present": true
+        }
+      },
+      {
+        "code": "688820",
+        "group": "科创板",
+        "primary": {
+          "name": "盛合晶微",
+          "list_date": "2026-04-21",
+          "industry": null,
+          "market": "SH",
+          "board": "科创板",
+          "source": "sse"
+        },
+        "sina": {
+          "name": "盛合晶微",
+          "prefix": "sh",
+          "present": true
+        },
+        "em": {
+          "name": "盛合晶微",
+          "present": true
+        }
+      },
+      {
+        "code": "688459",
+        "group": "科创板",
+        "primary": {
+          "name": "哈铁科技",
+          "list_date": "2022-10-12",
+          "industry": null,
+          "market": "SH",
+          "board": "科创板",
+          "source": "sse"
+        },
+        "sina": {
+          "name": "哈铁科技",
+          "prefix": "sh",
+          "present": true
+        },
+        "em": {
+          "name": "哈铁科技",
+          "present": true
+        }
+      },
+      {
+        "code": "300863",
+        "group": "创业板",
+        "primary": {
+          "name": "卡倍亿",
+          "list_date": "2020-08-24",
+          "industry": "C 制造业",
+          "market": "SZ",
+          "board": "创业板",
+          "source": "szse"
+        },
+        "sina": {
+          "name": "卡倍亿",
+          "prefix": "sz",
+          "present": true
+        },
+        "em": {
+          "name": "卡倍亿",
+          "present": true
+        }
+      },
+      {
+        "code": "300774",
+        "group": "创业板",
+        "primary": {
+          "name": "倍杰特",
+          "list_date": "2021-08-04",
+          "industry": "N 公共环保",
+          "market": "SZ",
+          "board": "创业板",
+          "source": "szse"
+        },
+        "sina": {
+          "name": "倍杰特",
+          "prefix": "sz",
+          "present": true
+        },
+        "em": {
+          "name": "倍杰特",
+          "present": true
+        }
+      },
+      {
+        "code": "300758",
+        "group": "创业板",
+        "primary": {
+          "name": "七彩化学",
+          "list_date": "2019-02-22",
+          "industry": "C 制造业",
+          "market": "SZ",
+          "board": "创业板",
+          "source": "szse"
+        },
+        "sina": {
+          "name": "七彩化学",
+          "prefix": "sz",
+          "present": true
+        },
+        "em": {
+          "name": "七彩化学",
+          "present": true
+        }
+      },
+      {
+        "code": "301353",
+        "group": "创业板",
+        "primary": {
+          "name": "普莱得",
+          "list_date": "2023-05-30",
+          "industry": "C 制造业",
+          "market": "SZ",
+          "board": "创业板",
+          "source": "szse"
+        },
+        "sina": {
+          "name": "普莱得",
+          "prefix": "sz",
+          "present": true
+        },
+        "em": {
+          "name": "普莱得",
+          "present": true
+        }
+      },
+      {
+        "code": "300256",
+        "group": "创业板",
+        "primary": {
+          "name": "星星科技",
+          "list_date": "2011-08-19",
+          "industry": "C 制造业",
+          "market": "SZ",
+          "board": "创业板",
+          "source": "szse"
+        },
+        "sina": {
+          "name": "星星科技",
+          "prefix": "sz",
+          "present": true
+        },
+        "em": {
+          "name": "星星科技",
+          "present": true
+        }
+      },
+      {
+        "code": "300545",
+        "group": "创业板",
+        "primary": {
+          "name": "联得装备",
+          "list_date": "2016-09-28",
+          "industry": "C 制造业",
+          "market": "SZ",
+          "board": "创业板",
+          "source": "szse"
+        },
+        "sina": {
+          "name": "联得装备",
+          "prefix": "sz",
+          "present": true
+        },
+        "em": {
+          "name": "联得装备",
+          "present": true
+        }
+      },
+      {
+        "code": "920407",
+        "group": "北交所",
+        "primary": {
+          "name": "驰诚股份",
+          "list_date": "2023-02-16",
+          "industry": "仪器仪表制造业",
+          "market": "BJ",
+          "board": "北交所",
+          "source": "bse"
+        },
+        "sina": {
+          "name": "驰诚股份",
+          "prefix": "bj",
+          "present": true
+        },
+        "em": {
+          "name": "驰诚股份",
+          "present": true
+        }
+      },
+      {
+        "code": "920056",
+        "group": "北交所",
+        "primary": {
+          "name": "能之光",
+          "list_date": "2025-08-22",
+          "industry": "橡胶和塑料制品业",
+          "market": "BJ",
+          "board": "北交所",
+          "source": "bse"
+        },
+        "sina": {
+          "name": "能之光",
+          "prefix": "bj",
+          "present": true
+        },
+        "em": {
+          "name": "能之光",
+          "present": true
+        }
+      },
+      {
+        "code": "920523",
+        "group": "北交所",
+        "primary": {
+          "name": "德瑞锂电",
+          "list_date": "2021-06-03",
+          "industry": "电气机械和器材制造业",
+          "market": "BJ",
+          "board": "北交所",
+          "source": "bse"
+        },
+        "sina": {
+          "name": "德瑞锂电",
+          "prefix": "bj",
+          "present": true
+        },
+        "em": {
+          "name": "德瑞锂电",
+          "present": true
+        }
+      },
+      {
+        "code": "920057",
+        "group": "北交所",
+        "primary": {
+          "name": "百甲科技",
+          "list_date": "2023-03-14",
+          "industry": "金属制品业",
+          "market": "BJ",
+          "board": "北交所",
+          "source": "bse"
+        },
+        "sina": {
+          "name": "百甲科技",
+          "prefix": "bj",
+          "present": true
+        },
+        "em": {
+          "name": "百甲科技",
+          "present": true
+        }
+      },
+      {
+        "code": "920263",
+        "group": "北交所",
+        "primary": {
+          "name": "中航泰达",
+          "list_date": "2020-07-27",
+          "industry": "生态保护和环境治理业",
+          "market": "BJ",
+          "board": "北交所",
+          "source": "bse"
+        },
+        "sina": {
+          "name": "中航泰达",
+          "prefix": "bj",
+          "present": true
+        },
+        "em": {
+          "name": "中航泰达",
+          "present": true
+        }
+      },
+      {
+        "code": "920107",
+        "group": "北交所",
+        "primary": {
+          "name": "恒兴股份",
+          "list_date": "2026-08-17",
+          "industry": "化学原料和化学制品制造业",
+          "market": "BJ",
+          "board": "北交所",
+          "source": "bse"
+        },
+        "sina": {
+          "name": "恒兴股份",
+          "prefix": "bj",
+          "present": true
+        },
+        "em": {
+          "name": "恒兴股份",
+          "present": true
+        }
+      }
+    ],
+    "sample_method": "random.seed(20261121) 按主源板块分组各抽6只,共30只",
+    "name_normalization_note": "名称严格字符串相等比较;未做别名/简称归一化,差异如实列出"
+  },
+  "counts": {
+    "sina_rows": 5579,
+    "em_rows": 5580,
+    "sh_main": 1700,
+    "sh_star": 619,
+    "sz_total": 2905,
+    "bj_total": 356
+  }
+}

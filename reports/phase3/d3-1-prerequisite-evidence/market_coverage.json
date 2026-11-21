@@ -1,0 +1,130 @@
+{
+  "task": "D3-1 market coverage by exchange official source",
+  "collect_time": "2026-11-21T08:39:00.668772+08:00",
+  "note": "仅统计普通A股股票;ETF/指数/可转债/基金按其代码前缀与来源接口天然排除;交易所官网接口为权威名单。",
+  "scope_rules": {
+    "SH主板": "上交所 stock_info_sh_name_code(主板A股),代码6开头,排除688科创板",
+    "SH科创板": "上交所 stock_info_sh_name_code(科创板),代码688开头",
+    "SZ主板": "深交所 stock_info_sz_name_code A股列表 板块=主板,代码000/001/002/003开头",
+    "SZ创业板": "深交所 stock_info_sz_name_code A股列表 板块=创业板,代码300/301开头",
+    "BJ": "北交所 stock_info_bj_name_code,代码8/4/920开头",
+    "exclude": "东财*_em的ETF/指数/可转债不纳入;退市单列不计入存量"
+  },
+  "markets": {
+    "SH主板": {
+      "total_raw": 1700,
+      "valid_6digit": 1700,
+      "unique": 1700,
+      "duplicates": 0,
+      "missing_name": 0,
+      "missing_list_date": 0,
+      "list_date_present": true,
+      "delist_identifiable": false,
+      "industry_field": false,
+      "data_update_time": null,
+      "code_prefix": "6(非688)"
+    },
+    "SH科创板": {
+      "total_raw": 619,
+      "valid_6digit": 619,
+      "unique": 619,
+      "duplicates": 0,
+      "missing_name": 0,
+      "missing_list_date": 0,
+      "list_date_present": true,
+      "delist_identifiable": false,
+      "industry_field": false,
+      "data_update_time": null,
+      "code_prefix": "688"
+    },
+    "SZ主板": {
+      "total_raw": 1494,
+      "valid_6digit": 1494,
+      "unique": 1494,
+      "duplicates": 0,
+      "missing_name": 0,
+      "missing_list_date": 0,
+      "list_date_present": true,
+      "delist_identifiable": false,
+      "industry_field": true,
+      "industry_sample": [
+        "J 金融业",
+        "K 房地产",
+        "K 房地产",
+        "K 房地产",
+        "C 制造业"
+      ],
+      "data_update_time": null,
+      "code_prefix": "000/001/002/003"
+    },
+    "SZ创业板": {
+      "total_raw": 1411,
+      "valid_6digit": 1411,
+      "unique": 1411,
+      "duplicates": 0,
+      "missing_name": 0,
+      "missing_list_date": 0,
+      "list_date_present": true,
+      "delist_identifiable": false,
+      "industry_field": true,
+      "data_update_time": null,
+      "code_prefix": "300/301"
+    },
+    "BJ北交所": {
+      "total_raw": 356,
+      "valid_6digit": 356,
+      "unique": 356,
+      "duplicates": 0,
+      "missing_name": 0,
+      "missing_list_date": 0,
+      "list_date_present": true,
+      "delist_identifiable": false,
+      "industry_field": true,
+      "industry_sample": [
+        "汽车制造业",
+        "计算机、通信和其他电子设备制造业",
+        "通用设备制造业",
+        "专业技术服务业",
+        "计算机、通信和其他电子设备制造业"
+      ],
+      "report_date_sample": [
+        "2026-11-20",
+        "2026-11-20",
+        "2026-11-20"
+      ],
+      "data_update_time": "2026-11-20",
+      "code_prefix": "8/4/920"
+    }
+  },
+  "delisted": {
+    "SH": {
+      "total_raw": 161,
+      "valid_6digit": 161,
+      "unique": 155,
+      "duplicates": 6,
+      "source": "stock_info_sh_delist(全部)",
+      "has_delist_reason_col": [
+        "公司代码",
+        "公司简称",
+        "上市日期",
+        "暂停上市日期"
+      ]
+    },
+    "SZ": {
+      "total_raw": 213,
+      "valid_6digit": 213,
+      "unique": 213,
+      "duplicates": 0,
+      "source": "stock_info_sz_delist(终止上市公司)",
+      "has_delist_reason_col": [
+        "证券代码",
+        "证券简称",
+        "上市日期",
+        "终止上市日期"
+      ]
+    },
+    "BJ": "未提供退市名单接口(unknown)"
+  },
+  "total_unique_a_share": 5580,
+  "coverage_note": "三市存量去重合计(不含退市);此数为交易所官网名单口径, Northern交易所报告日期2026-11-20为数据快照时间非实时。"
+}

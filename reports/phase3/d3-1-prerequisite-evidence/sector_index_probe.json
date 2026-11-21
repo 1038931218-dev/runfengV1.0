@@ -1,0 +1,1195 @@
+{
+  "task": "D3-1-prerequisite sector index daily probe",
+  "akshare_version": "1.18.22",
+  "collect_time": "2026-11-21T08:36:57.166097+08:00",
+  "note": "只验证板块指数日线数据源;行业目录/成分股/板块指数严格区分;不写业务库;敏感字段脱敏。 补充指数日线源见 supplementary_index_daily(中证官网csindex/新浪/腾讯)。",
+  "kinds_definition": {
+    "directory": "行业目录=行业代码/名称/层级,无个股代码",
+    "constituents": "板块成分股=板块到个股映射,非日线",
+    "index_daily": "板块指数日线=板块指数的OHLCV历史序列"
+  },
+  "probes": [
+    {
+      "interface": "ak.stock_board_industry_name_em()",
+      "source": "东方财富",
+      "params": {},
+      "data_kind": "directory",
+      "note": "行业板块名称目录",
+      "request_time": "2026-11-21T08:36:57.166131+08:00",
+      "response_status": "error",
+      "failure_category": "network_unreachable",
+      "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+      "row_count": 0,
+      "fields": [],
+      "sample_first5": [],
+      "http_captures": [
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:36:57.166258+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:36:59.740663+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:02.740028+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        }
+      ],
+      "has_index_code": false,
+      "has_index_name": false,
+      "has_ohlc": false,
+      "has_volume": false,
+      "has_amount": false,
+      "date_min": null,
+      "date_max": null,
+      "supports_multi_day": false,
+      "unit_note": null,
+      "adjust_note": null,
+      "elapsed_ms": 5674,
+      "traceback_tail": "^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/sessions.py\", line 703, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/adapters.py\", line 659, in send\n    raise ConnectionError(err, request=request)\nrequests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))\n"
+    },
+    {
+      "interface": "ak.stock_board_industry_hist_em(symbol='半导体',20240101-20240430,日k)",
+      "source": "东方财富",
+      "params": {
+        "symbol": "半导体",
+        "start_date": "20240101",
+        "end_date": "20240430",
+        "period": "日k",
+        "adjust": ""
+      },
+      "data_kind": "index_daily",
+      "note": "行业板块指数日线",
+      "request_time": "2026-11-21T08:37:02.842812+08:00",
+      "response_status": "error",
+      "failure_category": "network_unreachable",
+      "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+      "row_count": 0,
+      "fields": [],
+      "sample_first5": [],
+      "http_captures": [
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:02.843023+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:04.782853+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:08.158157+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        }
+      ],
+      "has_index_code": false,
+      "has_index_name": false,
+      "has_ohlc": false,
+      "has_volume": false,
+      "has_amount": false,
+      "date_min": null,
+      "date_max": null,
+      "supports_multi_day": false,
+      "unit_note": null,
+      "adjust_note": null,
+      "elapsed_ms": 5422,
+      "traceback_tail": "^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/sessions.py\", line 703, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/adapters.py\", line 659, in send\n    raise ConnectionError(err, request=request)\nrequests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))\n"
+    },
+    {
+      "interface": "ak.stock_board_industry_hist_em(symbol='银行',20240101-20240430,日k)",
+      "source": "东方财富",
+      "params": {
+        "symbol": "银行",
+        "start_date": "20240101",
+        "end_date": "20240430",
+        "period": "日k",
+        "adjust": ""
+      },
+      "data_kind": "index_daily",
+      "note": "行业板块指数日线",
+      "request_time": "2026-11-21T08:37:08.268442+08:00",
+      "response_status": "error",
+      "failure_category": "network_unreachable",
+      "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+      "row_count": 0,
+      "fields": [],
+      "sample_first5": [],
+      "http_captures": [
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:08.268570+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:10.080456+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:13.328458+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        }
+      ],
+      "has_index_code": false,
+      "has_index_name": false,
+      "has_ohlc": false,
+      "has_volume": false,
+      "has_amount": false,
+      "date_min": null,
+      "date_max": null,
+      "supports_multi_day": false,
+      "unit_note": null,
+      "adjust_note": null,
+      "elapsed_ms": 5175,
+      "traceback_tail": "^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/sessions.py\", line 703, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/adapters.py\", line 659, in send\n    raise ConnectionError(err, request=request)\nrequests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))\n"
+    },
+    {
+      "interface": "ak.stock_board_industry_hist_em(symbol='电力',20240101-20240430,日k)",
+      "source": "东方财富",
+      "params": {
+        "symbol": "电力",
+        "start_date": "20240101",
+        "end_date": "20240430",
+        "period": "日k",
+        "adjust": ""
+      },
+      "data_kind": "index_daily",
+      "note": "行业板块指数日线",
+      "request_time": "2026-11-21T08:37:13.445181+08:00",
+      "response_status": "error",
+      "failure_category": "network_unreachable",
+      "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+      "row_count": 0,
+      "fields": [],
+      "sample_first5": [],
+      "http_captures": [
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:13.445311+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:15.759183+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:19.098547+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        }
+      ],
+      "has_index_code": false,
+      "has_index_name": false,
+      "has_ohlc": false,
+      "has_volume": false,
+      "has_amount": false,
+      "date_min": null,
+      "date_max": null,
+      "supports_multi_day": false,
+      "unit_note": null,
+      "adjust_note": null,
+      "elapsed_ms": 5720,
+      "traceback_tail": "^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/sessions.py\", line 703, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/adapters.py\", line 659, in send\n    raise ConnectionError(err, request=request)\nrequests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))\n"
+    },
+    {
+      "interface": "ak.stock_board_concept_hist_em(symbol='绿色电力',20240101-20240430)",
+      "source": "东方财富",
+      "params": {
+        "symbol": "绿色电力",
+        "start_date": "20240101",
+        "end_date": "20240430",
+        "period": "daily",
+        "adjust": ""
+      },
+      "data_kind": "index_daily",
+      "note": "概念板块指数日线",
+      "request_time": "2026-11-21T08:37:19.171248+08:00",
+      "response_status": "error",
+      "failure_category": "network_unreachable",
+      "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+      "row_count": 0,
+      "fields": [],
+      "sample_first5": [],
+      "http_captures": [
+        {
+          "method": "GET",
+          "url": "https://79.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f12', 'fs': 'm:90 t:3 f:!50', 'fields': 'f2,f3,f4,f8,f12,f14,f15,f16,f17,f18,f20,f21,f24,f25,f22,f33,f11,f62,f128,f124,f107,f104,f105,f136'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:19.171372+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://79.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f12', 'fs': 'm:90 t:3 f:!50', 'fields': 'f2,f3,f4,f8,f12,f14,f15,f16,f17,f18,f20,f21,f24,f25,f22,f33,f11,f62,f128,f124,f107,f104,f105,f136'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:21.073110+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://79.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f12', 'fs': 'm:90 t:3 f:!50', 'fields': 'f2,f3,f4,f8,f12,f14,f15,f16,f17,f18,f20,f21,f24,f25,f22,f33,f11,f62,f128,f124,f107,f104,f105,f136'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:24.094281+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        }
+      ],
+      "has_index_code": false,
+      "has_index_name": false,
+      "has_ohlc": false,
+      "has_volume": false,
+      "has_amount": false,
+      "date_min": null,
+      "date_max": null,
+      "supports_multi_day": false,
+      "unit_note": null,
+      "adjust_note": null,
+      "elapsed_ms": 5025,
+      "traceback_tail": "^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/sessions.py\", line 703, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/adapters.py\", line 659, in send\n    raise ConnectionError(err, request=request)\nrequests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))\n"
+    },
+    {
+      "interface": "ak.stock_board_industry_index_ths(symbol='半导体',20240101-20240430)",
+      "source": "同花顺",
+      "params": {
+        "symbol": "半导体",
+        "start_date": "20240101",
+        "end_date": "20240430"
+      },
+      "data_kind": "index_daily",
+      "note": "同花顺行业指数日线",
+      "request_time": "2026-11-21T08:37:24.199230+08:00",
+      "response_status": "error",
+      "failure_category": "other",
+      "error_detail": "AttributeError: 'NoneType' object has no attribute 'find_all'",
+      "row_count": 0,
+      "fields": [],
+      "sample_first5": [],
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://q.10jqka.com.cn/thshy/detail/code/881272/",
+          "params": "None",
+          "headers_subset": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+            "Cookie": "REDACTED(len=62)"
+          },
+          "ts": "2026-11-21T08:37:24.206496+08:00",
+          "http_status": 403,
+          "content_type": "text/html;charset=utf-8",
+          "body_len": 58,
+          "body_sample": "<h1>Nginx forbidden.</h1> <br/>request info: 82.156.58.57\n"
+        }
+      ],
+      "has_index_code": false,
+      "has_index_name": false,
+      "has_ohlc": false,
+      "has_volume": false,
+      "has_amount": false,
+      "date_min": null,
+      "date_max": null,
+      "supports_multi_day": false,
+      "unit_note": null,
+      "adjust_note": null,
+      "elapsed_ms": 100,
+      "traceback_tail": "dex_ths\n    code_map = _get_stock_board_industry_name_ths()\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock_feature/stock_board_industry_ths.py\", line 58, in _get_stock_board_industry_name_ths\n    for item in soup.find(name=\"div\", attrs={\"class\": \"cate_inner\"}).find_all(\"a\")\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'find_all'\n"
+    },
+    {
+      "interface": "ak.stock_board_industry_index_ths(symbol='元件',20240101-20240430)",
+      "source": "同花顺",
+      "params": {
+        "symbol": "元件",
+        "start_date": "20240101",
+        "end_date": "20240430"
+      },
+      "data_kind": "index_daily",
+      "note": "同花顺行业指数日线",
+      "request_time": "2026-11-21T08:37:24.301497+08:00",
+      "response_status": "error",
+      "failure_category": "other",
+      "error_detail": "AttributeError: 'NoneType' object has no attribute 'find_all'",
+      "row_count": 0,
+      "fields": [],
+      "sample_first5": [],
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://q.10jqka.com.cn/thshy/detail/code/881272/",
+          "params": "None",
+          "headers_subset": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+            "Cookie": "REDACTED(len=62)"
+          },
+          "ts": "2026-11-21T08:37:24.304696+08:00",
+          "http_status": 403,
+          "content_type": "text/html;charset=utf-8",
+          "body_len": 58,
+          "body_sample": "<h1>Nginx forbidden.</h1> <br/>request info: 82.156.58.57\n"
+        }
+      ],
+      "has_index_code": false,
+      "has_index_name": false,
+      "has_ohlc": false,
+      "has_volume": false,
+      "has_amount": false,
+      "date_min": null,
+      "date_max": null,
+      "supports_multi_day": false,
+      "unit_note": null,
+      "adjust_note": null,
+      "elapsed_ms": 100,
+      "traceback_tail": "dex_ths\n    code_map = _get_stock_board_industry_name_ths()\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock_feature/stock_board_industry_ths.py\", line 58, in _get_stock_board_industry_name_ths\n    for item in soup.find(name=\"div\", attrs={\"class\": \"cate_inner\"}).find_all(\"a\")\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'find_all'\n"
+    },
+    {
+      "interface": "ak.stock_board_industry_index_ths(symbol='银行',20240101-20240430)",
+      "source": "同花顺",
+      "params": {
+        "symbol": "银行",
+        "start_date": "20240101",
+        "end_date": "20240430"
+      },
+      "data_kind": "index_daily",
+      "note": "同花顺行业指数日线",
+      "request_time": "2026-11-21T08:37:24.403118+08:00",
+      "response_status": "error",
+      "failure_category": "other",
+      "error_detail": "AttributeError: 'NoneType' object has no attribute 'find_all'",
+      "row_count": 0,
+      "fields": [],
+      "sample_first5": [],
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://q.10jqka.com.cn/thshy/detail/code/881272/",
+          "params": "None",
+          "headers_subset": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+            "Cookie": "REDACTED(len=62)"
+          },
+          "ts": "2026-11-21T08:37:24.406652+08:00",
+          "http_status": 403,
+          "content_type": "text/html;charset=utf-8",
+          "body_len": 59,
+          "body_sample": "<h1>Nginx forbidden.</h1> <br/>request info: 43.143.211.24\n"
+        }
+      ],
+      "has_index_code": false,
+      "has_index_name": false,
+      "has_ohlc": false,
+      "has_volume": false,
+      "has_amount": false,
+      "date_min": null,
+      "date_max": null,
+      "supports_multi_day": false,
+      "unit_note": null,
+      "adjust_note": null,
+      "elapsed_ms": 141,
+      "traceback_tail": "dex_ths\n    code_map = _get_stock_board_industry_name_ths()\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock_feature/stock_board_industry_ths.py\", line 58, in _get_stock_board_industry_name_ths\n    for item in soup.find(name=\"div\", attrs={\"class\": \"cate_inner\"}).find_all(\"a\")\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'find_all'\n"
+    },
+    {
+      "interface": "ak.stock_board_industry_name_ths()",
+      "source": "同花顺",
+      "params": {},
+      "data_kind": "directory",
+      "note": "同花顺行业名称目录",
+      "request_time": "2026-11-21T08:37:24.545396+08:00",
+      "response_status": "error",
+      "failure_category": "other",
+      "error_detail": "AttributeError: 'NoneType' object has no attribute 'find_all'",
+      "row_count": 0,
+      "fields": [],
+      "sample_first5": [],
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://q.10jqka.com.cn/thshy/detail/code/881272/",
+          "params": "None",
+          "headers_subset": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+            "Cookie": "REDACTED(len=62)"
+          },
+          "ts": "2026-11-21T08:37:24.548929+08:00",
+          "http_status": 403,
+          "content_type": "text/html;charset=utf-8",
+          "body_len": 59,
+          "body_sample": "<h1>Nginx forbidden.</h1> <br/>request info: 43.143.213.81\n"
+        }
+      ],
+      "has_index_code": false,
+      "has_index_name": false,
+      "has_ohlc": false,
+      "has_volume": false,
+      "has_amount": false,
+      "date_min": null,
+      "date_max": null,
+      "supports_multi_day": false,
+      "unit_note": null,
+      "adjust_note": null,
+      "elapsed_ms": 102,
+      "traceback_tail": "ame_ths_map = _get_stock_board_industry_name_ths()\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock_feature/stock_board_industry_ths.py\", line 58, in _get_stock_board_industry_name_ths\n    for item in soup.find(name=\"div\", attrs={\"class\": \"cate_inner\"}).find_all(\"a\")\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'find_all'\n"
+    },
+    {
+      "interface": "ak.index_zh_a_hist(symbol='000300',20240101-20240430)",
+      "source": "东方财富-中证指数",
+      "params": {
+        "symbol": "000300",
+        "period": "daily",
+        "start_date": "20240101",
+        "end_date": "20240430"
+      },
+      "data_kind": "index_daily",
+      "note": "宽基指数日线(中证300,非板块)",
+      "request_time": "2026-11-21T08:37:24.649486+08:00",
+      "response_status": "error",
+      "failure_category": "network_unreachable",
+      "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+      "row_count": 0,
+      "fields": [],
+      "sample_first5": [],
+      "http_captures": [
+        {
+          "method": "GET",
+          "url": "https://80.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'b:MK0010,m:1+t:1,m:0 t:5,m:1+s:3,m:0+t:5,m:2', 'fields': 'f3,f12,f13'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:24.649594+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://80.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'b:MK0010,m:1+t:1,m:0 t:5,m:1+s:3,m:0+t:5,m:2', 'fields': 'f3,f12,f13'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:26.500593+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://80.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'b:MK0010,m:1+t:1,m:0 t:5,m:1+s:3,m:0+t:5,m:2', 'fields': 'f3,f12,f13'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:30.010933+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        }
+      ],
+      "has_index_code": false,
+      "has_index_name": false,
+      "has_ohlc": false,
+      "has_volume": false,
+      "has_amount": false,
+      "date_min": null,
+      "date_max": null,
+      "supports_multi_day": false,
+      "unit_note": null,
+      "adjust_note": null,
+      "elapsed_ms": 5475,
+      "traceback_tail": "^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/sessions.py\", line 703, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/adapters.py\", line 659, in send\n    raise ConnectionError(err, request=request)\nrequests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))\n"
+    },
+    {
+      "interface": "ak.stock_sector_spot(indicator='新浪行业')",
+      "source": "新浪",
+      "params": {
+        "indicator": "新浪行业"
+      },
+      "data_kind": "realtime_sector",
+      "note": "板块实时快照(非历史日线)",
+      "request_time": "2026-11-21T08:37:30.127208+08:00",
+      "response_status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 49,
+      "fields": [
+        "label",
+        "板块",
+        "公司家数",
+        "平均价格",
+        "涨跌额",
+        "涨跌幅",
+        "总成交量",
+        "总成交额",
+        "股票代码",
+        "个股-涨跌幅",
+        "个股-当前价",
+        "个股-涨跌额",
+        "股票名称"
+      ],
+      "sample_first5": [
+        {
+          "label": "new_blhy",
+          "板块": "玻璃行业",
+          "公司家数": 19,
+          "平均价格": 11.911578947368,
+          "涨跌额": -0.61421052631579,
+          "涨跌幅": -4.9035673767805,
+          "总成交量": 466667809,
+          "总成交额": 5992027134,
+          "股票代码": "sz002571",
+          "个股-涨跌幅": 1.833,
+          "个股-当前价": 8.89,
+          "个股-涨跌额": 0.16,
+          "股票名称": "德力股份"
+        },
+        {
+          "label": "new_cbzz",
+          "板块": "船舶制造",
+          "公司家数": 8,
+          "平均价格": 12.69,
+          "涨跌额": -0.27,
+          "涨跌幅": -2.0833333333333,
+          "总成交量": 190942438,
+          "总成交额": 3345358499,
+          "股票代码": "sz002608",
+          "个股-涨跌幅": 1.414,
+          "个股-当前价": 7.89,
+          "个股-涨跌额": 0.11,
+          "股票名称": "江苏国信"
+        },
+        {
+          "label": "new_cmyl",
+          "板块": "传媒娱乐",
+          "公司家数": 40,
+          "平均价格": 7.2791666666667,
+          "涨跌额": -0.21388888888889,
+          "涨跌幅": -2.8544949026877,
+          "总成交量": 1836119669,
+          "总成交额": 12252957841,
+          "股票代码": "sz000607",
+          "个股-涨跌幅": 10.029,
+          "个股-当前价": 3.73,
+          "个股-涨跌额": 0.34,
+          "股票名称": "华媒控股"
+        },
+        {
+          "label": "new_dlhy",
+          "板块": "电力行业",
+          "公司家数": 62,
+          "平均价格": 7.4831666666667,
+          "涨跌额": -0.147,
+          "涨跌幅": -1.9265634215067,
+          "总成交量": 2276653195,
+          "总成交额": 19685981563,
+          "股票代码": "sh600886",
+          "个股-涨跌幅": 3.956,
+          "个股-当前价": 16.82,
+          "个股-涨跌额": 0.64,
+          "股票名称": "国投电力"
+        },
+        {
+          "label": "new_dqhy",
+          "板块": "电器行业",
+          "公司家数": 58,
+          "平均价格": 11.784074074074,
+          "涨跌额": -0.58333333333333,
+          "涨跌幅": -4.7166986104456,
+          "总成交量": 1234714494,
+          "总成交额": 12528929460,
+          "股票代码": "sz002452",
+          "个股-涨跌幅": 0.293,
+          "个股-当前价": 10.27,
+          "个股-涨跌额": 0.03,
+          "股票名称": "长高电气"
+        }
+      ],
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "http://vip.stock.finance.sina.com.cn/q/view/newSinaHy.php",
+          "params": "None",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5",
+            "Accept": "*/*"
+          },
+          "ts": "2026-11-21T08:37:30.127314+08:00",
+          "http_status": 200,
+          "content_type": "text/html; charset=gbk",
+          "body_len": 6804,
+          "body_sample": "var S_Finance_bankuai_sinaindustry = {\"new_blhy\":\"new_blhy,������ҵ,19,11.911578947368,-0.61421052631579,-4.9035673767805,466667809,5992027134,sz002571,1.833,8.890,0.160,�����ɷ�\",\"new_cbzz\":\"new_cbzz,��������,8,12.69,-0.27,-2.0833333333333,190942438,3345358499,sz002608,1.414,7.890,0.110,���չ���\",\"new_cmyl\":\"new_cmyl,��ý����,40,7.2791666666667,-0.21388888888889,-2.8544949026877,1836119669,12252957841,sz000607,10.029,3.730,0.340,��ý�ع�\",\"new_dlhy\":\"new_dlhy,������ҵ,62,7.4831666666667,-0.147,-1.9265634215067,2276653195,19685981563,sh600886,3.956,16.820,0.640,��Ͷ����\",\"new_dqhy\":\"new_dqhy,������ҵ,58,11.784074074074,-0.58333333333333,-4.7166986104456,1234714494,12528929460,sz002452,0.293,10.270,0.030,���ߵ���\",\"new_dzqj\":\"new_dzqj,��������,152,19.763309859155,-0.90661971830986,-4.3861771028881,6257570840,94288230287,sz002579,10.025,13.390,1.220,�о�����\",\"new_dzxx\":\"new_dzxx,������Ϣ,247,12.265590909091,-0.63268181818182,-4.905167006153,7951886790,98052735429,sz002642,10.000,7.260,0"
+        }
+      ],
+      "has_index_code": false,
+      "has_index_name": true,
+      "has_ohlc": false,
+      "has_volume": true,
+      "has_amount": true,
+      "date_min": null,
+      "date_max": null,
+      "supports_multi_day": false,
+      "unit_note": null,
+      "adjust_note": null,
+      "elapsed_ms": 86
+    }
+  ],
+  "supplementary_index_daily": [
+    {
+      "interface": "ak.stock_zh_index_daily(symbol='sh000001')",
+      "source": "新浪",
+      "params": {
+        "symbol": "sh000001"
+      },
+      "request_time": "2026-11-21T08:38:46.993640+08:00",
+      "response_status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 8768,
+      "fields": [
+        "date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume"
+      ],
+      "sample_first5": [
+        {
+          "date": "1990-12-19",
+          "open": 96.05,
+          "high": 99.98,
+          "low": 95.79,
+          "close": 99.98,
+          "volume": 126000
+        },
+        {
+          "date": "1990-12-20",
+          "open": 104.3,
+          "high": 104.39,
+          "low": 99.98,
+          "close": 104.39,
+          "volume": 19700
+        },
+        {
+          "date": "1990-12-21",
+          "open": 109.07,
+          "high": 109.13,
+          "low": 103.73,
+          "close": 109.13,
+          "volume": 2800
+        },
+        {
+          "date": "1990-12-24",
+          "open": 113.57,
+          "high": 114.55,
+          "low": 109.13,
+          "close": 114.55,
+          "volume": 3200
+        },
+        {
+          "date": "1990-12-25",
+          "open": 120.09,
+          "high": 120.25,
+          "low": 114.55,
+          "close": 120.25,
+          "volume": 1500
+        }
+      ],
+      "has_ohlc": true,
+      "has_volume": true,
+      "has_amount": false,
+      "date_min": "1990-12-19",
+      "date_max": "2026-11-20",
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://finance.sina.com.cn/realstock/company/sh000001/hisdata/klc_kl.js",
+          "params": "{'d': '2020_2_4'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:46.993739+08:00",
+          "http_status": 200,
+          "content_type": "application/x-javascript",
+          "body_len": 146340,
+          "body_sample": "var KLC_KL_sh000001=\"HX/DAAAg8/FycXa9AEEQrHwwe68gDRLAcIaBEDmaIJhHgbK8A837KYFh6BrIUPQGKkWBUg0KgCclOcOBAAcOBAgmQIAAQBAAQBAX5u7WR8AWR8ANINuBaQQRDCJ6lCAwZCAOTUUNAAUUAgiCxJaqRqSNSV8zGamIGhDxI0C7ewI8AwI8gGRIesJoAsJog2KIeOJoAOJog1YNYAKAgM2nwLKfW44QAAwIsiswh04SIUASIQZx7ca3mIyQG8HpNG3EJUgIhGdda3mIegDBNKHfk3cIoAcI8uoe43II8AAgj06ca3mIeAA0FScQ3wIoAAomSYQ3UgCAAj2EYy2aBAAAOEFYC4UAAAAcp0cC4+HeAAQArMC4SIAAFclcq4WHyQBM+7c04SIAAAAFFYW4UwDUgQcYemIUAuQKgzI6eYJyAYJyAiPya6IeQHhCUDqecIyASIygtqYe6IUA6IClYFveEJAAEJ2H5/3YiJAwcAA0iH4DOJUAFKAmR6c0HoA0HFgtqe6IoA6IoA0JHa6IUQHhCcDFYM40HFeg3A4cM4cIAwDw7GcW4cIAwDAhqeg4SIKAUAO"
+        }
+      ],
+      "elapsed_ms": 185,
+      "label": "sina_sh000001"
+    },
+    {
+      "interface": "ak.stock_zh_index_daily(symbol='sh000922')",
+      "source": "新浪-中证红利",
+      "params": {
+        "symbol": "sh000922"
+      },
+      "request_time": "2026-11-21T08:38:47.182454+08:00",
+      "response_status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 3423,
+      "fields": [
+        "date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume"
+      ],
+      "sample_first5": [
+        {
+          "date": "2005-01-04",
+          "open": 996.377,
+          "high": 996.377,
+          "low": 981.555,
+          "close": 981.555,
+          "volume": 180302622
+        },
+        {
+          "date": "2005-01-05",
+          "open": 981.105,
+          "high": 986.535,
+          "low": 981.105,
+          "close": 986.535,
+          "volume": 164649599
+        },
+        {
+          "date": "2005-01-06",
+          "open": 987.008,
+          "high": 987.008,
+          "low": 975.526,
+          "close": 975.526,
+          "volume": 160063142
+        },
+        {
+          "date": "2005-01-07",
+          "open": 975.578,
+          "high": 982.043,
+          "low": 975.578,
+          "close": 980.717,
+          "volume": 174006153
+        },
+        {
+          "date": "2005-01-10",
+          "open": 979.749,
+          "high": 989.529,
+          "low": 979.749,
+          "close": 989.529,
+          "volume": 147843280
+        }
+      ],
+      "has_ohlc": true,
+      "has_volume": true,
+      "has_amount": false,
+      "date_min": "2005-01-04",
+      "date_max": "2019-01-30",
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://finance.sina.com.cn/realstock/company/sh000922/hisdata/klc_kl.js",
+          "params": "{'d': '2020_2_4'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:47.182569+08:00",
+          "http_status": 200,
+          "content_type": "application/x-javascript",
+          "body_len": 58486,
+          "body_sample": "var KLC_KL_sh000922=\"HX/DKQBYz/mZQzDAAAmnDaY8eMzvKy8+43mKAA2UJsTi4MZHAAazykpnQguS0AIoMAATQZcgpGS4wnGTAA0Y6okhzXL/HlJHAlJbbR4SOmWUKAAiSZEs64Xs6vIEAofQzvLMEoDIFMLKnuehyuUo5FAQ9cWYEHsMXIyylMJyLlMR9zHUMwHAAlK9vGXRNuUi/GAQFLWn28TvR2twp/fDHAAfDHts9tIShJjsEAAkl4PrhJQYZfnJuvYnJYb+/5SeKHAAWvqQ/yhLmU02HAQoV+Sdzg8vMAAAAVsZdybgUhUPXHAQPSZEG8CkGSqrvoTAALIZxEmK6tiL4bgBAAfDM8n6zQU4IAAQjRmz9pqtO+t5rnuvAAguvArBJ5zI3aJkRAA7dyT104cFGAAAHDpyIDE64Uf7HAwRcyd80Hgp+9WBIxkAAIxkwV0wQWWOA7BFAA7BFHeFUO9840mJ/exMp4IYKVvmfypjPTOn9Tj6TcPYATuIS35JxdEct0AAubRi0AnsX2UtqHAosL1suPZmk2tTGAAAYpi1q7KRE2IaRnqYivSFTqH9u2U4GAAgdIU82Bu"
+        }
+      ],
+      "elapsed_ms": 153,
+      "label": "sina_sh000922"
+    },
+    {
+      "interface": "ak.stock_zh_index_daily_tx(symbol='sz980017')",
+      "source": "腾讯",
+      "params": {
+        "symbol": "sz980017"
+      },
+      "request_time": "2026-11-21T08:38:47.337144+08:00",
+      "response_status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 640,
+      "fields": [
+        "date",
+        "open",
+        "close",
+        "high",
+        "low",
+        "amount"
+      ],
+      "sample_first5": [
+        {
+          "date": "2024-04-01",
+          "open": 6227.96,
+          "close": 6273.7,
+          "high": 6300.74,
+          "low": 6210.76,
+          "amount": 3675339.0
+        },
+        {
+          "date": "2024-04-02",
+          "open": 6276.64,
+          "close": 6161.03,
+          "high": 6277.36,
+          "low": 6125.3,
+          "amount": 3299629.0
+        },
+        {
+          "date": "2024-04-03",
+          "open": 6155.97,
+          "close": 6107.08,
+          "high": 6208.76,
+          "low": 6055.62,
+          "amount": 3406373.0
+        },
+        {
+          "date": "2024-04-08",
+          "open": 6105.46,
+          "close": 5966.14,
+          "high": 6118.15,
+          "low": 5966.14,
+          "amount": 3285369.0
+        },
+        {
+          "date": "2024-04-09",
+          "open": 5962.42,
+          "close": 6016.51,
+          "high": 6018.05,
+          "low": 5910.25,
+          "amount": 2591939.0
+        }
+      ],
+      "has_ohlc": true,
+      "has_volume": false,
+      "has_amount": true,
+      "date_min": "2024-04-01",
+      "date_max": "2026-11-20",
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+          "params": "{'code': 'sz980017', 'type': 'qfq', '_var': 'trend_qfq', 'r': '0.3506048543943414'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:47.337255+08:00",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "body_len": 41,
+          "body_sample": "trend_qfq={\"code\":0,\"msg\":\"ok\",\"data\":[]}"
+        },
+        {
+          "method": "get",
+          "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+          "params": "{'_var': 'kline_dayqfq', 'param': 'sz980017,day,,,320,qfq', 'r': '0.751892490072597'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:47.460680+08:00",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "body_len": 37086,
+          "body_sample": "kline_dayqfq={\"code\":0,\"msg\":\"\",\"data\":{\"sz980017\":{\"day\":[[\"2025-07-28\",\"9407.60\",\"9384.67\",\"9417.82\",\"9316.44\",\"5896531.00\",{},\"1.69\",\"3912905.15\",\"0.00\",\"0.00\"],[\"2025-07-29\",\"9351.97\",\"9516.42\",\"9519.23\",\"9347.67\",\"6509090.00\",{},\"1.85\",\"4659999.08\",\"0.00\",\"0.00\"],[\"2025-07-30\",\"9494.50\",\"9421.14\",\"9571.38\",\"9352.33\",\"6212417.00\",{},\"1.77\",\"4390578.64\",\"0.00\",\"0.00\"],[\"2025-07-31\",\"9392.88\",\"9290.03\",\"9506.04\",\"9260.99\",\"6893316.00\",{},\"1.96\",\"5116446.66\",\"0.00\",\"0.00\"],[\"2025-08-01\",\"9266.45\",\"9177.08\",\"9374.22\",\"9120.23\",\"6075656.00\",{},\"1.73\",\"3868580.20\",\"0.00\",\"0.00\"],[\"2025-08-04\",\"9"
+        },
+        {
+          "method": "get",
+          "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+          "params": "{'_var': 'kline_dayqfq', 'param': 'sz980017,day,2025-01-01,2026-12-31,640,qfq', 'r': '0.8205512681390605'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:47.714852+08:00",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "body_len": 70740,
+          "body_sample": "kline_dayqfq={\"code\":0,\"msg\":\"\",\"data\":{\"sz980017\":{\"day\":[[\"2024-04-01\",\"6227.96\",\"6273.70\",\"6300.74\",\"6210.76\",\"3675339.00\",{},\"1.14\",\"1776725.34\",\"0.00\",\"0.00\"],[\"2024-04-02\",\"6276.64\",\"6161.03\",\"6277.36\",\"6125.30\",\"3299629.00\",{},\"1.02\",\"1651705.83\",\"0.00\",\"0.00\"],[\"2024-04-03\",\"6155.97\",\"6107.08\",\"6208.76\",\"6055.62\",\"3406373.00\",{},\"1.06\",\"1698775.46\",\"0.00\",\"0.00\"],[\"2024-04-08\",\"6105.46\",\"5966.14\",\"6118.15\",\"5966.14\",\"3285369.00\",{},\"1.02\",\"1526297.51\",\"0.00\",\"0.00\"],[\"2024-04-09\",\"5962.42\",\"6016.51\",\"6018.05\",\"5910.25\",\"2591939.00\",{},\"0.80\",\"1212572.50\",\"0.00\",\"0.00\"],[\"2024-04-10\",\"6"
+        },
+        {
+          "method": "get",
+          "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+          "params": "{'_var': 'kline_dayqfq', 'param': 'sz980017,day,2026-01-01,2027-12-31,640,qfq', 'r': '0.8205512681390605'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:48.047719+08:00",
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "body_len": 70740,
+          "body_sample": "kline_dayqfq={\"code\":0,\"msg\":\"\",\"data\":{\"sz980017\":{\"day\":[[\"2024-04-01\",\"6227.96\",\"6273.70\",\"6300.74\",\"6210.76\",\"3675339.00\",{},\"1.14\",\"1776725.34\",\"0.00\",\"0.00\"],[\"2024-04-02\",\"6276.64\",\"6161.03\",\"6277.36\",\"6125.30\",\"3299629.00\",{},\"1.02\",\"1651705.83\",\"0.00\",\"0.00\"],[\"2024-04-03\",\"6155.97\",\"6107.08\",\"6208.76\",\"6055.62\",\"3406373.00\",{},\"1.06\",\"1698775.46\",\"0.00\",\"0.00\"],[\"2024-04-08\",\"6105.46\",\"5966.14\",\"6118.15\",\"5966.14\",\"3285369.00\",{},\"1.02\",\"1526297.51\",\"0.00\",\"0.00\"],[\"2024-04-09\",\"5962.42\",\"6016.51\",\"6018.05\",\"5910.25\",\"2591939.00\",{},\"0.80\",\"1212572.50\",\"0.00\",\"0.00\"],[\"2024-04-10\",\"6"
+        }
+      ],
+      "elapsed_ms": 1039,
+      "label": "tx_sz980017"
+    },
+    {
+      "interface": "ak.stock_zh_index_hist_csindex(symbol='000928',2024-01-01~2024-04-30)",
+      "source": "中证指数官网",
+      "params": {
+        "symbol": "000928",
+        "start_date": "20240101",
+        "end_date": "20240430"
+      },
+      "request_time": "2026-11-21T08:38:48.377485+08:00",
+      "response_status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 79,
+      "fields": [
+        "日期",
+        "指数代码",
+        "指数中文全称",
+        "指数中文简称",
+        "指数英文全称",
+        "指数英文简称",
+        "开盘",
+        "最高",
+        "最低",
+        "收盘",
+        "涨跌",
+        "涨跌幅",
+        "成交量",
+        "成交金额",
+        "样本数量",
+        "滚动市盈率"
+      ],
+      "sample_first5": [
+        {
+          "日期": "2024-01-01",
+          "指数代码": "000928",
+          "指数中文全称": "中证能源指数",
+          "指数中文简称": "800能源",
+          "指数英文全称": "CSI Energy Index",
+          "指数英文简称": "800 Energy",
+          "开盘": 2656.88,
+          "最高": 2728.7,
+          "最低": 2656.88,
+          "收盘": 2717.35,
+          "涨跌": 59.76,
+          "涨跌幅": 2.25,
+          "成交量": 1399303300.0,
+          "成交金额": 126.88,
+          "样本数量": 24.0,
+          "滚动市盈率": 7.92
+        },
+        {
+          "日期": "2024-01-02",
+          "指数代码": "000928",
+          "指数中文全称": "中证能源指数",
+          "指数中文简称": "800能源",
+          "指数英文全称": "CSI Energy Index",
+          "指数英文简称": "800 Energy",
+          "开盘": 2656.88,
+          "最高": 2728.7,
+          "最低": 2656.88,
+          "收盘": 2717.35,
+          "涨跌": 59.76,
+          "涨跌幅": 2.25,
+          "成交量": 1399303300.0,
+          "成交金额": 126.88,
+          "样本数量": 24.0,
+          "滚动市盈率": 7.92
+        },
+        {
+          "日期": "2024-01-03",
+          "指数代码": "000928",
+          "指数中文全称": "中证能源指数",
+          "指数中文简称": "800能源",
+          "指数英文全称": "CSI Energy Index",
+          "指数英文简称": "800 Energy",
+          "开盘": 2709.34,
+          "最高": 2754.25,
+          "最低": 2706.27,
+          "收盘": 2754.04,
+          "涨跌": 36.69,
+          "涨跌幅": 1.35,
+          "成交量": 1214892700.0,
+          "成交金额": 111.11,
+          "样本数量": 24.0,
+          "滚动市盈率": 8.05
+        },
+        {
+          "日期": "2024-01-04",
+          "指数代码": "000928",
+          "指数中文全称": "中证能源指数",
+          "指数中文简称": "800能源",
+          "指数英文全称": "CSI Energy Index",
+          "指数英文简称": "800 Energy",
+          "开盘": 2759.78,
+          "最高": 2791.93,
+          "最低": 2756.92,
+          "收盘": 2779.82,
+          "涨跌": 25.78,
+          "涨跌幅": 0.94,
+          "成交量": 1242675600.0,
+          "成交金额": 117.65,
+          "样本数量": 24.0,
+          "滚动市盈率": 8.15
+        },
+        {
+          "日期": "2024-01-05",
+          "指数代码": "000928",
+          "指数中文全称": "中证能源指数",
+          "指数中文简称": "800能源",
+          "指数英文全称": "CSI Energy Index",
+          "指数英文简称": "800 Energy",
+          "开盘": 2774.12,
+          "最高": 2806.36,
+          "最低": 2762.62,
+          "收盘": 2774.74,
+          "涨跌": -5.09,
+          "涨跌幅": -0.18,
+          "成交量": 1215287000.0,
+          "成交金额": 113.46,
+          "样本数量": 24.0,
+          "滚动市盈率": 8.15
+        }
+      ],
+      "has_ohlc": true,
+      "has_volume": true,
+      "has_amount": false,
+      "date_min": "2024-01-01",
+      "date_max": "2024-04-30",
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": "{'indexCode': '000928', 'startDate': '20240101', 'endDate': '20240430'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:48.377582+08:00",
+          "http_status": 200,
+          "content_type": "application/json;charset=UTF-8",
+          "body_len": 26977,
+          "body_sample": "{\"code\":\"200\",\"msg\":\"Success\",\"data\":[{\"tradeDate\":\"20240101\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2656.88,\"high\":2728.7,\"low\":2656.88,\"close\":2717.35,\"change\":59.76,\"changePct\":2.25,\"tradingVol\":1.3993033E9,\"tradingValue\":126.88,\"consNumber\":24.0,\"peg\":7.92},{\"tradeDate\":\"20240102\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2656.88,\"high\":2728.7,\"low\":2656.88,\"close\""
+        }
+      ],
+      "elapsed_ms": 135,
+      "label": "csindex_000928"
+    },
+    {
+      "interface": "ak.stock_zh_index_daily_em(symbol='csi931151',1990~2050)",
+      "source": "东财-中证指数",
+      "params": {
+        "symbol": "csi931151"
+      },
+      "request_time": "2026-11-21T08:38:48.514282+08:00",
+      "response_status": "error",
+      "failure_category": "network_unreachable",
+      "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+      "row_count": 0,
+      "fields": [],
+      "sample_first5": [],
+      "has_ohlc": false,
+      "has_volume": false,
+      "has_amount": false,
+      "date_min": null,
+      "date_max": null,
+      "http_captures": [
+        {
+          "method": "get",
+          "url": "https://push2his.eastmoney.com/api/qt/stock/kline/get",
+          "params": "{'secid': '2.931151', 'fields1': 'f1,f2,f3,f4,f5', 'fields2': 'f51,f52,f53,f54,f55,f56,f57,f58', 'klt': '101', 'fqt': '0', 'beg': '19900101', 'end': '20500101'}",
+          "headers_subset": {
+            "User-Agent": "python-requests/2.32.5"
+          },
+          "ts": "2026-11-21T08:38:48.514389+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        }
+      ],
+      "elapsed_ms": 128,
+      "traceback_tail": "ts/sessions.py\", line 703, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/adapters.py\", line 659, in send\n    raise ConnectionError(err, request=request)\nrequests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))\n",
+      "label": "em_csi931151"
+    }
+  ],
+  "cross_ref": "完整交叉样本见 cross_source_sample.json"
+}

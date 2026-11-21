@@ -1,0 +1,121 @@
+{
+  "task": "D3-1 classification coverage denominator design",
+  "design_time": "2026-11-21T08:39:40.875108+08:00",
+  "status": "design_only_not_implemented",
+  "note": "本文件为口径设计,非实测覆盖率。真实库stock_info=0行(见d3-0 sql_evidence),故当前实际覆盖率返回unavailable,严禁用样本冒充全市场。",
+  "universe_definition": {
+    "name": "全部有效A股(存量,非退市)",
+    "denominator_source": "交易所官网名单(上交所+深交所+北交所)去重",
+    "denominator_value": 5580,
+    "denominator_breakdown": {
+      "SH主板": 1700,
+      "SH科创板": 619,
+      "SZ主板": 1494,
+      "SZ创业板": 1411,
+      "BJ北交所": 356
+    },
+    "cross_check": "东财stock_info_a_code_name=5580,与三市去重合计一致(强印证)",
+    "excluded": [
+      "ETF",
+      "指数",
+      "可转债",
+      "基金",
+      "退市股票(单列)"
+    ],
+    "denominator_status": "proven_by_exchange_official_lists",
+    "caveat": "这是时点名单快照;北交所报告日期2026-11-20;上市/退市为动态,需设名单刷新周期"
+  },
+  "coverage_metrics_contract": {
+    "formula": "coverage_rate = count(stocks_with_classification) / count(universe)",
+    "denominator_policy": "分母必须为全市场有效A股总数;无法确定时整个覆盖率返回unavailable,不得以样本数替代",
+    "counting_rules": [
+      "分母与分子必须同一时点名单",
+      "一股多标准时按选定唯一标准计一次",
+      "分类记录需在生效日期区间内方计为有效",
+      "过期(超过新鲜度阈值)或未知状态的分类单独计数,不计入有效覆盖分子"
+    ],
+    "result_states": [
+      "ok",
+      "unavailable"
+    ],
+    "unavailable_reasons": [
+      "universe_denominator_unknown",
+      "classification_source_unavailable",
+      "effective_date_unverifiable"
+    ]
+  },
+  "required_fields_per_stock": {
+    "code": "6位A股代码(不含交易所前缀,前缀由market字段表达)",
+    "classification_standard": "分类标准标识(见standards)",
+    "classification_value": "该标准下的行业名称/代码",
+    "classification_code": "行业标准代码(如门类/大类代码),可空但需披露",
+    "effective_date": "分类生效日期(YYYY-MM-DD),必须存在且可解析",
+    "source": "分类数据来源接口标识",
+    "last_update_time": "该分类记录的最后更新时间/报告日期",
+    "status": "ok|stale|unknown(过期或未知单独标记)"
+  },
+  "standards": {
+    "candidate_v10": "巨潮行业分类标准(008002)",
+    "selection_rationale": "巨潮是唯一实测可按start/end区间回溯历史变更且含四级行业层级与分类代码的来源;但时效止于2021附近,当前完整性unknown",
+    "alternatives": {
+      "中上协008001": "2024-02-08有记录,疑为换代标准(推测,待查)",
+      "申万008003": "行业目录可取(131/336行),但个股成分映射接口未稳定取得",
+      "中证008014/008019": "指数成分非行业分类,不适用",
+      "恒生008016": "未在D3-0实测",
+      "证监会008021": "未在D3-0实测"
+    },
+    "v10_status": "candidate_pending_freshness_proof",
+    "one_standard_policy": "V1.0必须固定单一标准,禁止混用多标准计算覆盖率"
+  },
+  "freshness_policy": {
+    "current_evidence": "巨潮008002最新记录约2019-2020;中上协008001 2024-02-08;2025/2026查询空响应",
+    "freshness_status": "unknown",
+    "stale_threshold_days": null,
+    "stale_threshold_note": "阈值未定,需在D3-1设计时由业务确认;在确认前所有分类记录新鲜度按unknown处理",
+    "rule": "无法证明当前有效性时,不得标为ok;统一标unknown并披露时效边界"
+  },
+  "coverage_output_schema": {
+    "as_of": "名单时点",
+    "universe": {
+      "total": 5580,
+      "source": "exchange_official",
+      "status": "ok"
+    },
+    "with_classification": {
+      "count": null,
+      "status": "unavailable",
+      "reason": "真实库无分类数据,未采集入库"
+    },
+    "without_classification": {
+      "count": null,
+      "status": "unavailable"
+    },
+    "coverage_rate": {
+      "value": null,
+      "status": "unavailable",
+      "reason": "分子不可得"
+    },
+    "by_standard": {
+      "008002": {
+        "count": null,
+        "status": "unavailable"
+      }
+    },
+    "by_status": {
+      "ok": null,
+      "stale": null,
+      "unknown": null
+    },
+    "classification_source": "cninfo_p_stock2110",
+    "classification_last_update": null,
+    "disclosure": "覆盖率当前不可计算;需先完成分类数据入库与时效固化"
+  },
+  "prerequisites_to_unblock": [
+    "将三市5580只名单入库为universe基准表(含代码/名称/市场/板块/上市日期)",
+    "选定V1.0唯一分类标准并固化",
+    "按选定标准采集全市场分类并回溯有效日期,入库",
+    "证明分类数据时效(解决freshness=unknown)",
+    "确定过期阈值并实现status判定",
+    "完成板块指数日线源选型(中证官网csindex实测可用为候选)"
+  ]
+}
