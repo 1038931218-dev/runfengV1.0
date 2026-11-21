@@ -1,0 +1,1175 @@
+{
+  "task": "R2 supplement: BJ coverage / universe coverage sampling / sina new-year anomaly",
+  "collect_time": "2026-11-21T20:10:20.449060+08:00",
+  "akshare_version": "1.18.22",
+  "bj_coverage": {
+    "total_bj": 356,
+    "sampled": 20,
+    "mapped": 20,
+    "empty_or_error": 0,
+    "samples": [
+      {
+        "code": "920662",
+        "status": "ok",
+        "industry": "通用设备制造业",
+        "name": "方盛股份"
+      },
+      {
+        "code": "920125",
+        "status": "ok",
+        "industry": "专用设备制造业",
+        "name": "鸿仕达"
+      },
+      {
+        "code": "920208",
+        "status": "ok",
+        "industry": "专业技术服务业",
+        "name": "青矩技术"
+      },
+      {
+        "code": "920284",
+        "status": "ok",
+        "industry": "专用设备制造业",
+        "name": "灵鸽科技"
+      },
+      {
+        "code": "920819",
+        "status": "ok",
+        "industry": "化学原料和化学制品制造业",
+        "name": "颖泰生物"
+      },
+      {
+        "code": "920059",
+        "status": "ok",
+        "industry": "汽车制造业",
+        "name": "双英集团"
+      },
+      {
+        "code": "920270",
+        "status": "ok",
+        "industry": "通用设备制造业",
+        "name": "天铭科技"
+      },
+      {
+        "code": "920050",
+        "status": "ok",
+        "industry": "医药制造业",
+        "name": "爱伦医疗"
+      },
+      {
+        "code": "920002",
+        "status": "ok",
+        "industry": "通用设备制造业",
+        "name": "万达轴承"
+      },
+      {
+        "code": "920130",
+        "status": "ok",
+        "industry": "软件和信息技术服务业",
+        "name": "立方控股"
+      },
+      {
+        "code": "920117",
+        "status": "ok",
+        "industry": "专用设备制造业",
+        "name": "龙鑫智能"
+      },
+      {
+        "code": "920300",
+        "status": "ok",
+        "industry": "专用设备制造业",
+        "name": "辰光医疗"
+      },
+      {
+        "code": "920285",
+        "status": "ok",
+        "industry": "电气机械和器材制造业",
+        "name": "远大健科"
+      },
+      {
+        "code": "920123",
+        "status": "ok",
+        "industry": "化学原料和化学制品制造业",
+        "name": "芭薇股份"
+      },
+      {
+        "code": "920119",
+        "status": "ok",
+        "industry": "通用设备制造业",
+        "name": "美德乐"
+      },
+      {
+        "code": "920799",
+        "status": "ok",
+        "industry": "软件和信息技术服务业",
+        "name": "艾融软件"
+      },
+      {
+        "code": "920304",
+        "status": "ok",
+        "industry": "化学原料和化学制品制造业",
+        "name": "迪尔化工"
+      },
+      {
+        "code": "920378",
+        "status": "ok",
+        "industry": "汽车制造业",
+        "name": "泰德股份"
+      },
+      {
+        "code": "920275",
+        "status": "ok",
+        "industry": "农副食品加工业",
+        "name": "驱动力"
+      },
+      {
+        "code": "920808",
+        "status": "ok",
+        "industry": "通用设备制造业",
+        "name": "曙光数创"
+      }
+    ],
+    "note": "北交所股票在stock_profile_cninfo的覆盖率采样估算"
+  },
+  "universe_coverage_sample": {
+    "universe_size": 5580,
+    "sample_size": 200,
+    "mapped": 200,
+    "empty": 0,
+    "error": 0,
+    "coverage_rate_pct": 100.0,
+    "note": "基于200只随机样本估算全市场profile行业映射覆盖率;非全量逐只,标为样本估算",
+    "full_market_exact_coverage": "unavailable(未逐只跑完5580,按样本估算)",
+    "samples": [
+      {
+        "code": "002438",
+        "status": "ok",
+        "industry": "通用设备制造业"
+      },
+      {
+        "code": "300555",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "600602",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "002110",
+        "status": "ok",
+        "industry": "黑色金属冶炼和压延加工业"
+      },
+      {
+        "code": "601882",
+        "status": "ok",
+        "industry": "通用设备制造业"
+      },
+      {
+        "code": "002121",
+        "status": "ok",
+        "industry": "仪器仪表制造业"
+      },
+      {
+        "code": "301301",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "002736",
+        "status": "ok",
+        "industry": "资本市场服务"
+      },
+      {
+        "code": "002233",
+        "status": "ok",
+        "industry": "非金属矿物制品业"
+      },
+      {
+        "code": "300434",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "920942",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "300246",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "600176",
+        "status": "ok",
+        "industry": "非金属矿物制品业"
+      },
+      {
+        "code": "000031",
+        "status": "ok",
+        "industry": "房地产业"
+      },
+      {
+        "code": "301638",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "603595",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "920078",
+        "status": "ok",
+        "industry": "化学原料和化学制品制造业"
+      },
+      {
+        "code": "600828",
+        "status": "ok",
+        "industry": "零售业"
+      },
+      {
+        "code": "000682",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "300313",
+        "status": "ok",
+        "industry": "畜牧业"
+      },
+      {
+        "code": "300121",
+        "status": "ok",
+        "industry": "化学原料和化学制品制造业"
+      },
+      {
+        "code": "688575",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "002981",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "002589",
+        "status": "ok",
+        "industry": "批发业"
+      },
+      {
+        "code": "300708",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "688607",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "688610",
+        "status": "ok",
+        "industry": "仪器仪表制造业"
+      },
+      {
+        "code": "600177",
+        "status": "ok",
+        "industry": "纺织服装、服饰业"
+      },
+      {
+        "code": "600210",
+        "status": "ok",
+        "industry": "橡胶和塑料制品业"
+      },
+      {
+        "code": "600332",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "600859",
+        "status": "ok",
+        "industry": "零售业"
+      },
+      {
+        "code": "688196",
+        "status": "ok",
+        "industry": "废弃资源综合利用业"
+      },
+      {
+        "code": "920344",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "601500",
+        "status": "ok",
+        "industry": "橡胶和塑料制品业"
+      },
+      {
+        "code": "600830",
+        "status": "ok",
+        "industry": "其他金融业"
+      },
+      {
+        "code": "300730",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "603566",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "000601",
+        "status": "ok",
+        "industry": "电力、热力生产和供应业"
+      },
+      {
+        "code": "300329",
+        "status": "ok",
+        "industry": "文教、工美、体育和娱乐用品制造业"
+      },
+      {
+        "code": "688335",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "300549",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "601868",
+        "status": "ok",
+        "industry": "土木工程建筑业"
+      },
+      {
+        "code": "603680",
+        "status": "ok",
+        "industry": "铁路、船舶、航空航天和其他运输设备制造业"
+      },
+      {
+        "code": "601991",
+        "status": "ok",
+        "industry": "电力、热力生产和供应业"
+      },
+      {
+        "code": "600475",
+        "status": "ok",
+        "industry": "生态保护和环境治理业"
+      },
+      {
+        "code": "603085",
+        "status": "ok",
+        "industry": "汽车制造业"
+      },
+      {
+        "code": "601601",
+        "status": "ok",
+        "industry": "保险业"
+      },
+      {
+        "code": "002446",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "920339",
+        "status": "ok",
+        "industry": "电气机械和器材制造业"
+      },
+      {
+        "code": "603268",
+        "status": "ok",
+        "industry": "非金属矿物制品业"
+      },
+      {
+        "code": "688237",
+        "status": "ok",
+        "industry": "铁路、船舶、航空航天和其他运输设备制造业"
+      },
+      {
+        "code": "600088",
+        "status": "ok",
+        "industry": "广播、电视、电影和录音制作业"
+      },
+      {
+        "code": "002091",
+        "status": "ok",
+        "industry": "批发业"
+      },
+      {
+        "code": "600419",
+        "status": "ok",
+        "industry": "食品制造业"
+      },
+      {
+        "code": "002460",
+        "status": "ok",
+        "industry": "有色金属冶炼和压延加工业"
+      },
+      {
+        "code": "301529",
+        "status": "ok",
+        "industry": "汽车制造业"
+      },
+      {
+        "code": "301125",
+        "status": "ok",
+        "industry": "通用设备制造业"
+      },
+      {
+        "code": "002268",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "003030",
+        "status": "ok",
+        "industry": "农副食品加工业"
+      },
+      {
+        "code": "301095",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "300082",
+        "status": "ok",
+        "industry": "化学原料和化学制品制造业"
+      },
+      {
+        "code": "300723",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "000338",
+        "status": "ok",
+        "industry": "汽车制造业"
+      },
+      {
+        "code": "688136",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "600446",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "600217",
+        "status": "ok",
+        "industry": "废弃资源综合利用业"
+      },
+      {
+        "code": "603042",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "301100",
+        "status": "ok",
+        "industry": "化学原料和化学制品制造业"
+      },
+      {
+        "code": "301162",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "000750",
+        "status": "ok",
+        "industry": "资本市场服务"
+      },
+      {
+        "code": "603023",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "920879",
+        "status": "ok",
+        "industry": "仪器仪表制造业"
+      },
+      {
+        "code": "603899",
+        "status": "ok",
+        "industry": "文教、工美、体育和娱乐用品制造业"
+      },
+      {
+        "code": "002612",
+        "status": "ok",
+        "industry": "纺织服装、服饰业"
+      },
+      {
+        "code": "600655",
+        "status": "ok",
+        "industry": "零售业"
+      },
+      {
+        "code": "688583",
+        "status": "ok",
+        "industry": "仪器仪表制造业"
+      },
+      {
+        "code": "688091",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "605286",
+        "status": "ok",
+        "industry": "通用设备制造业"
+      },
+      {
+        "code": "002552",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "603557",
+        "status": "ok",
+        "industry": "皮革、毛皮、羽毛及其制品和制鞋业"
+      },
+      {
+        "code": "920556",
+        "status": "ok",
+        "industry": "仪器仪表制造业"
+      },
+      {
+        "code": "603813",
+        "status": "ok",
+        "industry": "道路运输业"
+      },
+      {
+        "code": "603429",
+        "status": "ok",
+        "industry": "印刷和记录媒介复制业"
+      },
+      {
+        "code": "603018",
+        "status": "ok",
+        "industry": "专业技术服务业"
+      },
+      {
+        "code": "300352",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "603185",
+        "status": "ok",
+        "industry": "电气机械和器材制造业"
+      },
+      {
+        "code": "002304",
+        "status": "ok",
+        "industry": "酒、饮料和精制茶制造业"
+      },
+      {
+        "code": "301536",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "001391",
+        "status": "ok",
+        "industry": "航空运输业"
+      },
+      {
+        "code": "600288",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "301068",
+        "status": "ok",
+        "industry": "废弃资源综合利用业"
+      },
+      {
+        "code": "300571",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "688200",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "300604",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "920145",
+        "status": "ok",
+        "industry": "仪器仪表制造业"
+      },
+      {
+        "code": "000661",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "000888",
+        "status": "ok",
+        "industry": "公共设施管理业"
+      },
+      {
+        "code": "688337",
+        "status": "ok",
+        "industry": "仪器仪表制造业"
+      },
+      {
+        "code": "300467",
+        "status": "ok",
+        "industry": "互联网和相关服务"
+      },
+      {
+        "code": "002940",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "688696",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "688630",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "601696",
+        "status": "ok",
+        "industry": "资本市场服务"
+      },
+      {
+        "code": "688301",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "688008",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "002425",
+        "status": "ok",
+        "industry": "互联网和相关服务"
+      },
+      {
+        "code": "603060",
+        "status": "ok",
+        "industry": "专业技术服务业"
+      },
+      {
+        "code": "603189",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "688433",
+        "status": "ok",
+        "industry": "通用设备制造业"
+      },
+      {
+        "code": "920866",
+        "status": "ok",
+        "industry": "化学原料和化学制品制造业"
+      },
+      {
+        "code": "301085",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "920786",
+        "status": "ok",
+        "industry": "畜牧业"
+      },
+      {
+        "code": "301051",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "001376",
+        "status": "ok",
+        "industry": "电力、热力生产和供应业"
+      },
+      {
+        "code": "920211",
+        "status": "ok",
+        "industry": "仪器仪表制造业"
+      },
+      {
+        "code": "300694",
+        "status": "ok",
+        "industry": "汽车制造业"
+      },
+      {
+        "code": "603208",
+        "status": "ok",
+        "industry": "木材加工和木、竹、藤、棕、草制品业"
+      },
+      {
+        "code": "002100",
+        "status": "ok",
+        "industry": "农副食品加工业"
+      },
+      {
+        "code": "000952",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "301086",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "603789",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "688827",
+        "status": "ok",
+        "industry": "通用设备制造业"
+      },
+      {
+        "code": "001330",
+        "status": "ok",
+        "industry": "广播、电视、电影和录音制作业"
+      },
+      {
+        "code": "300177",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "001219",
+        "status": "ok",
+        "industry": "食品制造业"
+      },
+      {
+        "code": "688511",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "603712",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "300295",
+        "status": "ok",
+        "industry": "互联网和相关服务"
+      },
+      {
+        "code": "000922",
+        "status": "ok",
+        "industry": "电气机械和器材制造业"
+      },
+      {
+        "code": "000810",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "300165",
+        "status": "ok",
+        "industry": "仪器仪表制造业"
+      },
+      {
+        "code": "600373",
+        "status": "ok",
+        "industry": "新闻和出版业"
+      },
+      {
+        "code": "300407",
+        "status": "ok",
+        "industry": "铁路、船舶、航空航天和其他运输设备制造业"
+      },
+      {
+        "code": "300310",
+        "status": "ok",
+        "industry": "电信、广播电视和卫星传输服务"
+      },
+      {
+        "code": "002899",
+        "status": "ok",
+        "industry": "文教、工美、体育和娱乐用品制造业"
+      },
+      {
+        "code": "920110",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "603341",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "603931",
+        "status": "ok",
+        "industry": "化学原料和化学制品制造业"
+      },
+      {
+        "code": "002887",
+        "status": "ok",
+        "industry": "生态保护和环境治理业"
+      },
+      {
+        "code": "301002",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "300990",
+        "status": "ok",
+        "industry": "通用设备制造业"
+      },
+      {
+        "code": "300796",
+        "status": "ok",
+        "industry": "化学原料和化学制品制造业"
+      },
+      {
+        "code": "002968",
+        "status": "ok",
+        "industry": "房地产业"
+      },
+      {
+        "code": "603618",
+        "status": "ok",
+        "industry": "电气机械和器材制造业"
+      },
+      {
+        "code": "002140",
+        "status": "ok",
+        "industry": "土木工程建筑业"
+      },
+      {
+        "code": "603489",
+        "status": "ok",
+        "industry": "电气机械和器材制造业"
+      },
+      {
+        "code": "002427",
+        "status": "ok",
+        "industry": "化学纤维制造业"
+      },
+      {
+        "code": "688105",
+        "status": "ok",
+        "industry": "研究和试验发展"
+      },
+      {
+        "code": "688652",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "603025",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "300769",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "301156",
+        "status": "ok",
+        "industry": "食品制造业"
+      },
+      {
+        "code": "300238",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "603858",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "601061",
+        "status": "ok",
+        "industry": "批发业"
+      },
+      {
+        "code": "603716",
+        "status": "ok",
+        "industry": "批发业"
+      },
+      {
+        "code": "300457",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "300058",
+        "status": "ok",
+        "industry": "商务服务业"
+      },
+      {
+        "code": "920438",
+        "status": "ok",
+        "industry": "非金属矿物制品业"
+      },
+      {
+        "code": "300675",
+        "status": "ok",
+        "industry": "专业技术服务业"
+      },
+      {
+        "code": "600742",
+        "status": "ok",
+        "industry": "汽车制造业"
+      },
+      {
+        "code": "002351",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "920087",
+        "status": "ok",
+        "industry": "农、林、牧、渔专业及辅助性活动"
+      },
+      {
+        "code": "688577",
+        "status": "ok",
+        "industry": "通用设备制造业"
+      },
+      {
+        "code": "300447",
+        "status": "ok",
+        "industry": "电气机械和器材制造业"
+      },
+      {
+        "code": "000543",
+        "status": "ok",
+        "industry": "电力、热力生产和供应业"
+      },
+      {
+        "code": "688088",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "002991",
+        "status": "ok",
+        "industry": "农副食品加工业"
+      },
+      {
+        "code": "300560",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "300994",
+        "status": "ok",
+        "industry": "铁路、船舶、航空航天和其他运输设备制造业"
+      },
+      {
+        "code": "300377",
+        "status": "ok",
+        "industry": "软件和信息技术服务业"
+      },
+      {
+        "code": "301259",
+        "status": "ok",
+        "industry": "生态保护和环境治理业"
+      },
+      {
+        "code": "300832",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "300201",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "688300",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "600316",
+        "status": "ok",
+        "industry": "铁路、船舶、航空航天和其他运输设备制造业"
+      },
+      {
+        "code": "600211",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "001298",
+        "status": "ok",
+        "industry": "批发业"
+      },
+      {
+        "code": "688062",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "000725",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "002651",
+        "status": "ok",
+        "industry": "专用设备制造业"
+      },
+      {
+        "code": "603444",
+        "status": "ok",
+        "industry": "互联网和相关服务"
+      },
+      {
+        "code": "300506",
+        "status": "ok",
+        "industry": "建筑装饰、装修和其他建筑业"
+      },
+      {
+        "code": "600816",
+        "status": "ok",
+        "industry": "其他金融业"
+      },
+      {
+        "code": "603459",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "920394",
+        "status": "ok",
+        "industry": "纺织业"
+      },
+      {
+        "code": "688226",
+        "status": "ok",
+        "industry": "电气机械和器材制造业"
+      },
+      {
+        "code": "688681",
+        "status": "ok",
+        "industry": "电气机械和器材制造业"
+      },
+      {
+        "code": "300863",
+        "status": "ok",
+        "industry": "汽车制造业"
+      },
+      {
+        "code": "600329",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "002060",
+        "status": "ok",
+        "industry": "土木工程建筑业"
+      },
+      {
+        "code": "605168",
+        "status": "ok",
+        "industry": "商务服务业"
+      },
+      {
+        "code": "301717",
+        "status": "ok",
+        "industry": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "code": "605178",
+        "status": "ok",
+        "industry": "建筑装饰、装修和其他建筑业"
+      },
+      {
+        "code": "301188",
+        "status": "ok",
+        "industry": "非金属矿物制品业"
+      },
+      {
+        "code": "300650",
+        "status": "ok",
+        "industry": "批发业"
+      },
+      {
+        "code": "301001",
+        "status": "ok",
+        "industry": "零售业"
+      },
+      {
+        "code": "000989",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "688468",
+        "status": "ok",
+        "industry": "医药制造业"
+      },
+      {
+        "code": "002145",
+        "status": "ok",
+        "industry": "化学原料和化学制品制造业"
+      }
+    ]
+  },
+  "sina_newyear_check": {
+    "code": "000932",
+    "date_min": "2009-07-03",
+    "date_max": "2026-11-20",
+    "has_2023_01_01": false,
+    "has_2024_01_01": false,
+    "rows_around_2023_newyear": [
+      "2023-01-03",
+      "2023-01-04",
+      "2023-01-05",
+      "2023-01-06",
+      "2023-01-09",
+      "2023-01-10"
+    ],
+    "note": "对比中证csindex的2023-01-01节假日异常,看新浪是否也有"
+  },
+  "bj_code_migration_note": {
+    "finding": "北交所代码已迁移至920段;旧段830/831/835/836/832在profile返回0行",
+    "evidence": "30只样本中830799/831305/836260/835185/832000旧代码profile empty;重测确认rows=0;920段20/20成功",
+    "old_codes_failed": [
+      "830799",
+      "831305",
+      "836260",
+      "835185",
+      "832000"
+    ],
+    "new_920_codes_ok": "920000及920xxx段20/20成功",
+    "implication": "5580分母使用920新代码(来自北交所官网最新名单),覆盖率采样200/200有效;但历史数据若引用旧代码段会映射失败"
+  }
+}

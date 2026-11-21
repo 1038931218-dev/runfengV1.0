@@ -1,0 +1,1608 @@
+{
+  "task": "R2 sector index history validation",
+  "collect_time": "2026-11-21T20:09:36.003272+08:00",
+  "akshare_version": "1.18.22",
+  "indices": [
+    [
+      "399986",
+      "中证银行",
+      "银行"
+    ],
+    [
+      "399975",
+      "证券公司",
+      "证券"
+    ],
+    [
+      "000932",
+      "800消费",
+      "消费"
+    ],
+    [
+      "000991",
+      "全指医药",
+      "医药"
+    ],
+    [
+      "000819",
+      "有色金属",
+      "有色"
+    ],
+    [
+      "000928",
+      "800能源",
+      "能源"
+    ],
+    [
+      "000807",
+      "食品饮料",
+      "食品"
+    ],
+    [
+      "000808",
+      "医药生物",
+      "医药2"
+    ],
+    [
+      "399998",
+      "中证煤炭",
+      "煤炭"
+    ],
+    [
+      "000986",
+      "全指能源",
+      "能源2"
+    ]
+  ],
+  "note": "10行业指数;每指数>=100交易日优先;三源(中证官网csindex/新浪/腾讯);质量检查;3指数跨源交叉;000928已知异常不得重新认定生产级。",
+  "results": [
+    {
+      "code": "399986",
+      "name": "中证银行",
+      "tag": "银行",
+      "request_time": "2026-11-21T20:09:36.003315+08:00",
+      "sources": {
+        "csindex": {
+          "status": "ok",
+          "rows": 463,
+          "error": null,
+          "quality": {
+            "rows": 463,
+            "unique_dates": 463,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 1,
+            "identical_group_samples": [
+              [
+                "2023-01-01",
+                "2023-01-03"
+              ]
+            ],
+            "date_min": "2023-01-01",
+            "date_max": "2024-11-29",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": true,
+              "fields": [
+                "日期",
+                "指数代码",
+                "指数中文全称",
+                "指数中文简称",
+                "指数英文全称",
+                "指数英文简称",
+                "开盘",
+                "最高",
+                "最低",
+                "收盘",
+                "涨跌",
+                "涨跌幅",
+                "成交量",
+                "成交金额",
+                "样本数量",
+                "滚动市盈率"
+              ],
+              "volume_col": "成交量",
+              "amount_col": "成交金额"
+            }
+          },
+          "sample_first3": [
+            {
+              "date": "2023-01-01",
+              "open": 5692.54,
+              "high": 5739.52,
+              "low": 5633.07,
+              "close": 5725.93,
+              "volume": 2220197539.0,
+              "amount": 159.01
+            },
+            {
+              "date": "2023-01-03",
+              "open": 5692.54,
+              "high": 5739.52,
+              "low": 5633.07,
+              "close": 5725.93,
+              "volume": 2220197539.0,
+              "amount": 159.01
+            },
+            {
+              "date": "2023-01-04",
+              "open": 5737.66,
+              "high": 5852.43,
+              "low": 5727.89,
+              "close": 5839.84,
+              "volume": 2810567960.0,
+              "amount": 201.55
+            }
+          ],
+          "sample_last2": [
+            {
+              "date": "2024-11-28",
+              "open": 6676.6,
+              "high": 6708.02,
+              "low": 6638.63,
+              "close": 6668.28,
+              "volume": 2896137109.0,
+              "amount": 188.72
+            },
+            {
+              "date": "2024-11-29",
+              "open": 6681.98,
+              "high": 6752.38,
+              "low": 6660.82,
+              "close": 6668.64,
+              "volume": 3748717884.0,
+              "amount": 247.7
+            }
+          ],
+          "http": [
+            {
+              "http_status": 200,
+              "content_type": "application/json;charset=UTF-8",
+              "body_len": 159334,
+              "body_sha256": "0fa66c494a02d5f5c8c7052b0940895f39c9d1d3d808a073c1a4463c0fcfb0f6"
+            }
+          ]
+        },
+        "sina_sh": {
+          "status": "error",
+          "rows": 0,
+          "error": "KeyError: 'date'"
+        }
+      }
+    },
+    {
+      "code": "399975",
+      "name": "证券公司",
+      "tag": "证券",
+      "request_time": "2026-11-21T20:09:36.437476+08:00",
+      "sources": {
+        "csindex": {
+          "status": "ok",
+          "rows": 463,
+          "error": null,
+          "quality": {
+            "rows": 463,
+            "unique_dates": 463,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 1,
+            "identical_group_samples": [
+              [
+                "2023-01-01",
+                "2023-01-03"
+              ]
+            ],
+            "date_min": "2023-01-01",
+            "date_max": "2024-11-29",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": true,
+              "fields": [
+                "日期",
+                "指数代码",
+                "指数中文全称",
+                "指数中文简称",
+                "指数英文全称",
+                "指数英文简称",
+                "开盘",
+                "最高",
+                "最低",
+                "收盘",
+                "涨跌",
+                "涨跌幅",
+                "成交量",
+                "成交金额",
+                "样本数量",
+                "滚动市盈率"
+              ],
+              "volume_col": "成交量",
+              "amount_col": "成交金额"
+            }
+          },
+          "sample_first3": [
+            {
+              "date": "2023-01-01",
+              "open": 627.59,
+              "high": 632.1,
+              "low": 614.96,
+              "close": 630.91,
+              "volume": 1779167201.0,
+              "amount": 182.14
+            },
+            {
+              "date": "2023-01-03",
+              "open": 627.59,
+              "high": 632.1,
+              "low": 614.96,
+              "close": 630.91,
+              "volume": 1779167201.0,
+              "amount": 182.14
+            },
+            {
+              "date": "2023-01-04",
+              "open": 629.79,
+              "high": 636.82,
+              "low": 629.46,
+              "close": 633.14,
+              "volume": 1289983985.0,
+              "amount": 124.63
+            }
+          ],
+          "sample_last2": [
+            {
+              "date": "2024-11-28",
+              "open": 852.13,
+              "high": 855.19,
+              "low": 841.64,
+              "close": 842.86,
+              "volume": 4015865035.0,
+              "amount": 519.29
+            },
+            {
+              "date": "2024-11-29",
+              "open": 841.62,
+              "high": 892.14,
+              "low": 839.87,
+              "close": 865.82,
+              "volume": 7651657700.0,
+              "amount": 1004.87
+            }
+          ],
+          "http": [
+            {
+              "http_status": 200,
+              "content_type": "application/json;charset=UTF-8",
+              "body_len": 184096,
+              "body_sha256": "cfda8d1d481f601f8db7dc3d636161fd6c6c008127d60e2717e4cecc0a74ff31"
+            }
+          ]
+        },
+        "sina_sh": {
+          "status": "error",
+          "rows": 0,
+          "error": "KeyError: 'date'"
+        }
+      }
+    },
+    {
+      "code": "000932",
+      "name": "800消费",
+      "tag": "消费",
+      "request_time": "2026-11-21T20:09:36.927479+08:00",
+      "sources": {
+        "csindex": {
+          "status": "ok",
+          "rows": 463,
+          "error": null,
+          "quality": {
+            "rows": 463,
+            "unique_dates": 463,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 1,
+            "identical_group_samples": [
+              [
+                "2023-01-01",
+                "2023-01-03"
+              ]
+            ],
+            "date_min": "2023-01-01",
+            "date_max": "2024-11-29",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": true,
+              "fields": [
+                "日期",
+                "指数代码",
+                "指数中文全称",
+                "指数中文简称",
+                "指数英文全称",
+                "指数英文简称",
+                "开盘",
+                "最高",
+                "最低",
+                "收盘",
+                "涨跌",
+                "涨跌幅",
+                "成交量",
+                "成交金额",
+                "样本数量",
+                "滚动市盈率"
+              ],
+              "volume_col": "成交量",
+              "amount_col": "成交金额"
+            }
+          },
+          "sample_first3": [
+            {
+              "date": "2023-01-01",
+              "open": 21538.33,
+              "high": 21568.66,
+              "low": 21056.65,
+              "close": 21231.83,
+              "volume": 689165300.0,
+              "amount": 300.83
+            },
+            {
+              "date": "2023-01-03",
+              "open": 21538.33,
+              "high": 21568.66,
+              "low": 21056.65,
+              "close": 21231.83,
+              "volume": 689165300.0,
+              "amount": 300.83
+            },
+            {
+              "date": "2023-01-04",
+              "open": 21199.7,
+              "high": 21364.22,
+              "low": 21104.49,
+              "close": 21245.49,
+              "volume": 571484900.0,
+              "amount": 217.66
+            }
+          ],
+          "sample_last2": [
+            {
+              "date": "2024-11-28",
+              "open": 16449.51,
+              "high": 16481.63,
+              "low": 16275.18,
+              "close": 16306.36,
+              "volume": 509984500.0,
+              "amount": 174.52
+            },
+            {
+              "date": "2024-11-29",
+              "open": 16340.04,
+              "high": 16739.51,
+              "low": 16335.98,
+              "close": 16527.45,
+              "volume": 698015000.0,
+              "amount": 265.67
+            }
+          ],
+          "http": [
+            {
+              "http_status": 200,
+              "content_type": "application/json;charset=UTF-8",
+              "body_len": 170347,
+              "body_sha256": "8aaf71b4b0e9ff81547325fa967b77a2aa525da5543d9feaa6a0af7ad4eed103"
+            }
+          ]
+        },
+        "sina_sh": {
+          "status": "ok",
+          "rows": 4223,
+          "error": null,
+          "quality": {
+            "rows": 4223,
+            "unique_dates": 4223,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 0,
+            "identical_group_samples": [],
+            "date_min": "2009-07-03",
+            "date_max": "2026-11-20",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": false,
+              "fields": [
+                "date",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume"
+              ],
+              "volume_col": "volume",
+              "amount_col": null
+            }
+          },
+          "sample_last2": [
+            {
+              "date": "2026-11-19",
+              "open": 13245.879,
+              "high": 13316.642,
+              "low": 13182.475,
+              "close": 13273.6,
+              "volume": 571223300,
+              "amount": null
+            },
+            {
+              "date": "2026-11-20",
+              "open": 13190.478,
+              "high": 13239.303,
+              "low": 13021.462,
+              "close": 13217.798,
+              "volume": 839031600,
+              "amount": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "code": "000991",
+      "name": "全指医药",
+      "tag": "医药",
+      "request_time": "2026-11-21T20:09:37.477135+08:00",
+      "sources": {
+        "csindex": {
+          "status": "ok",
+          "rows": 463,
+          "error": null,
+          "quality": {
+            "rows": 463,
+            "unique_dates": 463,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 1,
+            "identical_group_samples": [
+              [
+                "2023-01-01",
+                "2023-01-03"
+              ]
+            ],
+            "date_min": "2023-01-01",
+            "date_max": "2024-11-29",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": true,
+              "fields": [
+                "日期",
+                "指数代码",
+                "指数中文全称",
+                "指数中文简称",
+                "指数英文全称",
+                "指数英文简称",
+                "开盘",
+                "最高",
+                "最低",
+                "收盘",
+                "涨跌",
+                "涨跌幅",
+                "成交量",
+                "成交金额",
+                "样本数量",
+                "滚动市盈率"
+              ],
+              "volume_col": "成交量",
+              "amount_col": "成交金额"
+            }
+          },
+          "sample_first3": [
+            {
+              "date": "2023-01-01",
+              "open": 10967.65,
+              "high": 11095.02,
+              "low": 10938.08,
+              "close": 11042.07,
+              "volume": 4613939700.0,
+              "amount": 833.66
+            },
+            {
+              "date": "2023-01-03",
+              "open": 10967.65,
+              "high": 11095.02,
+              "low": 10938.08,
+              "close": 11042.07,
+              "volume": 4613939700.0,
+              "amount": 833.66
+            },
+            {
+              "date": "2023-01-04",
+              "open": 11038.03,
+              "high": 11136.83,
+              "low": 10996.65,
+              "close": 11081.98,
+              "volume": 3952143100.0,
+              "amount": 738.31
+            }
+          ],
+          "sample_last2": [
+            {
+              "date": "2024-11-28",
+              "open": 8629.21,
+              "high": 8649.96,
+              "low": 8525.19,
+              "close": 8542.74,
+              "volume": 1170502400.0,
+              "amount": 301.18
+            },
+            {
+              "date": "2024-11-29",
+              "open": 8551.07,
+              "high": 8757.09,
+              "low": 8546.29,
+              "close": 8674.46,
+              "volume": 1508580700.0,
+              "amount": 402.47
+            }
+          ],
+          "http": [
+            {
+              "http_status": 200,
+              "content_type": "application/json;charset=UTF-8",
+              "body_len": 177955,
+              "body_sha256": "035ae4f28de13b67accce48fd7bdd04b9bee41a19bcc71fa471d6a2b653bbb22"
+            }
+          ]
+        },
+        "sina_sh": {
+          "status": "ok",
+          "rows": 3716,
+          "error": null,
+          "quality": {
+            "rows": 3716,
+            "unique_dates": 3716,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 0,
+            "identical_group_samples": [],
+            "date_min": "2011-08-02",
+            "date_max": "2026-11-20",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": false,
+              "fields": [
+                "date",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume"
+              ],
+              "volume_col": "volume",
+              "amount_col": null
+            }
+          },
+          "sample_last2": [
+            {
+              "date": "2026-11-19",
+              "open": 8215.137,
+              "high": 8227.761,
+              "low": 8140.728,
+              "close": 8195.962,
+              "volume": 1138928800,
+              "amount": null
+            },
+            {
+              "date": "2026-11-20",
+              "open": 8098.729,
+              "high": 8098.729,
+              "low": 7951.492,
+              "close": 8000.713,
+              "volume": 1478290100,
+              "amount": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "code": "000819",
+      "name": "有色金属",
+      "tag": "有色",
+      "request_time": "2026-11-21T20:09:38.037370+08:00",
+      "sources": {
+        "csindex": {
+          "status": "ok",
+          "rows": 463,
+          "error": null,
+          "quality": {
+            "rows": 463,
+            "unique_dates": 463,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 1,
+            "identical_group_samples": [
+              [
+                "2023-01-01",
+                "2023-01-03"
+              ]
+            ],
+            "date_min": "2023-01-01",
+            "date_max": "2024-11-29",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": true,
+              "fields": [
+                "日期",
+                "指数代码",
+                "指数中文全称",
+                "指数中文简称",
+                "指数英文全称",
+                "指数英文简称",
+                "开盘",
+                "最高",
+                "最低",
+                "收盘",
+                "涨跌",
+                "涨跌幅",
+                "成交量",
+                "成交金额",
+                "样本数量",
+                "滚动市盈率"
+              ],
+              "volume_col": "成交量",
+              "amount_col": "成交金额"
+            }
+          },
+          "sample_first3": [
+            {
+              "date": "2023-01-01",
+              "open": 5291.61,
+              "high": 5445.92,
+              "low": 5264.42,
+              "close": 5437.01,
+              "volume": 1542967600.0,
+              "amount": 264.52
+            },
+            {
+              "date": "2023-01-03",
+              "open": 5291.61,
+              "high": 5445.92,
+              "low": 5264.42,
+              "close": 5437.01,
+              "volume": 1542967600.0,
+              "amount": 264.52
+            },
+            {
+              "date": "2023-01-04",
+              "open": 5412.2,
+              "high": 5421.21,
+              "low": 5322.18,
+              "close": 5342.03,
+              "volume": 1224823900.0,
+              "amount": 212.22
+            }
+          ],
+          "sample_last2": [
+            {
+              "date": "2024-11-28",
+              "open": 5008.83,
+              "high": 5015.96,
+              "low": 4952.36,
+              "close": 4957.92,
+              "volume": 1658832800.0,
+              "amount": 228.31
+            },
+            {
+              "date": "2024-11-29",
+              "open": 4955.61,
+              "high": 5055.22,
+              "low": 4922.79,
+              "close": 5021.98,
+              "volume": 1974430400.0,
+              "amount": 269.07
+            }
+          ],
+          "http": [
+            {
+              "http_status": 200,
+              "content_type": "application/json;charset=UTF-8",
+              "body_len": 175644,
+              "body_sha256": "7dffa7e80cf6ef80b3067af5fe4baeffa5833f3e01f72053cb907667722fbe72"
+            }
+          ]
+        },
+        "sina_sh": {
+          "status": "ok",
+          "rows": 3533,
+          "error": null,
+          "quality": {
+            "rows": 3533,
+            "unique_dates": 3533,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 0,
+            "identical_group_samples": [],
+            "date_min": "2012-05-09",
+            "date_max": "2026-11-20",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": false,
+              "fields": [
+                "date",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume"
+              ],
+              "volume_col": "volume",
+              "amount_col": null
+            }
+          },
+          "sample_last2": [
+            {
+              "date": "2026-11-19",
+              "open": 6391.376,
+              "high": 6447.844,
+              "low": 6282.512,
+              "close": 6416.354,
+              "volume": 2743551500,
+              "amount": null
+            },
+            {
+              "date": "2026-11-20",
+              "open": 6236.032,
+              "high": 6260.617,
+              "low": 6123.982,
+              "close": 6226.823,
+              "volume": 2865858300,
+              "amount": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "code": "000928",
+      "name": "800能源",
+      "tag": "能源",
+      "request_time": "2026-11-21T20:09:38.558853+08:00",
+      "sources": {
+        "csindex": {
+          "status": "ok",
+          "rows": 463,
+          "error": null,
+          "quality": {
+            "rows": 463,
+            "unique_dates": 463,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 1,
+            "identical_group_samples": [
+              [
+                "2023-01-01",
+                "2023-01-03"
+              ]
+            ],
+            "date_min": "2023-01-01",
+            "date_max": "2024-11-29",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": true,
+              "fields": [
+                "日期",
+                "指数代码",
+                "指数中文全称",
+                "指数中文简称",
+                "指数英文全称",
+                "指数英文简称",
+                "开盘",
+                "最高",
+                "最低",
+                "收盘",
+                "涨跌",
+                "涨跌幅",
+                "成交量",
+                "成交金额",
+                "样本数量",
+                "滚动市盈率"
+              ],
+              "volume_col": "成交量",
+              "amount_col": "成交金额"
+            }
+          },
+          "sample_first3": [
+            {
+              "date": "2023-01-01",
+              "open": 2372.32,
+              "high": 2403.14,
+              "low": 2364.31,
+              "close": 2399.25,
+              "volume": 804484500.0,
+              "amount": 59.69
+            },
+            {
+              "date": "2023-01-03",
+              "open": 2372.32,
+              "high": 2403.14,
+              "low": 2364.31,
+              "close": 2399.25,
+              "volume": 804484500.0,
+              "amount": 59.69
+            },
+            {
+              "date": "2023-01-04",
+              "open": 2392.97,
+              "high": 2392.97,
+              "low": 2352.37,
+              "close": 2364.66,
+              "volume": 811685400.0,
+              "amount": 65.88
+            }
+          ],
+          "sample_last2": [
+            {
+              "date": "2024-11-28",
+              "open": 2866.11,
+              "high": 2876.95,
+              "low": 2847.71,
+              "close": 2852.09,
+              "volume": 1621497600.0,
+              "amount": 77.17
+            },
+            {
+              "date": "2024-11-29",
+              "open": 2854.49,
+              "high": 2871.93,
+              "low": 2847.23,
+              "close": 2853.97,
+              "volume": 1617568200.0,
+              "amount": 91.13
+            }
+          ],
+          "http": [
+            {
+              "http_status": 200,
+              "content_type": "application/json;charset=UTF-8",
+              "body_len": 157568,
+              "body_sha256": "76c0bae389a21bf3061ed1fdbf1eb6c69e95044ed51f86bd3faf871828b6160a"
+            }
+          ]
+        },
+        "sina_sh": {
+          "status": "ok",
+          "rows": 4223,
+          "error": null,
+          "quality": {
+            "rows": 4223,
+            "unique_dates": 4223,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 0,
+            "identical_group_samples": [],
+            "date_min": "2009-07-03",
+            "date_max": "2026-11-20",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": false,
+              "fields": [
+                "date",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume"
+              ],
+              "volume_col": "volume",
+              "amount_col": null
+            }
+          },
+          "sample_last2": [
+            {
+              "date": "2026-11-19",
+              "open": 3324.356,
+              "high": 3324.356,
+              "low": 3283.245,
+              "close": 3314.981,
+              "volume": 943555500,
+              "amount": null
+            },
+            {
+              "date": "2026-11-20",
+              "open": 3297.085,
+              "high": 3358.21,
+              "low": 3282.515,
+              "close": 3348.671,
+              "volume": 1264431900,
+              "amount": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "code": "000807",
+      "name": "食品饮料",
+      "tag": "食品",
+      "request_time": "2026-11-21T20:09:39.226850+08:00",
+      "sources": {
+        "csindex": {
+          "status": "ok",
+          "rows": 463,
+          "error": null,
+          "quality": {
+            "rows": 463,
+            "unique_dates": 463,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 1,
+            "identical_group_samples": [
+              [
+                "2023-01-01",
+                "2023-01-03"
+              ]
+            ],
+            "date_min": "2023-01-01",
+            "date_max": "2024-11-29",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": true,
+              "fields": [
+                "日期",
+                "指数代码",
+                "指数中文全称",
+                "指数中文简称",
+                "指数英文全称",
+                "指数英文简称",
+                "开盘",
+                "最高",
+                "最低",
+                "收盘",
+                "涨跌",
+                "涨跌幅",
+                "成交量",
+                "成交金额",
+                "样本数量",
+                "滚动市盈率"
+              ],
+              "volume_col": "成交量",
+              "amount_col": "成交金额"
+            }
+          },
+          "sample_first3": [
+            {
+              "date": "2023-01-01",
+              "open": 28120.36,
+              "high": 28159.82,
+              "low": 27438.83,
+              "close": 27660.74,
+              "volume": 497525420.0,
+              "amount": 289.44
+            },
+            {
+              "date": "2023-01-03",
+              "open": 28120.36,
+              "high": 28159.82,
+              "low": 27438.83,
+              "close": 27660.74,
+              "volume": 497525420.0,
+              "amount": 289.44
+            },
+            {
+              "date": "2023-01-04",
+              "open": 27623.96,
+              "high": 27907.16,
+              "low": 27482.31,
+              "close": 27680.85,
+              "volume": 335664087.0,
+              "amount": 200.33
+            }
+          ],
+          "sample_last2": [
+            {
+              "date": "2024-11-28",
+              "open": 20897.59,
+              "high": 20970.59,
+              "low": 20683.49,
+              "close": 20727.99,
+              "volume": 452747333.0,
+              "amount": 187.38
+            },
+            {
+              "date": "2024-11-29",
+              "open": 20786.22,
+              "high": 21375.97,
+              "low": 20786.22,
+              "close": 21039.42,
+              "volume": 698425592.0,
+              "amount": 292.13
+            }
+          ],
+          "http": [
+            {
+              "http_status": 200,
+              "content_type": "application/json;charset=UTF-8",
+              "body_len": 176400,
+              "body_sha256": "b5927fe65e182ec007dabfee563640653b0ba746feba42ea1484b10ce375c22b"
+            }
+          ]
+        },
+        "sina_sh": {
+          "status": "ok",
+          "rows": 1670,
+          "error": null,
+          "quality": {
+            "rows": 1670,
+            "unique_dates": 1670,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 0,
+            "identical_group_samples": [],
+            "date_min": "2012-02-20",
+            "date_max": "2018-12-25",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": false,
+              "fields": [
+                "date",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume"
+              ],
+              "volume_col": "volume",
+              "amount_col": null
+            }
+          },
+          "sample_last2": [
+            {
+              "date": "2018-12-24",
+              "open": 11008.25,
+              "high": 11165.167,
+              "low": 10941.528,
+              "close": 11144.323,
+              "volume": 206998100,
+              "amount": null
+            },
+            {
+              "date": "2018-12-25",
+              "open": 11017.998,
+              "high": 11169.776,
+              "low": 10915.13,
+              "close": 11131.594,
+              "volume": 268350700,
+              "amount": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "code": "000808",
+      "name": "医药生物",
+      "tag": "医药2",
+      "request_time": "2026-11-21T20:09:39.799634+08:00",
+      "sources": {
+        "csindex": {
+          "status": "ok",
+          "rows": 463,
+          "error": null,
+          "quality": {
+            "rows": 463,
+            "unique_dates": 463,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 1,
+            "identical_group_samples": [
+              [
+                "2023-01-01",
+                "2023-01-03"
+              ]
+            ],
+            "date_min": "2023-01-01",
+            "date_max": "2024-11-29",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": true,
+              "fields": [
+                "日期",
+                "指数代码",
+                "指数中文全称",
+                "指数中文简称",
+                "指数英文全称",
+                "指数英文简称",
+                "开盘",
+                "最高",
+                "最低",
+                "收盘",
+                "涨跌",
+                "涨跌幅",
+                "成交量",
+                "成交金额",
+                "样本数量",
+                "滚动市盈率"
+              ],
+              "volume_col": "成交量",
+              "amount_col": "成交金额"
+            }
+          },
+          "sample_first3": [
+            {
+              "date": "2023-01-01",
+              "open": 10540.82,
+              "high": 10634.62,
+              "low": 10481.23,
+              "close": 10579.9,
+              "volume": 1605038853.0,
+              "amount": 444.91
+            },
+            {
+              "date": "2023-01-03",
+              "open": 10540.82,
+              "high": 10634.62,
+              "low": 10481.23,
+              "close": 10579.9,
+              "volume": 1605038853.0,
+              "amount": 444.91
+            },
+            {
+              "date": "2023-01-04",
+              "open": 10582.83,
+              "high": 10702.47,
+              "low": 10552.89,
+              "close": 10653.07,
+              "volume": 1332147805.0,
+              "amount": 395.28
+            }
+          ],
+          "sample_last2": [
+            {
+              "date": "2024-11-28",
+              "open": 8210.05,
+              "high": 8229.2,
+              "low": 8109.53,
+              "close": 8125.61,
+              "volume": 1000778245.0,
+              "amount": 281.09
+            },
+            {
+              "date": "2024-11-29",
+              "open": 8134.68,
+              "high": 8326.33,
+              "low": 8129.9,
+              "close": 8249.17,
+              "volume": 1308749640.0,
+              "amount": 373.1
+            }
+          ],
+          "http": [
+            {
+              "http_status": 200,
+              "content_type": "application/json;charset=UTF-8",
+              "body_len": 171759,
+              "body_sha256": "bf308a462e31630075a28f98b5bc38a324de7e550db5a4a7ab206171990a1091"
+            }
+          ]
+        },
+        "sina_sh": {
+          "status": "ok",
+          "rows": 2184,
+          "error": null,
+          "quality": {
+            "rows": 2184,
+            "unique_dates": 2184,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 0,
+            "identical_group_samples": [],
+            "date_min": "2012-02-20",
+            "date_max": "2021-02-04",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": false,
+              "fields": [
+                "date",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume"
+              ],
+              "volume_col": "volume",
+              "amount_col": null
+            }
+          },
+          "sample_last2": [
+            {
+              "date": "2021-02-03",
+              "open": 16847.614,
+              "high": 17200.711,
+              "low": 16757.437,
+              "close": 16957.265,
+              "volume": 1224309900,
+              "amount": null
+            },
+            {
+              "date": "2021-02-04",
+              "open": 16817.187,
+              "high": 17060.584,
+              "low": 16540.473,
+              "close": 16736.607,
+              "volume": 1181093800,
+              "amount": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "code": "399998",
+      "name": "中证煤炭",
+      "tag": "煤炭",
+      "request_time": "2026-11-21T20:09:40.400595+08:00",
+      "sources": {
+        "csindex": {
+          "status": "ok",
+          "rows": 463,
+          "error": null,
+          "quality": {
+            "rows": 463,
+            "unique_dates": 463,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 1,
+            "identical_group_samples": [
+              [
+                "2023-01-01",
+                "2023-01-03"
+              ]
+            ],
+            "date_min": "2023-01-01",
+            "date_max": "2024-11-29",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": true,
+              "fields": [
+                "日期",
+                "指数代码",
+                "指数中文全称",
+                "指数中文简称",
+                "指数英文全称",
+                "指数英文简称",
+                "开盘",
+                "最高",
+                "最低",
+                "收盘",
+                "涨跌",
+                "涨跌幅",
+                "成交量",
+                "成交金额",
+                "样本数量",
+                "滚动市盈率"
+              ],
+              "volume_col": "成交量",
+              "amount_col": "成交金额"
+            }
+          },
+          "sample_first3": [
+            {
+              "date": "2023-01-01",
+              "open": 2148.84,
+              "high": 2176.01,
+              "low": 2136.06,
+              "close": 2172.98,
+              "volume": 748254945.0,
+              "amount": 63.28
+            },
+            {
+              "date": "2023-01-03",
+              "open": 2148.84,
+              "high": 2176.01,
+              "low": 2136.06,
+              "close": 2172.98,
+              "volume": 748254945.0,
+              "amount": 63.28
+            },
+            {
+              "date": "2023-01-04",
+              "open": 2165.93,
+              "high": 2166.26,
+              "low": 2115.92,
+              "close": 2125.35,
+              "volume": 838268596.0,
+              "amount": 77.71
+            }
+          ],
+          "sample_last2": [
+            {
+              "date": "2024-11-28",
+              "open": 2161.02,
+              "high": 2164.83,
+              "low": 2143.39,
+              "close": 2146.11,
+              "volume": 1635530114.0,
+              "amount": 65.74
+            },
+            {
+              "date": "2024-11-29",
+              "open": 2144.06,
+              "high": 2169.68,
+              "low": 2132.62,
+              "close": 2157.53,
+              "volume": 1570929447.0,
+              "amount": 75.53
+            }
+          ],
+          "http": [
+            {
+              "http_status": 200,
+              "content_type": "application/json;charset=UTF-8",
+              "body_len": 166667,
+              "body_sha256": "277fda284bd64c61c4d464cb351633e1ad744c7702a01e30ca1cdbfb210cfd65"
+            }
+          ]
+        },
+        "sina_sh": {
+          "status": "error",
+          "rows": 0,
+          "error": "KeyError: 'date'"
+        }
+      }
+    },
+    {
+      "code": "000986",
+      "name": "全指能源",
+      "tag": "能源2",
+      "request_time": "2026-11-21T20:09:40.813388+08:00",
+      "sources": {
+        "csindex": {
+          "status": "ok",
+          "rows": 463,
+          "error": null,
+          "quality": {
+            "rows": 463,
+            "unique_dates": 463,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 1,
+            "identical_group_samples": [
+              [
+                "2023-01-01",
+                "2023-01-03"
+              ]
+            ],
+            "date_min": "2023-01-01",
+            "date_max": "2024-11-29",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": true,
+              "fields": [
+                "日期",
+                "指数代码",
+                "指数中文全称",
+                "指数中文简称",
+                "指数英文全称",
+                "指数英文简称",
+                "开盘",
+                "最高",
+                "最低",
+                "收盘",
+                "涨跌",
+                "涨跌幅",
+                "成交量",
+                "成交金额",
+                "样本数量",
+                "滚动市盈率"
+              ],
+              "volume_col": "成交量",
+              "amount_col": "成交金额"
+            }
+          },
+          "sample_first3": [
+            {
+              "date": "2023-01-01",
+              "open": 2065.1,
+              "high": 2091.61,
+              "low": 2057.37,
+              "close": 2089.21,
+              "volume": 1340703700.0,
+              "amount": 97.48
+            },
+            {
+              "date": "2023-01-03",
+              "open": 2065.1,
+              "high": 2091.61,
+              "low": 2057.37,
+              "close": 2089.21,
+              "volume": 1340703700.0,
+              "amount": 97.48
+            },
+            {
+              "date": "2023-01-04",
+              "open": 2082.45,
+              "high": 2082.45,
+              "low": 2048.7,
+              "close": 2058.02,
+              "volume": 1476975400.0,
+              "amount": 117.89
+            }
+          ],
+          "sample_last2": [
+            {
+              "date": "2024-11-28",
+              "open": 2333.09,
+              "high": 2340.3,
+              "low": 2318.32,
+              "close": 2321.19,
+              "volume": 2210993900.0,
+              "amount": 111.55
+            },
+            {
+              "date": "2024-11-29",
+              "open": 2322.87,
+              "high": 2338.6,
+              "low": 2314.83,
+              "close": 2324.42,
+              "volume": 2250557700.0,
+              "amount": 130.38
+            }
+          ],
+          "http": [
+            {
+              "http_status": 200,
+              "content_type": "application/json;charset=UTF-8",
+              "body_len": 169455,
+              "body_sha256": "3a451744b57029ab126b6e278a6a368fe22541c3ed046076ec2e1e8b39d5de7c"
+            }
+          ]
+        },
+        "sina_sh": {
+          "status": "ok",
+          "rows": 3716,
+          "error": null,
+          "quality": {
+            "rows": 3716,
+            "unique_dates": 3716,
+            "duplicate_date_count": 0,
+            "duplicate_dates": {},
+            "ohlc_logic_violations": 0,
+            "missing_ohlc_rows": 0,
+            "identical_ohlcv_diff_date_groups": 0,
+            "identical_group_samples": [],
+            "date_min": "2011-08-02",
+            "date_max": "2026-11-20",
+            "has_100_sessions": true,
+            "field_detection": {
+              "has_volume": true,
+              "has_amount": false,
+              "fields": [
+                "date",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume"
+              ],
+              "volume_col": "volume",
+              "amount_col": null
+            }
+          },
+          "sample_last2": [
+            {
+              "date": "2026-11-19",
+              "open": 2581.147,
+              "high": 2581.147,
+              "low": 2549.628,
+              "close": 2568.523,
+              "volume": 1448178300,
+              "amount": null
+            },
+            {
+              "date": "2026-11-20",
+              "open": 2553.372,
+              "high": 2591.304,
+              "low": 2541.124,
+              "close": 2584.856,
+              "volume": 1829650100,
+              "amount": null
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cross_source": [
+    {
+      "code": "399986",
+      "error": "KeyError: 'date'"
+    },
+    {
+      "code": "399975",
+      "error": "KeyError: 'date'"
+    },
+    {
+      "code": "000932",
+      "name": "800消费",
+      "common_dates": 462,
+      "max_diff_pct": 0.0,
+      "samples": [
+        {
+          "date": "2023-01-03",
+          "csindex_close": 21231.83,
+          "sina_close": 21231.83,
+          "diff_pct": 0.0
+        },
+        {
+          "date": "2023-01-04",
+          "csindex_close": 21245.49,
+          "sina_close": 21245.487,
+          "diff_pct": 0.0
+        },
+        {
+          "date": "2023-01-05",
+          "csindex_close": 21937.18,
+          "sina_close": 21937.182,
+          "diff_pct": 0.0
+        },
+        {
+          "date": "2023-01-06",
+          "csindex_close": 21891.81,
+          "sina_close": 21891.807,
+          "diff_pct": 0.0
+        },
+        {
+          "date": "2023-01-09",
+          "csindex_close": 22270.49,
+          "sina_close": 22270.488,
+          "diff_pct": 0.0
+        }
+      ]
+    }
+  ],
+  "http_capture_count": 26
+}
