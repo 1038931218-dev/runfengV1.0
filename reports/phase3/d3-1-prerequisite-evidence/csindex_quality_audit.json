@@ -1,0 +1,419 @@
+{
+  "task": "D3-1 prerequisite R4 P1-02 csindex daily quality audit",
+  "collect_time": "2026-11-21T08:45:56.086195+08:00",
+  "akshare_version": "1.18.22",
+  "symbol": "000928",
+  "interface": "ak.stock_zh_index_hist_csindex(symbol='000928',start_date=...,end_date=...)",
+  "params": {
+    "symbol": "000928",
+    "start_date": "20240101",
+    "end_date": "20240430"
+  },
+  "note": "只验证000928;捕获原始HTTP对比DataFrame;字段检测明确成交量=volume成交金额=amount;无法确认单位标unknown。",
+  "doc_warning": "AKShare源码docstring明确:'只有收盘价，正常情况下不应使用该接口,除非指数只有中证网站有' —— 质量警示",
+  "call_status": "ok",
+  "http_captures": [
+    {
+      "method": "get",
+      "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": "{'indexCode': '000928', 'startDate': '20240101', 'endDate': '20240430'}",
+      "ts": "2026-11-21T08:45:56.086311+08:00",
+      "http_status": 200,
+      "content_type": "application/json;charset=UTF-8",
+      "body_len": 26977,
+      "body_full": "{\"code\":\"200\",\"msg\":\"Success\",\"data\":[{\"tradeDate\":\"20240101\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2656.88,\"high\":2728.7,\"low\":2656.88,\"close\":2717.35,\"change\":59.76,\"changePct\":2.25,\"tradingVol\":1.3993033E9,\"tradingValue\":126.88,\"consNumber\":24.0,\"peg\":7.92},{\"tradeDate\":\"20240102\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2656.88,\"high\":2728.7,\"low\":2656.88,\"close\":2717.35,\"change\":59.76,\"changePct\":2.25,\"tradingVol\":1.3993033E9,\"tradingValue\":126.88,\"consNumber\":24.0,\"peg\":7.92},{\"tradeDate\":\"20240103\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2709.34,\"high\":2754.25,\"low\":2706.27,\"close\":2754.04,\"change\":36.69,\"changePct\":1.35,\"tradingVol\":1.2148927E9,\"tradingValue\":111.11,\"consNumber\":24.0,\"peg\":8.05},{\"tradeDate\":\"20240104\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2759.78,\"high\":2791.93,\"low\":2756.92,\"close\":2779.82,\"change\":25.78,\"changePct\":0.94,\"tradingVol\":1.2426756E9,\"tradingValue\":117.65,\"consNumber\":24.0,\"peg\":8.15},{\"tradeDate\":\"20240105\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2774.12,\"high\":2806.36,\"low\":2762.62,\"close\":2774.74,\"change\":-5.09,\"changePct\":-0.18,\"tradingVol\":1.215287E9,\"tradingValue\":113.46,\"consNumber\":24.0,\"peg\":8.15},{\"tradeDate\":\"20240108\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2769.65,\"high\":2773.83,\"low\":2747.5,\"close\":2759.88,\"change\":-14.86,\"changePct\":-0.54,\"tradingVol\":1.055073E9,\"tradingValue\":101.78,\"consNumber\":24.0,\"peg\":8.12},{\"tradeDate\":\"20240109\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2744.47,\"high\":2783.08,\"low\":2729.1,\"close\":2775.34,\"change\":15.46,\"changePct\":0.56,\"tradingVol\":9.573669E8,\"tradingValue\":92.95,\"consNumber\":24.0,\"peg\":8.16},{\"tradeDate\":\"20240110\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2773.87,\"high\":2796.58,\"low\":2750.06,\"close\":2752.68,\"change\":-22.66,\"changePct\":-0.82,\"tradingVol\":8.063057E8,\"tradingValue\":78.74,\"consNumber\":24.0,\"peg\":8.09},{\"tradeDate\":\"20240111\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2747.05,\"high\":2747.05,\"low\":2701.68,\"close\":2709.28,\"change\":-43.4,\"changePct\":-1.58,\"tradingVol\":1.042591E9,\"tradingValue\":96.83,\"consNumber\":24.0,\"peg\":7.94},{\"tradeDate\":\"20240112\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2709.69,\"high\":2736.24,\"low\":2707.58,\"close\":2725.5,\"change\":16.22,\"changePct\":0.6,\"tradingVol\":9.115892E8,\"tradingValue\":72.26,\"consNumber\":24.0,\"peg\":7.97},{\"tradeDate\":\"20240115\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2714.41,\"high\":2753.43,\"low\":2714.41,\"close\":2751.11,\"change\":25.6,\"changePct\":0.94,\"tradingVol\":8.257366E8,\"tradingValue\":86.5,\"consNumber\":24.0,\"peg\":8.06},{\"tradeDate\":\"20240116\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2745.17,\"high\":2763.52,\"low\":2729.27,\"close\":2752.23,\"change\":1.12,\"changePct\":0.04,\"tradingVol\":8.731654E8,\"tradingValue\":77.03,\"consNumber\":24.0,\"peg\":8.08},{\"tradeDate\":\"20240117\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2746.88,\"high\":2762.61,\"low\":2720.03,\"close\":2720.03,\"change\":-32.2,\"changePct\":-1.17,\"tradingVol\":9.46091E8,\"tradingValue\":83.12,\"consNumber\":24.0,\"peg\":7.97},{\"tradeDate\":\"20240118\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2715.71,\"high\":2719.84,\"low\":2626.58,\"close\":2709.86,\"change\":-10.17,\"changePct\":-0.37,\"tradingVol\":1.5146623E9,\"tradingValue\":123.3,\"consNumber\":24.0,\"peg\":7.94},{\"tradeDate\":\"20240119\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2700.12,\"high\":2702.89,\"low\":2662.5,\"close\":2675.78,\"change\":-34.07,\"changePct\":-1.26,\"tradingVol\":9.322272E8,\"tradingValue\":93.64,\"consNumber\":24.0,\"peg\":7.86},{\"tradeDate\":\"20240122\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2672.46,\"high\":2679.98,\"low\":2605.97,\"close\":2624.09,\"change\":-51.69,\"changePct\":-1.93,\"tradingVol\":1.1819244E9,\"tradingValue\":94.55,\"consNumber\":24.0,\"peg\":7.74},{\"tradeDate\":\"20240123\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2617.32,\"high\":2670.98,\"low\":2605.18,\"close\":2656.95,\"change\":32.86,\"changePct\":1.25,\"tradingVol\":1.0426787E9,\"tradingValue\":86.21,\"consNumber\":24.0,\"peg\":7.79},{\"tradeDate\":\"20240124\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2660.0,\"high\":2729.26,\"low\":2659.95,\"close\":2725.61,\"change\":68.66,\"changePct\":2.58,\"tradingVol\":1.2321002E9,\"tradingValue\":99.45,\"consNumber\":24.0,\"peg\":8.03},{\"tradeDate\":\"20240125\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2741.72,\"high\":2851.8,\"low\":2741.27,\"close\":2851.8,\"change\":126.19,\"changePct\":4.63,\"tradingVol\":1.8325855E9,\"tradingValue\":153.12,\"consNumber\":24.0,\"peg\":8.53},{\"tradeDate\":\"20240126\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2845.63,\"high\":2896.54,\"low\":2832.21,\"close\":2891.29,\"change\":39.49,\"changePct\":1.38,\"tradingVol\":1.8374697E9,\"tradingValue\":153.8,\"consNumber\":24.0,\"peg\":8.77},{\"tradeDate\":\"20240129\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2888.11,\"high\":2942.63,\"low\":2872.66,\"close\":2892.04,\"change\":0.75,\"changePct\":0.03,\"tradingVol\":1.9648827E9,\"tradingValue\":160.55,\"consNumber\":24.0,\"peg\":8.76},{\"tradeDate\":\"20240130\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2877.62,\"high\":2917.2,\"low\":2860.94,\"close\":2873.83,\"change\":-18.21,\"changePct\":-0.63,\"tradingVol\":1.4164763E9,\"tradingValue\":117.17,\"consNumber\":24.0,\"peg\":8.73},{\"tradeDate\":\"20240131\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2856.74,\"high\":2923.07,\"low\":2853.19,\"close\":2891.01,\"change\":17.18,\"changePct\":0.6,\"tradingVol\":1.3989416E9,\"tradingValue\":126.15,\"consNumber\":24.0,\"peg\":8.78},{\"tradeDate\":\"20240201\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2871.91,\"high\":2888.07,\"low\":2833.48,\"close\":2838.85,\"change\":-52.16,\"changePct\":-1.8,\"tradingVol\":1.3897969E9,\"tradingValue\":122.27,\"consNumber\":24.0,\"peg\":8.6},{\"tradeDate\":\"20240202\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2837.62,\"high\":2880.15,\"low\":2788.1,\"close\":2843.31,\"change\":4.46,\"changePct\":0.16,\"tradingVol\":1.5766851E9,\"tradingValue\":130.67,\"consNumber\":24.0,\"peg\":8.61},{\"tradeDate\":\"20240205\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2838.92,\"high\":2901.57,\"low\":2828.2,\"close\":2887.83,\"change\":44.52,\"changePct\":1.57,\"tradingVol\":2.0588857E9,\"tradingValue\":164.97,\"consNumber\":24.0,\"peg\":8.79},{\"tradeDate\":\"20240206\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2872.86,\"high\":2916.52,\"low\":2853.86,\"close\":2891.24,\"change\":3.41,\"changePct\":0.12,\"tradingVol\":1.958688E9,\"tradingValue\":156.0,\"consNumber\":24.0,\"peg\":8.7},{\"tradeDate\":\"20240207\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2888.07,\"high\":2957.28,\"low\":2861.12,\"close\":2955.32,\"change\":64.08,\"changePct\":2.22,\"tradingVol\":2.3381579E9,\"tradingValue\":189.22,\"consNumber\":24.0,\"peg\":8.87},{\"tradeDate\":\"20240208\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2941.12,\"high\":2965.71,\"low\":2932.79,\"close\":2948.03,\"change\":-7.29,\"changePct\":-0.25,\"tradingVol\":2.0782405E9,\"tradingValue\":152.59,\"consNumber\":24.0,\"peg\":8.83},{\"tradeDate\":\"20240219\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2950.92,\"high\":3076.22,\"low\":2927.83,\"close\":3075.95,\"change\":127.92,\"changePct\":4.34,\"tradingVol\":1.9435251E9,\"tradingValue\":179.28,\"consNumber\":24.0,\"peg\":9.24},{\"tradeDate\":\"20240220\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3066.75,\"high\":3109.07,\"low\":3051.57,\"close\":3087.09,\"change\":11.14,\"changePct\":0.36,\"tradingVol\":1.3861719E9,\"tradingValue\":134.65,\"consNumber\":24.0,\"peg\":9.25},{\"tradeDate\":\"20240221\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3078.74,\"high\":3110.4,\"low\":3069.46,\"close\":3078.52,\"change\":-8.56,\"changePct\":-0.28,\"tradingVol\":1.8170691E9,\"tradingValue\":163.47,\"consNumber\":24.0,\"peg\":9.26},{\"tradeDate\":\"20240222\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3064.56,\"high\":3210.62,\"low\":3063.93,\"close\":3210.62,\"change\":132.1,\"changePct\":4.29,\"tradingVol\":1.909648E9,\"tradingValue\":193.5,\"consNumber\":24.0,\"peg\":9.68},{\"tradeDate\":\"20240223\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3215.58,\"high\":3215.58,\"low\":3144.08,\"close\":3160.37,\"change\":-50.26,\"changePct\":-1.57,\"tradingVol\":1.6679241E9,\"tradingValue\":166.69,\"consNumber\":24.0,\"peg\":9.53},{\"tradeDate\":\"20240226\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3138.53,\"high\":3177.69,\"low\":3080.34,\"close\":3097.85,\"change\":-62.51,\"changePct\":-1.98,\"tradingVol\":1.5789762E9,\"tradingValue\":163.84,\"consNumber\":24.0,\"peg\":9.31},{\"tradeDate\":\"20240227\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3083.9,\"high\":3127.65,\"low\":3069.8,\"close\":3108.22,\"change\":10.36,\"changePct\":0.33,\"tradingVol\":1.2600406E9,\"tradingValue\":126.96,\"consNumber\":24.0,\"peg\":9.33},{\"tradeDate\":\"20240228\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3101.58,\"high\":3133.27,\"low\":3052.21,\"close\":3095.71,\"change\":-12.51,\"changePct\":-0.4,\"tradingVol\":1.8425236E9,\"tradingValue\":173.51,\"consNumber\":24.0,\"peg\":9.31},{\"tradeDate\":\"20240229\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3075.89,\"high\":3104.73,\"low\":3072.65,\"close\":3104.73,\"change\":9.02,\"changePct\":0.29,\"tradingVol\":1.4125738E9,\"tradingValue\":132.26,\"consNumber\":24.0,\"peg\":9.31},{\"tradeDate\":\"20240301\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3097.13,\"high\":3135.73,\"low\":3089.06,\"close\":3111.41,\"change\":6.67,\"changePct\":0.21,\"tradingVol\":1.494063E9,\"tradingValue\":143.24,\"consNumber\":24.0,\"peg\":9.29},{\"tradeDate\":\"20240304\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3108.05,\"high\":3189.89,\"low\":3105.25,\"close\":3188.78,\"change\":77.37,\"changePct\":2.49,\"tradingVol\":1.8031909E9,\"tradingValue\":182.38,\"consNumber\":24.0,\"peg\":9.55},{\"tradeDate\":\"20240305\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3175.81,\"high\":3216.39,\"low\":3160.93,\"close\":3191.77,\"change\":2.99,\"changePct\":0.09,\"tradingVol\":1.4776841E9,\"tradingValue\":149.35,\"consNumber\":24.0,\"peg\":9.55},{\"tradeDate\":\"20240306\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3193.95,\"high\":3245.3,\"low\":3179.67,\"close\":3195.69,\"change\":3.92,\"changePct\":0.12,\"tradingVol\":1.2947584E9,\"tradingValue\":142.29,\"consNumber\":24.0,\"peg\":9.53},{\"tradeDate\":\"20240307\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3190.84,\"high\":3261.47,\"low\":3188.84,\"close\":3233.6,\"change\":37.91,\"changePct\":1.19,\"tradingVol\":1.4544087E9,\"tradingValue\":141.39,\"consNumber\":24.0,\"peg\":9.64},{\"tradeDate\":\"20240308\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3231.85,\"high\":3247.44,\"low\":3179.73,\"close\":3244.79,\"change\":11.19,\"changePct\":0.35,\"tradingVol\":1.3215557E9,\"tradingValue\":143.68,\"consNumber\":24.0,\"peg\":9.67},{\"tradeDate\":\"20240311\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3226.34,\"high\":3229.78,\"low\":3123.93,\"close\":3158.82,\"change\":-85.96,\"changePct\":-2.65,\"tradingVol\":1.7554156E9,\"tradingValue\":190.19,\"consNumber\":24.0,\"peg\":9.44},{\"tradeDate\":\"20240312\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3142.22,\"high\":3144.74,\"low\":3036.63,\"close\":3046.51,\"change\":-112.31,\"changePct\":-3.56,\"tradingVol\":1.7593303E9,\"tradingValue\":210.77,\"consNumber\":24.0,\"peg\":9.1},{\"tradeDate\":\"20240313\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3029.37,\"high\":3042.69,\"low\":2991.61,\"close\":3040.01,\"change\":-6.5,\"changePct\":-0.21,\"tradingVol\":1.3092535E9,\"tradingValue\":142.17,\"consNumber\":24.0,\"peg\":9.09},{\"tradeDate\":\"20240314\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3032.23,\"high\":3075.02,\"low\":3020.31,\"close\":3063.88,\"change\":23.86,\"changePct\":0.79,\"tradingVol\":1.3682022E9,\"tradingValue\":145.75,\"consNumber\":24.0,\"peg\":9.18},{\"tradeDate\":\"20240315\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3057.79,\"high\":3063.05,\"low\":2988.6,\"close\":3044.75,\"change\":-19.13,\"changePct\":-0.62,\"tradingVol\":1.5237673E9,\"tradingValue\":166.19,\"consNumber\":24.0,\"peg\":9.17},{\"tradeDate\":\"20240318\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3024.34,\"high\":3029.81,\"low\":2991.38,\"close\":3019.4,\"change\":-25.34,\"changePct\":-0.83,\"tradingVol\":1.3173089E9,\"tradingValue\":147.7,\"consNumber\":24.0,\"peg\":9.12},{\"tradeDate\":\"20240319\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3019.91,\"high\":3082.95,\"low\":3018.11,\"close\":3033.22,\"change\":13.81,\"changePct\":0.46,\"tradingVol\":1.7094066E9,\"tradingValue\":170.6,\"consNumber\":24.0,\"peg\":9.17},{\"tradeDate\":\"20240320\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3027.06,\"high\":3082.72,\"low\":3006.78,\"close\":3058.92,\"change\":25.71,\"changePct\":0.85,\"tradingVol\":1.4416083E9,\"tradingValue\":148.69,\"consNumber\":24.0,\"peg\":9.29},{\"tradeDate\":\"20240321\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3047.87,\"high\":3074.21,\"low\":3016.02,\"close\":3054.53,\"change\":-4.4,\"changePct\":-0.14,\"tradingVol\":1.1116166E9,\"tradingValue\":121.83,\"consNumber\":24.0,\"peg\":9.3},{\"tradeDate\":\"20240322\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3048.05,\"high\":3067.7,\"low\":3024.98,\"close\":3042.69,\"change\":-11.83,\"changePct\":-0.39,\"tradingVol\":1.3264352E9,\"tradingValue\":135.88,\"consNumber\":24.0,\"peg\":9.26},{\"tradeDate\":\"20240325\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3016.52,\"high\":3103.8,\"low\":3012.04,\"close\":3063.17,\"change\":20.47,\"changePct\":0.67,\"tradingVol\":1.4049327E9,\"tradingValue\":159.73,\"consNumber\":24.0,\"peg\":9.37},{\"tradeDate\":\"20240326\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3074.53,\"high\":3077.44,\"low\":2994.76,\"close\":3020.92,\"change\":-42.25,\"changePct\":-1.38,\"tradingVol\":1.3559861E9,\"tradingValue\":144.61,\"consNumber\":24.0,\"peg\":9.26},{\"tradeDate\":\"20240327\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3014.56,\"high\":3041.36,\"low\":3014.1,\"close\":3016.31,\"change\":-4.61,\"changePct\":-0.15,\"tradingVol\":1.0600317E9,\"tradingValue\":106.39,\"consNumber\":24.0,\"peg\":9.27},{\"tradeDate\":\"20240328\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3013.55,\"high\":3042.1,\"low\":2988.85,\"close\":3028.72,\"change\":12.42,\"changePct\":0.41,\"tradingVol\":1.1627646E9,\"tradingValue\":115.41,\"consNumber\":24.0,\"peg\":9.31},{\"tradeDate\":\"20240329\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3026.39,\"high\":3116.11,\"low\":3025.06,\"close\":3111.22,\"change\":82.5,\"changePct\":2.72,\"tradingVol\":1.4904651E9,\"tradingValue\":147.44,\"consNumber\":24.0,\"peg\":9.68},{\"tradeDate\":\"20240401\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3090.31,\"high\":3090.9,\"low\":3056.16,\"close\":3080.68,\"change\":-30.54,\"changePct\":-0.98,\"tradingVol\":1.4886106E9,\"tradingValue\":152.37,\"consNumber\":24.0,\"peg\":9.57},{\"tradeDate\":\"20240402\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3081.87,\"high\":3146.15,\"low\":3080.29,\"close\":3121.66,\"change\":40.98,\"changePct\":1.33,\"tradingVol\":1.3961466E9,\"tradingValue\":150.61,\"consNumber\":24.0,\"peg\":9.73},{\"tradeDate\":\"20240403\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3129.48,\"high\":3186.22,\"low\":3129.48,\"close\":3183.97,\"change\":62.31,\"changePct\":2.0,\"tradingVol\":1.6838075E9,\"tradingValue\":177.65,\"consNumber\":24.0,\"peg\":9.92},{\"tradeDate\":\"20240408\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3150.88,\"high\":3227.82,\"low\":3132.99,\"close\":3171.84,\"change\":-12.13,\"changePct\":-0.38,\"tradingVol\":1.9084488E9,\"tradingValue\":174.72,\"consNumber\":24.0,\"peg\":9.92},{\"tradeDate\":\"20240409\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3177.12,\"high\":3193.81,\"low\":3113.6,\"close\":3143.93,\"change\":-27.91,\"changePct\":-0.88,\"tradingVol\":1.2984058E9,\"tradingValue\":125.68,\"consNumber\":24.0,\"peg\":9.82},{\"tradeDate\":\"20240410\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3135.88,\"high\":3198.62,\"low\":3133.68,\"close\":3177.86,\"change\":33.94,\"changePct\":1.08,\"tradingVol\":1.3349463E9,\"tradingValue\":140.62,\"consNumber\":24.0,\"peg\":9.94},{\"tradeDate\":\"20240411\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3166.83,\"high\":3231.33,\"low\":3152.63,\"close\":3200.39,\"change\":22.53,\"changePct\":0.71,\"tradingVol\":1.4125302E9,\"tradingValue\":136.41,\"consNumber\":24.0,\"peg\":9.96},{\"tradeDate\":\"20240412\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3191.56,\"high\":3213.27,\"low\":3172.8,\"close\":3189.48,\"change\":-10.91,\"changePct\":-0.34,\"tradingVol\":1.0621411E9,\"tradingValue\":110.08,\"consNumber\":24.0,\"peg\":9.95},{\"tradeDate\":\"20240415\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3183.35,\"high\":3291.38,\"low\":3181.59,\"close\":3282.73,\"change\":93.25,\"changePct\":2.92,\"tradingVol\":1.8805994E9,\"tradingValue\":177.0,\"consNumber\":24.0,\"peg\":10.29},{\"tradeDate\":\"20240416\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3276.43,\"high\":3338.97,\"low\":3258.25,\"close\":3303.11,\"change\":20.38,\"changePct\":0.62,\"tradingVol\":2.1468186E9,\"tradingValue\":201.68,\"consNumber\":24.0,\"peg\":10.43},{\"tradeDate\":\"20240417\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3283.21,\"high\":3322.15,\"low\":3245.33,\"close\":3320.24,\"change\":17.13,\"changePct\":0.52,\"tradingVol\":1.7794562E9,\"tradingValue\":153.93,\"consNumber\":24.0,\"peg\":10.46},{\"tradeDate\":\"20240418\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3302.63,\"high\":3344.97,\"low\":3274.29,\"close\":3290.7,\"change\":-29.55,\"changePct\":-0.89,\"tradingVol\":1.6594811E9,\"tradingValue\":163.16,\"consNumber\":24.0,\"peg\":10.28},{\"tradeDate\":\"20240419\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3284.22,\"high\":3375.43,\"low\":3284.22,\"close\":3337.3,\"change\":46.6,\"changePct\":1.42,\"tradingVol\":2.0551618E9,\"tradingValue\":202.37,\"consNumber\":24.0,\"peg\":10.48},{\"tradeDate\":\"20240422\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3318.81,\"high\":3363.36,\"low\":3203.76,\"close\":3206.24,\"change\":-131.06,\"changePct\":-3.93,\"tradingVol\":2.0368182E9,\"tradingValue\":216.08,\"consNumber\":24.0,\"peg\":10.12},{\"tradeDate\":\"20240423\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3177.88,\"high\":3199.08,\"low\":3118.49,\"close\":3148.05,\"change\":-58.2,\"changePct\":-1.82,\"tradingVol\":1.5236473E9,\"tradingValue\":147.38,\"consNumber\":24.0,\"peg\":9.92},{\"tradeDate\":\"20240424\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3162.16,\"high\":3166.93,\"low\":3119.34,\"close\":3147.42,\"change\":-0.63,\"changePct\":-0.02,\"tradingVol\":1.1284657E9,\"tradingValue\":109.74,\"consNumber\":24.0,\"peg\":9.95},{\"tradeDate\":\"20240425\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3139.61,\"high\":3173.97,\"low\":3133.17,\"close\":3169.95,\"change\":22.53,\"changePct\":0.72,\"tradingVol\":1.0155773E9,\"tradingValue\":98.78,\"consNumber\":24.0,\"peg\":10.03},{\"tradeDate\":\"20240426\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3171.98,\"high\":3205.03,\"low\":3153.27,\"close\":3169.15,\"change\":-0.8,\"changePct\":-0.03,\"tradingVol\":1.6720689E9,\"tradingValue\":167.56,\"consNumber\":24.0,\"peg\":10.05},{\"tradeDate\":\"20240429\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3150.55,\"high\":3150.55,\"low\":3084.03,\"close\":3111.73,\"change\":-57.42,\"changePct\":-1.81,\"tradingVol\":1.9852108E9,\"tradingValue\":194.14,\"consNumber\":24.0,\"peg\":9.76},{\"tradeDate\":\"20240430\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":3100.67,\"high\":3169.65,\"low\":3097.87,\"close\":3144.58,\"change\":32.84,\"changePct\":1.06,\"tradingVol\":1.4405302E9,\"tradingValue\":142.99,\"consNumber\":24.0,\"peg\":9.86}],\"success\":true}",
+      "body_sha256": "ba8b940eca0f7eccf9d2f0e176cf0b811ff67feea55bc4ed1b46d62d0227fd49"
+    }
+  ],
+  "dataframe": {
+    "row_count": 79,
+    "fields": [
+      "日期",
+      "指数代码",
+      "指数中文全称",
+      "指数中文简称",
+      "指数英文全称",
+      "指数英文简称",
+      "开盘",
+      "最高",
+      "最低",
+      "收盘",
+      "涨跌",
+      "涨跌幅",
+      "成交量",
+      "成交金额",
+      "样本数量",
+      "滚动市盈率"
+    ],
+    "field_detection": {
+      "volume_candidates": [
+        "成交量"
+      ],
+      "amount_candidates": [
+        "成交金额"
+      ],
+      "ohlc_candidates": [
+        "开盘",
+        "最高",
+        "最低",
+        "收盘"
+      ],
+      "has_volume": true,
+      "has_amount": true,
+      "has_ohlc": true
+    },
+    "first5": [
+      {
+        "日期": "2024-01-01",
+        "指数代码": "000928",
+        "指数中文全称": "中证能源指数",
+        "指数中文简称": "800能源",
+        "指数英文全称": "CSI Energy Index",
+        "指数英文简称": "800 Energy",
+        "开盘": 2656.88,
+        "最高": 2728.7,
+        "最低": 2656.88,
+        "收盘": 2717.35,
+        "涨跌": 59.76,
+        "涨跌幅": 2.25,
+        "成交量": 1399303300.0,
+        "成交金额": 126.88,
+        "样本数量": 24.0,
+        "滚动市盈率": 7.92
+      },
+      {
+        "日期": "2024-01-02",
+        "指数代码": "000928",
+        "指数中文全称": "中证能源指数",
+        "指数中文简称": "800能源",
+        "指数英文全称": "CSI Energy Index",
+        "指数英文简称": "800 Energy",
+        "开盘": 2656.88,
+        "最高": 2728.7,
+        "最低": 2656.88,
+        "收盘": 2717.35,
+        "涨跌": 59.76,
+        "涨跌幅": 2.25,
+        "成交量": 1399303300.0,
+        "成交金额": 126.88,
+        "样本数量": 24.0,
+        "滚动市盈率": 7.92
+      },
+      {
+        "日期": "2024-01-03",
+        "指数代码": "000928",
+        "指数中文全称": "中证能源指数",
+        "指数中文简称": "800能源",
+        "指数英文全称": "CSI Energy Index",
+        "指数英文简称": "800 Energy",
+        "开盘": 2709.34,
+        "最高": 2754.25,
+        "最低": 2706.27,
+        "收盘": 2754.04,
+        "涨跌": 36.69,
+        "涨跌幅": 1.35,
+        "成交量": 1214892700.0,
+        "成交金额": 111.11,
+        "样本数量": 24.0,
+        "滚动市盈率": 8.05
+      },
+      {
+        "日期": "2024-01-04",
+        "指数代码": "000928",
+        "指数中文全称": "中证能源指数",
+        "指数中文简称": "800能源",
+        "指数英文全称": "CSI Energy Index",
+        "指数英文简称": "800 Energy",
+        "开盘": 2759.78,
+        "最高": 2791.93,
+        "最低": 2756.92,
+        "收盘": 2779.82,
+        "涨跌": 25.78,
+        "涨跌幅": 0.94,
+        "成交量": 1242675600.0,
+        "成交金额": 117.65,
+        "样本数量": 24.0,
+        "滚动市盈率": 8.15
+      },
+      {
+        "日期": "2024-01-05",
+        "指数代码": "000928",
+        "指数中文全称": "中证能源指数",
+        "指数中文简称": "800能源",
+        "指数英文全称": "CSI Energy Index",
+        "指数英文简称": "800 Energy",
+        "开盘": 2774.12,
+        "最高": 2806.36,
+        "最低": 2762.62,
+        "收盘": 2774.74,
+        "涨跌": -5.09,
+        "涨跌幅": -0.18,
+        "成交量": 1215287000.0,
+        "成交金额": 113.46,
+        "样本数量": 24.0,
+        "滚动市盈率": 8.15
+      }
+    ],
+    "last5": [
+      {
+        "日期": "2024-04-24",
+        "指数代码": "000928",
+        "指数中文全称": "中证能源指数",
+        "指数中文简称": "800能源",
+        "指数英文全称": "CSI Energy Index",
+        "指数英文简称": "800 Energy",
+        "开盘": 3162.16,
+        "最高": 3166.93,
+        "最低": 3119.34,
+        "收盘": 3147.42,
+        "涨跌": -0.63,
+        "涨跌幅": -0.02,
+        "成交量": 1128465700.0,
+        "成交金额": 109.74,
+        "样本数量": 24.0,
+        "滚动市盈率": 9.95
+      },
+      {
+        "日期": "2024-04-25",
+        "指数代码": "000928",
+        "指数中文全称": "中证能源指数",
+        "指数中文简称": "800能源",
+        "指数英文全称": "CSI Energy Index",
+        "指数英文简称": "800 Energy",
+        "开盘": 3139.61,
+        "最高": 3173.97,
+        "最低": 3133.17,
+        "收盘": 3169.95,
+        "涨跌": 22.53,
+        "涨跌幅": 0.72,
+        "成交量": 1015577300.0,
+        "成交金额": 98.78,
+        "样本数量": 24.0,
+        "滚动市盈率": 10.03
+      },
+      {
+        "日期": "2024-04-26",
+        "指数代码": "000928",
+        "指数中文全称": "中证能源指数",
+        "指数中文简称": "800能源",
+        "指数英文全称": "CSI Energy Index",
+        "指数英文简称": "800 Energy",
+        "开盘": 3171.98,
+        "最高": 3205.03,
+        "最低": 3153.27,
+        "收盘": 3169.15,
+        "涨跌": -0.8,
+        "涨跌幅": -0.03,
+        "成交量": 1672068900.0,
+        "成交金额": 167.56,
+        "样本数量": 24.0,
+        "滚动市盈率": 10.05
+      },
+      {
+        "日期": "2024-04-29",
+        "指数代码": "000928",
+        "指数中文全称": "中证能源指数",
+        "指数中文简称": "800能源",
+        "指数英文全称": "CSI Energy Index",
+        "指数英文简称": "800 Energy",
+        "开盘": 3150.55,
+        "最高": 3150.55,
+        "最低": 3084.03,
+        "收盘": 3111.73,
+        "涨跌": -57.42,
+        "涨跌幅": -1.81,
+        "成交量": 1985210800.0,
+        "成交金额": 194.14,
+        "样本数量": 24.0,
+        "滚动市盈率": 9.76
+      },
+      {
+        "日期": "2024-04-30",
+        "指数代码": "000928",
+        "指数中文全称": "中证能源指数",
+        "指数中文简称": "800能源",
+        "指数英文全称": "CSI Energy Index",
+        "指数英文简称": "800 Energy",
+        "开盘": 3100.67,
+        "最高": 3169.65,
+        "最低": 3097.87,
+        "收盘": 3144.58,
+        "涨跌": 32.84,
+        "涨跌幅": 1.06,
+        "成交量": 1440530200.0,
+        "成交金额": 142.99,
+        "样本数量": 24.0,
+        "滚动市盈率": 9.86
+      }
+    ]
+  },
+  "date_analysis": {
+    "first_date": "2024-01-01",
+    "second_date": "2024-01-02",
+    "last_date": "2024-04-30",
+    "total_rows": 79,
+    "unique_dates": 79,
+    "duplicate_dates": {},
+    "all_dates_unique": true
+  },
+  "first_two_rows_comparison": {
+    "date0": "2024-01-01",
+    "date1": "2024-01-02",
+    "row0": {
+      "日期": "2024-01-01",
+      "指数代码": "000928",
+      "指数中文全称": "中证能源指数",
+      "指数中文简称": "800能源",
+      "指数英文全称": "CSI Energy Index",
+      "指数英文简称": "800 Energy",
+      "开盘": "2656.88",
+      "最高": "2728.7",
+      "最低": "2656.88",
+      "收盘": "2717.35",
+      "涨跌": "59.76",
+      "涨跌幅": "2.25",
+      "成交量": "1399303300.0",
+      "成交金额": "126.88",
+      "样本数量": "24.0",
+      "滚动市盈率": "7.92"
+    },
+    "row1": {
+      "日期": "2024-01-02",
+      "指数代码": "000928",
+      "指数中文全称": "中证能源指数",
+      "指数中文简称": "800能源",
+      "指数英文全称": "CSI Energy Index",
+      "指数英文简称": "800 Energy",
+      "开盘": "2656.88",
+      "最高": "2728.7",
+      "最低": "2656.88",
+      "收盘": "2717.35",
+      "涨跌": "59.76",
+      "涨跌幅": "2.25",
+      "成交量": "1399303300.0",
+      "成交金额": "126.88",
+      "样本数量": "24.0",
+      "滚动市盈率": "7.92"
+    },
+    "identical_excluding_date": true,
+    "differing_fields": []
+  },
+  "first_record_20240101": {
+    "date": "2024-01-01",
+    "is_weekday": true,
+    "weekday_name": "周一",
+    "note": "2024-01-01为元旦法定节假日;接口仍返回记录。周末/节假日判定需法定交易日历,本接口无法提供->非交易日判断依据不足,标记unknown;但元旦为公休为常识性事实。",
+    "trading_day_status": "likely_non_trading_day(元旦)",
+    "verification": "unknown(无法定交易日历接口佐证)"
+  },
+  "weekend_records": {
+    "count": 0,
+    "samples": [],
+    "note": "仅能检测周六/周日;法定节假日(如元旦/春节)无法从日期本身识别,需外部交易日历->unknown"
+  },
+  "consecutive_duplicate_dates": {
+    "count": 0,
+    "dates": []
+  },
+  "identical_ohlcva_different_dates": {
+    "key_fields": [
+      "开盘",
+      "最高",
+      "最低",
+      "收盘",
+      "成交量",
+      "成交金额"
+    ],
+    "group_count": 1,
+    "samples": [
+      {
+        "values": [
+          "2656.88",
+          "2728.7",
+          "2656.88",
+          "2717.35",
+          "1399303300.0",
+          "126.88"
+        ],
+        "dates": [
+          "2024-01-01",
+          "2024-01-02"
+        ]
+      }
+    ]
+  },
+  "raw_http_vs_dataframe": {
+    "http_captured": true,
+    "raw_top_keys": [
+      "code",
+      "msg",
+      "data",
+      "success"
+    ],
+    "raw_data_len": 79,
+    "df_row_count": 79,
+    "row_count_match": true,
+    "raw_first_record": {
+      "tradeDate": "20240101",
+      "indexCode": "000928",
+      "indexNameCnAll": "中证能源指数",
+      "indexNameCn": "800能源",
+      "indexNameEnAll": "CSI Energy Index",
+      "indexNameEn": "800 Energy",
+      "open": 2656.88,
+      "high": 2728.7,
+      "low": 2656.88,
+      "close": 2717.35,
+      "change": 59.76,
+      "changePct": 2.25,
+      "tradingVol": 1399303300.0,
+      "tradingValue": 126.88,
+      "consNumber": 24.0,
+      "peg": 7.92
+    },
+    "raw_second_record": {
+      "tradeDate": "20240102",
+      "indexCode": "000928",
+      "indexNameCnAll": "中证能源指数",
+      "indexNameCn": "800能源",
+      "indexNameEnAll": "CSI Energy Index",
+      "indexNameEn": "800 Energy",
+      "open": 2656.88,
+      "high": 2728.7,
+      "low": 2656.88,
+      "close": 2717.35,
+      "change": 59.76,
+      "changePct": 2.25,
+      "tradingVol": 1399303300.0,
+      "tradingValue": 126.88,
+      "consNumber": 24.0,
+      "peg": 7.92
+    },
+    "raw_data_sha256": "403fc10c49bf86f81c5b4e7618ae372fa685ddaad8b41cba4cfec180d1f01423",
+    "raw_first_is_list": false
+  },
+  "amount_field": {
+    "detected_columns": [
+      "成交金额"
+    ],
+    "sample_values": [
+      "126.88",
+      "126.88",
+      "111.11"
+    ],
+    "unit_in_response": "未随响应标注",
+    "unit_status": "unknown",
+    "note": "成交金额字段确实存在(中文字段'成交金额'/数值);但单位(元/千元/万元)未随HTTP响应或文档标注,不得自行推测->unknown。"
+  },
+  "quality_verdict": {
+    "issues": [
+      "首条为2024-01-01(元旦节假日)",
+      "01-01与01-02除日期外完全相同",
+      "存在1组不同日期OHLC量额全同"
+    ],
+    "quality_check_passed": false,
+    "can_be_production_source": false,
+    "verdict_note": "存在未解释异常(尤其2024-01-01元旦记录及01-01/01-02雷同),质量验证未通过,不得称为可靠生产数据源。",
+    "docstring_warning_reinforces": "即使无上述异常,AKShare明示该接口非首选(只有收盘价场景),不宜作为常规板块日线源。"
+  }
+}

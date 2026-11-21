@@ -1191,5 +1191,23 @@
       "label": "em_csi931151"
     }
   ],
-  "cross_ref": "完整交叉样本见 cross_source_sample.json"
+  "cross_ref": "完整交叉样本见 cross_source_sample.json",
+  "r4_csindex_quality_correction": {
+    "collect_time": "2026-11-21T08:48:08.742017+08:00",
+    "evidence_ref": "csindex_quality_audit.json",
+    "symbol": "000928",
+    "previous_label": "已证实(79行)",
+    "revised_label": "取到数据但质量验证未通过",
+    "quality_check_passed": false,
+    "can_be_production_source": false,
+    "issues": [
+      "首条2024-01-01元旦记录",
+      "01-01与01-02除日期外全同",
+      "1组不同日期OHLC量额全同",
+      "异常源自上游(HTTP与DF一致)"
+    ],
+    "field_detection_fix": "成交量=volume 成交金额=amount",
+    "amount_unit": "unknown",
+    "note": "撤销可靠生产源表述"
+  }
 }

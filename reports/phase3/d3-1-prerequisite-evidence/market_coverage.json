@@ -126,5 +126,32 @@
     "BJ": "未提供退市名单接口(unknown)"
   },
   "total_unique_a_share": 5580,
-  "coverage_note": "三市存量去重合计(不含退市);此数为交易所官网名单口径, Northern交易所报告日期2026-11-20为数据快照时间非实时。"
+  "coverage_note": "三市存量去重合计(不含退市);此数为交易所官网名单口径, Northern交易所报告日期2026-11-20为数据快照时间非实时。",
+  "r4_delist_correction": {
+    "collect_time": "2026-11-21T08:48:08.742017+08:00",
+    "evidence_ref": "delist_audit.json",
+    "SH": {
+      "raw_records": 161,
+      "unique_securities": 155,
+      "duplicate_records": 6,
+      "note": "161原始!=161只;6代码各2条系同证券上市日期不同重复登记"
+    },
+    "SZ": {
+      "raw_records": 213,
+      "unique_securities": 213,
+      "duplicate_records": 0
+    },
+    "BJ": {
+      "status": "unknown",
+      "note": "无退市名单接口"
+    }
+  },
+  "r4_denominator_set_verified": {
+    "collect_time": "2026-11-21T08:48:08.742017+08:00",
+    "evidence_ref": "full_universe_code_audit.json",
+    "three_market_union": 5580,
+    "em_code_name": 5580,
+    "sets_identical": true,
+    "note": "5580由完整代码集合逐只相等验证,非仅数量相等"
+  }
 }

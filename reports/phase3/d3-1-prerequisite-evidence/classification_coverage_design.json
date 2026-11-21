@@ -117,5 +117,11 @@
     "证明分类数据时效(解决freshness=unknown)",
     "确定过期阈值并实现status判定",
     "完成板块指数日线源选型(中证官网csindex实测可用为候选)"
-  ]
+  ],
+  "r4_denominator_verification": {
+    "collect_time": "2026-11-21T08:48:08.742017+08:00",
+    "evidence_ref": "full_universe_code_audit.json",
+    "denominator_status": "proven_by_full_code_sets_identical",
+    "note": "分母5580由三市完整代码并集与东财完整集合逐只相等验证(sets_identical=true,交集5580,各来源独有0)"
+  }
 }
