@@ -1,0 +1,1156 @@
+{
+  "task": "D3-2.1 classification standard confirmation probe",
+  "collected_at": "2026-11-22T08:54:27.086199+08:00",
+  "akshare_version": "1.18.22",
+  "note": "系统验证分类标准名称/编码/版本/映射/历史/生效/更新;只读;HTTP原始响应脱敏+SHA256。",
+  "probes": [
+    {
+      "interface": "ak.stock_industry_category_cninfo",
+      "params": {
+        "symbol": "巨潮行业分类标准"
+      },
+      "request_time": "2026-11-22T08:54:27.086237+08:00",
+      "status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 294,
+      "fields": [
+        "类目编码",
+        "类目名称",
+        "终止日期",
+        "行业类型",
+        "行业类型编码",
+        "类目名称英文",
+        "父类编码",
+        "分级"
+      ],
+      "sample": [
+        {
+          "类目编码": "Z",
+          "类目名称": "巨潮行业分类标准",
+          "终止日期": "NaT",
+          "行业类型": "巨潮行业分类标准",
+          "行业类型编码": "008002",
+          "类目名称英文": "CNINF Industry Classification Standard",
+          "父类编码": "008",
+          "分级": 0
+        },
+        {
+          "类目编码": "Z01",
+          "类目名称": "能源",
+          "终止日期": "NaT",
+          "行业类型": "巨潮行业分类标准",
+          "行业类型编码": "008002",
+          "类目名称英文": "Energy",
+          "父类编码": "Z",
+          "分级": 1
+        },
+        {
+          "类目编码": "Z0101",
+          "类目名称": "能源",
+          "终止日期": "NaT",
+          "行业类型": "巨潮行业分类标准",
+          "行业类型编码": "008002",
+          "类目名称英文": "Energy",
+          "父类编码": "Z01",
+          "分级": 2
+        },
+        {
+          "类目编码": "Z010101",
+          "类目名称": "能源设备与服务",
+          "终止日期": "NaT",
+          "行业类型": "巨潮行业分类标准",
+          "行业类型编码": "008002",
+          "类目名称英文": "Energy Equipment and Services",
+          "父类编码": "Z0101",
+          "分级": 3
+        },
+        {
+          "类目编码": "Z01010101",
+          "类目名称": "能源设备",
+          "终止日期": "NaT",
+          "行业类型": "巨潮行业分类标准",
+          "行业类型编码": "008002",
+          "类目名称英文": "Energy Equipment",
+          "父类编码": "Z010101",
+          "分级": 4
+        },
+        {
+          "类目编码": "Z01010102",
+          "类目名称": "能源服务",
+          "终止日期": "NaT",
+          "行业类型": "巨潮行业分类标准",
+          "行业类型编码": "008002",
+          "类目名称英文": "Energy Services",
+          "父类编码": "Z010101",
+          "分级": 4
+        },
+        {
+          "类目编码": "Z010102",
+          "类目名称": "石油天然气",
+          "终止日期": "NaT",
+          "行业类型": "巨潮行业分类标准",
+          "行业类型编码": "008002",
+          "类目名称英文": "Oil and Gas",
+          "父类编码": "Z0101",
+          "分级": 3
+        },
+        {
+          "类目编码": "Z01010201",
+          "类目名称": "石油天然气的勘探与生产",
+          "终止日期": "NaT",
+          "行业类型": "巨潮行业分类标准",
+          "行业类型编码": "008002",
+          "类目名称英文": "Oil and Gas Exploration and Production",
+          "父类编码": "Z010102",
+          "分级": 4
+        }
+      ],
+      "date_min": "NaT",
+      "date_max": "NaT",
+      "http": [
+        {
+          "method": "get",
+          "url": "https://webapi.cninfo.com.cn/api/stock/p_public0002",
+          "params": "{'indcode': '', 'indtype': '008002', 'format': 'json'}",
+          "ts": "2026-11-22T08:54:27.199587+08:00",
+          "http_status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body_len": 50455,
+          "body_sha256": "69c270294ac6c2bc2161493a33f1cfd09d6bf0661ffbb8b186b02f2ae69cbc8f",
+          "body_sample": "{\"total\":294,\"records\":[{\"SORTCODE\":\"Z\",\"SORTNAME\":\"巨潮行业分类标准\",\"F002D\":null,\"F004V\":\"巨潮行业分类标准\",\"F003V\":\"008002\",\"F001V\":\"CNINF Industry Classification Standard\",\"PARENTCODE\":\"008\"},{\"SORTCODE\":\"Z01\",\"SORTNAME\":\"能源\",\"F002D\":null,\"F004V\":\"巨潮行业分类标准\",\"F003V\":\"008002\",\"F001V\":\"Energy\",\"PARENTCODE\":\"Z\"},{\"SORTCODE\":\"Z0101\",\"SORTNAME\":\"能源\",\"F002D\":null,\"F004V\":\"巨潮行业分类标准\",\"F003V\":\"008002\",\"F001V\":\"Energy\",\"PARENTCODE\":\"Z01\"},{\"SORTCODE\":\"Z010101\",\"SORTNAME\":\"能源设备与服务\",\"F002D\":null,\"F004V\":\"巨潮行业分类标准\",\"F003V\":\"008002\",\"F001V\":\"Energy Equipment and Services\",\"PARENTCODE\":\"Z0101\"},{\"SORTCODE\":\"Z01010101\",\"SORTNAME\":\"能源设备\",\"F002D\":null,\"F004V\":\"巨潮行业分类标准\",\"F003V\":\"008002\",\"F001V\":\""
+        }
+      ],
+      "elapsed_ms": 547
+    },
+    {
+      "interface": "ak.stock_industry_category_cninfo",
+      "params": {
+        "symbol": "证监会行业分类标准"
+      },
+      "request_time": "2026-11-22T08:54:27.635210+08:00",
+      "status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 577,
+      "fields": [
+        "类目编码",
+        "类目名称",
+        "终止日期",
+        "行业类型",
+        "行业类型编码",
+        "类目名称英文",
+        "父类编码",
+        "分级"
+      ],
+      "sample": [
+        {
+          "类目编码": "0",
+          "类目名称": "中国上市公司协会上市公司行业分类",
+          "终止日期": "NaT",
+          "行业类型": "中国上市公司协会上市公司行业分类标准",
+          "行业类型编码": "008001",
+          "类目名称英文": "CAPCO Industry Classification",
+          "父类编码": "008",
+          "分级": 0
+        },
+        {
+          "类目编码": "A",
+          "类目名称": "农、林、牧、渔业",
+          "终止日期": "NaT",
+          "行业类型": "中国上市公司协会上市公司行业分类标准",
+          "行业类型编码": "008001",
+          "类目名称英文": "Agriculture, Forestry, Animal Husbandry and Fishery",
+          "父类编码": "0",
+          "分级": 0
+        },
+        {
+          "类目编码": "A01",
+          "类目名称": "农业",
+          "终止日期": "NaT",
+          "行业类型": "中国上市公司协会上市公司行业分类标准",
+          "行业类型编码": "008001",
+          "类目名称英文": "Agriculture",
+          "父类编码": "A",
+          "分级": 2
+        },
+        {
+          "类目编码": "A011",
+          "类目名称": "谷物种植",
+          "终止日期": "NaT",
+          "行业类型": "中国上市公司协会上市公司行业分类标准",
+          "行业类型编码": "008001",
+          "类目名称英文": "Grain Planting",
+          "父类编码": "A01",
+          "分级": 3
+        },
+        {
+          "类目编码": "A012",
+          "类目名称": "豆类、油料和薯类种植",
+          "终止日期": "NaT",
+          "行业类型": "中国上市公司协会上市公司行业分类标准",
+          "行业类型编码": "008001",
+          "类目名称英文": "Bean, Oil Crops and Potato Planting",
+          "父类编码": "A01",
+          "分级": 3
+        },
+        {
+          "类目编码": "A013",
+          "类目名称": "棉、麻、糖、烟草种植",
+          "终止日期": "NaT",
+          "行业类型": "中国上市公司协会上市公司行业分类标准",
+          "行业类型编码": "008001",
+          "类目名称英文": "Cotton, Hemp, Sugar and Tobacco Planting",
+          "父类编码": "A01",
+          "分级": 3
+        },
+        {
+          "类目编码": "A014",
+          "类目名称": "蔬菜、食用菌及园艺作物种植",
+          "终止日期": "NaT",
+          "行业类型": "中国上市公司协会上市公司行业分类标准",
+          "行业类型编码": "008001",
+          "类目名称英文": "Vegetables, Edible Fungi and Horticultural Crops Planting",
+          "父类编码": "A01",
+          "分级": 3
+        },
+        {
+          "类目编码": "A015",
+          "类目名称": "水果种植",
+          "终止日期": "NaT",
+          "行业类型": "中国上市公司协会上市公司行业分类标准",
+          "行业类型编码": "008001",
+          "类目名称英文": "Fruit Planting",
+          "父类编码": "A01",
+          "分级": 3
+        }
+      ],
+      "date_min": "NaT",
+      "date_max": "NaT",
+      "http": [
+        {
+          "method": "get",
+          "url": "https://webapi.cninfo.com.cn/api/stock/p_public0002",
+          "params": "{'indcode': '', 'indtype': '008001', 'format': 'json'}",
+          "ts": "2026-11-22T08:54:27.642271+08:00",
+          "http_status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body_len": 123331,
+          "body_sha256": "360a924153710fffe511cbd3971cfce6abb04b28653fb3b6296fa485e3a3daab",
+          "body_sample": "{\"total\":577,\"records\":[{\"SORTCODE\":\"0\",\"SORTNAME\":\"中国上市公司协会上市公司行业分类\",\"F002D\":null,\"F004V\":\"中国上市公司协会上市公司行业分类标准\",\"F003V\":\"008001\",\"F001V\":\"CAPCO Industry Classification\",\"PARENTCODE\":\"008\"},{\"SORTCODE\":\"A\",\"SORTNAME\":\"农、林、牧、渔业\",\"F002D\":null,\"F004V\":\"中国上市公司协会上市公司行业分类标准\",\"F003V\":\"008001\",\"F001V\":\"Agriculture, Forestry, Animal Husbandry and Fishery\",\"PARENTCODE\":\"0\"},{\"SORTCODE\":\"A01\",\"SORTNAME\":\"农业\",\"F002D\":null,\"F004V\":\"中国上市公司协会上市公司行业分类标准\",\"F003V\":\"008001\",\"F001V\":\"Agriculture\",\"PARENTCODE\":\"A\"},{\"SORTCODE\":\"A011\",\"SORTNAME\":\"谷物种植\",\"F002D\":null,\"F004V\":\"中国上市公司协会上市公司行业分类标准\",\"F003V\":\"008001\",\""
+        }
+      ],
+      "elapsed_ms": 378
+    },
+    {
+      "interface": "ak.stock_industry_category_cninfo",
+      "params": {
+        "symbol": "申银万国行业分类标准"
+      },
+      "request_time": "2026-11-22T08:54:28.014537+08:00",
+      "status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 512,
+      "fields": [
+        "类目编码",
+        "类目名称",
+        "终止日期",
+        "行业类型",
+        "行业类型编码",
+        "类目名称英文",
+        "父类编码",
+        "分级"
+      ],
+      "sample": [
+        {
+          "类目编码": "S",
+          "类目名称": "申银万国行业分类",
+          "终止日期": "NaT",
+          "行业类型": "申银万国行业分类标准",
+          "行业类型编码": "008003",
+          "类目名称英文": "Shenyin Wanguo Industry Classification",
+          "父类编码": "008",
+          "分级": 0
+        },
+        {
+          "类目编码": "S11",
+          "类目名称": "农林牧渔",
+          "终止日期": "NaT",
+          "行业类型": "申银万国行业分类标准",
+          "行业类型编码": "008003",
+          "类目名称英文": "Agriculture, Forestry, Animal Husbandry and Fisheries",
+          "父类编码": "S",
+          "分级": 1
+        },
+        {
+          "类目编码": "S1101",
+          "类目名称": "种植业",
+          "终止日期": "NaT",
+          "行业类型": "申银万国行业分类标准",
+          "行业类型编码": "008003",
+          "类目名称英文": "Crop Farming",
+          "父类编码": "S11",
+          "分级": 2
+        },
+        {
+          "类目编码": "S110101",
+          "类目名称": "种子",
+          "终止日期": "NaT",
+          "行业类型": "申银万国行业分类标准",
+          "行业类型编码": "008003",
+          "类目名称英文": "Seed",
+          "父类编码": "S1101",
+          "分级": 3
+        },
+        {
+          "类目编码": "S110102",
+          "类目名称": "粮食种植",
+          "终止日期": "NaT",
+          "行业类型": "申银万国行业分类标准",
+          "行业类型编码": "008003",
+          "类目名称英文": "Grain-growing",
+          "父类编码": "S1101",
+          "分级": 3
+        },
+        {
+          "类目编码": "S110103",
+          "类目名称": "其他种植业",
+          "终止日期": "NaT",
+          "行业类型": "申银万国行业分类标准",
+          "行业类型编码": "008003",
+          "类目名称英文": "Other Crop Growing",
+          "父类编码": "S1101",
+          "分级": 3
+        },
+        {
+          "类目编码": "S110104",
+          "类目名称": "食用菌",
+          "终止日期": "NaT",
+          "行业类型": "申银万国行业分类标准",
+          "行业类型编码": "008003",
+          "类目名称英文": "Edible fungus",
+          "父类编码": "S1101",
+          "分级": 3
+        },
+        {
+          "类目编码": "S1102",
+          "类目名称": "渔业",
+          "终止日期": "NaT",
+          "行业类型": "申银万国行业分类标准",
+          "行业类型编码": "008003",
+          "类目名称英文": "Fishery",
+          "父类编码": "S11",
+          "分级": 2
+        }
+      ],
+      "date_min": "NaT",
+      "date_max": "NaT",
+      "http": [
+        {
+          "method": "get",
+          "url": "https://webapi.cninfo.com.cn/api/stock/p_public0002",
+          "params": "{'indcode': '', 'indtype': '008003', 'format': 'json'}",
+          "ts": "2026-11-22T08:54:28.021477+08:00",
+          "http_status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body_len": 86920,
+          "body_sha256": "a3e4d6d2a0cd5757ff2b82ce4349301fc94b35fdbd538ce1c2fe07744859bf0c",
+          "body_sample": "{\"total\":512,\"records\":[{\"SORTCODE\":\"S\",\"SORTNAME\":\"申银万国行业分类\",\"F002D\":null,\"F004V\":\"申银万国行业分类标准\",\"F003V\":\"008003\",\"F001V\":\"Shenyin Wanguo Industry Classification\",\"PARENTCODE\":\"008\"},{\"SORTCODE\":\"S11\",\"SORTNAME\":\"农林牧渔\",\"F002D\":null,\"F004V\":\"申银万国行业分类标准\",\"F003V\":\"008003\",\"F001V\":\"Agriculture, Forestry, Animal Husbandry and Fisheries\",\"PARENTCODE\":\"S\"},{\"SORTCODE\":\"S1101\",\"SORTNAME\":\"种植业\",\"F002D\":null,\"F004V\":\"申银万国行业分类标准\",\"F003V\":\"008003\",\"F001V\":\"Crop Farming\",\"PARENTCODE\":\"S11\"},{\"SORTCODE\":\"S110101\",\"SORTNAME\":\"种子\",\"F002D\":null,\"F004V\":\"申银万国行业分类标准\",\"F003V\":\"008003\",\"F001V\":\"Seed\",\"PARENTCODE\":\"S1101\"},{\"SORTCODE\":\"S110102\",\"SORTNAME\":\"粮食种植\",\"F002D\":null,\"F004V\":\"申银�"
+        }
+      ],
+      "elapsed_ms": 349
+    },
+    {
+      "interface": "ak.stock_industry_category_cninfo",
+      "params": {
+        "symbol": "中证行业分类标准"
+      },
+      "request_time": "2026-11-22T08:54:28.364658+08:00",
+      "status": "error",
+      "failure_category": "parse_error_or_changed_schema",
+      "error_detail": "KeyError: '中证行业分类标准'",
+      "row_count": 0,
+      "fields": [],
+      "sample": [],
+      "date_min": null,
+      "date_max": null,
+      "http": [],
+      "elapsed_ms": 0,
+      "traceback_tail": "c3e51e2000/d32_standards_probe.py\", line 87, in <lambda>\n    lambda s=std: ak.stock_industry_category_cninfo(symbol=s), rownum=8)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock/stock_industry_cninfo.py\", line 54, in stock_industry_category_cninfo\n    params = {\"indcode\": \"\", \"indtype\": symbol_map[symbol], \"format\": \"json\"}\n                                        ~~~~~~~~~~^^^^^^^^\nKeyError: '中证行业分类标准'\n"
+    },
+    {
+      "interface": "ak.stock_industry_category_cninfo",
+      "params": {
+        "symbol": "全球行业分类标准（GICS）"
+      },
+      "request_time": "2026-11-22T08:54:28.366076+08:00",
+      "status": "error",
+      "failure_category": "parse_error_or_changed_schema",
+      "error_detail": "KeyError: '全球行业分类标准（GICS）'",
+      "row_count": 0,
+      "fields": [],
+      "sample": [],
+      "date_min": null,
+      "date_max": null,
+      "http": [],
+      "elapsed_ms": 0,
+      "traceback_tail": "2000/d32_standards_probe.py\", line 87, in <lambda>\n    lambda s=std: ak.stock_industry_category_cninfo(symbol=s), rownum=8)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock/stock_industry_cninfo.py\", line 54, in stock_industry_category_cninfo\n    params = {\"indcode\": \"\", \"indtype\": symbol_map[symbol], \"format\": \"json\"}\n                                        ~~~~~~~~~~^^^^^^^^\nKeyError: '全球行业分类标准（GICS）'\n"
+    },
+    {
+      "interface": "ak.stock_industry_category_cninfo",
+      "params": {
+        "symbol": "中上协行业分类标准"
+      },
+      "request_time": "2026-11-22T08:54:28.366244+08:00",
+      "status": "error",
+      "failure_category": "parse_error_or_changed_schema",
+      "error_detail": "KeyError: '中上协行业分类标准'",
+      "row_count": 0,
+      "fields": [],
+      "sample": [],
+      "date_min": null,
+      "date_max": null,
+      "http": [],
+      "elapsed_ms": 0,
+      "traceback_tail": "3e51e2000/d32_standards_probe.py\", line 87, in <lambda>\n    lambda s=std: ak.stock_industry_category_cninfo(symbol=s), rownum=8)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock/stock_industry_cninfo.py\", line 54, in stock_industry_category_cninfo\n    params = {\"indcode\": \"\", \"indtype\": symbol_map[symbol], \"format\": \"json\"}\n                                        ~~~~~~~~~~^^^^^^^^\nKeyError: '中上协行业分类标准'\n"
+    },
+    {
+      "interface": "ak.stock_industry_pe_ratio_cninfo",
+      "params": {
+        "symbol": "证监会行业分类",
+        "date": "20241129"
+      },
+      "request_time": "2026-11-22T08:54:28.366368+08:00",
+      "status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 120,
+      "fields": [
+        "变动日期",
+        "行业分类",
+        "行业层级",
+        "行业编码",
+        "行业名称",
+        "公司数量",
+        "纳入计算公司数量",
+        "总市值-静态",
+        "净利润-静态",
+        "静态市盈率-加权平均",
+        "静态市盈率-中位数",
+        "静态市盈率-算术平均"
+      ],
+      "sample": [
+        {
+          "变动日期": "2024-11-29",
+          "行业分类": "中国上市公司协会上市公司行业分类标准",
+          "行业层级": 1.0,
+          "行业编码": "A",
+          "行业名称": "农、林、牧、渔业",
+          "公司数量": 46.0,
+          "纳入计算公司数量": 26.0,
+          "总市值-静态": 2076.0547,
+          "净利润-静态": 164.7542,
+          "静态市盈率-加权平均": 12.6,
+          "静态市盈率-中位数": 37.49,
+          "静态市盈率-算术平均": 64.35
+        },
+        {
+          "变动日期": "2024-11-29",
+          "行业分类": "中国上市公司协会上市公司行业分类标准",
+          "行业层级": 2.0,
+          "行业编码": "A01",
+          "行业名称": "农业",
+          "公司数量": 10.0,
+          "纳入计算公司数量": 8.0,
+          "总市值-静态": 684.723,
+          "净利润-静态": 17.9204,
+          "静态市盈率-加权平均": 38.21,
+          "静态市盈率-中位数": 47.07,
+          "静态市盈率-算术平均": 61.88
+        },
+        {
+          "变动日期": "2024-11-29",
+          "行业分类": "中国上市公司协会上市公司行业分类标准",
+          "行业层级": 2.0,
+          "行业编码": "A02",
+          "行业名称": "林业",
+          "公司数量": 2.0,
+          "纳入计算公司数量": 2.0,
+          "总市值-静态": 42.0622,
+          "净利润-静态": 1.9804,
+          "静态市盈率-加权平均": 21.24,
+          "静态市盈率-中位数": 139.83,
+          "静态市盈率-算术平均": 139.83
+        },
+        {
+          "变动日期": "2024-11-29",
+          "行业分类": "中国上市公司协会上市公司行业分类标准",
+          "行业层级": 2.0,
+          "行业编码": "A03",
+          "行业名称": "畜牧业",
+          "公司数量": 20.0,
+          "纳入计算公司数量": 5.0,
+          "总市值-静态": 714.0767,
+          "净利润-静态": 115.7393,
+          "静态市盈率-加权平均": 6.17,
+          "静态市盈率-中位数": 19.82,
+          "静态市盈率-算术平均": 15.78
+        },
+        {
+          "变动日期": "2024-11-29",
+          "行业分类": "中国上市公司协会上市公司行业分类标准",
+          "行业层级": 2.0,
+          "行业编码": "A04",
+          "行业名称": "渔业",
+          "公司数量": 6.0,
+          "纳入计算公司数量": 4.0,
+          "总市值-静态": 155.668,
+          "净利润-静态": 19.56,
+          "静态市盈率-加权平均": 7.96,
+          "静态市盈率-中位数": 45.32,
+          "静态市盈率-算术平均": 100.44
+        }
+      ],
+      "date_min": "2024-11-29",
+      "date_max": "2024-11-29",
+      "http": [
+        {
+          "method": "post",
+          "url": "http://webapi.cninfo.com.cn/api/sysapi/p_sysapi1087",
+          "params": "{'tdate': '2024-11-29', 'sortcode': '008001'}",
+          "ts": "2026-11-22T08:54:28.373286+08:00",
+          "http_status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body_len": 29556,
+          "body_sha256": "af0c17d34c075bbc4272930372d67023067bc4712296f7be63ea68cfb19498a1",
+          "body_sample": "{\"total\":120,\"records\":[{\"F004N\":1,\"F013N\":64.35,\"F012N\":37.49,\"F011N\":12.6,\"F010N\":164.7542,\"F006V\":\"农、林、牧、渔业\",\"F005V\":\"A\",\"F003V\":\"中国上市公司协会上市公司行业分类标准\",\"F009N\":2076.0547,\"F008N\":26,\"VARYDATE\":\"2024-11-29\",\"F007N\":46},{\"F004N\":2,\"F013N\":61.88,\"F012N\":47.07,\"F011N\":38.21,\"F010N\":17.9204,\"F006V\":\"农业\",\"F005V\":\"A01\",\"F003V\":\"中国上市公司协会上市公司行业分类标准\",\"F009N\":684.723,\"F008N\":8,\"VARYDATE\":\"2024-11-29\",\"F007N\":10},{\"F004N\":2,\"F013N\":139.83,\"F012N\":139.83,\"F011N\":21.24,\"F010N\":1.9804,\"F006V\":\"林业\",\"F005V\":\"A02\",\"F003V\":\"中国上市公司协会上市公司行业分类标准\",\"F009N\":42.0622,\"F008N\":2,\"VARYDATE\":\"2024-11-29\",\"F007N\":2},{\"F004N\":2,\"F013N\":15.78,\"F012N\":19.82,\"F011N\":6.17,\"F010N\":115.7393,\"F006V\""
+        }
+      ],
+      "elapsed_ms": 182
+    },
+    {
+      "interface": "ak.sw_index_first_info",
+      "params": {},
+      "request_time": "2026-11-22T08:54:28.549871+08:00",
+      "status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 31,
+      "fields": [
+        "行业代码",
+        "行业名称",
+        "成份个数",
+        "静态市盈率",
+        "TTM(滚动)市盈率",
+        "市净率",
+        "静态股息率"
+      ],
+      "sample": [
+        {
+          "行业代码": "801010.SI",
+          "行业名称": "农林牧渔",
+          "成份个数": 104,
+          "静态市盈率": 28.56,
+          "TTM(滚动)市盈率": 32.6,
+          "市净率": 1.79,
+          "静态股息率": 2.29
+        },
+        {
+          "行业代码": "801030.SI",
+          "行业名称": "基础化工",
+          "成份个数": 413,
+          "静态市盈率": 20.57,
+          "TTM(滚动)市盈率": 17.0,
+          "市净率": 1.84,
+          "静态股息率": 1.97
+        },
+        {
+          "行业代码": "801040.SI",
+          "行业名称": "钢铁",
+          "成份个数": 44,
+          "静态市盈率": 16.15,
+          "TTM(滚动)市盈率": 20.19,
+          "市净率": 0.91,
+          "静态股息率": 2.7
+        },
+        {
+          "行业代码": "801050.SI",
+          "行业名称": "有色金属",
+          "成份个数": 141,
+          "静态市盈率": 17.16,
+          "TTM(滚动)市盈率": 11.19,
+          "市净率": 2.22,
+          "静态股息率": 1.93
+        },
+        {
+          "行业代码": "801080.SI",
+          "行业名称": "电子",
+          "成份个数": 496,
+          "静态市盈率": 62.56,
+          "TTM(滚动)市盈率": 28.54,
+          "市净率": 4.73,
+          "静态股息率": 0.7
+        }
+      ],
+      "date_min": null,
+      "date_max": null,
+      "http": [
+        {
+          "method": "get",
+          "url": "https://legulegu.com/stockdata/sw-industry-overview",
+          "params": "None",
+          "ts": "2026-11-22T08:54:28.549961+08:00",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "body_len": 1184714,
+          "body_sha256": "a6d889247cf43418790d2484be4e3455b3721da65ed3ad0ba7bcf8eeabaa1464",
+          "body_sample": "<!DOCTYPE html>\n\n\n\n<html lang=\"zh-CN\">\n<head>\n\t<meta charset=\"utf-8\">\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n\t<meta http-equiv=\"content-language\" content=\"zh-CN\"/>\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\t<meta name=\"shenma-site-verification\" content=\"4556b205f40a74d5580ec2fae05391cc_1523083326\">\n\t<meta name='zyiis_check_verify' content='df808ca7ad95eb4945aabc03468483e9'>\n\t<meta name=\"domain_verify\" content=\"pmrgi33nmfuw4ir2ejwgkz3vnrswo5jomnxw2irmejtxk2leei5cezdbme3ggyjrgu3denlfgqydozdbmvtdgzjzgjsdeodbgeywkolgeiwce5djnvsvgylwmurdumjvgm3tknbygy2tiojwhb6q\">\n\t\n\n\n\n<title>申万行业滚动市盈率、静态市盈率、市净率、股息率_每日查询_一览表_乐咕乐股网</"
+        }
+      ],
+      "elapsed_ms": 1166
+    },
+    {
+      "interface": "ak.sw_index_second_info",
+      "params": {},
+      "request_time": "2026-11-22T08:54:29.717493+08:00",
+      "status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 131,
+      "fields": [
+        "行业代码",
+        "行业名称",
+        "上级行业",
+        "成份个数",
+        "静态市盈率",
+        "TTM(滚动)市盈率",
+        "市净率",
+        "静态股息率"
+      ],
+      "sample": [
+        {
+          "行业代码": "801016.SI",
+          "行业名称": "种植业",
+          "上级行业": "农林牧渔",
+          "成份个数": 20,
+          "静态市盈率": 30.5,
+          "TTM(滚动)市盈率": 31.97,
+          "市净率": 1.69,
+          "静态股息率": 1.99
+        },
+        {
+          "行业代码": "801015.SI",
+          "行业名称": "渔业",
+          "上级行业": "农林牧渔",
+          "成份个数": 6,
+          "静态市盈率": 76.31,
+          "TTM(滚动)市盈率": 48.53,
+          "市净率": 1.89,
+          "静态股息率": 0.54
+        },
+        {
+          "行业代码": "801011.SI",
+          "行业名称": "林业Ⅱ",
+          "上级行业": "农林牧渔",
+          "成份个数": 4,
+          "静态市盈率": 202.03,
+          "TTM(滚动)市盈率": 42.0,
+          "市净率": 2.42,
+          "静态股息率": 0.46
+        },
+        {
+          "行业代码": "801014.SI",
+          "行业名称": "饲料",
+          "上级行业": "农林牧渔",
+          "成份个数": 18,
+          "静态市盈率": 20.3,
+          "TTM(滚动)市盈率": 30.44,
+          "市净率": 2.87,
+          "静态股息率": 1.85
+        },
+        {
+          "行业代码": "801012.SI",
+          "行业名称": "农产品加工",
+          "上级行业": "农林牧渔",
+          "成份个数": 23,
+          "静态市盈率": 36.88,
+          "TTM(滚动)市盈率": 37.33,
+          "市净率": 1.61,
+          "静态股息率": 1.11
+        }
+      ],
+      "date_min": null,
+      "date_max": null,
+      "http": [
+        {
+          "method": "get",
+          "url": "https://legulegu.com/stockdata/sw-industry-overview",
+          "params": "None",
+          "ts": "2026-11-22T08:54:29.717584+08:00",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "body_len": 1184714,
+          "body_sha256": "7ca1b6788eec22abaddcb2efcc1e270a3b952f3465790aeda99412ad26451f7f",
+          "body_sample": "<!DOCTYPE html>\n\n\n\n<html lang=\"zh-CN\">\n<head>\n\t<meta charset=\"utf-8\">\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n\t<meta http-equiv=\"content-language\" content=\"zh-CN\"/>\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\t<meta name=\"shenma-site-verification\" content=\"4556b205f40a74d5580ec2fae05391cc_1523083326\">\n\t<meta name='zyiis_check_verify' content='df808ca7ad95eb4945aabc03468483e9'>\n\t<meta name=\"domain_verify\" content=\"pmrgi33nmfuw4ir2ejwgkz3vnrswo5jomnxw2irmejtxk2leei5cezdbme3ggyjrgu3denlfgqydozdbmvtdgzjzgjsdeodbgeywkolgeiwce5djnvsvgylwmurdumjvgm3tknbygy2tiojwhb6q\">\n\t\n\n\n\n<title>申万行业滚动市盈率、静态市盈率、市净率、股息率_每日查询_一览表_乐咕乐股网</"
+        }
+      ],
+      "elapsed_ms": 1263
+    },
+    {
+      "interface": "ak.sw_index_third_info",
+      "params": {},
+      "request_time": "2026-11-22T08:54:30.982288+08:00",
+      "status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 336,
+      "fields": [
+        "行业代码",
+        "行业名称",
+        "上级行业",
+        "成份个数",
+        "静态市盈率",
+        "TTM(滚动)市盈率",
+        "市净率",
+        "静态股息率"
+      ],
+      "sample": [
+        {
+          "行业代码": "850111.SI",
+          "行业名称": "种子",
+          "上级行业": "种植业",
+          "成份个数": 8,
+          "静态市盈率": 64.45,
+          "TTM(滚动)市盈率": 59.87,
+          "市净率": 2.14,
+          "静态股息率": 0.64
+        },
+        {
+          "行业代码": "850112.SI",
+          "行业名称": "粮食种植",
+          "上级行业": "种植业",
+          "成份个数": 2,
+          "静态市盈率": 19.32,
+          "TTM(滚动)市盈率": 22.04,
+          "市净率": 1.46,
+          "静态股息率": 4.07
+        },
+        {
+          "行业代码": "850113.SI",
+          "行业名称": "其他种植业",
+          "上级行业": "种植业",
+          "成份个数": 6,
+          "静态市盈率": 22.56,
+          "TTM(滚动)市盈率": 21.1,
+          "市净率": 1.6,
+          "静态股息率": 1.1
+        },
+        {
+          "行业代码": "850114.SI",
+          "行业名称": "食用菌",
+          "上级行业": "种植业",
+          "成份个数": 4,
+          "静态市盈率": 16.11,
+          "TTM(滚动)市盈率": 21.95,
+          "市净率": 1.06,
+          "静态股息率": 3.12
+        },
+        {
+          "行业代码": "850121.SI",
+          "行业名称": "海洋捕捞",
+          "上级行业": "渔业",
+          "成份个数": 2,
+          "静态市盈率": 33.42,
+          "TTM(滚动)市盈率": 22.17,
+          "市净率": 5.34,
+          "静态股息率": 1.05
+        }
+      ],
+      "date_min": null,
+      "date_max": null,
+      "http": [
+        {
+          "method": "get",
+          "url": "https://legulegu.com/stockdata/sw-industry-overview",
+          "params": "None",
+          "ts": "2026-11-22T08:54:30.982380+08:00",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "body_len": 1184714,
+          "body_sha256": "82c36099a07baacd456441fcfd5e8f38e2639f3c2328117bbc7632671dcfdb1b",
+          "body_sample": "<!DOCTYPE html>\n\n\n\n<html lang=\"zh-CN\">\n<head>\n\t<meta charset=\"utf-8\">\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n\t<meta http-equiv=\"content-language\" content=\"zh-CN\"/>\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\t<meta name=\"shenma-site-verification\" content=\"4556b205f40a74d5580ec2fae05391cc_1523083326\">\n\t<meta name='zyiis_check_verify' content='df808ca7ad95eb4945aabc03468483e9'>\n\t<meta name=\"domain_verify\" content=\"pmrgi33nmfuw4ir2ejwgkz3vnrswo5jomnxw2irmejtxk2leei5cezdbme3ggyjrgu3denlfgqydozdbmvtdgzjzgjsdeodbgeywkolgeiwce5djnvsvgylwmurdumjvgm3tknbygy2tiojwhb6q\">\n\t\n\n\n\n<title>申万行业滚动市盈率、静态市盈率、市净率、股息率_每日查询_一览表_乐咕乐股网</"
+        }
+      ],
+      "elapsed_ms": 1306
+    },
+    {
+      "interface": "ak.sw_index_third_cons",
+      "params": {
+        "symbol": "证券Ⅲ"
+      },
+      "request_time": "2026-11-22T08:54:32.289681+08:00",
+      "status": "error",
+      "failure_category": "parse_error_or_changed_schema",
+      "error_detail": "ValueError: Length mismatch: Expected axis has 21 elements, new values have 17 elements",
+      "row_count": 0,
+      "fields": [],
+      "sample": [],
+      "date_min": null,
+      "date_max": null,
+      "http": [
+        {
+          "method": "get",
+          "url": "https://legulegu.com/stockdata/index-composition?industryCode=证券Ⅲ",
+          "params": "None",
+          "ts": "2026-11-22T08:54:32.289797+08:00",
+          "http_status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "body_len": 153901,
+          "body_sha256": "a7531c1b62e4e0f60296060443bd6e62d9923d0dc0ff6382b62ec02fc097a14e",
+          "body_sample": "<!DOCTYPE html>\n\n\n\n<html lang=\"zh-CN\">\n<head>\n\t<meta charset=\"utf-8\">\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n\t<meta http-equiv=\"content-language\" content=\"zh-CN\"/>\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\t<meta name=\"shenma-site-verification\" content=\"4556b205f40a74d5580ec2fae05391cc_1523083326\">\n\t<meta name='zyiis_check_verify' content='df808ca7ad95eb4945aabc03468483e9'>\n\t<meta name=\"domain_verify\" content=\"pmrgi33nmfuw4ir2ejwgkz3vnrswo5jomnxw2irmejtxk2leei5cezdbme3ggyjrgu3denlfgqydozdbmvtdgzjzgjsdeodbgeywkolgeiwce5djnvsvgylwmurdumjvgm3tknbygy2tiojwhb6q\">\n\t\n\n\n\n<title>null(null)申万行业成分股_乐咕乐股网</title>\n\n\n<meta name=\"keywords\" content=\"null,null,成分股,�"
+        }
+      ],
+      "elapsed_ms": 130,
+      "traceback_tail": "/pandas/core/generic.py\", line 766, in _set_axis\n    self._mgr.set_axis(axis, labels)\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pandas/core/internals/managers.py\", line 273, in set_axis\n    self._validate_set_axis(axis, new_labels)\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/pandas/core/internals/managers.py\", line 288, in _validate_set_axis\n    raise ValueError(\nValueError: Length mismatch: Expected axis has 21 elements, new values have 17 elements\n"
+    },
+    {
+      "interface": "ak.stock_industry_clf_hist_sw",
+      "params": {},
+      "request_time": "2026-11-22T08:54:32.432176+08:00",
+      "status": "error",
+      "failure_category": "network_unreachable",
+      "error_detail": "SSLError: HTTPSConnectionPool(host='www.swsresearch.com', port=443): Max retries exceeded with url: /swindex/pdf/SwClass2021/StockClassifyUse_stock.xls (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)')))",
+      "row_count": 0,
+      "fields": [],
+      "sample": [],
+      "date_min": null,
+      "date_max": null,
+      "http": [
+        {
+          "method": "get",
+          "url": "https://www.swsresearch.com/swindex/pdf/SwClass2021/StockClassifyUse_stock.xls",
+          "params": "None",
+          "ts": "2026-11-22T08:54:32.432267+08:00",
+          "request_error": "SSLError: HTTPSConnectionPool(host='www.swsresearch.com', port=443): Max retries exceeded with url: /swindex/pdf/SwClass2021/StockClassifyUse_stock.xls (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed:"
+        }
+      ],
+      "elapsed_ms": 119,
+      "traceback_tail": "^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/adapters.py\", line 675, in send\n    raise SSLError(e, request=request)\nrequests.exceptions.SSLError: HTTPSConnectionPool(host='www.swsresearch.com', port=443): Max retries exceeded with url: /swindex/pdf/SwClass2021/StockClassifyUse_stock.xls (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)')))\n"
+    },
+    {
+      "interface": "ak.stock_classify_sina",
+      "params": {
+        "symbol": "hangye"
+      },
+      "request_time": "2026-11-22T08:54:32.555964+08:00",
+      "status": "error",
+      "failure_category": "parse_error_or_changed_schema",
+      "error_detail": "KeyError: 'hangye'",
+      "row_count": 0,
+      "fields": [],
+      "sample": [],
+      "date_min": null,
+      "date_max": null,
+      "http": [
+        {
+          "method": "get",
+          "url": "http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodes",
+          "params": "None",
+          "ts": "2026-11-22T08:54:32.556055+08:00",
+          "http_status": 200,
+          "content_type": "application/json; charset=gbk",
+          "body_len": 91431,
+          "body_sha256": "7ddd36c71bd8dd80b1edddd26367fe593cb409a6a34b99b0a948cb3d4fc5ee93",
+          "body_sample": "[\"\\u884c\\u60c5\\u4e2d\\u5fc3\",[[\"A\\u80a1\",[[\"\\u65b0\\u6d6a\\u884c\\u4e1a\",[[\"\\u73bb\\u7483\\u884c\\u4e1a\",\"\",\"new_blhy\"],[\"\\u4f20\\u5a92\\u5a31\\u4e50\",\"\",\"new_cmyl\"],[\"\\u8239\\u8236\\u5236\\u9020\",\"\",\"new_cbzz\"],[\"\\u7535\\u529b\\u884c\\u4e1a\",\"\",\"new_dlhy\"],[\"\\u7535\\u5668\\u884c\\u4e1a\",\"\",\"new_dqhy\"],[\"\\u7535\\u5b50\\u5668\\u4ef6\",\"\",\"new_dzqj\"],[\"\\u7535\\u5b50\\u4fe1\\u606f\",\"\",\"new_dzxx\"],[\"\\u53d1\\u7535\\u8bbe\\u5907\",\"\",\"new_fdsb\"],[\"\\u7eba\\u7ec7\\u673a\\u68b0\",\"\",\"new_fzjx\"],[\"\\u7eba\\u7ec7\\u884c\\u4e1a\",\"\",\"new_fzhy\"],[\"\\u98de\\u673a\\u5236\\u9020\",\"\",\"new_fjzz\"],[\"\\u670d\\u88c5\\u978b\\u7c7b\",\"\",\"new_fzxl\"],[\"\\u94a2\\u94c1\\u884c\\u4e1a\",\"\",\"new_gthy\"],[\"\\u516c\\u8def\\u6865\\u6881\",\"\",\"new_glql\"],[\"\\u4f9b\\u6c34\\u4f9b\\u6c14\",\"\",\"new_gsgq\"],[\"\\u5316\\u5de5\\u884c\\u4e1a\",\"\",\"new_hghy\"],[\"\\u5316\\u7ea4\\u884c\\u4e1a\",\"\",\"new_hqhy\"]"
+        }
+      ],
+      "elapsed_ms": 60,
+      "traceback_tail": "fy_sina\", {\"symbol\":\"hangye\"}, lambda: ak.stock_classify_sina(symbol=\"hangye\"))\n                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/akshare/stock_feature/stock_classify_sina.py\", line 59, in stock_classify_sina\n    for num in tqdm(range(len(stock_classify_board_dict[symbol][\"code\"])), leave=False):\n                              ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^\nKeyError: 'hangye'\n"
+    },
+    {
+      "interface": "ak.index_stock_cons_csindex",
+      "params": {
+        "symbol": "000819"
+      },
+      "request_time": "2026-11-22T08:54:32.617228+08:00",
+      "status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 50,
+      "fields": [
+        "日期",
+        "指数代码",
+        "指数名称",
+        "指数英文名称",
+        "成分券代码",
+        "成分券名称",
+        "成分券英文名称",
+        "交易所",
+        "交易所英文名称"
+      ],
+      "sample": [
+        {
+          "日期": "2026-11-20",
+          "指数代码": "000819",
+          "指数名称": "有色金属",
+          "指数英文名称": "Non-ferrous Metal",
+          "成分券代码": "000060",
+          "成分券名称": "中金岭南",
+          "成分券英文名称": "Shenzhen Zhongjin Lingnan Nonfemet Co Ltd",
+          "交易所": "深圳证券交易所",
+          "交易所英文名称": "Shenzhen Stock Exchange"
+        },
+        {
+          "日期": "2026-11-20",
+          "指数代码": "000819",
+          "指数名称": "有色金属",
+          "指数英文名称": "Non-ferrous Metal",
+          "成分券代码": "000408",
+          "成分券名称": "藏格矿业",
+          "成分券英文名称": "ZANGGE MINING COMPANY LIMITED",
+          "交易所": "深圳证券交易所",
+          "交易所英文名称": "Shenzhen Stock Exchange"
+        },
+        {
+          "日期": "2026-11-20",
+          "指数代码": "000819",
+          "指数名称": "有色金属",
+          "指数英文名称": "Non-ferrous Metal",
+          "成分券代码": "000426",
+          "成分券名称": "兴业银锡",
+          "成分券英文名称": "INNER MONGOLIA XINGYE SILVER & TIN MINING CO.,LTD",
+          "交易所": "深圳证券交易所",
+          "交易所英文名称": "Shenzhen Stock Exchange"
+        },
+        {
+          "日期": "2026-11-20",
+          "指数代码": "000819",
+          "指数名称": "有色金属",
+          "指数英文名称": "Non-ferrous Metal",
+          "成分券代码": "000630",
+          "成分券名称": "铜陵有色",
+          "成分券英文名称": "Tongling Nonferrous Metals Group Co. Ltd",
+          "交易所": "深圳证券交易所",
+          "交易所英文名称": "Shenzhen Stock Exchange"
+        },
+        {
+          "日期": "2026-11-20",
+          "指数代码": "000819",
+          "指数名称": "有色金属",
+          "指数英文名称": "Non-ferrous Metal",
+          "成分券代码": "000657",
+          "成分券名称": "中钨高新",
+          "成分券英文名称": "China Tungsten and Hightech Materials Co Ltd",
+          "交易所": "深圳证券交易所",
+          "交易所英文名称": "Shenzhen Stock Exchange"
+        }
+      ],
+      "date_min": "2026-11-20",
+      "date_max": "2026-11-20",
+      "http": [
+        {
+          "method": "get",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000819cons.xls",
+          "params": "None",
+          "ts": "2026-11-22T08:54:32.617311+08:00",
+          "http_status": 200,
+          "content_type": "application/vnd.ms-excel",
+          "body_len": 14336,
+          "body_sha256": "dd479cc182947d486e4ed9852c30a9e178480c9110b1e2da4e02b127c1aed8fb",
+          "body_sample": "��\u0011ࡱ\u001a�\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000;\u0000\u0003\u0000��\t\u0000\u0006\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000����\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������R\u0000o\u0000o\u0000t\u0000 \u0000E\u0000n\u0000t\u0000r\u0000y\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0016\u0000\u0005\u0001��������\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000W\u0000o\u0000r\u0000k\u0000b\u0000o\u0000o\u0000k\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0012\u0000\u0002\u0001������������\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000�1\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+        }
+      ],
+      "elapsed_ms": 142
+    },
+    {
+      "interface": "ak.index_stock_cons",
+      "params": {
+        "symbol": "000819"
+      },
+      "request_time": "2026-11-22T08:54:32.760035+08:00",
+      "status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 50,
+      "fields": [
+        "品种代码",
+        "品种名称",
+        "纳入日期"
+      ],
+      "sample": [
+        {
+          "品种代码": "688102",
+          "品种名称": "斯瑞新材",
+          "纳入日期": "2026-06-15"
+        },
+        {
+          "品种代码": "600711",
+          "品种名称": "盛屯矿业",
+          "纳入日期": "2026-06-15"
+        },
+        {
+          "品种代码": "600301",
+          "品种名称": "华锡有色",
+          "纳入日期": "2026-06-15"
+        },
+        {
+          "品种代码": "002716",
+          "品种名称": "湖南白银",
+          "纳入日期": "2026-06-15"
+        },
+        {
+          "品种代码": "002378",
+          "品种名称": "章源钨业",
+          "纳入日期": "2026-06-15"
+        }
+      ],
+      "date_min": "2012-05-09",
+      "date_max": "2026-06-15",
+      "http": [
+        {
+          "method": "get",
+          "url": "https://vip.stock.finance.sina.com.cn/corp/go.php/vII_NewestComponent/indexid/000819.phtml",
+          "params": "None",
+          "ts": "2026-11-22T08:54:32.760112+08:00",
+          "http_status": 200,
+          "content_type": "text/html; charset=gbk",
+          "body_len": 34927,
+          "body_sha256": "fc1bb9f9c9a8a5e1b036bbe6862a68c148aed54a1bf0d52d2c5cc996d4b4310a",
+          "body_sample": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\" />\r\n<title>��֤������ɫ����ָ��(000819)_���³ɷ�_������</title>\r\n<meta name=\"Keywords\" content=\"��֤������ɫ����ָ��,000819,����\" />\r\n<meta name=\"Description\" content=\"��֤������ɫ����ָ����ʵʱ����\" />\r\n<link media=\"all\" rel=\"stylesheet\" href=\"/corp/view/css/style.css\" />\r\n<link media=\"all\" rel=\"stylesheet\" href=\"/corp/view/css/newstyle.css\" />\r\n<link media=\"all\" rel=\"stylesheet\" href=\"/corp/view/css/tables.css\" />\r\n<link media=\"all\" rel=\"stylesheet\" href=\"/corp/view/css/style4.css\" />\r\n<style type=\"text/css\">\r\nbody,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form"
+        }
+      ],
+      "elapsed_ms": 60
+    },
+    {
+      "interface": "ak.stock_board_industry_name_em",
+      "params": {},
+      "request_time": "2026-11-22T08:54:32.820547+08:00",
+      "status": "error",
+      "failure_category": "network_unreachable",
+      "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+      "row_count": 0,
+      "fields": [],
+      "sample": [],
+      "date_min": null,
+      "date_max": null,
+      "http": [
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "ts": "2026-11-22T08:54:32.820643+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "ts": "2026-11-22T08:54:34.943764+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "ts": "2026-11-22T08:54:37.675294+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        }
+      ],
+      "elapsed_ms": 4961,
+      "traceback_tail": "^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/sessions.py\", line 703, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/adapters.py\", line 659, in send\n    raise ConnectionError(err, request=request)\nrequests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))\n"
+    },
+    {
+      "interface": "ak.stock_board_industry_cons_em",
+      "params": {
+        "symbol": "银行"
+      },
+      "request_time": "2026-11-22T08:54:37.787634+08:00",
+      "status": "error",
+      "failure_category": "network_unreachable",
+      "error_detail": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+      "row_count": 0,
+      "fields": [],
+      "sample": [],
+      "date_min": null,
+      "date_max": null,
+      "http": [
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "ts": "2026-11-22T08:54:37.787844+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "ts": "2026-11-22T08:54:39.699138+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        {
+          "method": "GET",
+          "url": "https://17.push2.eastmoney.com/api/qt/clist/get",
+          "params": "{'pn': '1', 'pz': '100', 'po': '1', 'np': '1', 'ut': 'bd1d9ddb04089700cf9c27f6f7426281', 'fltt': '2', 'invt': '2', 'fid': 'f3', 'fs': 'm:90 t:2 f:!50', 'fields': 'f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222'}",
+          "ts": "2026-11-22T08:54:42.331050+08:00",
+          "request_error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        }
+      ],
+      "elapsed_ms": 4662,
+      "traceback_tail": "^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/sessions.py\", line 703, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/requests/adapters.py\", line 659, in send\n    raise ConnectionError(err, request=request)\nrequests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))\n"
+    },
+    {
+      "interface": "ak.stock_board_industry_name_ths",
+      "params": {},
+      "request_time": "2026-11-22T08:54:42.451179+08:00",
+      "status": "ok",
+      "failure_category": null,
+      "error_detail": null,
+      "row_count": 90,
+      "fields": [
+        "name",
+        "code"
+      ],
+      "sample": [
+        {
+          "name": "半导体",
+          "code": "881121"
+        },
+        {
+          "name": "白酒",
+          "code": "881273"
+        },
+        {
+          "name": "白色家电",
+          "code": "881131"
+        },
+        {
+          "name": "保险",
+          "code": "881156"
+        },
+        {
+          "name": "包装印刷",
+          "code": "881138"
+        }
+      ],
+      "date_min": null,
+      "date_max": null,
+      "http": [
+        {
+          "method": "get",
+          "url": "https://q.10jqka.com.cn/thshy/detail/code/881272/",
+          "params": "None",
+          "ts": "2026-11-22T08:54:42.456465+08:00",
+          "http_status": 200,
+          "content_type": "text/html; charset=gbk",
+          "body_len": 49885,
+          "body_sha256": "2b82b049bf5c45baca0c4dbe08fca01e68211f03779e6f68d47d642f01e45761",
+          "body_sample": "<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <meta charset=\"gbk\">\r\n    <title>ͬ��˳��ҵ����_ͬ��˳��������_ͬ��˳�ƾ���</title>\r\n    <meta name=\"keywords\" content=\"����,������,���ڷ���,������վ,������Ϣ,������Ѷ,������Ϣ����,Ͷ��,����Ͷ��,Ͷ������,��Ʊ\"/>\r\n    <meta name=\"description\" content=\"����ͬ��˳������Ϣ�ɷ����޹�˾��ͬ��˳��������1995�꣬��һ��רҵ�Ļ������������ݷ����̣�Ϊ��ȫ��λ�ṩ�ƾ���Ѷ��ȫ������г����飬���ǹ�Ʊ�������ڻ�����㡢ծȯ�����С��ƽ�ȶ���������˺���ҵ�ķ���\"/>\r\n    <link rel=\"stylesheet\" href=\"http://s.thsi.cn/js/webHQ/resources/m.min.css\">\r\n <script type=\"text/javascript\" src=\"//s.thsi.cn/js/chameleon/chameleon.1.7.min.1795308.js\"></script> <script type=\"text/javascript\">\n    var targetProtocol = \"https:\";\n    if (window.location.protocol != targetProtocol)\n  "
+        }
+      ],
+      "elapsed_ms": 210
+    }
+  ],
+  "http_capture_count": 19
+}

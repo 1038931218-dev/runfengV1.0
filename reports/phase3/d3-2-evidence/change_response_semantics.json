@@ -1,0 +1,109 @@
+{
+  "task": "D3-2.3 change interface empty-response semantics audit",
+  "collected_at": "2026-11-22T09:02:26.080717+08:00",
+  "akshare_version": "1.18.22",
+  "finding": "区分change接口空响应是'确无变更(records:[])'还是'解析异常/HTTP错误';并核对变更日期字段语义。",
+  "calls": [
+    {
+      "symbol": "601398",
+      "year": "2023",
+      "start_date": "20230101",
+      "end_date": "20231231",
+      "ak_status": "error",
+      "error": "KeyError: '变更日期'",
+      "http": [
+        {
+          "method": "post",
+          "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+          "params": "{'scode': '601398', 'sdate': '2023-01-01', 'edate': '2023-12-31'}",
+          "ts": "2026-11-22T09:02:26.088795+08:00",
+          "http_status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body_len": 73,
+          "body_sha256": "6b5a6d47f53d788ff5677b903eac19693d9a28c6778176590054ec7595025de0",
+          "body_sample": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}"
+        }
+      ]
+    },
+    {
+      "symbol": "601398",
+      "year": "2024",
+      "start_date": "20240101",
+      "end_date": "20241231",
+      "ak_status": "ok",
+      "rows": 1,
+      "fields": [
+        "新证券简称",
+        "行业中类",
+        "行业大类",
+        "行业次类",
+        "行业门类",
+        "机构名称",
+        "行业编码",
+        "分类标准",
+        "分类标准编码",
+        "证券代码",
+        "变更日期"
+      ],
+      "dates": [
+        "2024-02-08"
+      ],
+      "change_date_field_semantics": "接口字段名为'变更日期';是否等于生效日期无官方说明,标unknown",
+      "http": [
+        {
+          "method": "post",
+          "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+          "params": "{'scode': '601398', 'sdate': '2024-01-01', 'edate': '2024-12-31'}",
+          "ts": "2026-11-22T09:02:26.327536+08:00",
+          "http_status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body_len": 374,
+          "body_sha256": "ccaccea398f3b4b12b2ff4d23693b97d392b60a5fe8a45d6e522fb3d361ee106",
+          "body_sample": "{\"total\":1,\"records\":[{\"F008C\":\"1\",\"SECNAME\":\"工商银行\",\"F007V\":null,\"F006V\":\"货币金融服务\",\"F005V\":null,\"F004V\":\"金融业\",\"ORGNAME\":\"中国工商银行股份有限公司\",\"F003V\":\"J66\",\"F002V\":\"中国上市公司协会上市公司行业分类标准\",\"F001V\":\"008001\",\"SECCODE\":\"601398\",\"VARYDATE\":\"2024-02-08\"}],\"resultmsg\":\"success\",\"count\":1,\"resultcode\":200}"
+        }
+      ]
+    },
+    {
+      "symbol": "601398",
+      "year": "2025",
+      "start_date": "20250101",
+      "end_date": "20251231",
+      "ak_status": "error",
+      "error": "KeyError: '变更日期'",
+      "http": [
+        {
+          "method": "post",
+          "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+          "params": "{'scode': '601398', 'sdate': '2025-01-01', 'edate': '2025-12-31'}",
+          "ts": "2026-11-22T09:02:26.577426+08:00",
+          "http_status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body_len": 73,
+          "body_sha256": "6b5a6d47f53d788ff5677b903eac19693d9a28c6778176590054ec7595025de0",
+          "body_sample": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}"
+        }
+      ]
+    },
+    {
+      "symbol": "601398",
+      "year": "2026",
+      "start_date": "20260101",
+      "end_date": "20261121",
+      "ak_status": "error",
+      "error": "KeyError: '变更日期'",
+      "http": [
+        {
+          "method": "post",
+          "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+          "params": "{'scode': '601398', 'sdate': '2026-01-01', 'edate': '2026-11-21'}",
+          "ts": "2026-11-22T09:02:26.816573+08:00",
+          "http_status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body_len": 73,
+          "body_sha256": "6b5a6d47f53d788ff5677b903eac19693d9a28c6778176590054ec7595025de0",
+          "body_sample": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}"
+        }
+      ]
+    }
+  ]
+}

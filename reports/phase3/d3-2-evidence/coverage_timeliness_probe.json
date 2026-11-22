@@ -1,0 +1,2037 @@
+{
+  "task": "D3-2.2/2.3 coverage & timeliness probe",
+  "collected_at": "2026-11-22T08:58:46.587929+08:00",
+  "akshare_version": "1.18.22",
+  "note": "巨潮目录版本字段统计/pe_ratio多日期时效/change多年度/中证成分覆盖;只读;HTTP SHA256。",
+  "sections": {
+    "cninfo_category_versions": [
+      {
+        "interface": "ak.stock_industry_category_cninfo",
+        "params": {
+          "symbol": "巨潮行业分类标准"
+        },
+        "request_time": "2026-11-22T08:58:46.587978+08:00",
+        "status": "ok",
+        "row_count": 294,
+        "fields": [
+          "类目编码",
+          "类目名称",
+          "终止日期",
+          "行业类型",
+          "行业类型编码",
+          "类目名称英文",
+          "父类编码",
+          "分级"
+        ],
+        "sample": [
+          {
+            "类目编码": "Z",
+            "类目名称": "巨潮行业分类标准",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "CNINF Industry Classification Standard",
+            "父类编码": "008",
+            "分级": 0
+          },
+          {
+            "类目编码": "Z01",
+            "类目名称": "能源",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "Energy",
+            "父类编码": "Z",
+            "分级": 1
+          },
+          {
+            "类目编码": "Z0101",
+            "类目名称": "能源",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "Energy",
+            "父类编码": "Z01",
+            "分级": 2
+          },
+          {
+            "类目编码": "Z010101",
+            "类目名称": "能源设备与服务",
+            "终止日期": "NaT",
+            "行业类型": "巨潮行业分类标准",
+            "行业类型编码": "008002",
+            "类目名称英文": "Energy Equipment and Services",
+            "父类编码": "Z0101",
+            "分级": 3
+          }
+        ],
+        "http": [
+          {
+            "method": "get",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_public0002",
+            "params": "{'indcode': '', 'indtype': '008002', 'format': 'json'}",
+            "ts": "2026-11-22T08:58:46.596576+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 50455,
+            "body_sha256": "69c270294ac6c2bc2161493a33f1cfd09d6bf0661ffbb8b186b02f2ae69cbc8f",
+            "body_sample": "{\"total\":294,\"records\":[{\"SORTCODE\":\"Z\",\"SORTNAME\":\"巨潮行业分类标准\",\"F002D\":null,\"F004V\":\"巨潮行业分类标准\",\"F003V\":\"008002\",\"F001V\":\"CNINF Industry Classification Standard\",\"PARENTCODE\":\"008\"},{\"SORTCODE\":\"Z01\",\"SORTNAME\":\"能源\",\"F002D\":null,\"F004V\":\"巨潮行业分类标准\",\"F003V\":\"008002\",\"F001V\":\"Energy\",\"PARENTCODE\":\"Z\"},{\"SORTCODE\":\"Z0101\",\"SORTNAME\":\"能源\",\"F002D\":null,\"F004V\":\"巨潮行业分类标准\",\"F003V\":\"008002\",\"F001V\":\"Energy\",\"PARENTCODE\":\"Z01\"},{\"SORTCO"
+          }
+        ],
+        "elapsed_ms": 417,
+        "termination_date_nonnull": 294,
+        "termination_date_samples": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "level_distribution": {
+          "4": 164,
+          "3": 88,
+          "2": 30,
+          "1": 11,
+          "0": 1
+        },
+        "industry_type_codes": [
+          "008002"
+        ]
+      },
+      {
+        "interface": "ak.stock_industry_category_cninfo",
+        "params": {
+          "symbol": "证监会行业分类标准"
+        },
+        "request_time": "2026-11-22T08:58:47.007993+08:00",
+        "status": "ok",
+        "row_count": 577,
+        "fields": [
+          "类目编码",
+          "类目名称",
+          "终止日期",
+          "行业类型",
+          "行业类型编码",
+          "类目名称英文",
+          "父类编码",
+          "分级"
+        ],
+        "sample": [
+          {
+            "类目编码": "0",
+            "类目名称": "中国上市公司协会上市公司行业分类",
+            "终止日期": "NaT",
+            "行业类型": "中国上市公司协会上市公司行业分类标准",
+            "行业类型编码": "008001",
+            "类目名称英文": "CAPCO Industry Classification",
+            "父类编码": "008",
+            "分级": 0
+          },
+          {
+            "类目编码": "A",
+            "类目名称": "农、林、牧、渔业",
+            "终止日期": "NaT",
+            "行业类型": "中国上市公司协会上市公司行业分类标准",
+            "行业类型编码": "008001",
+            "类目名称英文": "Agriculture, Forestry, Animal Husbandry and Fishery",
+            "父类编码": "0",
+            "分级": 0
+          },
+          {
+            "类目编码": "A01",
+            "类目名称": "农业",
+            "终止日期": "NaT",
+            "行业类型": "中国上市公司协会上市公司行业分类标准",
+            "行业类型编码": "008001",
+            "类目名称英文": "Agriculture",
+            "父类编码": "A",
+            "分级": 2
+          },
+          {
+            "类目编码": "A011",
+            "类目名称": "谷物种植",
+            "终止日期": "NaT",
+            "行业类型": "中国上市公司协会上市公司行业分类标准",
+            "行业类型编码": "008001",
+            "类目名称英文": "Grain Planting",
+            "父类编码": "A01",
+            "分级": 3
+          }
+        ],
+        "http": [
+          {
+            "method": "get",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_public0002",
+            "params": "{'indcode': '', 'indtype': '008001', 'format': 'json'}",
+            "ts": "2026-11-22T08:58:47.015037+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 123331,
+            "body_sha256": "360a924153710fffe511cbd3971cfce6abb04b28653fb3b6296fa485e3a3daab",
+            "body_sample": "{\"total\":577,\"records\":[{\"SORTCODE\":\"0\",\"SORTNAME\":\"中国上市公司协会上市公司行业分类\",\"F002D\":null,\"F004V\":\"中国上市公司协会上市公司行业分类标准\",\"F003V\":\"008001\",\"F001V\":\"CAPCO Industry Classification\",\"PARENTCODE\":\"008\"},{\"SORTCODE\":\"A\",\"SORTNAME\":\"农、林、牧、渔业\",\"F002D\":null,\"F004V\":\"中国上市公司协会上市公司行业分类标准\",\"F003V\":\"008001\",\"F001V\":\"Agriculture, Forestry, Animal Husbandry and Fishery\",\"PARENTCODE\":\"0\"},{\"SORTCODE\":\"A"
+          }
+        ],
+        "elapsed_ms": 433,
+        "termination_date_nonnull": 577,
+        "termination_date_samples": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "level_distribution": {
+          "3": 456,
+          "2": 91,
+          "0": 20,
+          "1": 10
+        },
+        "industry_type_codes": [
+          "008001"
+        ]
+      },
+      {
+        "interface": "ak.stock_industry_category_cninfo",
+        "params": {
+          "symbol": "申银万国行业分类标准"
+        },
+        "request_time": "2026-11-22T08:58:47.443759+08:00",
+        "status": "ok",
+        "row_count": 512,
+        "fields": [
+          "类目编码",
+          "类目名称",
+          "终止日期",
+          "行业类型",
+          "行业类型编码",
+          "类目名称英文",
+          "父类编码",
+          "分级"
+        ],
+        "sample": [
+          {
+            "类目编码": "S",
+            "类目名称": "申银万国行业分类",
+            "终止日期": "NaT",
+            "行业类型": "申银万国行业分类标准",
+            "行业类型编码": "008003",
+            "类目名称英文": "Shenyin Wanguo Industry Classification",
+            "父类编码": "008",
+            "分级": 0
+          },
+          {
+            "类目编码": "S11",
+            "类目名称": "农林牧渔",
+            "终止日期": "NaT",
+            "行业类型": "申银万国行业分类标准",
+            "行业类型编码": "008003",
+            "类目名称英文": "Agriculture, Forestry, Animal Husbandry and Fisheries",
+            "父类编码": "S",
+            "分级": 1
+          },
+          {
+            "类目编码": "S1101",
+            "类目名称": "种植业",
+            "终止日期": "NaT",
+            "行业类型": "申银万国行业分类标准",
+            "行业类型编码": "008003",
+            "类目名称英文": "Crop Farming",
+            "父类编码": "S11",
+            "分级": 2
+          },
+          {
+            "类目编码": "S110101",
+            "类目名称": "种子",
+            "终止日期": "NaT",
+            "行业类型": "申银万国行业分类标准",
+            "行业类型编码": "008003",
+            "类目名称英文": "Seed",
+            "父类编码": "S1101",
+            "分级": 3
+          }
+        ],
+        "http": [
+          {
+            "method": "get",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_public0002",
+            "params": "{'indcode': '', 'indtype': '008003', 'format': 'json'}",
+            "ts": "2026-11-22T08:58:47.450656+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 86937,
+            "body_sha256": "6cfd533e74c94f710519d1e4cb5f1ae8f6e5d291b87c720827cc868715044f26",
+            "body_sample": "{\"total\":512,\"records\":[{\"SORTCODE\":\"S\",\"SORTNAME\":\"申银万国行业分类\",\"F002D\":null,\"F004V\":\"申银万国行业分类标准\",\"F003V\":\"008003\",\"F001V\":\"Shenyin Wanguo Industry Classification\",\"PARENTCODE\":\"008\"},{\"SORTCODE\":\"S11\",\"SORTNAME\":\"农林牧渔\",\"F002D\":null,\"F004V\":\"申银万国行业分类标准\",\"F003V\":\"008003\",\"F001V\":\"Agriculture, Forestry, Animal Husbandry and Fisheries\",\"PARENTCODE\":\"S\"},{\"SORTCODE\":\"S1101\",\"SORTNAME\":\"种植业\",\"F002D\":null,\"F004V\":\"申银万国行业�"
+          }
+        ],
+        "elapsed_ms": 343,
+        "termination_date_nonnull": 512,
+        "termination_date_samples": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "level_distribution": {
+          "3": 346,
+          "2": 134,
+          "1": 31,
+          "0": 1
+        },
+        "industry_type_codes": [
+          "008003"
+        ]
+      }
+    ],
+    "cninfo_pe_ratio_timeliness": [
+      {
+        "interface": "ak.stock_industry_pe_ratio_cninfo",
+        "params": {
+          "symbol": "证监会行业分类",
+          "date": "20231130"
+        },
+        "request_time": "2026-11-22T08:58:47.789593+08:00",
+        "status": "ok",
+        "row_count": 109,
+        "fields": [
+          "变动日期",
+          "行业分类",
+          "行业层级",
+          "行业编码",
+          "行业名称",
+          "公司数量",
+          "纳入计算公司数量",
+          "总市值-静态",
+          "净利润-静态",
+          "静态市盈率-加权平均",
+          "静态市盈率-中位数",
+          "静态市盈率-算术平均"
+        ],
+        "sample": [
+          {
+            "变动日期": "2023-11-30",
+            "行业分类": "证监会行业分类标准",
+            "行业层级": 1,
+            "行业编码": "A",
+            "行业名称": "农、林、牧、渔业",
+            "公司数量": 49.0,
+            "纳入计算公司数量": 34.0,
+            "总市值-静态": 5641.305,
+            "净利润-静态": 237.5096,
+            "静态市盈率-加权平均": 23.75,
+            "静态市盈率-中位数": 54.69,
+            "静态市盈率-算术平均": 112.96
+          },
+          {
+            "变动日期": "2023-11-30",
+            "行业分类": "证监会行业分类标准",
+            "行业层级": 2,
+            "行业编码": "A01",
+            "行业名称": "农业",
+            "公司数量": 18.0,
+            "纳入计算公司数量": 13.0,
+            "总市值-静态": 1006.2554,
+            "净利润-静态": 23.3975,
+            "静态市盈率-加权平均": 43.01,
+            "静态市盈率-中位数": 45.17,
+            "静态市盈率-算术平均": 72.58
+          },
+          {
+            "变动日期": "2023-11-30",
+            "行业分类": "证监会行业分类标准",
+            "行业层级": 2,
+            "行业编码": "A02",
+            "行业名称": "林业",
+            "公司数量": 4.0,
+            "纳入计算公司数量": 2.0,
+            "总市值-静态": 45.16,
+            "净利润-静态": 0.2087,
+            "静态市盈率-加权平均": 216.42,
+            "静态市盈率-中位数": 218.22,
+            "静态市盈率-算术平均": 218.22
+          },
+          {
+            "变动日期": "2023-11-30",
+            "行业分类": "证监会行业分类标准",
+            "行业层级": 2,
+            "行业编码": "A03",
+            "行业名称": "畜牧业",
+            "公司数量": 19.0,
+            "纳入计算公司数量": 13.0,
+            "总市值-静态": 4385.0308,
+            "净利润-静态": 210.897,
+            "静态市盈率-加权平均": 20.79,
+            "静态市盈率-中位数": 54.46,
+            "静态市盈率-算术平均": 82.81
+          }
+        ],
+        "http": [
+          {
+            "method": "post",
+            "url": "http://webapi.cninfo.com.cn/api/sysapi/p_sysapi1087",
+            "params": "{'tdate': '2023-11-30', 'sortcode': '008001'}",
+            "ts": "2026-11-22T08:58:47.796816+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 23814,
+            "body_sha256": "2df501a6c898e2e75a4c628c27b5f957b8f84cb426bd943391a85d658f7d2686",
+            "body_sample": "{\"total\":109,\"records\":[{\"F004N\":1,\"F013N\":112.96,\"F012N\":54.69,\"F011N\":23.75,\"F010N\":237.5096,\"F006V\":\"农、林、牧、渔业\",\"F005V\":\"A\",\"F003V\":\"证监会行业分类标准\",\"F009N\":5641.305,\"F008N\":34,\"VARYDATE\":\"2023-11-30\",\"F007N\":49},{\"F004N\":2,\"F013N\":72.58,\"F012N\":45.17,\"F011N\":43.01,\"F010N\":23.3975,\"F006V\":\"农业\",\"F005V\":\"A01\",\"F003V\":\"证监会行业分类标准\",\"F009N\":1006.2554,\"F008N\":13,\"VARYDATE\":\"2023-11-30\",\"F007N\":18},{\"F004N\":2,\"F013N\":218.22,\"F012N\":218.22,\"F011N\":216."
+          }
+        ],
+        "elapsed_ms": 216,
+        "observed_change_dates": [
+          "2023-11-30"
+        ]
+      },
+      {
+        "interface": "ak.stock_industry_pe_ratio_cninfo",
+        "params": {
+          "symbol": "证监会行业分类",
+          "date": "20241129"
+        },
+        "request_time": "2026-11-22T08:58:48.007199+08:00",
+        "status": "ok",
+        "row_count": 120,
+        "fields": [
+          "变动日期",
+          "行业分类",
+          "行业层级",
+          "行业编码",
+          "行业名称",
+          "公司数量",
+          "纳入计算公司数量",
+          "总市值-静态",
+          "净利润-静态",
+          "静态市盈率-加权平均",
+          "静态市盈率-中位数",
+          "静态市盈率-算术平均"
+        ],
+        "sample": [
+          {
+            "变动日期": "2024-11-29",
+            "行业分类": "中国上市公司协会上市公司行业分类标准",
+            "行业层级": 1.0,
+            "行业编码": "A",
+            "行业名称": "农、林、牧、渔业",
+            "公司数量": 46.0,
+            "纳入计算公司数量": 26.0,
+            "总市值-静态": 2076.0547,
+            "净利润-静态": 164.7542,
+            "静态市盈率-加权平均": 12.6,
+            "静态市盈率-中位数": 37.49,
+            "静态市盈率-算术平均": 64.35
+          },
+          {
+            "变动日期": "2024-11-29",
+            "行业分类": "中国上市公司协会上市公司行业分类标准",
+            "行业层级": 2.0,
+            "行业编码": "A01",
+            "行业名称": "农业",
+            "公司数量": 10.0,
+            "纳入计算公司数量": 8.0,
+            "总市值-静态": 684.723,
+            "净利润-静态": 17.9204,
+            "静态市盈率-加权平均": 38.21,
+            "静态市盈率-中位数": 47.07,
+            "静态市盈率-算术平均": 61.88
+          },
+          {
+            "变动日期": "2024-11-29",
+            "行业分类": "中国上市公司协会上市公司行业分类标准",
+            "行业层级": 2.0,
+            "行业编码": "A02",
+            "行业名称": "林业",
+            "公司数量": 2.0,
+            "纳入计算公司数量": 2.0,
+            "总市值-静态": 42.0622,
+            "净利润-静态": 1.9804,
+            "静态市盈率-加权平均": 21.24,
+            "静态市盈率-中位数": 139.83,
+            "静态市盈率-算术平均": 139.83
+          },
+          {
+            "变动日期": "2024-11-29",
+            "行业分类": "中国上市公司协会上市公司行业分类标准",
+            "行业层级": 2.0,
+            "行业编码": "A03",
+            "行业名称": "畜牧业",
+            "公司数量": 20.0,
+            "纳入计算公司数量": 5.0,
+            "总市值-静态": 714.0767,
+            "净利润-静态": 115.7393,
+            "静态市盈率-加权平均": 6.17,
+            "静态市盈率-中位数": 19.82,
+            "静态市盈率-算术平均": 15.78
+          }
+        ],
+        "http": [
+          {
+            "method": "post",
+            "url": "http://webapi.cninfo.com.cn/api/sysapi/p_sysapi1087",
+            "params": "{'tdate': '2024-11-29', 'sortcode': '008001'}",
+            "ts": "2026-11-22T08:58:48.013996+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 29556,
+            "body_sha256": "af0c17d34c075bbc4272930372d67023067bc4712296f7be63ea68cfb19498a1",
+            "body_sample": "{\"total\":120,\"records\":[{\"F004N\":1,\"F013N\":64.35,\"F012N\":37.49,\"F011N\":12.6,\"F010N\":164.7542,\"F006V\":\"农、林、牧、渔业\",\"F005V\":\"A\",\"F003V\":\"中国上市公司协会上市公司行业分类标准\",\"F009N\":2076.0547,\"F008N\":26,\"VARYDATE\":\"2024-11-29\",\"F007N\":46},{\"F004N\":2,\"F013N\":61.88,\"F012N\":47.07,\"F011N\":38.21,\"F010N\":17.9204,\"F006V\":\"农业\",\"F005V\":\"A01\",\"F003V\":\"中国上市公司协会上市公司行业分类标准\",\"F009N\":684.723,\"F008N\":8,\"VARYDATE\":\"2024-11-29\",\"F007N\":10},{\"F"
+          }
+        ],
+        "elapsed_ms": 231,
+        "observed_change_dates": [
+          "2024-11-29"
+        ]
+      },
+      {
+        "interface": "ak.stock_industry_pe_ratio_cninfo",
+        "params": {
+          "symbol": "证监会行业分类",
+          "date": "20251128"
+        },
+        "request_time": "2026-11-22T08:58:48.239259+08:00",
+        "status": "ok",
+        "row_count": 120,
+        "fields": [
+          "变动日期",
+          "行业分类",
+          "行业层级",
+          "行业编码",
+          "行业名称",
+          "公司数量",
+          "纳入计算公司数量",
+          "总市值-静态",
+          "净利润-静态",
+          "静态市盈率-加权平均",
+          "静态市盈率-中位数",
+          "静态市盈率-算术平均"
+        ],
+        "sample": [
+          {
+            "变动日期": "2025-11-28",
+            "行业分类": "中国上市公司协会上市公司行业分类标准",
+            "行业层级": 1.0,
+            "行业编码": "A",
+            "行业名称": "农、林、牧、渔业",
+            "公司数量": 45.0,
+            "纳入计算公司数量": 31.0,
+            "总市值-静态": 6471.2618,
+            "净利润-静态": 353.494,
+            "静态市盈率-加权平均": 18.31,
+            "静态市盈率-中位数": 53.25,
+            "静态市盈率-算术平均": 80.44
+          },
+          {
+            "变动日期": "2025-11-28",
+            "行业分类": "中国上市公司协会上市公司行业分类标准",
+            "行业层级": 2.0,
+            "行业编码": "A01",
+            "行业名称": "农业",
+            "公司数量": 9.0,
+            "纳入计算公司数量": 6.0,
+            "总市值-静态": 683.4949,
+            "净利润-静态": 15.2914,
+            "静态市盈率-加权平均": 44.7,
+            "静态市盈率-中位数": 50.88,
+            "静态市盈率-算术平均": 81.86
+          },
+          {
+            "变动日期": "2025-11-28",
+            "行业分类": "中国上市公司协会上市公司行业分类标准",
+            "行业层级": 2.0,
+            "行业编码": "A02",
+            "行业名称": "林业",
+            "公司数量": 2.0,
+            "纳入计算公司数量": 1.0,
+            "总市值-静态": 31.4499,
+            "净利润-静态": 0.1041,
+            "静态市盈率-加权平均": 302.08,
+            "静态市盈率-中位数": 302.08,
+            "静态市盈率-算术平均": 302.08
+          },
+          {
+            "变动日期": "2025-11-28",
+            "行业分类": "中国上市公司协会上市公司行业分类标准",
+            "行业层级": 2.0,
+            "行业编码": "A03",
+            "行业名称": "畜牧业",
+            "公司数量": 19.0,
+            "纳入计算公司数量": 14.0,
+            "总市值-静态": 5202.3299,
+            "净利润-静态": 331.869,
+            "静态市盈率-加权平均": 15.68,
+            "静态市盈率-中位数": 20.7,
+            "静态市盈率-算术平均": 55.44
+          }
+        ],
+        "http": [
+          {
+            "method": "post",
+            "url": "http://webapi.cninfo.com.cn/api/sysapi/p_sysapi1087",
+            "params": "{'tdate': '2025-11-28', 'sortcode': '008001'}",
+            "ts": "2026-11-22T08:58:48.246239+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 29570,
+            "body_sha256": "66b4f875850b1a6c80970ec736a093016f1331c88c90f0f5e8b4db7a615b596b",
+            "body_sample": "{\"total\":120,\"records\":[{\"F004N\":1,\"F013N\":80.44,\"F012N\":53.25,\"F011N\":18.31,\"F010N\":353.494,\"F006V\":\"农、林、牧、渔业\",\"F005V\":\"A\",\"F003V\":\"中国上市公司协会上市公司行业分类标准\",\"F009N\":6471.2618,\"F008N\":31,\"VARYDATE\":\"2025-11-28\",\"F007N\":45},{\"F004N\":2,\"F013N\":81.86,\"F012N\":50.88,\"F011N\":44.7,\"F010N\":15.2914,\"F006V\":\"农业\",\"F005V\":\"A01\",\"F003V\":\"中国上市公司协会上市公司行业分类标准\",\"F009N\":683.4949,\"F008N\":6,\"VARYDATE\":\"2025-11-28\",\"F007N\":9},{\"F0"
+          }
+        ],
+        "elapsed_ms": 183,
+        "observed_change_dates": [
+          "2025-11-28"
+        ]
+      },
+      {
+        "interface": "ak.stock_industry_pe_ratio_cninfo",
+        "params": {
+          "symbol": "证监会行业分类",
+          "date": "20261120"
+        },
+        "request_time": "2026-11-22T08:58:48.423663+08:00",
+        "status": "ok",
+        "row_count": 120,
+        "fields": [
+          "变动日期",
+          "行业分类",
+          "行业层级",
+          "行业编码",
+          "行业名称",
+          "公司数量",
+          "纳入计算公司数量",
+          "总市值-静态",
+          "净利润-静态",
+          "静态市盈率-加权平均",
+          "静态市盈率-中位数",
+          "静态市盈率-算术平均"
+        ],
+        "sample": [
+          {
+            "变动日期": "2026-11-20",
+            "行业分类": "中国上市公司协会上市公司行业分类标准",
+            "行业层级": 1.0,
+            "行业编码": "A",
+            "行业名称": "农、林、牧、渔业",
+            "公司数量": 43.0,
+            "纳入计算公司数量": 29.0,
+            "总市值-静态": 5168.9406,
+            "净利润-静态": 248.1094,
+            "静态市盈率-加权平均": 20.83,
+            "静态市盈率-中位数": 50.33,
+            "静态市盈率-算术平均": 94.18
+          },
+          {
+            "变动日期": "2026-11-20",
+            "行业分类": "中国上市公司协会上市公司行业分类标准",
+            "行业层级": 2.0,
+            "行业编码": "A01",
+            "行业名称": "农业",
+            "公司数量": 8.0,
+            "纳入计算公司数量": 6.0,
+            "总市值-静态": 367.3531,
+            "净利润-静态": 17.7408,
+            "静态市盈率-加权平均": 20.71,
+            "静态市盈率-中位数": 22.01,
+            "静态市盈率-算术平均": 40.74
+          },
+          {
+            "变动日期": "2026-11-20",
+            "行业分类": "中国上市公司协会上市公司行业分类标准",
+            "行业层级": 2.0,
+            "行业编码": "A02",
+            "行业名称": "林业",
+            "公司数量": 1.0,
+            "纳入计算公司数量": 1.0,
+            "总市值-静态": 18.6483,
+            "净利润-静态": 0.0923,
+            "静态市盈率-加权平均": 202.03,
+            "静态市盈率-中位数": 202.03,
+            "静态市盈率-算术平均": 202.03
+          },
+          {
+            "变动日期": "2026-11-20",
+            "行业分类": "中国上市公司协会上市公司行业分类标准",
+            "行业层级": 2.0,
+            "行业编码": "A03",
+            "行业名称": "畜牧业",
+            "公司数量": 19.0,
+            "纳入计算公司数量": 11.0,
+            "总市值-静态": 4323.2663,
+            "净利润-静态": 223.3908,
+            "静态市盈率-加权平均": 19.35,
+            "静态市盈率-中位数": 33.02,
+            "静态市盈率-算术平均": 58.31
+          }
+        ],
+        "http": [
+          {
+            "method": "post",
+            "url": "http://webapi.cninfo.com.cn/api/sysapi/p_sysapi1087",
+            "params": "{'tdate': '2026-11-20', 'sortcode': '008001'}",
+            "ts": "2026-11-22T08:58:48.430547+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 29551,
+            "body_sha256": "c3ad41ff685b4c7da8b52ccdf06cd420962fe0092d9973e5da67d54a9c634b58",
+            "body_sample": "{\"total\":120,\"records\":[{\"F004N\":1,\"F013N\":94.18,\"F012N\":50.33,\"F011N\":20.83,\"F010N\":248.1094,\"F006V\":\"农、林、牧、渔业\",\"F005V\":\"A\",\"F003V\":\"中国上市公司协会上市公司行业分类标准\",\"F009N\":5168.9406,\"F008N\":29,\"VARYDATE\":\"2026-11-20\",\"F007N\":43},{\"F004N\":2,\"F013N\":40.74,\"F012N\":22.01,\"F011N\":20.71,\"F010N\":17.7408,\"F006V\":\"农业\",\"F005V\":\"A01\",\"F003V\":\"中国上市公司协会上市公司行业分类标准\",\"F009N\":367.3531,\"F008N\":6,\"VARYDATE\":\"2026-11-20\",\"F007N\":8},{\""
+          }
+        ],
+        "elapsed_ms": 210,
+        "observed_change_dates": [
+          "2026-11-20"
+        ]
+      }
+    ],
+    "cninfo_change_multiyear": [
+      {
+        "interface": "ak.stock_industry_change_cninfo",
+        "params": {
+          "symbol": "601398",
+          "start_date": "20230101",
+          "end_date": "20231231"
+        },
+        "request_time": "2026-11-22T08:58:48.635179+08:00",
+        "status": "error",
+        "row_count": 0,
+        "fields": [],
+        "sample": [],
+        "http": [
+          {
+            "method": "post",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+            "params": "{'scode': '601398', 'sdate': '2023-01-01', 'edate': '2023-12-31'}",
+            "ts": "2026-11-22T08:58:48.642331+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 73,
+            "body_sha256": "6b5a6d47f53d788ff5677b903eac19693d9a28c6778176590054ec7595025de0",
+            "body_sample": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}"
+          }
+        ],
+        "elapsed_ms": 243,
+        "error_detail": "KeyError: '变更日期'"
+      },
+      {
+        "interface": "ak.stock_industry_change_cninfo",
+        "params": {
+          "symbol": "601398",
+          "start_date": "20240101",
+          "end_date": "20241231"
+        },
+        "request_time": "2026-11-22T08:58:48.880189+08:00",
+        "status": "ok",
+        "row_count": 1,
+        "fields": [
+          "新证券简称",
+          "行业中类",
+          "行业大类",
+          "行业次类",
+          "行业门类",
+          "机构名称",
+          "行业编码",
+          "分类标准",
+          "分类标准编码",
+          "证券代码",
+          "变更日期"
+        ],
+        "sample": [
+          {
+            "新证券简称": "工商银行",
+            "行业中类": null,
+            "行业大类": "货币金融服务",
+            "行业次类": null,
+            "行业门类": "金融业",
+            "机构名称": "中国工商银行股份有限公司",
+            "行业编码": "J66",
+            "分类标准": "中国上市公司协会上市公司行业分类标准",
+            "分类标准编码": "008001",
+            "证券代码": "601398",
+            "变更日期": "2024-02-08"
+          }
+        ],
+        "http": [
+          {
+            "method": "post",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+            "params": "{'scode': '601398', 'sdate': '2024-01-01', 'edate': '2024-12-31'}",
+            "ts": "2026-11-22T08:58:48.887301+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 374,
+            "body_sha256": "ccaccea398f3b4b12b2ff4d23693b97d392b60a5fe8a45d6e522fb3d361ee106",
+            "body_sample": "{\"total\":1,\"records\":[{\"F008C\":\"1\",\"SECNAME\":\"工商银行\",\"F007V\":null,\"F006V\":\"货币金融服务\",\"F005V\":null,\"F004V\":\"金融业\",\"ORGNAME\":\"中国工商银行股份有限公司\",\"F003V\":\"J66\",\"F002V\":\"中国上市公司协会上市公司行业分类标准\",\"F001V\":\"008001\",\"SECCODE\":\"601398\",\"VARYDATE\":\"2024-02-08\"}],\"resultmsg\":\"success\",\"count\":1,\"resultcode\":200}"
+          }
+        ],
+        "elapsed_ms": 209,
+        "date_range_observed": [
+          "2024-02-08",
+          "2024-02-08"
+        ]
+      },
+      {
+        "interface": "ak.stock_industry_change_cninfo",
+        "params": {
+          "symbol": "601398",
+          "start_date": "20250101",
+          "end_date": "20251231"
+        },
+        "request_time": "2026-11-22T08:58:49.090342+08:00",
+        "status": "error",
+        "row_count": 0,
+        "fields": [],
+        "sample": [],
+        "http": [
+          {
+            "method": "post",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+            "params": "{'scode': '601398', 'sdate': '2025-01-01', 'edate': '2025-12-31'}",
+            "ts": "2026-11-22T08:58:49.097126+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 73,
+            "body_sha256": "6b5a6d47f53d788ff5677b903eac19693d9a28c6778176590054ec7595025de0",
+            "body_sample": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}"
+          }
+        ],
+        "elapsed_ms": 255,
+        "error_detail": "KeyError: '变更日期'"
+      },
+      {
+        "interface": "ak.stock_industry_change_cninfo",
+        "params": {
+          "symbol": "601398",
+          "start_date": "20260101",
+          "end_date": "20261121"
+        },
+        "request_time": "2026-11-22T08:58:49.346659+08:00",
+        "status": "error",
+        "row_count": 0,
+        "fields": [],
+        "sample": [],
+        "http": [
+          {
+            "method": "post",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+            "params": "{'scode': '601398', 'sdate': '2026-01-01', 'edate': '2026-11-21'}",
+            "ts": "2026-11-22T08:58:49.353736+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 73,
+            "body_sha256": "6b5a6d47f53d788ff5677b903eac19693d9a28c6778176590054ec7595025de0",
+            "body_sample": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}"
+          }
+        ],
+        "elapsed_ms": 216,
+        "error_detail": "KeyError: '变更日期'"
+      },
+      {
+        "interface": "ak.stock_industry_change_cninfo",
+        "params": {
+          "symbol": "600519",
+          "start_date": "20230101",
+          "end_date": "20231231"
+        },
+        "request_time": "2026-11-22T08:58:49.564109+08:00",
+        "status": "error",
+        "row_count": 0,
+        "fields": [],
+        "sample": [],
+        "http": [
+          {
+            "method": "post",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+            "params": "{'scode': '600519', 'sdate': '2023-01-01', 'edate': '2023-12-31'}",
+            "ts": "2026-11-22T08:58:49.571054+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 73,
+            "body_sha256": "6b5a6d47f53d788ff5677b903eac19693d9a28c6778176590054ec7595025de0",
+            "body_sample": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}"
+          }
+        ],
+        "elapsed_ms": 226,
+        "error_detail": "KeyError: '变更日期'"
+      },
+      {
+        "interface": "ak.stock_industry_change_cninfo",
+        "params": {
+          "symbol": "600519",
+          "start_date": "20240101",
+          "end_date": "20241231"
+        },
+        "request_time": "2026-11-22T08:58:49.791738+08:00",
+        "status": "ok",
+        "row_count": 1,
+        "fields": [
+          "新证券简称",
+          "行业中类",
+          "行业大类",
+          "行业次类",
+          "行业门类",
+          "机构名称",
+          "行业编码",
+          "分类标准",
+          "分类标准编码",
+          "证券代码",
+          "变更日期"
+        ],
+        "sample": [
+          {
+            "新证券简称": "贵州茅台",
+            "行业中类": null,
+            "行业大类": "酒、饮料和精制茶制造业",
+            "行业次类": null,
+            "行业门类": "制造业",
+            "机构名称": "贵州茅台酒股份有限公司",
+            "行业编码": "C15",
+            "分类标准": "中国上市公司协会上市公司行业分类标准",
+            "分类标准编码": "008001",
+            "证券代码": "600519",
+            "变更日期": "2024-02-08"
+          }
+        ],
+        "http": [
+          {
+            "method": "post",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+            "params": "{'scode': '600519', 'sdate': '2024-01-01', 'edate': '2024-12-31'}",
+            "ts": "2026-11-22T08:58:49.798809+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 386,
+            "body_sha256": "3a0b845dc2829482d8ab1bb090eeb2b022f0e6097527f4f208ecb324d11d1e3e",
+            "body_sample": "{\"total\":1,\"records\":[{\"F008C\":\"1\",\"SECNAME\":\"贵州茅台\",\"F007V\":null,\"F006V\":\"酒、饮料和精制茶制造业\",\"F005V\":null,\"F004V\":\"制造业\",\"ORGNAME\":\"贵州茅台酒股份有限公司\",\"F003V\":\"C15\",\"F002V\":\"中国上市公司协会上市公司行业分类标准\",\"F001V\":\"008001\",\"SECCODE\":\"600519\",\"VARYDATE\":\"2024-02-08\"}],\"resultmsg\":\"success\",\"count\":1,\"resultcode\":200}"
+          }
+        ],
+        "elapsed_ms": 211,
+        "date_range_observed": [
+          "2024-02-08",
+          "2024-02-08"
+        ]
+      },
+      {
+        "interface": "ak.stock_industry_change_cninfo",
+        "params": {
+          "symbol": "600519",
+          "start_date": "20250101",
+          "end_date": "20251231"
+        },
+        "request_time": "2026-11-22T08:58:50.004857+08:00",
+        "status": "error",
+        "row_count": 0,
+        "fields": [],
+        "sample": [],
+        "http": [
+          {
+            "method": "post",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+            "params": "{'scode': '600519', 'sdate': '2025-01-01', 'edate': '2025-12-31'}",
+            "ts": "2026-11-22T08:58:50.011820+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 73,
+            "body_sha256": "6b5a6d47f53d788ff5677b903eac19693d9a28c6778176590054ec7595025de0",
+            "body_sample": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}"
+          }
+        ],
+        "elapsed_ms": 270,
+        "error_detail": "KeyError: '变更日期'"
+      },
+      {
+        "interface": "ak.stock_industry_change_cninfo",
+        "params": {
+          "symbol": "600519",
+          "start_date": "20260101",
+          "end_date": "20261121"
+        },
+        "request_time": "2026-11-22T08:58:50.276729+08:00",
+        "status": "error",
+        "row_count": 0,
+        "fields": [],
+        "sample": [],
+        "http": [
+          {
+            "method": "post",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+            "params": "{'scode': '600519', 'sdate': '2026-01-01', 'edate': '2026-11-21'}",
+            "ts": "2026-11-22T08:58:50.284335+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 73,
+            "body_sha256": "6b5a6d47f53d788ff5677b903eac19693d9a28c6778176590054ec7595025de0",
+            "body_sample": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}"
+          }
+        ],
+        "elapsed_ms": 259,
+        "error_detail": "KeyError: '变更日期'"
+      },
+      {
+        "interface": "ak.stock_industry_change_cninfo",
+        "params": {
+          "symbol": "000651",
+          "start_date": "20230101",
+          "end_date": "20231231"
+        },
+        "request_time": "2026-11-22T08:58:50.537400+08:00",
+        "status": "error",
+        "row_count": 0,
+        "fields": [],
+        "sample": [],
+        "http": [
+          {
+            "method": "post",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+            "params": "{'scode': '000651', 'sdate': '2023-01-01', 'edate': '2023-12-31'}",
+            "ts": "2026-11-22T08:58:50.544491+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 73,
+            "body_sha256": "6b5a6d47f53d788ff5677b903eac19693d9a28c6778176590054ec7595025de0",
+            "body_sample": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}"
+          }
+        ],
+        "elapsed_ms": 245,
+        "error_detail": "KeyError: '变更日期'"
+      },
+      {
+        "interface": "ak.stock_industry_change_cninfo",
+        "params": {
+          "symbol": "000651",
+          "start_date": "20240101",
+          "end_date": "20241231"
+        },
+        "request_time": "2026-11-22T08:58:50.784312+08:00",
+        "status": "ok",
+        "row_count": 1,
+        "fields": [
+          "新证券简称",
+          "行业中类",
+          "行业大类",
+          "行业次类",
+          "行业门类",
+          "机构名称",
+          "行业编码",
+          "分类标准",
+          "分类标准编码",
+          "证券代码",
+          "变更日期"
+        ],
+        "sample": [
+          {
+            "新证券简称": "格力电器",
+            "行业中类": null,
+            "行业大类": "电气机械和器材制造业",
+            "行业次类": null,
+            "行业门类": "制造业",
+            "机构名称": "珠海格力电器股份有限公司",
+            "行业编码": "C38",
+            "分类标准": "中国上市公司协会上市公司行业分类标准",
+            "分类标准编码": "008001",
+            "证券代码": "000651",
+            "变更日期": "2024-02-08"
+          }
+        ],
+        "http": [
+          {
+            "method": "post",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+            "params": "{'scode': '000651', 'sdate': '2024-01-01', 'edate': '2024-12-31'}",
+            "ts": "2026-11-22T08:58:50.791388+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 386,
+            "body_sha256": "bf3e1f6b2cb51d2bbb708ae339e432040ce0fa4996c5e7062a8acdf9b8d04e5b",
+            "body_sample": "{\"total\":1,\"records\":[{\"F008C\":\"1\",\"SECNAME\":\"格力电器\",\"F007V\":null,\"F006V\":\"电气机械和器材制造业\",\"F005V\":null,\"F004V\":\"制造业\",\"ORGNAME\":\"珠海格力电器股份有限公司\",\"F003V\":\"C38\",\"F002V\":\"中国上市公司协会上市公司行业分类标准\",\"F001V\":\"008001\",\"SECCODE\":\"000651\",\"VARYDATE\":\"2024-02-08\"}],\"resultmsg\":\"success\",\"count\":1,\"resultcode\":200}"
+          }
+        ],
+        "elapsed_ms": 230,
+        "date_range_observed": [
+          "2024-02-08",
+          "2024-02-08"
+        ]
+      },
+      {
+        "interface": "ak.stock_industry_change_cninfo",
+        "params": {
+          "symbol": "000651",
+          "start_date": "20250101",
+          "end_date": "20251231"
+        },
+        "request_time": "2026-11-22T08:58:51.016434+08:00",
+        "status": "error",
+        "row_count": 0,
+        "fields": [],
+        "sample": [],
+        "http": [
+          {
+            "method": "post",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+            "params": "{'scode': '000651', 'sdate': '2025-01-01', 'edate': '2025-12-31'}",
+            "ts": "2026-11-22T08:58:51.023232+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 73,
+            "body_sha256": "6b5a6d47f53d788ff5677b903eac19693d9a28c6778176590054ec7595025de0",
+            "body_sample": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}"
+          }
+        ],
+        "elapsed_ms": 246,
+        "error_detail": "KeyError: '变更日期'"
+      },
+      {
+        "interface": "ak.stock_industry_change_cninfo",
+        "params": {
+          "symbol": "000651",
+          "start_date": "20260101",
+          "end_date": "20261121"
+        },
+        "request_time": "2026-11-22T08:58:51.263826+08:00",
+        "status": "error",
+        "row_count": 0,
+        "fields": [],
+        "sample": [],
+        "http": [
+          {
+            "method": "post",
+            "url": "https://webapi.cninfo.com.cn/api/stock/p_stock2110",
+            "params": "{'scode': '000651', 'sdate': '2026-01-01', 'edate': '2026-11-21'}",
+            "ts": "2026-11-22T08:58:51.271488+08:00",
+            "http_status": 200,
+            "content_type": "application/json;charset=utf-8",
+            "body_len": 73,
+            "body_sha256": "6b5a6d47f53d788ff5677b903eac19693d9a28c6778176590054ec7595025de0",
+            "body_sample": "{\"total\":0,\"records\":[],\"resultmsg\":\"success\",\"count\":0,\"resultcode\":200}"
+          }
+        ],
+        "elapsed_ms": 263,
+        "error_detail": "KeyError: '变更日期'"
+      }
+    ],
+    "csindex_constituents": {
+      "detail": [
+        {
+          "interface": "ak.index_stock_cons_csindex",
+          "params": {
+            "symbol": "399986"
+          },
+          "request_time": "2026-11-22T08:58:51.528905+08:00",
+          "status": "ok",
+          "row_count": 42,
+          "fields": [
+            "日期",
+            "指数代码",
+            "指数名称",
+            "指数英文名称",
+            "成分券代码",
+            "成分券名称",
+            "成分券英文名称",
+            "交易所",
+            "交易所英文名称"
+          ],
+          "sample": [
+            {
+              "日期": "2026-11-20",
+              "指数代码": "399986",
+              "指数名称": "中证银行",
+              "指数英文名称": "CSI Banks",
+              "成分券代码": "000001",
+              "成分券名称": "平安银行",
+              "成分券英文名称": "Ping An Bank Co., Ltd.",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "399986",
+              "指数名称": "中证银行",
+              "指数英文名称": "CSI Banks",
+              "成分券代码": "001227",
+              "成分券名称": "兰州银行",
+              "成分券英文名称": "BANK OF LANZHOU CO., LTD.",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "399986",
+              "指数名称": "中证银行",
+              "指数英文名称": "CSI Banks",
+              "成分券代码": "002142",
+              "成分券名称": "宁波银行",
+              "成分券英文名称": "Bank of Ningbo Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "399986",
+              "指数名称": "中证银行",
+              "指数英文名称": "CSI Banks",
+              "成分券代码": "002807",
+              "成分券名称": "江阴银行",
+              "成分券英文名称": "Jiangsu Jiangyin Rural Commercial Bank CO.,LTD.",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            }
+          ],
+          "http": [
+            {
+              "method": "get",
+              "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/399986cons.xls",
+              "params": "None",
+              "ts": "2026-11-22T08:58:51.528980+08:00",
+              "http_status": 200,
+              "content_type": "application/vnd.ms-excel",
+              "body_len": 12800,
+              "body_sha256": "5cd4789b616b6137057ffa827b76e5182e2e9161e118624027764f0e1734599a",
+              "body_sample": "��\u0011ࡱ\u001a�\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000;\u0000\u0003\u0000��\t\u0000\u0006\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000����\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������"
+            }
+          ],
+          "elapsed_ms": 145,
+          "unique_constituents": 42,
+          "codes_sample": [
+            "000001",
+            "001227",
+            "002142",
+            "002807",
+            "002839",
+            "002936",
+            "002948",
+            "002958"
+          ]
+        },
+        {
+          "interface": "ak.index_stock_cons_csindex",
+          "params": {
+            "symbol": "399975"
+          },
+          "request_time": "2026-11-22T08:58:51.674886+08:00",
+          "status": "ok",
+          "row_count": 47,
+          "fields": [
+            "日期",
+            "指数代码",
+            "指数名称",
+            "指数英文名称",
+            "成分券代码",
+            "成分券名称",
+            "成分券英文名称",
+            "交易所",
+            "交易所英文名称"
+          ],
+          "sample": [
+            {
+              "日期": "2026-11-20",
+              "指数代码": "399975",
+              "指数名称": "证券公司",
+              "指数英文名称": "All Share Brokerage",
+              "成分券代码": "000166",
+              "成分券名称": "申万宏源",
+              "成分券英文名称": "Shenwan Hongyuan Group CO., LTD",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "399975",
+              "指数名称": "证券公司",
+              "指数英文名称": "All Share Brokerage",
+              "成分券代码": "000686",
+              "成分券名称": "东北证券",
+              "成分券英文名称": "Northeast Securities Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "399975",
+              "指数名称": "证券公司",
+              "指数英文名称": "All Share Brokerage",
+              "成分券代码": "000712",
+              "成分券名称": "锦龙股份",
+              "成分券英文名称": "Guangdong Golden Dragon Development Inc.",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "399975",
+              "指数名称": "证券公司",
+              "指数英文名称": "All Share Brokerage",
+              "成分券代码": "000728",
+              "成分券名称": "国元证券",
+              "成分券英文名称": "Guoyuan Securities Company Limited",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            }
+          ],
+          "http": [
+            {
+              "method": "get",
+              "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/399975cons.xls",
+              "params": "None",
+              "ts": "2026-11-22T08:58:51.674952+08:00",
+              "http_status": 200,
+              "content_type": "application/vnd.ms-excel",
+              "body_len": 13824,
+              "body_sha256": "c10ffc8d1860161548b5ce810135a4970d8ffeb01419346288f825cfc7cd2925",
+              "body_sample": "��\u0011ࡱ\u001a�\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000;\u0000\u0003\u0000��\t\u0000\u0006\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000����\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������"
+            }
+          ],
+          "elapsed_ms": 150,
+          "unique_constituents": 47,
+          "codes_sample": [
+            "000166",
+            "000686",
+            "000712",
+            "000728",
+            "000750",
+            "000776",
+            "000783",
+            "002500"
+          ]
+        },
+        {
+          "interface": "ak.index_stock_cons_csindex",
+          "params": {
+            "symbol": "000932"
+          },
+          "request_time": "2026-11-22T08:58:51.826188+08:00",
+          "status": "ok",
+          "row_count": 36,
+          "fields": [
+            "日期",
+            "指数代码",
+            "指数名称",
+            "指数英文名称",
+            "成分券代码",
+            "成分券名称",
+            "成分券英文名称",
+            "交易所",
+            "交易所英文名称"
+          ],
+          "sample": [
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000932",
+              "指数名称": "800消费",
+              "指数英文名称": "800 Cons Staples",
+              "成分券代码": "000568",
+              "成分券名称": "泸州老窖",
+              "成分券英文名称": "Luzhou Lao Jiao Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000932",
+              "指数名称": "800消费",
+              "指数英文名称": "800 Cons Staples",
+              "成分券代码": "000596",
+              "成分券名称": "古井贡酒",
+              "成分券英文名称": "Anhui Gujing Distillery Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000932",
+              "指数名称": "800消费",
+              "指数英文名称": "800 Cons Staples",
+              "成分券代码": "000729",
+              "成分券名称": "燕京啤酒",
+              "成分券英文名称": "Beijing Yanjing Brewery Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000932",
+              "指数名称": "800消费",
+              "指数英文名称": "800 Cons Staples",
+              "成分券代码": "000858",
+              "成分券名称": "五 粮 液",
+              "成分券英文名称": "Wuliangye Yibin Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            }
+          ],
+          "http": [
+            {
+              "method": "get",
+              "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000932cons.xls",
+              "params": "None",
+              "ts": "2026-11-22T08:58:51.826259+08:00",
+              "http_status": 200,
+              "content_type": "application/vnd.ms-excel",
+              "body_len": 11776,
+              "body_sha256": "e2b36422c691e62c0fe3dbea5e6c06be3b60e53b843a3450600adbeb2ba14da4",
+              "body_sample": "��\u0011ࡱ\u001a�\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000;\u0000\u0003\u0000��\t\u0000\u0006\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000����\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������"
+            }
+          ],
+          "elapsed_ms": 148,
+          "unique_constituents": 36,
+          "codes_sample": [
+            "000568",
+            "000596",
+            "000729",
+            "000858",
+            "000895",
+            "002157",
+            "002299",
+            "002304"
+          ]
+        },
+        {
+          "interface": "ak.index_stock_cons_csindex",
+          "params": {
+            "symbol": "000991"
+          },
+          "request_time": "2026-11-22T08:58:51.975958+08:00",
+          "status": "ok",
+          "row_count": 119,
+          "fields": [
+            "日期",
+            "指数代码",
+            "指数名称",
+            "指数英文名称",
+            "成分券代码",
+            "成分券名称",
+            "成分券英文名称",
+            "交易所",
+            "交易所英文名称"
+          ],
+          "sample": [
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000991",
+              "指数名称": "全指医药",
+              "指数英文名称": "All Share HealthCare",
+              "成分券代码": "000403",
+              "成分券名称": "派林生物",
+              "成分券英文名称": "Pacific Shuanglin Bio-pharmacy Co., LTD",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000991",
+              "指数名称": "全指医药",
+              "指数英文名称": "All Share HealthCare",
+              "成分券代码": "000423",
+              "成分券名称": "东阿阿胶",
+              "成分券英文名称": "Shandong Dong-Ee Jiao Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000991",
+              "指数名称": "全指医药",
+              "指数英文名称": "All Share HealthCare",
+              "成分券代码": "000513",
+              "成分券名称": "丽珠集团",
+              "成分券英文名称": "Livzon Pharmaceutical Group Inc",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000991",
+              "指数名称": "全指医药",
+              "指数英文名称": "All Share HealthCare",
+              "成分券代码": "000538",
+              "成分券名称": "云南白药",
+              "成分券英文名称": "Yunnan Baiyao Group Co., Ltd.",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            }
+          ],
+          "http": [
+            {
+              "method": "get",
+              "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000991cons.xls",
+              "params": "None",
+              "ts": "2026-11-22T08:58:51.976026+08:00",
+              "http_status": 200,
+              "content_type": "application/vnd.ms-excel",
+              "body_len": 29184,
+              "body_sha256": "2e7c656f90cd8ba47cabc18ce63583391a492b1bb7c67b31cfa8142de123fba0",
+              "body_sample": "��\u0011ࡱ\u001a�\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000;\u0000\u0003\u0000��\t\u0000\u0006\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000����\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������"
+            }
+          ],
+          "elapsed_ms": 155,
+          "unique_constituents": 119,
+          "codes_sample": [
+            "000403",
+            "000423",
+            "000513",
+            "000538",
+            "000623",
+            "000661",
+            "000739",
+            "000766"
+          ]
+        },
+        {
+          "interface": "ak.index_stock_cons_csindex",
+          "params": {
+            "symbol": "000819"
+          },
+          "request_time": "2026-11-22T08:58:52.132227+08:00",
+          "status": "ok",
+          "row_count": 50,
+          "fields": [
+            "日期",
+            "指数代码",
+            "指数名称",
+            "指数英文名称",
+            "成分券代码",
+            "成分券名称",
+            "成分券英文名称",
+            "交易所",
+            "交易所英文名称"
+          ],
+          "sample": [
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000819",
+              "指数名称": "有色金属",
+              "指数英文名称": "Non-ferrous Metal",
+              "成分券代码": "000060",
+              "成分券名称": "中金岭南",
+              "成分券英文名称": "Shenzhen Zhongjin Lingnan Nonfemet Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000819",
+              "指数名称": "有色金属",
+              "指数英文名称": "Non-ferrous Metal",
+              "成分券代码": "000408",
+              "成分券名称": "藏格矿业",
+              "成分券英文名称": "ZANGGE MINING COMPANY LIMITED",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000819",
+              "指数名称": "有色金属",
+              "指数英文名称": "Non-ferrous Metal",
+              "成分券代码": "000426",
+              "成分券名称": "兴业银锡",
+              "成分券英文名称": "INNER MONGOLIA XINGYE SILVER & TIN MINING CO.,LTD",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000819",
+              "指数名称": "有色金属",
+              "指数英文名称": "Non-ferrous Metal",
+              "成分券代码": "000630",
+              "成分券名称": "铜陵有色",
+              "成分券英文名称": "Tongling Nonferrous Metals Group Co. Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            }
+          ],
+          "http": [
+            {
+              "method": "get",
+              "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000819cons.xls",
+              "params": "None",
+              "ts": "2026-11-22T08:58:52.132297+08:00",
+              "http_status": 200,
+              "content_type": "application/vnd.ms-excel",
+              "body_len": 14336,
+              "body_sha256": "dd479cc182947d486e4ed9852c30a9e178480c9110b1e2da4e02b127c1aed8fb",
+              "body_sample": "��\u0011ࡱ\u001a�\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000;\u0000\u0003\u0000��\t\u0000\u0006\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000����\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������"
+            }
+          ],
+          "elapsed_ms": 124,
+          "unique_constituents": 50,
+          "codes_sample": [
+            "000060",
+            "000408",
+            "000426",
+            "000630",
+            "000657",
+            "000688",
+            "000737",
+            "000807"
+          ]
+        },
+        {
+          "interface": "ak.index_stock_cons_csindex",
+          "params": {
+            "symbol": "000928"
+          },
+          "request_time": "2026-11-22T08:58:52.257418+08:00",
+          "status": "ok",
+          "row_count": 24,
+          "fields": [
+            "日期",
+            "指数代码",
+            "指数名称",
+            "指数英文名称",
+            "成分券代码",
+            "成分券名称",
+            "成分券英文名称",
+            "交易所",
+            "交易所英文名称"
+          ],
+          "sample": [
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000928",
+              "指数名称": "800能源",
+              "指数英文名称": "800 Energy",
+              "成分券代码": "000723",
+              "成分券名称": "美锦能源",
+              "成分券英文名称": "Shanxi Meijin Energy Co.,Ltd.",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000928",
+              "指数名称": "800能源",
+              "指数英文名称": "800 Energy",
+              "成分券代码": "000937",
+              "成分券名称": "冀中能源",
+              "成分券英文名称": "Jizhong Energy Resources Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000928",
+              "指数名称": "800能源",
+              "指数英文名称": "800 Energy",
+              "成分券代码": "000983",
+              "成分券名称": "山西焦煤",
+              "成分券英文名称": "Shanxi Coking Coal Energy Group Co.,Ltd.",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000928",
+              "指数名称": "800能源",
+              "指数英文名称": "800 Energy",
+              "成分券代码": "002353",
+              "成分券名称": "杰瑞股份",
+              "成分券英文名称": "Yantai Jereh Oilfield Services Group Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            }
+          ],
+          "http": [
+            {
+              "method": "get",
+              "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000928cons.xls",
+              "params": "None",
+              "ts": "2026-11-22T08:58:52.257485+08:00",
+              "http_status": 200,
+              "content_type": "application/vnd.ms-excel",
+              "body_len": 9216,
+              "body_sha256": "8ed4ac97ebf04e8e3ed638eccb4ba2b253b20553bb304e08532bc532caf7f983",
+              "body_sample": "��\u0011ࡱ\u001a�\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000;\u0000\u0003\u0000��\t\u0000\u0006\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000����\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������"
+            }
+          ],
+          "elapsed_ms": 139,
+          "unique_constituents": 24,
+          "codes_sample": [
+            "000723",
+            "000937",
+            "000983",
+            "002353",
+            "600028",
+            "600188",
+            "600256",
+            "600339"
+          ]
+        },
+        {
+          "interface": "ak.index_stock_cons_csindex",
+          "params": {
+            "symbol": "000807"
+          },
+          "request_time": "2026-11-22T08:58:52.397421+08:00",
+          "status": "ok",
+          "row_count": 50,
+          "fields": [
+            "日期",
+            "指数代码",
+            "指数名称",
+            "指数英文名称",
+            "成分券代码",
+            "成分券名称",
+            "成分券英文名称",
+            "交易所",
+            "交易所英文名称"
+          ],
+          "sample": [
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000807",
+              "指数名称": "食品饮料",
+              "指数英文名称": "Food & Beverage",
+              "成分券代码": "000568",
+              "成分券名称": "泸州老窖",
+              "成分券英文名称": "Luzhou Lao Jiao Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000807",
+              "指数名称": "食品饮料",
+              "指数英文名称": "Food & Beverage",
+              "成分券代码": "000596",
+              "成分券名称": "古井贡酒",
+              "成分券英文名称": "Anhui Gujing Distillery Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000807",
+              "指数名称": "食品饮料",
+              "指数英文名称": "Food & Beverage",
+              "成分券代码": "000729",
+              "成分券名称": "燕京啤酒",
+              "成分券英文名称": "Beijing Yanjing Brewery Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000807",
+              "指数名称": "食品饮料",
+              "指数英文名称": "Food & Beverage",
+              "成分券代码": "000799",
+              "成分券名称": "酒鬼酒",
+              "成分券英文名称": "Jiugui Liquor Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            }
+          ],
+          "http": [
+            {
+              "method": "get",
+              "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000807cons.xls",
+              "params": "None",
+              "ts": "2026-11-22T08:58:52.397491+08:00",
+              "http_status": 200,
+              "content_type": "application/vnd.ms-excel",
+              "body_len": 14336,
+              "body_sha256": "2af554398a2f7772f76559081b166ac3b78cc82085e9a55c7a8864e3b4864c0e",
+              "body_sample": "��\u0011ࡱ\u001a�\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000;\u0000\u0003\u0000��\t\u0000\u0006\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000����\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������"
+            }
+          ],
+          "elapsed_ms": 151,
+          "unique_constituents": 50,
+          "codes_sample": [
+            "000568",
+            "000596",
+            "000729",
+            "000799",
+            "000848",
+            "000858",
+            "000860",
+            "000895"
+          ]
+        },
+        {
+          "interface": "ak.index_stock_cons_csindex",
+          "params": {
+            "symbol": "000808"
+          },
+          "request_time": "2026-11-22T08:58:52.550267+08:00",
+          "status": "ok",
+          "row_count": 100,
+          "fields": [
+            "日期",
+            "指数代码",
+            "指数名称",
+            "指数英文名称",
+            "成分券代码",
+            "成分券名称",
+            "成分券英文名称",
+            "交易所",
+            "交易所英文名称"
+          ],
+          "sample": [
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000808",
+              "指数名称": "医药生物",
+              "指数英文名称": "Health Care",
+              "成分券代码": "000403",
+              "成分券名称": "派林生物",
+              "成分券英文名称": "Pacific Shuanglin Bio-pharmacy Co., LTD",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000808",
+              "指数名称": "医药生物",
+              "指数英文名称": "Health Care",
+              "成分券代码": "000423",
+              "成分券名称": "东阿阿胶",
+              "成分券英文名称": "Shandong Dong-Ee Jiao Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000808",
+              "指数名称": "医药生物",
+              "指数英文名称": "Health Care",
+              "成分券代码": "000513",
+              "成分券名称": "丽珠集团",
+              "成分券英文名称": "Livzon Pharmaceutical Group Inc",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000808",
+              "指数名称": "医药生物",
+              "指数英文名称": "Health Care",
+              "成分券代码": "000538",
+              "成分券名称": "云南白药",
+              "成分券英文名称": "Yunnan Baiyao Group Co., Ltd.",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            }
+          ],
+          "http": [
+            {
+              "method": "get",
+              "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000808cons.xls",
+              "params": "None",
+              "ts": "2026-11-22T08:58:52.550341+08:00",
+              "http_status": 200,
+              "content_type": "application/vnd.ms-excel",
+              "body_len": 25088,
+              "body_sha256": "80bcb85782ee49ec80f1767ccf1f271068eadf62cdb16a2aef4f52059e4ac718",
+              "body_sample": "��\u0011ࡱ\u001a�\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000;\u0000\u0003\u0000��\t\u0000\u0006\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000����\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������"
+            }
+          ],
+          "elapsed_ms": 164,
+          "unique_constituents": 100,
+          "codes_sample": [
+            "000403",
+            "000423",
+            "000513",
+            "000538",
+            "000623",
+            "000661",
+            "000739",
+            "000766"
+          ]
+        },
+        {
+          "interface": "ak.index_stock_cons_csindex",
+          "params": {
+            "symbol": "399998"
+          },
+          "request_time": "2026-11-22T08:58:52.716118+08:00",
+          "status": "ok",
+          "row_count": 31,
+          "fields": [
+            "日期",
+            "指数代码",
+            "指数名称",
+            "指数英文名称",
+            "成分券代码",
+            "成分券名称",
+            "成分券英文名称",
+            "交易所",
+            "交易所英文名称"
+          ],
+          "sample": [
+            {
+              "日期": "2026-11-20",
+              "指数代码": "399998",
+              "指数名称": "中证煤炭",
+              "指数英文名称": "CSI Coal",
+              "成分券代码": "000552",
+              "成分券名称": "甘肃能化",
+              "成分券英文名称": "GANSU ENERGY CHEMICAL CO.,LTD",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "399998",
+              "指数名称": "中证煤炭",
+              "指数英文名称": "CSI Coal",
+              "成分券代码": "000723",
+              "成分券名称": "美锦能源",
+              "成分券英文名称": "Shanxi Meijin Energy Co.,Ltd.",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "399998",
+              "指数名称": "中证煤炭",
+              "指数英文名称": "CSI Coal",
+              "成分券代码": "000937",
+              "成分券名称": "冀中能源",
+              "成分券英文名称": "Jizhong Energy Resources Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "399998",
+              "指数名称": "中证煤炭",
+              "指数英文名称": "CSI Coal",
+              "成分券代码": "000983",
+              "成分券名称": "山西焦煤",
+              "成分券英文名称": "Shanxi Coking Coal Energy Group Co.,Ltd.",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            }
+          ],
+          "http": [
+            {
+              "method": "get",
+              "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/399998cons.xls",
+              "params": "None",
+              "ts": "2026-11-22T08:58:52.716184+08:00",
+              "http_status": 200,
+              "content_type": "application/vnd.ms-excel",
+              "body_len": 10752,
+              "body_sha256": "e9f29575337457d05027d3dbd4fcd8781057cb809dd1d3452a22a3ed09e5eb50",
+              "body_sample": "��\u0011ࡱ\u001a�\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000;\u0000\u0003\u0000��\t\u0000\u0006\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000����\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������"
+            }
+          ],
+          "elapsed_ms": 120,
+          "unique_constituents": 31,
+          "codes_sample": [
+            "000552",
+            "000723",
+            "000937",
+            "000983",
+            "600121",
+            "600123",
+            "600188",
+            "600256"
+          ]
+        },
+        {
+          "interface": "ak.index_stock_cons_csindex",
+          "params": {
+            "symbol": "000986"
+          },
+          "request_time": "2026-11-22T08:58:52.837517+08:00",
+          "status": "ok",
+          "row_count": 50,
+          "fields": [
+            "日期",
+            "指数代码",
+            "指数名称",
+            "指数英文名称",
+            "成分券代码",
+            "成分券名称",
+            "成分券英文名称",
+            "交易所",
+            "交易所英文名称"
+          ],
+          "sample": [
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000986",
+              "指数名称": "全指能源",
+              "指数英文名称": "All Share Energy",
+              "成分券代码": "000059",
+              "成分券名称": "华锦股份",
+              "成分券英文名称": "North Huajin Chemical Industries Co., Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000986",
+              "指数名称": "全指能源",
+              "指数英文名称": "All Share Energy",
+              "成分券代码": "000096",
+              "成分券名称": "广聚能源",
+              "成分券英文名称": "Shenzhen Guangju Energy Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000986",
+              "指数名称": "全指能源",
+              "指数英文名称": "All Share Energy",
+              "成分券代码": "000552",
+              "成分券名称": "甘肃能化",
+              "成分券英文名称": "GANSU ENERGY CHEMICAL CO.,LTD",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            },
+            {
+              "日期": "2026-11-20",
+              "指数代码": "000986",
+              "指数名称": "全指能源",
+              "指数英文名称": "All Share Energy",
+              "成分券代码": "000554",
+              "成分券名称": "泰山石油",
+              "成分券英文名称": "Sinopec Shandong Taishan Petroleum Co Ltd",
+              "交易所": "深圳证券交易所",
+              "交易所英文名称": "Shenzhen Stock Exchange"
+            }
+          ],
+          "http": [
+            {
+              "method": "get",
+              "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000986cons.xls",
+              "params": "None",
+              "ts": "2026-11-22T08:58:52.837585+08:00",
+              "http_status": 200,
+              "content_type": "application/vnd.ms-excel",
+              "body_len": 14848,
+              "body_sha256": "52735415d355b1a9e795c3736acf3a4e8b502cf7856ca07fc9a6d55437cc7da6",
+              "body_sample": "��\u0011ࡱ\u001a�\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000;\u0000\u0003\u0000��\t\u0000\u0006\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000����\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������"
+            }
+          ],
+          "elapsed_ms": 141,
+          "unique_constituents": 50,
+          "codes_sample": [
+            "000059",
+            "000096",
+            "000552",
+            "000554",
+            "000723",
+            "000852",
+            "000937",
+            "000968"
+          ]
+        }
+      ],
+      "union_unique_codes": 379,
+      "board_distribution": {
+        "沪市主板": 201,
+        "深市主板": 113,
+        "创业板": 42,
+        "科创板": 22,
+        "北交所": 1
+      },
+      "note": "行业指数成分快照(当前,非历史行业分类);指数间成分重叠,并集去重;不代表全市场行业分类映射"
+    }
+  },
+  "http_capture_count": 29
+}

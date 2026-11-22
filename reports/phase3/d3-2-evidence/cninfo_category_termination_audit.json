@@ -1,0 +1,104 @@
+{
+  "task": "D3-2 cninfo category termination-date audit",
+  "collected_at": "2026-11-22T09:00:21.283366+08:00",
+  "akshare_version": "1.18.22",
+  "finding": "巨潮分类标准目录'终止日期'字段全部为NaT(空),不提供版本边界/失效日期数据;此前'终止日期可作版本边界'的表述无数据支撑,本轮推翻。",
+  "standards": [
+    {
+      "standard_symbol": "巨潮行业分类标准",
+      "field": "终止日期",
+      "dtype": "datetime64[s]",
+      "total_rows": 294,
+      "isna_count": 294,
+      "notna_count": 0,
+      "non_null_sample": [],
+      "fields": [
+        "类目编码",
+        "类目名称",
+        "终止日期",
+        "行业类型",
+        "行业类型编码",
+        "类目名称英文",
+        "父类编码",
+        "分级"
+      ],
+      "version_or_revision_field_present": false,
+      "http": [
+        {
+          "method": "get",
+          "url": "https://webapi.cninfo.com.cn/api/stock/p_public0002",
+          "params": "{'indcode': '', 'indtype': '008002', 'format': 'json'}",
+          "ts": "2026-11-22T09:00:21.291611+08:00",
+          "http_status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body_len": 50455,
+          "body_sha256": "69c270294ac6c2bc2161493a33f1cfd09d6bf0661ffbb8b186b02f2ae69cbc8f"
+        }
+      ]
+    },
+    {
+      "standard_symbol": "证监会行业分类标准",
+      "field": "终止日期",
+      "dtype": "datetime64[s]",
+      "total_rows": 577,
+      "isna_count": 577,
+      "notna_count": 0,
+      "non_null_sample": [],
+      "fields": [
+        "类目编码",
+        "类目名称",
+        "终止日期",
+        "行业类型",
+        "行业类型编码",
+        "类目名称英文",
+        "父类编码",
+        "分级"
+      ],
+      "version_or_revision_field_present": false,
+      "http": [
+        {
+          "method": "get",
+          "url": "https://webapi.cninfo.com.cn/api/stock/p_public0002",
+          "params": "{'indcode': '', 'indtype': '008001', 'format': 'json'}",
+          "ts": "2026-11-22T09:00:21.710307+08:00",
+          "http_status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body_len": 123331,
+          "body_sha256": "360a924153710fffe511cbd3971cfce6abb04b28653fb3b6296fa485e3a3daab"
+        }
+      ]
+    },
+    {
+      "standard_symbol": "申银万国行业分类标准",
+      "field": "终止日期",
+      "dtype": "datetime64[s]",
+      "total_rows": 512,
+      "isna_count": 512,
+      "notna_count": 0,
+      "non_null_sample": [],
+      "fields": [
+        "类目编码",
+        "类目名称",
+        "终止日期",
+        "行业类型",
+        "行业类型编码",
+        "类目名称英文",
+        "父类编码",
+        "分级"
+      ],
+      "version_or_revision_field_present": false,
+      "http": [
+        {
+          "method": "get",
+          "url": "https://webapi.cninfo.com.cn/api/stock/p_public0002",
+          "params": "{'indcode': '', 'indtype': '008003', 'format': 'json'}",
+          "ts": "2026-11-22T09:00:22.220542+08:00",
+          "http_status": 200,
+          "content_type": "application/json;charset=utf-8",
+          "body_len": 86937,
+          "body_sha256": "6cfd533e74c94f710519d1e4cb5f1ae8f6e5d291b87c720827cc868715044f26"
+        }
+      ]
+    }
+  ]
+}

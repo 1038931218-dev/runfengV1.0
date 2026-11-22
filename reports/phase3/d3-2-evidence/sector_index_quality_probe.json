@@ -1,0 +1,414 @@
+{
+  "task": "D3-2.4 sector index quality deep probe",
+  "collected_at": "2026-11-22T09:00:41.262259+08:00",
+  "akshare_version": "1.18.22",
+  "note": "中证异常底层HTTP原始正文+扩展指数+腾讯接口+单位+新浪连续性;只读;HTTP SHA256。",
+  "csindex_anomaly_rootcause": {
+    "symbol": "000928",
+    "params": {
+      "start_date": "20230101",
+      "end_date": "20230110"
+    },
+    "row_count": 7,
+    "http": [
+      {
+        "method": "get",
+        "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+        "params": "{'indexCode': '000928', 'startDate': '20230101', 'endDate': '20230110'}",
+        "ts": "2026-11-22T09:00:41.262408+08:00",
+        "http_status": 200,
+        "content_type": "application/json;charset=UTF-8",
+        "body_len": 2430,
+        "body_sha256": "7511f528e6a62283f8a83eed85d7cd47a94c8df884225bcbaad50fe129444db9",
+        "body_sample": "{\"code\":\"200\",\"msg\":\"Success\",\"data\":[{\"tradeDate\":\"20230101\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2372.32,\"high\":2403.14,\"low\":2364.31,\"close\":2399.25,\"change\":22.55,\"changePct\":0.95,\"tradingVol\":8.044845E8,\"tradingValue\":59.69,\"consNumber\":20.0,\"peg\":7.05},{\"tradeDate\":\"20230103\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2372.32,\"high\":2403.14,\"low\":2364.31,\"close\""
+      }
+    ],
+    "http_body_note": "原始JSON正文首600字节样本已存body_sample;完整正文SHA256见body_sha256;上游响应可据此独立复现",
+    "jan_records_from_dataframe": [
+      {
+        "日期": "2023-01-01",
+        "指数代码": "000928",
+        "指数中文全称": "中证能源指数",
+        "指数中文简称": "800能源",
+        "指数英文全称": "CSI Energy Index",
+        "指数英文简称": "800 Energy",
+        "开盘": 2372.32,
+        "最高": 2403.14,
+        "最低": 2364.31,
+        "收盘": 2399.25,
+        "涨跌": 22.55,
+        "涨跌幅": 0.95,
+        "成交量": 804484500.0,
+        "成交金额": 59.69,
+        "样本数量": 20.0,
+        "滚动市盈率": 7.05
+      },
+      {
+        "日期": "2023-01-03",
+        "指数代码": "000928",
+        "指数中文全称": "中证能源指数",
+        "指数中文简称": "800能源",
+        "指数英文全称": "CSI Energy Index",
+        "指数英文简称": "800 Energy",
+        "开盘": 2372.32,
+        "最高": 2403.14,
+        "最低": 2364.31,
+        "收盘": 2399.25,
+        "涨跌": 22.55,
+        "涨跌幅": 0.95,
+        "成交量": 804484500.0,
+        "成交金额": 59.69,
+        "样本数量": 20.0,
+        "滚动市盈率": 7.05
+      }
+    ],
+    "rootcause_observation": "若原始HTTP正文含2023-01-01与01-03两条OHLCV完全相同的记录,则异常源自上游数据而非AKShare解析;本字段给出证据,不臆断根因"
+  },
+  "csindex_extended_anomaly": [
+    {
+      "code": "000933",
+      "name": "800医药",
+      "status": "ok",
+      "rows": 7,
+      "jan_records": [
+        [
+          "2023-01-01",
+          10330.42,
+          1374008700.0
+        ],
+        [
+          "2023-01-03",
+          10330.42,
+          1374008700.0
+        ]
+      ],
+      "jan_identical": true,
+      "http_sha256": [
+        "9979a14ae5cff9374850f4c976848e69e5908698317da85bbcbcddfd0ba627e1"
+      ]
+    },
+    {
+      "code": "000934",
+      "name": "800金融",
+      "status": "ok",
+      "rows": 7,
+      "jan_records": [
+        [
+          "2023-01-01",
+          4918.78,
+          5020447000.0
+        ],
+        [
+          "2023-01-03",
+          4918.78,
+          5020447000.0
+        ]
+      ],
+      "jan_identical": true,
+      "http_sha256": [
+        "0aa6a5cb9b687861ffb7bb6bb29488e90759abfd8770b01928f779f26d296732"
+      ]
+    },
+    {
+      "code": "000822",
+      "name": "全指材料",
+      "status": "ok",
+      "rows": 7,
+      "jan_records": [
+        [
+          "2023-01-01",
+          8488.8,
+          831575259.0
+        ],
+        [
+          "2023-01-03",
+          8488.8,
+          831575259.0
+        ]
+      ],
+      "jan_identical": true,
+      "http_sha256": [
+        "598a9931d4fcde748146741d33fcc82a0d5b9388d29857a71aa38ec19f6dde27"
+      ]
+    },
+    {
+      "code": "000986",
+      "name": "全指能源",
+      "status": "ok",
+      "rows": 7,
+      "jan_records": [
+        [
+          "2023-01-01",
+          2089.21,
+          1340703700.0
+        ],
+        [
+          "2023-01-03",
+          2089.21,
+          1340703700.0
+        ]
+      ],
+      "jan_identical": true,
+      "http_sha256": [
+        "f575cc438350d8d0140ed7bed1577f977c67a3c5ce4647da49de6c7baabd0d6e"
+      ]
+    },
+    {
+      "code": "000811",
+      "name": "细分有色",
+      "status": "ok",
+      "rows": 7,
+      "jan_records": [
+        [
+          "2023-01-01",
+          6356.21,
+          1591334411.0
+        ],
+        [
+          "2023-01-03",
+          6356.21,
+          1591334411.0
+        ]
+      ],
+      "jan_identical": true,
+      "http_sha256": [
+        "40937ddbaee6c49747f4b46cb1ec6f89a1aa30bbebbb8d5245135cbbaf86bba2"
+      ]
+    },
+    {
+      "code": "399808",
+      "name": "中证新能",
+      "status": "ok",
+      "rows": 7,
+      "jan_records": [
+        [
+          "2023-01-01",
+          3355.59,
+          1664464536.0
+        ],
+        [
+          "2023-01-03",
+          3355.59,
+          1664464536.0
+        ]
+      ],
+      "jan_identical": true,
+      "http_sha256": [
+        "e5d817894c84525c652b706f31a069edd771dd62e0329eb93b84e0a22c495294"
+      ]
+    }
+  ],
+  "tencent_index_probe": [
+    {
+      "symbol": "sz980017",
+      "status": "ok",
+      "rows": 640,
+      "fields": [
+        "date",
+        "open",
+        "close",
+        "high",
+        "low",
+        "amount"
+      ],
+      "date_min": "2024-04-01",
+      "date_max": "2026-11-20",
+      "http_sha256": [
+        "850a91af1d6841ddeb6c285b2684fad32d93c830354d6281cfd844636ef0762c",
+        "9307d441ee2d9426f43ca367c59eb83ec0e7dddfa1a0d39c0c97438b777e7fd8",
+        "edf42c82ee873a0478eb4ea3a0bbaea76173bee552144ec5c59b2e2a49ab2c74",
+        "edf42c82ee873a0478eb4ea3a0bbaea76173bee552144ec5c59b2e2a49ab2c74"
+      ]
+    },
+    {
+      "symbol": "sh000819",
+      "status": "ok",
+      "rows": 3772,
+      "fields": [
+        "date",
+        "open",
+        "close",
+        "high",
+        "low",
+        "amount"
+      ],
+      "date_min": "2011-05-13",
+      "date_max": "2026-11-20",
+      "http_sha256": [
+        "45c2db5ab890da7c733362fb9c99d1b8845819e7bfaf5468e55430e0f1af4082",
+        "816bc0862ae781cebad0f9a7a276d228d03e3d1619c706f9ea50112bd95d9aa1",
+        "ef875ca659174614d4b29f8963f4f448002eac9f3f8596d142c84b6060b33285",
+        "2cbbea496f7e3ce0f946194a3abfa61aa5c8d150ec90956f0cf3fbd4d94a37d0",
+        "f72ad899586844452d90c3a1ae916f9745f15070972403f949105c54878eb120",
+        "5780e7e5db414ebce47af6713a458035bdc6849f0160c70054892e3d0f817f49",
+        "59d7b01b45523145c7987717f4b6c4ab7615768907015b4f31abc5117f1195ca",
+        "a545784739605ae7370e7662d2395468fe9895fa5feb7a4f2aa1d0d9b76a3cdf",
+        "f98fac33f93cc2ee3f31306dae3891eb1545fbd5730478c78480b47a690c7cdf",
+        "4a0f8f27e8a2412aae838cfce61eadbeac484daac5cecb40df7b488961926845",
+        "ba001612644d51c2af118e9ad0d84123ef02ec498e11f9c01c9c326db96c6c55",
+        "9954b644bc3c1b95f1f7ed2ebd8c5014ce6d2901e27bedbb3df5d75041e8ed9a",
+        "9a9948c3335ccd818a9747707bf459140d0b68006cd9391371e3d83f6ecf425a",
+        "36ef5e4c991ab1bf604640908a979548f231d5002a56d7fb4bc8e3a29ea39887",
+        "2128d95edccdb3e90b18af2e2ca70a9af6ec4966312d25e1a2d879b347c84cfc",
+        "2128d95edccdb3e90b18af2e2ca70a9af6ec4966312d25e1a2d879b347c84cfc"
+      ]
+    },
+    {
+      "symbol": "sh000932",
+      "status": "ok",
+      "rows": 4223,
+      "fields": [
+        "date",
+        "open",
+        "close",
+        "high",
+        "low",
+        "amount"
+      ],
+      "date_min": "2009-07-03",
+      "date_max": "2026-11-20",
+      "http_sha256": [
+        "77efd91d840e530426a29d80103e6a5b4e734b4a4fa070a63386fa8d8297d956",
+        "708287dae33ed78be97d6fb2c06ad849d04f4352438c24ea0d2b26d25bf6267c",
+        "45ed8ce9c82b4e5ab2e912f3a80ee4e2a4d290a2034b542db16a60cb8e357a48",
+        "bd1010f89da1bf8cb12229451bfc2b81e4e480b09119c0b63103e4f73e66205c",
+        "6d933f4e4cf6c6e8f6c0a748a67317a553c321b49f1a0209e2250b7c81d8ecb7",
+        "6f781b16f876d1fa0a476287ab534ca698c947a5fc6a35f08364d864a06235c8",
+        "b70faa980cb1fa459dfa28bc09250a67803378b34b5944c10feacd3b8ec7213b",
+        "a6302f9a90d6109102126f3e48dadf8c7139f0c1d6174f6efa1e7b4f2af7c41e",
+        "9431c5210205ae6c04a7272c1322efe2f61ca973217553fbcd877bf8d9817d0e",
+        "4acf206dafac257ece1604585ec08179e9fb37ea06a6f481e899e6c30bce878c",
+        "e31f7a5183b715028c408b40e233377f1323cd2d28bb810db6cc78e2c3e400b9",
+        "ca36598972f7cc2bc490a170a7f6108d35a2536f01ee1f8ceb30f6b09f4300b7",
+        "4b6de66d84cbe48eef5285871d854c39f6eecc48eaaebe4edd943e93e289e893",
+        "4f611dd5bc5c4425967e3a6127caadc7b97e9317f03c376256e774fd7ac9b6e9",
+        "57a2fc7c2d91185725558bec135a1e39a5983283f40830d0b40d96f0d04d5335",
+        "17f7bbc743a5687dde5c1fe18ccd0a263ea5148756b48336bbf0adadd6b4b4fd",
+        "c894719a5835045ca381d263a66a6144b22692456d68c96e392ea2dacee83d8c",
+        "10cc52f3216712f31a59ccfc57802fc3c222b0cd360c713d97fe6df83d93aebc",
+        "10cc52f3216712f31a59ccfc57802fc3c222b0cd360c713d97fe6df83d93aebc"
+      ]
+    },
+    {
+      "symbol": "sz399986",
+      "status": "ok",
+      "rows": 2739,
+      "fields": [
+        "date",
+        "open",
+        "close",
+        "high",
+        "low",
+        "amount"
+      ],
+      "date_min": "2015-08-11",
+      "date_max": "2026-11-20",
+      "http_sha256": [
+        "ce11781d4f65143e11b6dd4eb191aaf730b3185118f668c404e8d0901c3f400e",
+        "855021a5517c363ae42f47d723042af76cce99fc90dc94a484a0ec7c222a1bba",
+        "c968080ba6c1407533c2b06358d156fa2ba488f2897354e1d3c4af994ad2d5b2",
+        "196c78281ba30ed859815c8db38ad750a26da805232a9ea241c59b316c303ea6",
+        "b1567b4b0a412c7cb604f998e386cc6c1450b08549a80c776ffe758711057a83",
+        "19f8c59dce3ca788b7a5e14dc9021057615e1f20e4701b781bd9cf2d8a62273a",
+        "a4a1dcc9a15a649f20a0e7aea9fe9c536b977a0c07f2e558d9aae9528b0003f1",
+        "2dd1bd7fa5395c74db569ad331e747044dc5eeac0aa24b031121ec5bf7e27df4",
+        "b97e3f47aa81278fbe05740fe335aac3c07f3310b7017450f0311f6c3bb6520c",
+        "32dfd16c4b21795041d0279a6a242f5fc89b253717f88e68776145aadd290419",
+        "f788b20c6176e2809ac038a808beabf7cd96ad695de793be5ce0a45437bb722f",
+        "c502ed58a76b25674979124ee0a502abd9d2ece8f778cc0cf8bd8b521f94fc67",
+        "c502ed58a76b25674979124ee0a502abd9d2ece8f778cc0cf8bd8b521f94fc67"
+      ]
+    }
+  ],
+  "unit_confirmation": {
+    "csindex_docstring": "中证指数-具体指数-历史行情数据\nP.S. 只有收盘价，正常情况下不应使用该接口，除非指数只有中证网站有\nhttps://www.csindex.com.cn/zh-CN/indices/index-detail/H30374#/indices/family/detail?indexCode=H30374\n:param symbol: 指数代码; e.g., H30374\n:type symbol: str\n:param start_date: 开始日期\n:type start_date: str\n:param end_date: 结束日期\n:type end_date: str\n:return: 包含日期和收盘价的指数数据\n:rtype: pandas.DataFrame",
+    "csindex_unit_keywords": [],
+    "sina_docstring": "新浪财经-指数-历史行情数据, 大量抓取容易封 IP\nhttps://finance.sina.com.cn/realstock/company/sh000909/nc.shtml\n:param symbol: sz399998, 指定指数代码\n:type symbol: str\n:return: 历史行情数据\n:rtype: pandas.DataFrame",
+    "sina_unit_keywords": [],
+    "tencent_docstring": "腾讯证券-日频-股票或者指数历史数据\n作为 ak.stock_zh_index_daily() 的补充, 因为在新浪中有部分指数数据缺失\n注意都是: 前复权, 不同网站复权方式不同, 不可混用数据\nhttps://gu.qq.com/sh000919/zs\n:param symbol: 带市场标识的股票或者指数代码\n:type symbol: str\n:return: 前复权的股票和指数数据\n:rtype: pandas.DataFrame",
+    "tencent_unit_keywords": [
+      "股"
+    ],
+    "conclusion": "若docstring/接口返回未明确标注成交量与成交额单位,则维持unit=unknown;不臆测量纲"
+  },
+  "sina_continuity": [
+    {
+      "code": "000932",
+      "name": "800消费",
+      "status": "ok",
+      "rows": 4223,
+      "date_min": "2009-07-03",
+      "date_max": "2026-11-20",
+      "max_gap_days": 11,
+      "has_2023_01_01": false,
+      "has_2024_01_01": false
+    },
+    {
+      "code": "000991",
+      "name": "全指医药",
+      "status": "ok",
+      "rows": 3716,
+      "date_min": "2011-08-02",
+      "date_max": "2026-11-20",
+      "max_gap_days": 11,
+      "has_2023_01_01": false,
+      "has_2024_01_01": false
+    },
+    {
+      "code": "000819",
+      "name": "有色金属",
+      "status": "ok",
+      "rows": 3533,
+      "date_min": "2012-05-09",
+      "date_max": "2026-11-20",
+      "max_gap_days": 11,
+      "has_2023_01_01": false,
+      "has_2024_01_01": false
+    },
+    {
+      "code": "000928",
+      "name": "800能源",
+      "status": "ok",
+      "rows": 4223,
+      "date_min": "2009-07-03",
+      "date_max": "2026-11-20",
+      "max_gap_days": 11,
+      "has_2023_01_01": false,
+      "has_2024_01_01": false
+    },
+    {
+      "code": "000807",
+      "name": "食品饮料",
+      "status": "ok",
+      "rows": 1670,
+      "date_min": "2012-02-20",
+      "date_max": "2018-12-25",
+      "max_gap_days": 10,
+      "has_2023_01_01": false,
+      "has_2024_01_01": false
+    },
+    {
+      "code": "000808",
+      "name": "医药生物",
+      "status": "ok",
+      "rows": 2184,
+      "date_min": "2012-02-20",
+      "date_max": "2021-02-04",
+      "max_gap_days": 11,
+      "has_2023_01_01": false,
+      "has_2024_01_01": false
+    },
+    {
+      "code": "000986",
+      "name": "全指能源",
+      "status": "ok",
+      "rows": 3716,
+      "date_min": "2011-08-02",
+      "date_max": "2026-11-20",
+      "max_gap_days": 11,
+      "has_2023_01_01": false,
+      "has_2024_01_01": false
+    }
+  ],
+  "http_capture_count": 66
+}
