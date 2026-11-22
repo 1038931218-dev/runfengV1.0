@@ -1,0 +1,221 @@
+{
+ "task": "D3-1 round3 task C - 11 index history coverage",
+ "generated_at": "2026-11-22T19:23:44.818699+08:00",
+ "source": "artifact/cache.json (历史采集2026-11-22, idx_tx_*/idx_sina_* 原始数据, 6列OHLCV)",
+ "source_sha256": "eaa701fd898056bd1edae589b848a4256c0118cf0e185ebbd8dc8e9dd0fc4db2",
+ "indices": [
+  {
+   "symbol": "sh000807",
+   "name": "食品饮料(中证)",
+   "tencent": {
+    "first": "2011-05-13",
+    "last": "2026-11-20",
+    "rows": 3772
+   },
+   "sina": {
+    "first": "2012-02-20",
+    "last": "2018-12-25",
+    "rows": 1670
+   },
+   "tencent_only_dates_count": 2102,
+   "tencent_only_range": {
+    "first": "2011-05-13",
+    "last": "2026-11-20"
+   },
+   "common_dates": 1670,
+   "continuity_note": "新浪历史在2018-12-25截断，早于腾讯起点或晚于新浪终点的部分腾讯可覆盖"
+  },
+  {
+   "symbol": "sh000808",
+   "name": "医药卫生(中证)",
+   "tencent": {
+    "first": "2011-05-13",
+    "last": "2026-11-20",
+    "rows": 3772
+   },
+   "sina": {
+    "first": "2012-02-20",
+    "last": "2021-02-04",
+    "rows": 2184
+   },
+   "tencent_only_dates_count": 1588,
+   "tencent_only_range": {
+    "first": "2011-05-13",
+    "last": "2026-11-20"
+   },
+   "common_dates": 2184,
+   "continuity_note": "新浪历史在2021-02-04截断，早于腾讯起点或晚于新浪终点的部分腾讯可覆盖"
+  },
+  {
+   "symbol": "sh000819",
+   "name": "有色金属(中证)",
+   "tencent": {
+    "first": "2011-05-13",
+    "last": "2026-11-20",
+    "rows": 3772
+   },
+   "sina": {
+    "first": "2012-05-09",
+    "last": "2026-11-20",
+    "rows": 3533
+   },
+   "tencent_only_dates_count": 239,
+   "tencent_only_range": {
+    "first": "2011-05-13",
+    "last": "2012-05-08"
+   },
+   "common_dates": 3533,
+   "continuity_note": "两源覆盖至最新但行数不同"
+  },
+  {
+   "symbol": "sh000928",
+   "name": "中证煤炭(中证)",
+   "tencent": {
+    "first": "2009-07-03",
+    "last": "2026-11-20",
+    "rows": 4223
+   },
+   "sina": {
+    "first": "2009-07-03",
+    "last": "2026-11-20",
+    "rows": 4223
+   },
+   "tencent_only_dates_count": 0,
+   "tencent_only_range": null,
+   "common_dates": 4223,
+   "continuity_note": "两源均覆盖至最新，行数一致"
+  },
+  {
+   "symbol": "sh000932",
+   "name": "中证白酒(中证)",
+   "tencent": {
+    "first": "2009-07-03",
+    "last": "2026-11-20",
+    "rows": 4223
+   },
+   "sina": {
+    "first": "2009-07-03",
+    "last": "2026-11-20",
+    "rows": 4223
+   },
+   "tencent_only_dates_count": 0,
+   "tencent_only_range": null,
+   "common_dates": 4223,
+   "continuity_note": "两源均覆盖至最新，行数一致"
+  },
+  {
+   "symbol": "sh000933",
+   "name": "中证医药(中证)",
+   "tencent": {
+    "first": "2009-07-03",
+    "last": "2026-11-20",
+    "rows": 4223
+   },
+   "sina": {
+    "first": "2009-07-03",
+    "last": "2026-11-20",
+    "rows": 4223
+   },
+   "tencent_only_dates_count": 0,
+   "tencent_only_range": null,
+   "common_dates": 4223,
+   "continuity_note": "两源均覆盖至最新，行数一致"
+  },
+  {
+   "symbol": "sh000934",
+   "name": "中证金融(中证)",
+   "tencent": {
+    "first": "2009-07-03",
+    "last": "2026-11-20",
+    "rows": 4223
+   },
+   "sina": {
+    "first": "2009-07-03",
+    "last": "2026-11-20",
+    "rows": 4223
+   },
+   "tencent_only_dates_count": 0,
+   "tencent_only_range": null,
+   "common_dates": 4223,
+   "continuity_note": "两源均覆盖至最新，行数一致"
+  },
+  {
+   "symbol": "sh000991",
+   "name": "全指医药(中证)",
+   "tencent": {
+    "first": "2011-08-02",
+    "last": "2026-11-20",
+    "rows": 3716
+   },
+   "sina": {
+    "first": "2011-08-02",
+    "last": "2026-11-20",
+    "rows": 3716
+   },
+   "tencent_only_dates_count": 0,
+   "tencent_only_range": null,
+   "common_dates": 3716,
+   "continuity_note": "两源均覆盖至最新，行数一致"
+  },
+  {
+   "symbol": "sz399975",
+   "name": "证券公司(深证)",
+   "tencent": {
+    "first": "2015-08-11",
+    "last": "2026-11-20",
+    "rows": 2739
+   },
+   "sina": {
+    "first": "2015-05-19",
+    "last": "2026-11-20",
+    "rows": 2798
+   },
+   "tencent_only_dates_count": 0,
+   "tencent_only_range": null,
+   "common_dates": 2739,
+   "continuity_note": "两源覆盖至最新但行数不同"
+  },
+  {
+   "symbol": "sz399986",
+   "name": "中证银行(深证)",
+   "tencent": {
+    "first": "2015-08-11",
+    "last": "2026-11-20",
+    "rows": 2739
+   },
+   "sina": {
+    "first": "2015-05-19",
+    "last": "2026-11-20",
+    "rows": 2798
+   },
+   "tencent_only_dates_count": 0,
+   "tencent_only_range": null,
+   "common_dates": 2739,
+   "continuity_note": "两源覆盖至最新但行数不同"
+  },
+  {
+   "symbol": "sz399998",
+   "name": "中证煤炭(深证)",
+   "tencent": {
+    "first": "2015-06-16",
+    "last": "2026-11-20",
+    "rows": 2778
+   },
+   "sina": {
+    "first": "2015-06-16",
+    "last": "2026-11-20",
+    "rows": 2778
+   },
+   "tencent_only_dates_count": 0,
+   "tencent_only_range": null,
+   "common_dates": 2778,
+   "continuity_note": "两源均覆盖至最新，行数一致"
+  }
+ ],
+ "key_findings": {
+  "sh000807": "新浪仅2012-02~2018-12(1670行),2018-12-25后新浪无数据;腾讯2011-05~2026-11连续3772行。新浪源历史截断。",
+  "sh000808": "新浪仅2012-02~2021-02(2184行),2021-02-04后新浪无数据;腾讯连续3772行。新浪源历史截断。",
+  "sz399975_399986": "新浪比腾讯多59行(2015-05~2015-08区间腾讯缺失),两源起点不同。"
+ },
+ "substitutability_note": "sh000807/808的新浪历史截断可通过腾讯源补齐至2011-05(指数发布前后)。但腾讯为免费网页接口,商业授权未明(见任务D);中证指数官方数据从发布日开始提供完整历史行情,需通过官网数据下载或授权数据服务获取,本轮未取得官方历史行情原始文件(接口返回Parameter Errors,PDF抓取超时)。"
+}

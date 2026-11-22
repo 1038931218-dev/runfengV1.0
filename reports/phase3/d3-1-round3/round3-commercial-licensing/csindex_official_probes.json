@@ -1,0 +1,24 @@
+[
+ {
+  "name": "csindex_index_perf_api",
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000807&startDate=20110501&endDate=20261120",
+  "requested_at": "2026-11-22T19:23:44.907197+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 1429013,
+  "sha256": "a74c87774a56223cd248c8f8dfc400642a24a34b8f7f9d00a7e3b1467eb7e457",
+  "file": "reports/phase3/d3-1-round3/round3-commercial-licensing/csindex_index_perf_api_raw.txt",
+  "head": "{\"code\":\"200\",\"msg\":\"Success\",\"data\":[{\"tradeDate\":\"20110501\",\"indexCode\":\"000807\",\"indexNameCnAll\":\"中证申万食品饮料指数\",\"indexNameCn\":\"食品饮料\",\"indexNameEnAll\":\"CSI SWS Food & Beverage Index\",\"indexNameEn\":\"Food & Beverage\",\"open\":7253.86,\"high\":7380.36,\"low\":7217.51,\"close\":7379."
+ },
+ {
+  "name": "csindex_data_service_page",
+  "url": "https://www.csindex.com.cn/zh-CN/indices/index#/dataService",
+  "requested_at": "2026-11-22T19:23:46.684659+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 19563,
+  "sha256": "7e2525ba710203655fac8085e28eb78bfd44e67c766c6060c2baa4e20fc25c79",
+  "file": "reports/phase3/d3-1-round3/round3-commercial-licensing/csindex_data_service_page_raw.txt",
+  "head": "<!DOCTYPE html><html lang=\"\"><head><meta charset=\"utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=0.3,minimum-scale=0.1,maximum-scale=1,user-scalable=yes\"><link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"/favicon.ico\"><li"
+ }
+]

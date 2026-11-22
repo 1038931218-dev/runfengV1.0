@@ -1,0 +1,94 @@
+[
+ {
+  "index_code": "000807",
+  "name": "食品饮料",
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000807&startDate=20000101&endDate=20261120",
+  "requested_at": "2026-11-22T19:25:06.855809+08:00",
+  "status": "ok",
+  "code": "200",
+  "rows": 5316,
+  "first": "20000101",
+  "last": "20261120",
+  "bytes": 1999783,
+  "sha256": "dece2522ce598690a20cf81cdecde11ba27e4d510a43402626fa447545a12fcf",
+  "file": "reports/phase3/d3-1-round3/round3-commercial-licensing/csindex_perf_000807_raw.json"
+ },
+ {
+  "index_code": "000808",
+  "name": "医药卫生",
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000808&startDate=20000101&endDate=20261120",
+  "requested_at": "2026-11-22T19:25:31.669192+08:00",
+  "status": "error",
+  "error_type": "TimeoutError",
+  "error": "The read operation timed out"
+ },
+ {
+  "index_code": "000819",
+  "name": "有色金属",
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000819&startDate=20000101&endDate=20261120",
+  "requested_at": "2026-11-22T19:25:57.090181+08:00",
+  "status": "error",
+  "error_type": "TimeoutError",
+  "error": "The read operation timed out"
+ },
+ {
+  "index_code": "000928",
+  "name": "中证煤炭",
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000928&startDate=20000101&endDate=20261120",
+  "requested_at": "2026-11-22T19:26:22.480045+08:00",
+  "status": "error",
+  "error_type": "TimeoutError",
+  "error": "The read operation timed out"
+ },
+ {
+  "index_code": "000932",
+  "name": "中证白酒",
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000932&startDate=20000101&endDate=20261120",
+  "requested_at": "2026-11-22T19:26:47.868233+08:00",
+  "status": "error",
+  "error_type": "TimeoutError",
+  "error": "The read operation timed out"
+ },
+ {
+  "index_code": "000933",
+  "name": "中证医药",
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000933&startDate=20000101&endDate=20261120",
+  "requested_at": "2026-11-22T19:27:13.241861+08:00",
+  "status": "ok",
+  "code": "200",
+  "rows": 5317,
+  "first": "20000101",
+  "last": "20261120",
+  "bytes": 1900483,
+  "sha256": "554f3d015eedb2e230f5cf958bfa55da7e8f2d7e3d586266f9ae8e454260c6a3",
+  "file": "reports/phase3/d3-1-round3/round3-commercial-licensing/csindex_perf_000933_raw.json"
+ },
+ {
+  "index_code": "000934",
+  "name": "中证金融",
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000934&startDate=20000101&endDate=20261120",
+  "requested_at": "2026-11-22T19:27:30.296287+08:00",
+  "status": "ok",
+  "code": "200",
+  "rows": 5317,
+  "first": "20000101",
+  "last": "20261120",
+  "bytes": 2082687,
+  "sha256": "fad020dea49a5c6a072f0291c26122b10b298d9cce45fa41fd0fe74c6a15fba0",
+  "file": "reports/phase3/d3-1-round3/round3-commercial-licensing/csindex_perf_000934_raw.json"
+ },
+ {
+  "index_code": "000991",
+  "name": "全指医药",
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000991&startDate=20000101&endDate=20261120",
+  "requested_at": "2026-11-22T19:28:20.027895+08:00",
+  "status": "ok",
+  "code": "200",
+  "rows": 5317,
+  "first": "20000101",
+  "last": "20261120",
+  "bytes": 2034822,
+  "sha256": "858eb50f25281bd8f5b34d9f85ed908285a30e93a95242103b7ff58d23073970",
+  "file": "reports/phase3/d3-1-round3/round3-commercial-licensing/csindex_perf_000991_raw.json"
+ }
+]

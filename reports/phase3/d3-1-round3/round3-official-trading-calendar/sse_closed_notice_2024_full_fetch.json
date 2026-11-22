@@ -1,0 +1,10 @@
+{
+ "name": "sse_closed_notice_2024_full",
+ "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20231226_5733939.shtml",
+ "requested_at": "2026-11-22T19:22:16.288213+08:00",
+ "status": "ok",
+ "http_status": 200,
+ "bytes": 27834,
+ "file": "reports/phase3/d3-1-round3/round3-official-trading-calendar/sse_closed_notice_2024_full_raw.html",
+ "sha256": "eeb592d56b0e87f1cc7c5493768c5bb029bc83d4d7e7f755ca3c90fc84634ea8"
+}

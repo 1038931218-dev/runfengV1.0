@@ -1,0 +1,15 @@
+{
+ "name": "sse_closed_2026",
+ "url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/",
+ "requested_at": "2026-11-22T19:20:54.157996+08:00",
+ "headers": {
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+ },
+ "status": "ok",
+ "http_status": 200,
+ "final_url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/",
+ "bytes": 29661,
+ "file": "reports/phase3/d3-1-round3/round3-official-trading-calendar/sse_closed_2026_raw.html",
+ "sha256": "1795d06cf7b7581c844eca34075874cbe2ac2c4e73c26a7bf50f1da5b05b5aec",
+ "content_type": "text/html"
+}

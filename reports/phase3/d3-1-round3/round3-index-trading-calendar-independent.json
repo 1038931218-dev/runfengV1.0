@@ -1,0 +1,416 @@
+{
+ "task": "D3-1 round3 task B - 11 indices independent calendar verification",
+ "generated_at": "2026-11-22T19:22:40.726333+08:00",
+ "method": "对每个指数,分别用独立推导日历(chinese_calendar)比对新浪/腾讯实际交易日期。missing=日历内有交易日但数据源缺失;extra=数据源有日期但独立日历判定非交易日或超出2010-2026范围;duplicate=数据源内重复日期。",
+ "index_calendar_applicability": "sh开头6只(中证/上证系列)适用上交所日历,sz开头5只(深证系列)适用深交所日历;沪深两市交易日安排一致,均遵循国务院节假日安排,故共用同一独立推导日历。",
+ "results": [
+  {
+   "symbol": "sh000807",
+   "exchange": "上交所",
+   "calendar_applicable": "沪深A股独立推导日历(chinese_calendar官方节假日)",
+   "verifiable_range": {
+    "start": "2009-01-05",
+    "end": "2026-12-31"
+   },
+   "sina": {
+    "records": 1670,
+    "first_date": "2012-02-20",
+    "last_date": "2018-12-25",
+    "calendar_trading_days_in_data_range": 1670,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   },
+   "tencent": {
+    "records": 3772,
+    "first_date": "2011-05-13",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 3772,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   }
+  },
+  {
+   "symbol": "sh000808",
+   "exchange": "上交所",
+   "calendar_applicable": "沪深A股独立推导日历(chinese_calendar官方节假日)",
+   "verifiable_range": {
+    "start": "2009-01-05",
+    "end": "2026-12-31"
+   },
+   "sina": {
+    "records": 2184,
+    "first_date": "2012-02-20",
+    "last_date": "2021-02-04",
+    "calendar_trading_days_in_data_range": 2184,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   },
+   "tencent": {
+    "records": 3772,
+    "first_date": "2011-05-13",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 3772,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   }
+  },
+  {
+   "symbol": "sh000819",
+   "exchange": "上交所",
+   "calendar_applicable": "沪深A股独立推导日历(chinese_calendar官方节假日)",
+   "verifiable_range": {
+    "start": "2009-01-05",
+    "end": "2026-12-31"
+   },
+   "sina": {
+    "records": 3533,
+    "first_date": "2012-05-09",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 3533,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   },
+   "tencent": {
+    "records": 3772,
+    "first_date": "2011-05-13",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 3772,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   }
+  },
+  {
+   "symbol": "sh000928",
+   "exchange": "上交所",
+   "calendar_applicable": "沪深A股独立推导日历(chinese_calendar官方节假日)",
+   "verifiable_range": {
+    "start": "2009-01-05",
+    "end": "2026-12-31"
+   },
+   "sina": {
+    "records": 4223,
+    "first_date": "2009-07-03",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 4223,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   },
+   "tencent": {
+    "records": 4223,
+    "first_date": "2009-07-03",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 4223,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   }
+  },
+  {
+   "symbol": "sh000932",
+   "exchange": "上交所",
+   "calendar_applicable": "沪深A股独立推导日历(chinese_calendar官方节假日)",
+   "verifiable_range": {
+    "start": "2009-01-05",
+    "end": "2026-12-31"
+   },
+   "sina": {
+    "records": 4223,
+    "first_date": "2009-07-03",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 4223,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   },
+   "tencent": {
+    "records": 4223,
+    "first_date": "2009-07-03",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 4223,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   }
+  },
+  {
+   "symbol": "sh000933",
+   "exchange": "上交所",
+   "calendar_applicable": "沪深A股独立推导日历(chinese_calendar官方节假日)",
+   "verifiable_range": {
+    "start": "2009-01-05",
+    "end": "2026-12-31"
+   },
+   "sina": {
+    "records": 4223,
+    "first_date": "2009-07-03",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 4223,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   },
+   "tencent": {
+    "records": 4223,
+    "first_date": "2009-07-03",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 4223,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   }
+  },
+  {
+   "symbol": "sh000934",
+   "exchange": "上交所",
+   "calendar_applicable": "沪深A股独立推导日历(chinese_calendar官方节假日)",
+   "verifiable_range": {
+    "start": "2009-01-05",
+    "end": "2026-12-31"
+   },
+   "sina": {
+    "records": 4223,
+    "first_date": "2009-07-03",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 4223,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   },
+   "tencent": {
+    "records": 4223,
+    "first_date": "2009-07-03",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 4223,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   }
+  },
+  {
+   "symbol": "sh000991",
+   "exchange": "上交所",
+   "calendar_applicable": "沪深A股独立推导日历(chinese_calendar官方节假日)",
+   "verifiable_range": {
+    "start": "2009-01-05",
+    "end": "2026-12-31"
+   },
+   "sina": {
+    "records": 3716,
+    "first_date": "2011-08-02",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 3716,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   },
+   "tencent": {
+    "records": 3716,
+    "first_date": "2011-08-02",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 3716,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   }
+  },
+  {
+   "symbol": "sz399975",
+   "exchange": "深交所",
+   "calendar_applicable": "沪深A股独立推导日历(chinese_calendar官方节假日)",
+   "verifiable_range": {
+    "start": "2009-01-05",
+    "end": "2026-12-31"
+   },
+   "sina": {
+    "records": 2798,
+    "first_date": "2015-05-19",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 2798,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   },
+   "tencent": {
+    "records": 2739,
+    "first_date": "2015-08-11",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 2739,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   }
+  },
+  {
+   "symbol": "sz399986",
+   "exchange": "深交所",
+   "calendar_applicable": "沪深A股独立推导日历(chinese_calendar官方节假日)",
+   "verifiable_range": {
+    "start": "2009-01-05",
+    "end": "2026-12-31"
+   },
+   "sina": {
+    "records": 2798,
+    "first_date": "2015-05-19",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 2798,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   },
+   "tencent": {
+    "records": 2739,
+    "first_date": "2015-08-11",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 2739,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   }
+  },
+  {
+   "symbol": "sz399998",
+   "exchange": "深交所",
+   "calendar_applicable": "沪深A股独立推导日历(chinese_calendar官方节假日)",
+   "verifiable_range": {
+    "start": "2009-01-05",
+    "end": "2026-12-31"
+   },
+   "sina": {
+    "records": 2778,
+    "first_date": "2015-06-16",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 2778,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   },
+   "tencent": {
+    "records": 2778,
+    "first_date": "2015-06-16",
+    "last_date": "2026-11-20",
+    "calendar_trading_days_in_data_range": 2778,
+    "missing_count": 0,
+    "missing_dates": [],
+    "missing_truncated": false,
+    "extra_count": 0,
+    "extra_dates": [],
+    "extra_truncated": false,
+    "duplicate_count": 0,
+    "duplicate_dates": []
+   }
+  }
+ ],
+ "conclusion_note": "本轮用独立于新浪/腾讯的第三方日历库交叉验证,较第二轮(用新浪日历验证新浪+腾讯)独立性更强。但该日历仍非交易所官方原始日历文件,完整官方历史日历不可得(交易所仅发布年度休市公告)。额外日期需结合各指数发布历史解释(指数发布前无数据属正常)。"
+}

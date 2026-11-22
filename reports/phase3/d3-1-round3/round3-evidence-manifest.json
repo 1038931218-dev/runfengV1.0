@@ -1,0 +1,198 @@
+{
+ "task": "D3-1 round3 evidence manifest",
+ "generated_at": "2026-11-22T19:34:31.621711+08:00",
+ "total_files": 25,
+ "total_bytes": 12663323,
+ "json_files": 15,
+ "json_all_parse_ok": true,
+ "note": "原始原始响应(raw.html/raw.txt/原始json)与分析结论(main-report/licensing-report/alternative-data-sources/各reconciliation)分开保存。失败记录保留:csindex_official_history_batch(4超时)、PDF抓取超时见alternative报告、sina_zyhub为SPA空壳页(内容由WebFetch渲染提取)。本轮未提交Git,等待授权。",
+ "files": [
+  {
+   "path": "round3-alternative-data-sources.md",
+   "size_bytes": 5162,
+   "sha256": "d6e3462def3d3a2a521bda078c89d9ece054df05b4045fff60e9e517475efba3"
+  },
+  {
+   "path": "round3-commercial-licensing/csindex_data_service_page_raw.txt",
+   "size_bytes": 19563,
+   "sha256": "7e2525ba710203655fac8085e28eb78bfd44e67c766c6060c2baa4e20fc25c79"
+  },
+  {
+   "path": "round3-commercial-licensing/csindex_index_perf_api_raw.txt",
+   "size_bytes": 1429013,
+   "sha256": "a74c87774a56223cd248c8f8dfc400642a24a34b8f7f9d00a7e3b1467eb7e457"
+  },
+  {
+   "path": "round3-commercial-licensing/csindex_official_history_batch.json",
+   "size_bytes": 3422,
+   "sha256": "1e35f4326a9f65cbf95cfc7d37f18fddc94d6c2ef19b926cb3f400df745c9521"
+  },
+  {
+   "path": "round3-commercial-licensing/csindex_official_probes.json",
+   "size_bytes": 1557,
+   "sha256": "543999e58486b5e4a60b25055058e91d9a76527a8afcf4d923c5ccf3c41a229e"
+  },
+  {
+   "path": "round3-commercial-licensing/csindex_perf_000807_raw.json",
+   "size_bytes": 1999783,
+   "sha256": "dece2522ce598690a20cf81cdecde11ba27e4d510a43402626fa447545a12fcf"
+  },
+  {
+   "path": "round3-commercial-licensing/csindex_perf_000933_raw.json",
+   "size_bytes": 1900483,
+   "sha256": "554f3d015eedb2e230f5cf958bfa55da7e8f2d7e3d586266f9ae8e454260c6a3"
+  },
+  {
+   "path": "round3-commercial-licensing/csindex_perf_000934_raw.json",
+   "size_bytes": 2082687,
+   "sha256": "fad020dea49a5c6a072f0291c26122b10b298d9cce45fa41fd0fe74c6a15fba0"
+  },
+  {
+   "path": "round3-commercial-licensing/csindex_perf_000991_raw.json",
+   "size_bytes": 2034822,
+   "sha256": "858eb50f25281bd8f5b34d9f85ed908285a30e93a95242103b7ff58d23073970"
+  },
+  {
+   "path": "round3-commercial-licensing/licensing-report.md",
+   "size_bytes": 4698,
+   "sha256": "f0cc230464285a969bdef4129be903fa96dd112877dcb880394c1251beef4e69"
+  },
+  {
+   "path": "round3-commercial-licensing/sina_zyhub_fetch.json",
+   "size_bytes": 676,
+   "sha256": "58cf3f01e17e586d15d6f237be94c98c73d489ed729603c966b92af1c612c295"
+  },
+  {
+   "path": "round3-commercial-licensing/sina_zyhub_help_raw.html",
+   "size_bytes": 894,
+   "sha256": "209defc4ac682b716a4b74f1180acd55eba95f219b8ba76e54b9c793219d6395"
+  },
+  {
+   "path": "round3-commercial-licensing/sina_zyhub_home_raw.html",
+   "size_bytes": 894,
+   "sha256": "209defc4ac682b716a4b74f1180acd55eba95f219b8ba76e54b9c793219d6395"
+  },
+  {
+   "path": "round3-index-history-coverage.json",
+   "size_bytes": 5836,
+   "sha256": "b475a057f5f2dfd51335ca89a19e1e97f2aaaed17eff7797f25cb74b9ff179e5"
+  },
+  {
+   "path": "round3-index-trading-calendar-independent.json",
+   "size_bytes": 11571,
+   "sha256": "c2f3f56d0a9d76aa6b4352451df2decc968a16aeabebee1de8697519de2feba8"
+  },
+  {
+   "path": "round3-main-report.md",
+   "size_bytes": 7940,
+   "sha256": "2ddc680223c1563aeb8df16768a7cd03955ec73171876d7fde9f9224b4339831"
+  },
+  {
+   "path": "round3-official-trading-calendar/independent_calendar_derived.json",
+   "size_bytes": 72278,
+   "sha256": "e8a42f3093c53ae5007fdaa6aa5dd5af158ec26cea9462af146f9a4a90717b89"
+  },
+  {
+   "path": "round3-official-trading-calendar/sse_closed_2026_fetch.json",
+   "size_bytes": 558,
+   "sha256": "4d35732fdbb06410c2df496c1a12b7eac9580e34482fc6397506095fcde072fc"
+  },
+  {
+   "path": "round3-official-trading-calendar/sse_closed_2026_raw.html",
+   "size_bytes": 29661,
+   "sha256": "1795d06cf7b7581c844eca34075874cbe2ac2c4e73c26a7bf50f1da5b05b5aec"
+  },
+  {
+   "path": "round3-official-trading-calendar/sse_closed_notice_2024_full_fetch.json",
+   "size_bytes": 431,
+   "sha256": "b9c95f9757601747687a4ffdd02ed855e703838679d4d46296194620a20075a1"
+  },
+  {
+   "path": "round3-official-trading-calendar/sse_closed_notice_2024_full_raw.html",
+   "size_bytes": 27834,
+   "sha256": "eeb592d56b0e87f1cc7c5493768c5bb029bc83d4d7e7f755ca3c90fc84634ea8"
+  },
+  {
+   "path": "round3-official-trading-calendar/sse_closed_notice_2026_fetch.json",
+   "size_bytes": 630,
+   "sha256": "15fca0e7f5b4b9bb57ffab58a3d165fd4c5bdf743f3c58e83300b5f61a9eab45"
+  },
+  {
+   "path": "round3-official-trading-calendar/sse_closed_notice_2026_raw.html",
+   "size_bytes": 28118,
+   "sha256": "6414ab8f4316c318d816b68aefc4843a5ea87ec75d543f614e3e53aa7688f33c"
+  },
+  {
+   "path": "round3-universe-5580-original.json",
+   "size_bytes": 2981708,
+   "sha256": "9864cae7784030a70f2f1c0f1011fa732766efd44c3b5fa86f0fedb3df2db63a"
+  },
+  {
+   "path": "round3-universe-reconciliation.json",
+   "size_bytes": 13104,
+   "sha256": "f9b9411847bfb9fcf7fc27fafbeb8b4b9dd0ffdb51eb018c41f7b92f9d413524"
+  }
+ ],
+ "json_parse_check": [
+  {
+   "path": "round3-commercial-licensing/csindex_official_history_batch.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-commercial-licensing/csindex_official_probes.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-commercial-licensing/csindex_perf_000807_raw.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-commercial-licensing/csindex_perf_000933_raw.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-commercial-licensing/csindex_perf_000934_raw.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-commercial-licensing/csindex_perf_000991_raw.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-commercial-licensing/sina_zyhub_fetch.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-index-history-coverage.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-index-trading-calendar-independent.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-official-trading-calendar/independent_calendar_derived.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-official-trading-calendar/sse_closed_2026_fetch.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-official-trading-calendar/sse_closed_notice_2024_full_fetch.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-official-trading-calendar/sse_closed_notice_2026_fetch.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-universe-5580-original.json",
+   "json_parse": "OK"
+  },
+  {
+   "path": "round3-universe-reconciliation.json",
+   "json_parse": "OK"
+  }
+ ]
+}

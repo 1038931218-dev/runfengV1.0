@@ -1,0 +1,15 @@
+{
+ "name": "sse_closed_notice_2026",
+ "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20251222_10802507.shtml",
+ "requested_at": "2026-11-22T19:20:54.640686+08:00",
+ "headers": {
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+ },
+ "status": "ok",
+ "http_status": 200,
+ "final_url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20251222_10802507.shtml",
+ "bytes": 28118,
+ "file": "reports/phase3/d3-1-round3/round3-official-trading-calendar/sse_closed_notice_2026_raw.html",
+ "sha256": "6414ab8f4316c318d816b68aefc4843a5ea87ec75d543f614e3e53aa7688f33c",
+ "content_type": "text/html"
+}
