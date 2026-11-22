@@ -1,0 +1,475 @@
+{
+ "task": "D3-1 round4 task B - 2009-2026 official trading calendar annual coverage",
+ "generated_at": "2026-11-22T21:56:30.861276+08:00",
+ "read_only": true,
+ "third_round_calendar_preserved": true,
+ "third_round_calendar_sha256": "e8a42f3093c53ae5007fdaa6aa5dd5af158ec26cea9462af146f9a4a90717b89",
+ "third_round_calendar_range": {
+  "start": "2009-01-05",
+  "end": "2026-12-31",
+  "count": 4372
+ },
+ "third_round_override_holidays": [
+  "2024-02-09"
+ ],
+ "fundamental_limitation": "上交所/深交所官网发布逐年节假日休市安排公告(搜索可得原文URL),但:(1)不提供完整机器可读历史交易日历文件;(2)公告仅列节假日休市,不含周末枚举与临时休市汇总;(3)官网列表页仅展示最近年度,历史年份无稳定分页遍历接口。因此无法宣称'2009-2026每年官方完整交易日历验证通过'。本轮对已取得官方公告原文的年份做区间解析与冲突检查,其余年份如实标UNKNOWN。",
+ "annual_matrix": [
+  {
+   "year": 2009,
+   "official_evidence_count": 0,
+   "official_full_year_notice": false,
+   "official_evidence": [],
+   "official_holiday_workdays_parsed": 0,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": false,
+   "grade": "UNKNOWN",
+   "note": "本轮未取得该年官方公告原文,标记UNKNOWN,不伪造URL。"
+  },
+  {
+   "year": 2010,
+   "official_evidence_count": 1,
+   "official_full_year_notice": false,
+   "official_evidence": [
+    {
+     "source": "SSE",
+     "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2010_raw.html",
+     "sha256": "bab929bbc6d3762fdfec073bb0605a6ba1f9e23227826225d5ed6a8bdd6a950f",
+     "bytes": 27431,
+     "holiday_ranges": [],
+     "scope": "单节日公告"
+    }
+   ],
+   "official_holiday_workdays_parsed": 0,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "CONDITIONAL PASS",
+   "note": "已取得官方公告原文并解析休市区间;但交易所不发布完整机器可读交易日历文件(无周末枚举/无临时休市汇总),故不能宣称官方完整日历验证。"
+  },
+  {
+   "year": 2011,
+   "official_evidence_count": 0,
+   "official_full_year_notice": false,
+   "official_evidence": [],
+   "official_holiday_workdays_parsed": 0,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "UNKNOWN",
+   "note": "本轮未取得该年官方公告原文,标记UNKNOWN,不伪造URL。"
+  },
+  {
+   "year": 2012,
+   "official_evidence_count": 0,
+   "official_full_year_notice": false,
+   "official_evidence": [],
+   "official_holiday_workdays_parsed": 0,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "UNKNOWN",
+   "note": "本轮未取得该年官方公告原文,标记UNKNOWN,不伪造URL。"
+  },
+  {
+   "year": 2013,
+   "official_evidence_count": 0,
+   "official_full_year_notice": false,
+   "official_evidence": [],
+   "official_holiday_workdays_parsed": 0,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "UNKNOWN",
+   "note": "本轮未取得该年官方公告原文,标记UNKNOWN,不伪造URL。"
+  },
+  {
+   "year": 2014,
+   "official_evidence_count": 0,
+   "official_full_year_notice": false,
+   "official_evidence": [],
+   "official_holiday_workdays_parsed": 0,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "UNKNOWN",
+   "note": "本轮未取得该年官方公告原文,标记UNKNOWN,不伪造URL。"
+  },
+  {
+   "year": 2015,
+   "official_evidence_count": 1,
+   "official_full_year_notice": true,
+   "official_evidence": [
+    {
+     "source": "SSE",
+     "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2015_raw.html",
+     "sha256": "a9417dda53d84dccb419a5904fb162af72b20c1e42788fb8edf3b242e9a65aba",
+     "bytes": 27898,
+     "holiday_ranges": [
+      [
+       "1",
+       "1",
+       "1",
+       "3"
+      ],
+      [
+       "2",
+       "18",
+       "2",
+       "24"
+      ],
+      [
+       "4",
+       "5",
+       "4",
+       "6"
+      ],
+      [
+       "5",
+       "1",
+       "5",
+       "3"
+      ],
+      [
+       "6",
+       "20",
+       "6",
+       "22"
+      ],
+      [
+       "10",
+       "1",
+       "10",
+       "7"
+      ]
+     ],
+     "scope": "全年通知"
+    }
+   ],
+   "official_holiday_workdays_parsed": 15,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "CONDITIONAL PASS",
+   "note": "已取得官方公告原文并解析休市区间;但交易所不发布完整机器可读交易日历文件(无周末枚举/无临时休市汇总),故不能宣称官方完整日历验证。"
+  },
+  {
+   "year": 2016,
+   "official_evidence_count": 0,
+   "official_full_year_notice": false,
+   "official_evidence": [],
+   "official_holiday_workdays_parsed": 0,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "UNKNOWN",
+   "note": "本轮未取得该年官方公告原文,标记UNKNOWN,不伪造URL。"
+  },
+  {
+   "year": 2017,
+   "official_evidence_count": 0,
+   "official_full_year_notice": false,
+   "official_evidence": [],
+   "official_holiday_workdays_parsed": 0,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "UNKNOWN",
+   "note": "本轮未取得该年官方公告原文,标记UNKNOWN,不伪造URL。"
+  },
+  {
+   "year": 2018,
+   "official_evidence_count": 0,
+   "official_full_year_notice": false,
+   "official_evidence": [],
+   "official_holiday_workdays_parsed": 0,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "UNKNOWN",
+   "note": "本轮未取得该年官方公告原文,标记UNKNOWN,不伪造URL。"
+  },
+  {
+   "year": 2019,
+   "official_evidence_count": 0,
+   "official_full_year_notice": false,
+   "official_evidence": [],
+   "official_holiday_workdays_parsed": 0,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "UNKNOWN",
+   "note": "本轮未取得该年官方公告原文,标记UNKNOWN,不伪造URL。"
+  },
+  {
+   "year": 2020,
+   "official_evidence_count": 1,
+   "official_full_year_notice": false,
+   "official_evidence": [
+    {
+     "source": "SSE",
+     "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2020_nationalday_raw.html",
+     "sha256": "39b924403acacd66700552f95049da2fa9863e23bf2f162575024dc242394dc8",
+     "bytes": 26994,
+     "holiday_ranges": [
+      [
+       "10",
+       "1",
+       "10",
+       "8"
+      ]
+     ],
+     "scope": "单节日公告"
+    }
+   ],
+   "official_holiday_workdays_parsed": 6,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "CONDITIONAL PASS",
+   "note": "已取得官方公告原文并解析休市区间;但交易所不发布完整机器可读交易日历文件(无周末枚举/无临时休市汇总),故不能宣称官方完整日历验证。"
+  },
+  {
+   "year": 2021,
+   "official_evidence_count": 0,
+   "official_full_year_notice": false,
+   "official_evidence": [],
+   "official_holiday_workdays_parsed": 0,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "UNKNOWN",
+   "note": "本轮未取得该年官方公告原文,标记UNKNOWN,不伪造URL。"
+  },
+  {
+   "year": 2022,
+   "official_evidence_count": 0,
+   "official_full_year_notice": false,
+   "official_evidence": [],
+   "official_holiday_workdays_parsed": 0,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "UNKNOWN",
+   "note": "本轮未取得该年官方公告原文,标记UNKNOWN,不伪造URL。"
+  },
+  {
+   "year": 2023,
+   "official_evidence_count": 1,
+   "official_full_year_notice": true,
+   "official_evidence": [
+    {
+     "source": "SSE",
+     "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2023_full_raw.html",
+     "sha256": "3bc21d9ff7e8b359afe3e9336138bed20aa5f9f14517c04bbfa125416333d785",
+     "bytes": 27731,
+     "holiday_ranges": [
+      [
+       "1",
+       "21",
+       "1",
+       "27"
+      ],
+      [
+       "4",
+       "29",
+       "5",
+       "3"
+      ],
+      [
+       "6",
+       "22",
+       "6",
+       "24"
+      ],
+      [
+       "9",
+       "29",
+       "10",
+       "6"
+      ]
+     ],
+     "scope": "全年通知"
+    }
+   ],
+   "official_holiday_workdays_parsed": 16,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "CONDITIONAL PASS",
+   "note": "已取得官方公告原文并解析休市区间;但交易所不发布完整机器可读交易日历文件(无周末枚举/无临时休市汇总),故不能宣称官方完整日历验证。"
+  },
+  {
+   "year": 2024,
+   "official_evidence_count": 2,
+   "official_full_year_notice": true,
+   "official_evidence": [
+    {
+     "source": "SSE",
+     "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2024_nationalday_raw.html",
+     "sha256": "55e656f39f9dfb2e901b9430d41cdabc44dc4a48e65f58dddcc0193757eb2bfc",
+     "bytes": 26768,
+     "holiday_ranges": [
+      [
+       "10",
+       "1",
+       "10",
+       "7"
+      ]
+     ],
+     "scope": "单节日公告"
+    },
+    {
+     "source": "SSE(round3)",
+     "file": "reports/phase3/d3-1-round3/round3-official-trading-calendar/sse_closed_notice_2024_full_raw.html",
+     "sha256": "eeb592d56b0e87f1cc7c5493768c5bb029bc83d4d7e7f755ca3c90fc84634ea8",
+     "bytes": 27834,
+     "holiday_ranges": [
+      [
+       "2",
+       "9",
+       "2",
+       "17"
+      ],
+      [
+       "4",
+       "4",
+       "4",
+       "6"
+      ],
+      [
+       "5",
+       "1",
+       "5",
+       "5"
+      ],
+      [
+       "9",
+       "15",
+       "9",
+       "17"
+      ],
+      [
+       "10",
+       "1",
+       "10",
+       "7"
+      ]
+     ],
+     "scope": "全年通知"
+    }
+   ],
+   "official_holiday_workdays_parsed": 18,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "CONDITIONAL PASS",
+   "note": "已取得官方公告原文并解析休市区间;但交易所不发布完整机器可读交易日历文件(无周末枚举/无临时休市汇总),故不能宣称官方完整日历验证。"
+  },
+  {
+   "year": 2025,
+   "official_evidence_count": 1,
+   "official_full_year_notice": false,
+   "official_evidence": [
+    {
+     "source": "SSE",
+     "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2025_spring_raw.html",
+     "sha256": "a4eefb1932108261bf7f7eb9f8ad98429869bd33e65eb4c7df65b0918dd76f5f",
+     "bytes": 26751,
+     "holiday_ranges": [
+      [
+       "1",
+       "28",
+       "2",
+       "4"
+      ]
+     ],
+     "scope": "单节日公告"
+    }
+   ],
+   "official_holiday_workdays_parsed": 6,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "CONDITIONAL PASS",
+   "note": "已取得官方公告原文并解析休市区间;但交易所不发布完整机器可读交易日历文件(无周末枚举/无临时休市汇总),故不能宣称官方完整日历验证。"
+  },
+  {
+   "year": 2026,
+   "official_evidence_count": 2,
+   "official_full_year_notice": true,
+   "official_evidence": [
+    {
+     "source": "SSE",
+     "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2026_spring_raw.html",
+     "sha256": "08a788b3f78dd2ebf1a9ac236339cc0afca0a11e58b4e0c52c0797fd0d9bc614",
+     "bytes": 26802,
+     "holiday_ranges": [
+      [
+       "2",
+       "15",
+       "2",
+       "23"
+      ]
+     ],
+     "scope": "单节日公告"
+    },
+    {
+     "source": "SSE(round3)",
+     "file": "reports/phase3/d3-1-round3/round3-official-trading-calendar/sse_closed_notice_2026_raw.html",
+     "sha256": "6414ab8f4316c318d816b68aefc4843a5ea87ec75d543f614e3e53aa7688f33c",
+     "bytes": 28118,
+     "holiday_ranges": [
+      [
+       "1",
+       "1",
+       "1",
+       "3"
+      ],
+      [
+       "2",
+       "15",
+       "2",
+       "23"
+      ],
+      [
+       "4",
+       "4",
+       "4",
+       "6"
+      ],
+      [
+       "5",
+       "1",
+       "5",
+       "5"
+      ],
+      [
+       "6",
+       "19",
+       "6",
+       "21"
+      ],
+      [
+       "9",
+       "25",
+       "9",
+       "27"
+      ],
+      [
+       "10",
+       "1",
+       "10",
+       "7"
+      ]
+     ],
+     "scope": "全年通知"
+    }
+   ],
+   "official_holiday_workdays_parsed": 19,
+   "conflicts_official_holiday_but_in_sina_cal": [],
+   "in_round3_independent_calendar": true,
+   "grade": "CONDITIONAL PASS",
+   "note": "已取得官方公告原文并解析休市区间;但交易所不发布完整机器可读交易日历文件(无周末枚举/无临时休市汇总),故不能宣称官方完整日历验证。"
+  }
+ ],
+ "algorithm_checks": {
+  "weekend_excluded": "独立日历仅取周一至周五(chinese_calendar工作日推导),周末自然排除",
+  "legal_holidays": "使用chinese_calendar.is_holiday识别法定节假日;库数据覆盖2004-2026",
+  "makeup_workdays": "独立日历未将调休周末纳入(正确:A股调休周末不开市)",
+  "new_years_eve_2024": "2024-02-09除夕:chinese_calendar误判为交易日,已依据上交所官方公告显式修正为休市(第三轮override)",
+  "temporary_suspension": "UNKNOWN - 官方无临时休市汇总;行情数据中的个别停牌不等于市场休市",
+  "special_open": "UNKNOWN - 无法系统核验特殊开市安排",
+  "library_vs_exchange_conflict": "已发现并修正2024除夕冲突;其他年份未发现冲突(基于已取得公告样本)",
+  "year_2009_boundary": "chinese_calendar节假日数据从2004起,2009在覆盖内;新浪日历从1990起",
+  "no_reverse_proof": "本核验未使用新浪/腾讯行情数据反向证明日历正确;仅用官方公告文本与第三方库",
+  "calendar_is_not_official_full": true
+ },
+ "grade_summary": {
+  "UNKNOWN": 11,
+  "CONDITIONAL PASS": 7
+ }
+}

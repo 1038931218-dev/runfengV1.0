@@ -1,0 +1,62 @@
+[
+ {
+  "index_code": "000808",
+  "name": "医药卫生",
+  "attempt": 1,
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000808&startDate=20110501&endDate=20261120",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 1397571,
+  "sha256": "1fac5b4270e427eb9ade80426214308660d0765953e60014950ab8d4e6b80b5d",
+  "rows": 3782,
+  "first": "20110501",
+  "last": "20261120",
+  "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_000808_attempt1_raw.json",
+  "note": "第三轮超时,本轮第1次重试即成功"
+ },
+ {
+  "index_code": "000819",
+  "name": "有色金属",
+  "attempt": 1,
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000819&startDate=20110501&endDate=20261120",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 1432901,
+  "sha256": "fbabe0d6fb9d45f13b8efa4dabe791f3addbefd44e966b83d83fe5b2d79115ee",
+  "rows": 3782,
+  "first": "20110501",
+  "last": "20261120",
+  "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_000819_attempt1_raw.json",
+  "note": "第三轮超时,本轮第1次重试即成功"
+ },
+ {
+  "index_code": "000928",
+  "name": "中证煤炭",
+  "attempt": 1,
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000928&startDate=20110501&endDate=20261120",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 1287416,
+  "sha256": "da2780ec9a91eb84cc6c985e577f4354d507333421428c641c8c9dc43fc82bc7",
+  "rows": 3782,
+  "first": "20110501",
+  "last": "20261120",
+  "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_000928_attempt1_raw.json",
+  "note": "第三轮超时,本轮第1次重试即成功"
+ },
+ {
+  "index_code": "000932",
+  "name": "中证白酒",
+  "attempt": 1,
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000932&startDate=20110501&endDate=20261120",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 1383401,
+  "sha256": "3ddd485569ec92ac7f282a6d53f06403ec563b356ade4e38b4fbb62ccd165c9c",
+  "rows": 3782,
+  "first": "20110501",
+  "last": "20261120",
+  "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_000932_attempt1_raw.json",
+  "note": "第三轮超时,本轮第1次重试即成功"
+ }
+]

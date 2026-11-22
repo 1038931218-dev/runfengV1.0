@@ -1,0 +1,55 @@
+[
+ {
+  "name": "sse_2010",
+  "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20150912_3988350.shtml",
+  "requested_at": "2026-11-22T21:53:37.050888+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "final_url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20150912_3988350.shtml",
+  "bytes": 27431,
+  "sha256": "bab929bbc6d3762fdfec073bb0605a6ba1f9e23227826225d5ed6a8bdd6a950f",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2010_raw.html",
+  "content_type": "text/html",
+  "has_2010": true,
+  "has_休市": true,
+  "has_春节": true
+ },
+ {
+  "name": "sse_2011",
+  "url": "https://big5.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20150912_3988440.shtml",
+  "requested_at": "2026-11-22T21:53:37.673488+08:00",
+  "status": "error",
+  "error_type": "URLError",
+  "error": "<urlopen error [Errno 101] Network is unreachable>"
+ },
+ {
+  "name": "sse_2015",
+  "url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/list/c/c_20160104_3979217.shtml",
+  "requested_at": "2026-11-22T21:54:02.927333+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "final_url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/list/c/c_20160104_3979217.shtml",
+  "bytes": 27898,
+  "sha256": "a9417dda53d84dccb419a5904fb162af72b20c1e42788fb8edf3b242e9a65aba",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2015_raw.html",
+  "content_type": "text/html",
+  "has_2010": false,
+  "has_休市": true,
+  "has_春节": true
+ },
+ {
+  "name": "sse_closed_index",
+  "url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/",
+  "requested_at": "2026-11-22T21:54:03.234228+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "final_url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/",
+  "bytes": 29661,
+  "sha256": "1795d06cf7b7581c844eca34075874cbe2ac2c4e73c26a7bf50f1da5b05b5aec",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_closed_index_raw.html",
+  "content_type": "text/html",
+  "has_2010": false,
+  "has_休市": true,
+  "has_春节": true
+ }
+]

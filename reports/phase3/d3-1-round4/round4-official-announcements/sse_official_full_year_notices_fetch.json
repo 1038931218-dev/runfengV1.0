@@ -1,0 +1,62 @@
+[
+ {
+  "name": "sse_2023_full",
+  "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20221227_5714458.shtml",
+  "requested_at": "2026-11-22T21:54:55.095804+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 27731,
+  "sha256": "3bc21d9ff7e8b359afe3e9336138bed20aa5f9f14517c04bbfa125416333d785",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2023_full_raw.html",
+  "has_休市": true,
+  "has_春节": true
+ },
+ {
+  "name": "sse_2020_nationalday",
+  "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20200917_5220000.shtml",
+  "requested_at": "2026-11-22T21:54:55.431413+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 26994,
+  "sha256": "39b924403acacd66700552f95049da2fa9863e23bf2f162575024dc242394dc8",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2020_nationalday_raw.html",
+  "has_休市": true,
+  "has_春节": false
+ },
+ {
+  "name": "sse_2026_spring",
+  "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20260205_10808618.shtml",
+  "requested_at": "2026-11-22T21:54:55.754067+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 26802,
+  "sha256": "08a788b3f78dd2ebf1a9ac236339cc0afca0a11e58b4e0c52c0797fd0d9bc614",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2026_spring_raw.html",
+  "has_休市": true,
+  "has_春节": true
+ },
+ {
+  "name": "sse_2025_spring",
+  "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20250123_10770570.shtml",
+  "requested_at": "2026-11-22T21:54:55.931221+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 26751,
+  "sha256": "a4eefb1932108261bf7f7eb9f8ad98429869bd33e65eb4c7df65b0918dd76f5f",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2025_spring_raw.html",
+  "has_休市": true,
+  "has_春节": true
+ },
+ {
+  "name": "sse_2024_nationalday",
+  "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20240919_10762012.shtml",
+  "requested_at": "2026-11-22T21:54:56.188365+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 26768,
+  "sha256": "55e656f39f9dfb2e901b9430d41cdabc44dc4a48e65f58dddcc0193757eb2bfc",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_2024_nationalday_raw.html",
+  "has_休市": true,
+  "has_春节": false
+ }
+]

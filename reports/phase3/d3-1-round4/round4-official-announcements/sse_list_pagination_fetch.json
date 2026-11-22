@@ -1,0 +1,90 @@
+[
+ {
+  "page": 1,
+  "url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/list/?page=1",
+  "requested_at": "2026-11-22T21:54:28.708811+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 31764,
+  "sha256": "aaebb9d5f7b6642c98596eb8e4d2bd5785339c9f09c6f5bd63774bbe20969396",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_closed_list_p1_raw.html",
+  "links_count": 15
+ },
+ {
+  "page": 2,
+  "url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/list/?page=2",
+  "requested_at": "2026-11-22T21:54:29.217166+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 31764,
+  "sha256": "aaebb9d5f7b6642c98596eb8e4d2bd5785339c9f09c6f5bd63774bbe20969396",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_closed_list_p2_raw.html",
+  "links_count": 15
+ },
+ {
+  "page": 3,
+  "url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/list/?page=3",
+  "requested_at": "2026-11-22T21:54:29.775985+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 31764,
+  "sha256": "aaebb9d5f7b6642c98596eb8e4d2bd5785339c9f09c6f5bd63774bbe20969396",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_closed_list_p3_raw.html",
+  "links_count": 15
+ },
+ {
+  "page": 4,
+  "url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/list/?page=4",
+  "requested_at": "2026-11-22T21:54:30.264494+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 31764,
+  "sha256": "aaebb9d5f7b6642c98596eb8e4d2bd5785339c9f09c6f5bd63774bbe20969396",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_closed_list_p4_raw.html",
+  "links_count": 15
+ },
+ {
+  "page": 5,
+  "url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/list/?page=5",
+  "requested_at": "2026-11-22T21:54:30.780500+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 31764,
+  "sha256": "aaebb9d5f7b6642c98596eb8e4d2bd5785339c9f09c6f5bd63774bbe20969396",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_closed_list_p5_raw.html",
+  "links_count": 15
+ },
+ {
+  "page": 6,
+  "url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/list/?page=6",
+  "requested_at": "2026-11-22T21:54:31.276494+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 31764,
+  "sha256": "aaebb9d5f7b6642c98596eb8e4d2bd5785339c9f09c6f5bd63774bbe20969396",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_closed_list_p6_raw.html",
+  "links_count": 15
+ },
+ {
+  "page": 7,
+  "url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/list/?page=7",
+  "requested_at": "2026-11-22T21:54:31.748329+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 31764,
+  "sha256": "aaebb9d5f7b6642c98596eb8e4d2bd5785339c9f09c6f5bd63774bbe20969396",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_closed_list_p7_raw.html",
+  "links_count": 15
+ },
+ {
+  "page": 8,
+  "url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/list/?page=8",
+  "requested_at": "2026-11-22T21:54:32.415615+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 31764,
+  "sha256": "aaebb9d5f7b6642c98596eb8e4d2bd5785339c9f09c6f5bd63774bbe20969396",
+  "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_closed_list_p8_raw.html",
+  "links_count": 15
+ }
+]

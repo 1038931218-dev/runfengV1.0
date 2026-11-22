@@ -1,0 +1,53 @@
+[
+ {
+  "index_code": "399975",
+  "name": "证券公司",
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=399975&startDate=20110501&endDate=20261120",
+  "requested_at": "2026-11-22T21:58:07.499285+08:00",
+  "status": "ok",
+  "tested_this_round": true,
+  "http_status": 200,
+  "bytes": 1500580,
+  "sha256": "eda7af1c1ad8324628d6fbad4cb1d48d784893399f4a86f2299f3036ffb35aad",
+  "code_field": "200",
+  "msg": "Success",
+  "rows": 3782,
+  "first": "20110501",
+  "last": "20261120",
+  "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_399975_probe_raw.json"
+ },
+ {
+  "index_code": "399986",
+  "name": "中证银行",
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=399986&startDate=20110501&endDate=20261120",
+  "requested_at": "2026-11-22T21:58:09.257432+08:00",
+  "status": "ok",
+  "tested_this_round": true,
+  "http_status": 200,
+  "bytes": 1295485,
+  "sha256": "9a833b73968c082baba8095703675d2d2cfd2444b0ab2f7bb53fdd3f56e3a15c",
+  "code_field": "200",
+  "msg": "Success",
+  "rows": 3782,
+  "first": "20110501",
+  "last": "20261120",
+  "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_399986_probe_raw.json"
+ },
+ {
+  "index_code": "399998",
+  "name": "中证煤炭指数",
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=399998&startDate=20110501&endDate=20261120",
+  "requested_at": "2026-11-22T21:58:10.240214+08:00",
+  "status": "ok",
+  "tested_this_round": true,
+  "http_status": 200,
+  "bytes": 1359731,
+  "sha256": "2de16bec4d2b163caa2bc2c6b47c02082ddb64ebd8517cae92e9ea99ee543c10",
+  "code_field": "200",
+  "msg": "Success",
+  "rows": 3782,
+  "first": "20110501",
+  "last": "20261120",
+  "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_399998_probe_raw.json"
+ }
+]

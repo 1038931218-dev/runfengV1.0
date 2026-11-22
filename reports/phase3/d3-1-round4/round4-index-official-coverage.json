@@ -1,0 +1,610 @@
+{
+ "task": "D3-1 round4 task C - 11 indices official history coverage",
+ "generated_at": "2026-11-22T22:01:23.026840+08:00",
+ "read_only": true,
+ "retry_policy": "第三轮超时的4指数各最多重试3次;实际均第1次成功。未删除任何失败记录(第三轮失败记录在round3证据中)。",
+ "tested_count": 11,
+ "official_success_count": 11,
+ "results": [
+  {
+   "index_code": "000807",
+   "expected_name": "食品饮料",
+   "official_name_full": "中证申万食品饮料指数",
+   "name_match_note": "一致",
+   "official_test_status": "round3成功",
+   "official_response": {
+    "file": "reports/phase3/d3-1-round3/round3-commercial-licensing/csindex_perf_000807_raw.json",
+    "bytes": 1999783,
+    "sha256": "dece2522ce598690a20cf81cdecde11ba27e4d510a43402626fa447545a12fcf",
+    "code_field": "200",
+    "msg": "Success",
+    "indexNameCn": "食品饮料",
+    "indexNameCnAll": "中证申万食品饮料指数"
+   },
+   "C1_sina_tencent_coverage": {
+    "symbol": "sh000807",
+    "sina": {
+     "first": "2012-02-20",
+     "last": "2018-12-25",
+     "rows": 1670
+    },
+    "tencent": {
+     "first": "2011-05-13",
+     "last": "2026-11-20",
+     "rows": 3772
+    }
+   },
+   "C3_official_data_validation": {
+    "1_actual_first_last": [
+     "20000101",
+     "20261120"
+    ],
+    "2_raw_record_count": 5316,
+    "3_unique_trade_dates": 5316,
+    "4_duplicate_dates": [],
+    "5_missing_dates": "无法判定-官方接口返回可能为固定区间抽样;需与逐日交易日历比对(本轮未逐日展开)",
+    "6_ohlc_fields_present": true,
+    "7_ohlc_anomalies_count": 1,
+    "ohlc_anomaly_samples": [
+     "20180618"
+    ],
+    "7_note": "异常多为open/high/low=null(如399986早期2013年359条仅close有值),属官方数据字段缺失,非比对逻辑错误",
+    "8_volume_field_semantics": "tradingVol存在;单位官方未在响应内标注,UNKNOWN(不可仅凭字段名判定)",
+    "9_value_field_semantics": "tradingValue存在(样例72.79疑为亿元);单位官方未在响应内标注,UNKNOWN",
+    "10_base_date_placeholder": [
+     "20000101"
+    ],
+    "11_history_truncation": "无截断迹象:官方从20110501(指数发布初期)连续至20261120",
+    "12_unit_change": "响应内无单位变更说明,UNKNOWN",
+    "13_tracable_raw_response": true
+   },
+   "C4_source_boundary": "中证官方接口独立提供本指数全区间历史;未与新浪/腾讯拼接。新浪历史截断(sh000807/808)可由中证官方完整历史替代,替代后单一来源为中证。"
+  },
+  {
+   "index_code": "000808",
+   "expected_name": "医药卫生",
+   "official_name_full": "中证申万医药生物指数",
+   "name_match_note": "口径差异:任务书用短名/口语名,官方全称为中证申万医药生物指数",
+   "official_test_status": "round4重试成功",
+   "official_response": {
+    "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_000808_attempt1_raw.json",
+    "bytes": 1397571,
+    "sha256": "1fac5b4270e427eb9ade80426214308660d0765953e60014950ab8d4e6b80b5d",
+    "code_field": "200",
+    "msg": "Success",
+    "indexNameCn": "医药生物",
+    "indexNameCnAll": "中证申万医药生物指数"
+   },
+   "C1_sina_tencent_coverage": {
+    "symbol": "sh000808",
+    "sina": {
+     "first": "2012-02-20",
+     "last": "2021-02-04",
+     "rows": 2184
+    },
+    "tencent": {
+     "first": "2011-05-13",
+     "last": "2026-11-20",
+     "rows": 3772
+    }
+   },
+   "C3_official_data_validation": {
+    "1_actual_first_last": [
+     "20110501",
+     "20261120"
+    ],
+    "2_raw_record_count": 3782,
+    "3_unique_trade_dates": 3782,
+    "4_duplicate_dates": [],
+    "5_missing_dates": "无法判定-官方接口返回可能为固定区间抽样;需与逐日交易日历比对(本轮未逐日展开)",
+    "6_ohlc_fields_present": true,
+    "7_ohlc_anomalies_count": 1,
+    "ohlc_anomaly_samples": [
+     "20180618"
+    ],
+    "7_note": "异常多为open/high/low=null(如399986早期2013年359条仅close有值),属官方数据字段缺失,非比对逻辑错误",
+    "8_volume_field_semantics": "tradingVol存在;单位官方未在响应内标注,UNKNOWN(不可仅凭字段名判定)",
+    "9_value_field_semantics": "tradingValue存在(样例72.79疑为亿元);单位官方未在响应内标注,UNKNOWN",
+    "10_base_date_placeholder": [],
+    "11_history_truncation": "无截断迹象:官方从20110501(指数发布初期)连续至20261120",
+    "12_unit_change": "响应内无单位变更说明,UNKNOWN",
+    "13_tracable_raw_response": true
+   },
+   "C4_source_boundary": "中证官方接口独立提供本指数全区间历史;未与新浪/腾讯拼接。新浪历史截断(sh000807/808)可由中证官方完整历史替代,替代后单一来源为中证。"
+  },
+  {
+   "index_code": "000819",
+   "expected_name": "有色金属",
+   "official_name_full": "中证申万有色金属指数",
+   "name_match_note": "一致",
+   "official_test_status": "round4重试成功",
+   "official_response": {
+    "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_000819_attempt1_raw.json",
+    "bytes": 1432901,
+    "sha256": "fbabe0d6fb9d45f13b8efa4dabe791f3addbefd44e966b83d83fe5b2d79115ee",
+    "code_field": "200",
+    "msg": "Success",
+    "indexNameCn": "有色金属",
+    "indexNameCnAll": "中证申万有色金属指数"
+   },
+   "C1_sina_tencent_coverage": {
+    "symbol": "sh000819",
+    "sina": {
+     "first": "2012-05-09",
+     "last": "2026-11-20",
+     "rows": 3533
+    },
+    "tencent": {
+     "first": "2011-05-13",
+     "last": "2026-11-20",
+     "rows": 3772
+    }
+   },
+   "C3_official_data_validation": {
+    "1_actual_first_last": [
+     "20110501",
+     "20261120"
+    ],
+    "2_raw_record_count": 3782,
+    "3_unique_trade_dates": 3782,
+    "4_duplicate_dates": [],
+    "5_missing_dates": "无法判定-官方接口返回可能为固定区间抽样;需与逐日交易日历比对(本轮未逐日展开)",
+    "6_ohlc_fields_present": true,
+    "7_ohlc_anomalies_count": 1,
+    "ohlc_anomaly_samples": [
+     "20180618"
+    ],
+    "7_note": "异常多为open/high/low=null(如399986早期2013年359条仅close有值),属官方数据字段缺失,非比对逻辑错误",
+    "8_volume_field_semantics": "tradingVol存在;单位官方未在响应内标注,UNKNOWN(不可仅凭字段名判定)",
+    "9_value_field_semantics": "tradingValue存在(样例72.79疑为亿元);单位官方未在响应内标注,UNKNOWN",
+    "10_base_date_placeholder": [],
+    "11_history_truncation": "无截断迹象:官方从20110501(指数发布初期)连续至20261120",
+    "12_unit_change": "响应内无单位变更说明,UNKNOWN",
+    "13_tracable_raw_response": true
+   },
+   "C4_source_boundary": "中证官方接口独立提供本指数全区间历史;未与新浪/腾讯拼接。新浪历史截断(sh000807/808)可由中证官方完整历史替代,替代后单一来源为中证。"
+  },
+  {
+   "index_code": "000928",
+   "expected_name": "中证煤炭",
+   "official_name_full": "中证能源指数",
+   "name_match_note": "口径差异:任务书用短名/口语名,官方全称为中证能源指数",
+   "official_test_status": "round4重试成功",
+   "official_response": {
+    "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_000928_attempt1_raw.json",
+    "bytes": 1287416,
+    "sha256": "da2780ec9a91eb84cc6c985e577f4354d507333421428c641c8c9dc43fc82bc7",
+    "code_field": "200",
+    "msg": "Success",
+    "indexNameCn": "800能源",
+    "indexNameCnAll": "中证能源指数"
+   },
+   "C1_sina_tencent_coverage": {
+    "symbol": "sh000928",
+    "sina": {
+     "first": "2009-07-03",
+     "last": "2026-11-20",
+     "rows": 4223
+    },
+    "tencent": {
+     "first": "2009-07-03",
+     "last": "2026-11-20",
+     "rows": 4223
+    }
+   },
+   "C3_official_data_validation": {
+    "1_actual_first_last": [
+     "20110501",
+     "20261120"
+    ],
+    "2_raw_record_count": 3782,
+    "3_unique_trade_dates": 3782,
+    "4_duplicate_dates": [],
+    "5_missing_dates": "无法判定-官方接口返回可能为固定区间抽样;需与逐日交易日历比对(本轮未逐日展开)",
+    "6_ohlc_fields_present": true,
+    "7_ohlc_anomalies_count": 1,
+    "ohlc_anomaly_samples": [
+     "20180618"
+    ],
+    "7_note": "异常多为open/high/low=null(如399986早期2013年359条仅close有值),属官方数据字段缺失,非比对逻辑错误",
+    "8_volume_field_semantics": "tradingVol存在;单位官方未在响应内标注,UNKNOWN(不可仅凭字段名判定)",
+    "9_value_field_semantics": "tradingValue存在(样例72.79疑为亿元);单位官方未在响应内标注,UNKNOWN",
+    "10_base_date_placeholder": [],
+    "11_history_truncation": "无截断迹象:官方从20110501(指数发布初期)连续至20261120",
+    "12_unit_change": "响应内无单位变更说明,UNKNOWN",
+    "13_tracable_raw_response": true
+   },
+   "C4_source_boundary": "中证官方接口独立提供本指数全区间历史;未与新浪/腾讯拼接。新浪历史截断(sh000807/808)可由中证官方完整历史替代,替代后单一来源为中证。"
+  },
+  {
+   "index_code": "000932",
+   "expected_name": "中证白酒",
+   "official_name_full": "中证主要消费指数",
+   "name_match_note": "口径差异:任务书用短名/口语名,官方全称为中证主要消费指数",
+   "official_test_status": "round4重试成功",
+   "official_response": {
+    "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_000932_attempt1_raw.json",
+    "bytes": 1383401,
+    "sha256": "3ddd485569ec92ac7f282a6d53f06403ec563b356ade4e38b4fbb62ccd165c9c",
+    "code_field": "200",
+    "msg": "Success",
+    "indexNameCn": "800消费",
+    "indexNameCnAll": "中证主要消费指数"
+   },
+   "C1_sina_tencent_coverage": {
+    "symbol": "sh000932",
+    "sina": {
+     "first": "2009-07-03",
+     "last": "2026-11-20",
+     "rows": 4223
+    },
+    "tencent": {
+     "first": "2009-07-03",
+     "last": "2026-11-20",
+     "rows": 4223
+    }
+   },
+   "C3_official_data_validation": {
+    "1_actual_first_last": [
+     "20110501",
+     "20261120"
+    ],
+    "2_raw_record_count": 3782,
+    "3_unique_trade_dates": 3782,
+    "4_duplicate_dates": [],
+    "5_missing_dates": "无法判定-官方接口返回可能为固定区间抽样;需与逐日交易日历比对(本轮未逐日展开)",
+    "6_ohlc_fields_present": true,
+    "7_ohlc_anomalies_count": 1,
+    "ohlc_anomaly_samples": [
+     "20180618"
+    ],
+    "7_note": "异常多为open/high/low=null(如399986早期2013年359条仅close有值),属官方数据字段缺失,非比对逻辑错误",
+    "8_volume_field_semantics": "tradingVol存在;单位官方未在响应内标注,UNKNOWN(不可仅凭字段名判定)",
+    "9_value_field_semantics": "tradingValue存在(样例72.79疑为亿元);单位官方未在响应内标注,UNKNOWN",
+    "10_base_date_placeholder": [],
+    "11_history_truncation": "无截断迹象:官方从20110501(指数发布初期)连续至20261120",
+    "12_unit_change": "响应内无单位变更说明,UNKNOWN",
+    "13_tracable_raw_response": true
+   },
+   "C4_source_boundary": "中证官方接口独立提供本指数全区间历史;未与新浪/腾讯拼接。新浪历史截断(sh000807/808)可由中证官方完整历史替代,替代后单一来源为中证。"
+  },
+  {
+   "index_code": "000933",
+   "expected_name": "中证医药",
+   "official_name_full": "中证医药卫生指数",
+   "name_match_note": "一致",
+   "official_test_status": "round3成功",
+   "official_response": {
+    "file": "reports/phase3/d3-1-round3/round3-commercial-licensing/csindex_perf_000933_raw.json",
+    "bytes": 1900483,
+    "sha256": "554f3d015eedb2e230f5cf958bfa55da7e8f2d7e3d586266f9ae8e454260c6a3",
+    "code_field": "200",
+    "msg": "Success",
+    "indexNameCn": "800医卫",
+    "indexNameCnAll": "中证医药卫生指数"
+   },
+   "C1_sina_tencent_coverage": {
+    "symbol": "sh000933",
+    "sina": {
+     "first": "2009-07-03",
+     "last": "2026-11-20",
+     "rows": 4223
+    },
+    "tencent": {
+     "first": "2009-07-03",
+     "last": "2026-11-20",
+     "rows": 4223
+    }
+   },
+   "C3_official_data_validation": {
+    "1_actual_first_last": [
+     "20000101",
+     "20261120"
+    ],
+    "2_raw_record_count": 5317,
+    "3_unique_trade_dates": 5317,
+    "4_duplicate_dates": [],
+    "5_missing_dates": "无法判定-官方接口返回可能为固定区间抽样;需与逐日交易日历比对(本轮未逐日展开)",
+    "6_ohlc_fields_present": true,
+    "7_ohlc_anomalies_count": 3,
+    "ohlc_anomaly_samples": [
+     "20000101",
+     "20041231",
+     "20180618"
+    ],
+    "7_note": "异常多为open/high/low=null(如399986早期2013年359条仅close有值),属官方数据字段缺失,非比对逻辑错误",
+    "8_volume_field_semantics": "tradingVol存在;单位官方未在响应内标注,UNKNOWN(不可仅凭字段名判定)",
+    "9_value_field_semantics": "tradingValue存在(样例72.79疑为亿元);单位官方未在响应内标注,UNKNOWN",
+    "10_base_date_placeholder": [
+     "20000101"
+    ],
+    "11_history_truncation": "无截断迹象:官方从20110501(指数发布初期)连续至20261120",
+    "12_unit_change": "响应内无单位变更说明,UNKNOWN",
+    "13_tracable_raw_response": true
+   },
+   "C4_source_boundary": "中证官方接口独立提供本指数全区间历史;未与新浪/腾讯拼接。新浪历史截断(sh000807/808)可由中证官方完整历史替代,替代后单一来源为中证。"
+  },
+  {
+   "index_code": "000934",
+   "expected_name": "中证金融",
+   "official_name_full": "中证金融地产指数",
+   "name_match_note": "一致",
+   "official_test_status": "round3成功",
+   "official_response": {
+    "file": "reports/phase3/d3-1-round3/round3-commercial-licensing/csindex_perf_000934_raw.json",
+    "bytes": 2082687,
+    "sha256": "fad020dea49a5c6a072f0291c26122b10b298d9cce45fa41fd0fe74c6a15fba0",
+    "code_field": "200",
+    "msg": "Success",
+    "indexNameCn": "800金地",
+    "indexNameCnAll": "中证金融地产指数"
+   },
+   "C1_sina_tencent_coverage": {
+    "symbol": "sh000934",
+    "sina": {
+     "first": "2009-07-03",
+     "last": "2026-11-20",
+     "rows": 4223
+    },
+    "tencent": {
+     "first": "2009-07-03",
+     "last": "2026-11-20",
+     "rows": 4223
+    }
+   },
+   "C3_official_data_validation": {
+    "1_actual_first_last": [
+     "20000101",
+     "20261120"
+    ],
+    "2_raw_record_count": 5317,
+    "3_unique_trade_dates": 5317,
+    "4_duplicate_dates": [],
+    "5_missing_dates": "无法判定-官方接口返回可能为固定区间抽样;需与逐日交易日历比对(本轮未逐日展开)",
+    "6_ohlc_fields_present": true,
+    "7_ohlc_anomalies_count": 3,
+    "ohlc_anomaly_samples": [
+     "20000101",
+     "20041231",
+     "20180618"
+    ],
+    "7_note": "异常多为open/high/low=null(如399986早期2013年359条仅close有值),属官方数据字段缺失,非比对逻辑错误",
+    "8_volume_field_semantics": "tradingVol存在;单位官方未在响应内标注,UNKNOWN(不可仅凭字段名判定)",
+    "9_value_field_semantics": "tradingValue存在(样例72.79疑为亿元);单位官方未在响应内标注,UNKNOWN",
+    "10_base_date_placeholder": [
+     "20000101"
+    ],
+    "11_history_truncation": "无截断迹象:官方从20110501(指数发布初期)连续至20261120",
+    "12_unit_change": "响应内无单位变更说明,UNKNOWN",
+    "13_tracable_raw_response": true
+   },
+   "C4_source_boundary": "中证官方接口独立提供本指数全区间历史;未与新浪/腾讯拼接。新浪历史截断(sh000807/808)可由中证官方完整历史替代,替代后单一来源为中证。"
+  },
+  {
+   "index_code": "000991",
+   "expected_name": "全指医药",
+   "official_name_full": "中证全指医药卫生指数",
+   "name_match_note": "一致",
+   "official_test_status": "round3成功",
+   "official_response": {
+    "file": "reports/phase3/d3-1-round3/round3-commercial-licensing/csindex_perf_000991_raw.json",
+    "bytes": 2034822,
+    "sha256": "858eb50f25281bd8f5b34d9f85ed908285a30e93a95242103b7ff58d23073970",
+    "code_field": "200",
+    "msg": "Success",
+    "indexNameCn": "全指医药",
+    "indexNameCnAll": "中证全指医药卫生指数"
+   },
+   "C1_sina_tencent_coverage": {
+    "symbol": "sh000991",
+    "sina": {
+     "first": "2011-08-02",
+     "last": "2026-11-20",
+     "rows": 3716
+    },
+    "tencent": {
+     "first": "2011-08-02",
+     "last": "2026-11-20",
+     "rows": 3716
+    }
+   },
+   "C3_official_data_validation": {
+    "1_actual_first_last": [
+     "20000101",
+     "20261120"
+    ],
+    "2_raw_record_count": 5317,
+    "3_unique_trade_dates": 5317,
+    "4_duplicate_dates": [],
+    "5_missing_dates": "无法判定-官方接口返回可能为固定区间抽样;需与逐日交易日历比对(本轮未逐日展开)",
+    "6_ohlc_fields_present": true,
+    "7_ohlc_anomalies_count": 3,
+    "ohlc_anomaly_samples": [
+     "20000101",
+     "20041231",
+     "20180618"
+    ],
+    "7_note": "异常多为open/high/low=null(如399986早期2013年359条仅close有值),属官方数据字段缺失,非比对逻辑错误",
+    "8_volume_field_semantics": "tradingVol存在;单位官方未在响应内标注,UNKNOWN(不可仅凭字段名判定)",
+    "9_value_field_semantics": "tradingValue存在(样例72.79疑为亿元);单位官方未在响应内标注,UNKNOWN",
+    "10_base_date_placeholder": [
+     "20000101"
+    ],
+    "11_history_truncation": "无截断迹象:官方从20110501(指数发布初期)连续至20261120",
+    "12_unit_change": "响应内无单位变更说明,UNKNOWN",
+    "13_tracable_raw_response": true
+   },
+   "C4_source_boundary": "中证官方接口独立提供本指数全区间历史;未与新浪/腾讯拼接。新浪历史截断(sh000807/808)可由中证官方完整历史替代,替代后单一来源为中证。"
+  },
+  {
+   "index_code": "399975",
+   "expected_name": "证券公司",
+   "official_name_full": "中证全指证券公司指数",
+   "name_match_note": "一致",
+   "official_test_status": "round4新测成功",
+   "official_response": {
+    "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_399975_probe_raw.json",
+    "bytes": 1500580,
+    "sha256": "eda7af1c1ad8324628d6fbad4cb1d48d784893399f4a86f2299f3036ffb35aad",
+    "code_field": "200",
+    "msg": "Success",
+    "indexNameCn": "证券公司",
+    "indexNameCnAll": "中证全指证券公司指数"
+   },
+   "C1_sina_tencent_coverage": {
+    "symbol": "sz399975",
+    "sina": {
+     "first": "2015-05-19",
+     "last": "2026-11-20",
+     "rows": 2798
+    },
+    "tencent": {
+     "first": "2015-08-11",
+     "last": "2026-11-20",
+     "rows": 2739
+    }
+   },
+   "C3_official_data_validation": {
+    "1_actual_first_last": [
+     "20110501",
+     "20261120"
+    ],
+    "2_raw_record_count": 3782,
+    "3_unique_trade_dates": 3782,
+    "4_duplicate_dates": [],
+    "5_missing_dates": "无法判定-官方接口返回可能为固定区间抽样;需与逐日交易日历比对(本轮未逐日展开)",
+    "6_ohlc_fields_present": true,
+    "7_ohlc_anomalies_count": 1,
+    "ohlc_anomaly_samples": [
+     "20180618"
+    ],
+    "7_note": "异常多为open/high/low=null(如399986早期2013年359条仅close有值),属官方数据字段缺失,非比对逻辑错误",
+    "8_volume_field_semantics": "tradingVol存在;单位官方未在响应内标注,UNKNOWN(不可仅凭字段名判定)",
+    "9_value_field_semantics": "tradingValue存在(样例72.79疑为亿元);单位官方未在响应内标注,UNKNOWN",
+    "10_base_date_placeholder": [],
+    "11_history_truncation": "无截断迹象:官方从20110501(指数发布初期)连续至20261120",
+    "12_unit_change": "响应内无单位变更说明,UNKNOWN",
+    "13_tracable_raw_response": true
+   },
+   "C4_source_boundary": "中证官方接口独立提供本指数全区间历史;未与新浪/腾讯拼接。新浪历史截断(sh000807/808)可由中证官方完整历史替代,替代后单一来源为中证。"
+  },
+  {
+   "index_code": "399986",
+   "expected_name": "中证银行",
+   "official_name_full": "中证银行指数",
+   "name_match_note": "一致",
+   "official_test_status": "round4新测成功",
+   "official_response": {
+    "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_399986_probe_raw.json",
+    "bytes": 1295485,
+    "sha256": "9a833b73968c082baba8095703675d2d2cfd2444b0ab2f7bb53fdd3f56e3a15c",
+    "code_field": "200",
+    "msg": "Success",
+    "indexNameCn": "中证银行",
+    "indexNameCnAll": "中证银行指数"
+   },
+   "C1_sina_tencent_coverage": {
+    "symbol": "sz399986",
+    "sina": {
+     "first": "2015-05-19",
+     "last": "2026-11-20",
+     "rows": 2798
+    },
+    "tencent": {
+     "first": "2015-08-11",
+     "last": "2026-11-20",
+     "rows": 2739
+    }
+   },
+   "C3_official_data_validation": {
+    "1_actual_first_last": [
+     "20110501",
+     "20261120"
+    ],
+    "2_raw_record_count": 3782,
+    "3_unique_trade_dates": 3782,
+    "4_duplicate_dates": [],
+    "5_missing_dates": "无法判定-官方接口返回可能为固定区间抽样;需与逐日交易日历比对(本轮未逐日展开)",
+    "6_ohlc_fields_present": true,
+    "7_ohlc_anomalies_count": 359,
+    "ohlc_anomaly_samples": [
+     "20130715",
+     "20130716",
+     "20130717",
+     "20130718",
+     "20130719"
+    ],
+    "7_note": "异常多为open/high/low=null(如399986早期2013年359条仅close有值),属官方数据字段缺失,非比对逻辑错误",
+    "8_volume_field_semantics": "tradingVol存在;单位官方未在响应内标注,UNKNOWN(不可仅凭字段名判定)",
+    "9_value_field_semantics": "tradingValue存在(样例72.79疑为亿元);单位官方未在响应内标注,UNKNOWN",
+    "10_base_date_placeholder": [],
+    "11_history_truncation": "无截断迹象:官方从20110501(指数发布初期)连续至20261120",
+    "12_unit_change": "响应内无单位变更说明,UNKNOWN",
+    "13_tracable_raw_response": true
+   },
+   "C4_source_boundary": "中证官方接口独立提供本指数全区间历史;未与新浪/腾讯拼接。新浪历史截断(sh000807/808)可由中证官方完整历史替代,替代后单一来源为中证。"
+  },
+  {
+   "index_code": "399998",
+   "expected_name": "中证煤炭指数",
+   "official_name_full": "中证煤炭指数",
+   "name_match_note": "一致",
+   "official_test_status": "round4新测成功",
+   "official_response": {
+    "file": "reports/phase3/d3-1-round4/round4-index-responses/csindex_perf_399998_probe_raw.json",
+    "bytes": 1359731,
+    "sha256": "2de16bec4d2b163caa2bc2c6b47c02082ddb64ebd8517cae92e9ea99ee543c10",
+    "code_field": "200",
+    "msg": "Success",
+    "indexNameCn": "中证煤炭",
+    "indexNameCnAll": "中证煤炭指数"
+   },
+   "C1_sina_tencent_coverage": {
+    "symbol": "sz399998",
+    "sina": {
+     "first": "2015-06-16",
+     "last": "2026-11-20",
+     "rows": 2778
+    },
+    "tencent": {
+     "first": "2015-06-16",
+     "last": "2026-11-20",
+     "rows": 2778
+    }
+   },
+   "C3_official_data_validation": {
+    "1_actual_first_last": [
+     "20110501",
+     "20261120"
+    ],
+    "2_raw_record_count": 3782,
+    "3_unique_trade_dates": 3782,
+    "4_duplicate_dates": [],
+    "5_missing_dates": "无法判定-官方接口返回可能为固定区间抽样;需与逐日交易日历比对(本轮未逐日展开)",
+    "6_ohlc_fields_present": true,
+    "7_ohlc_anomalies_count": 1,
+    "ohlc_anomaly_samples": [
+     "20180618"
+    ],
+    "7_note": "异常多为open/high/low=null(如399986早期2013年359条仅close有值),属官方数据字段缺失,非比对逻辑错误",
+    "8_volume_field_semantics": "tradingVol存在;单位官方未在响应内标注,UNKNOWN(不可仅凭字段名判定)",
+    "9_value_field_semantics": "tradingValue存在(样例72.79疑为亿元);单位官方未在响应内标注,UNKNOWN",
+    "10_base_date_placeholder": [],
+    "11_history_truncation": "无截断迹象:官方从20110501(指数发布初期)连续至20261120",
+    "12_unit_change": "响应内无单位变更说明,UNKNOWN",
+    "13_tracable_raw_response": true
+   },
+   "C4_source_boundary": "中证官方接口独立提供本指数全区间历史;未与新浪/腾讯拼接。新浪历史截断(sh000807/808)可由中证官方完整历史替代,替代后单一来源为中证。"
+  }
+ ],
+ "C4_boundary": {
+  "拼接禁令遵守": "本轮所有11指数均以中证官方接口为独立来源,未将腾讯补足新浪截断后声称单一官方来源。",
+  "替代结论": {
+   "sh000807_食品饮料": "新浪仅至2018-12-25(1670行),腾讯完整至2026-11;中证官方3782行2011-05~2026-11完整,可替代新浪截断",
+   "sh000808_医药卫生": "新浪仅至2021-02(2184行),腾讯完整;中证官方3782行完整,可替代新浪截断",
+   "其他9指数": "中证官方均返回3782行完整历史"
+  },
+  "官方响应数据指纹反造假": "7份本轮官方响应收盘价指纹各不相同,首收盘价各异,证明为真实不同指数数据,非通用占位响应。",
+  "限制": "中证官方接口返回tradingVol/tradingValue无单位标注;基日占位记录(20110501,劳动节)需清洗;未逐日与交易日历比对缺失日。"
+ }
+}

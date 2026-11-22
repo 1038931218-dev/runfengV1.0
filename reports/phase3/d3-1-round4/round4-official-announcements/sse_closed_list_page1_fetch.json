@@ -1,0 +1,72 @@
+{
+ "name": "sse_closed_list_page1",
+ "url": "https://www.sse.com.cn/disclosure/dealinstruc/closed/list/",
+ "requested_at": "2026-11-22T21:54:23.721326+08:00",
+ "status": "ok",
+ "http_status": 200,
+ "bytes": 31764,
+ "sha256": "aaebb9d5f7b6642c98596eb8e4d2bd5785339c9f09c6f5bd63774bbe20969396",
+ "file": "reports/phase3/d3-1-round4/round4-official-announcements/sse_closed_list_page1_raw.html",
+ "announcement_links": [
+  {
+   "title": "关于2026年中秋节、国庆节休市安排的公告",
+   "href": "/disclosure/announcement/general/c/c_20260915_10832273.shtml"
+  },
+  {
+   "title": "关于2026年端午节休市安排的公告",
+   "href": "/disclosure/announcement/general/c/c_20260611_10821419.shtml"
+  },
+  {
+   "title": "关于2026年劳动节休市安排的公告",
+   "href": "/disclosure/announcement/general/c/c_20260423_10816345.shtml"
+  },
+  {
+   "title": "关于2026年清明节休市安排的公告",
+   "href": "/disclosure/announcement/general/c/c_20260331_10813622.shtml"
+  },
+  {
+   "title": "关于2026年春节休市安排的公告",
+   "href": "/disclosure/announcement/general/c/c_20260205_10808618.shtml"
+  },
+  {
+   "title": "关于上海证券交易所2026年部分节假日休市安排的通知",
+   "href": "/disclosure/announcement/general/c/c_20251222_10802507.shtml"
+  },
+  {
+   "title": "关于2025年国庆节、中秋节休市安排的公告",
+   "href": "/disclosure/announcement/general/c/c_20250925_10792976.shtml"
+  },
+  {
+   "title": "关于2025年端午节休市安排的公告",
+   "href": "/disclosure/announcement/general/c/c_20250522_10779724.shtml"
+  },
+  {
+   "title": "关于2025年劳动节休市安排的公告",
+   "href": "/disclosure/announcement/general/c/c_20250424_10777645.shtml"
+  },
+  {
+   "title": "关于2025年清明节休市安排的公告",
+   "href": "/disclosure/announcement/general/c/c_20250327_10776462.shtml"
+  },
+  {
+   "title": "关于2025年春节休市安排的公告",
+   "href": "/disclosure/announcement/general/c/c_20250123_10770570.shtml"
+  },
+  {
+   "title": "关于上海证券交易所2025年部分节假日休市安排的通知",
+   "href": "/disclosure/announcement/general/c/c_20241223_10767108.shtml"
+  },
+  {
+   "title": "关于2024年国庆节休市安排的公告",
+   "href": "/disclosure/announcement/general/c/c_20240919_10762012.shtml"
+  },
+  {
+   "title": "关于2024年中秋节休市安排的公告",
+   "href": "/disclosure/announcement/general/c/c_20240905_10761311.shtml"
+  },
+  {
+   "title": "关于2024年端午节休市安排的公告",
+   "href": "/disclosure/announcement/general/c/c_20240530_10758158.shtml"
+  }
+ ]
+}

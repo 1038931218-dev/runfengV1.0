@@ -1,0 +1,38 @@
+[
+ {
+  "name": "csindex_data_service",
+  "url": "https://www.csindex.com.cn/zh-CN/indices/index#/dataService",
+  "requested_at": "2026-11-22T22:02:54.512330+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 19563,
+  "sha256": "7e2525ba710203655fac8085e28eb78bfd44e67c766c6060c2baa4e20fc25c79",
+  "file": "reports/phase3/d3-1-round4/round4-licensing/csindex_data_service_raw.html",
+  "mentions_数据服务": false,
+  "mentions_指数数据": false,
+  "mentions_授权": false,
+  "mentions_service": false
+ },
+ {
+  "name": "csindex_contact",
+  "url": "https://www.csindex.com.cn/zh-CN/indices/index#/company/contactUs",
+  "requested_at": "2026-11-22T22:02:54.663462+08:00",
+  "status": "error",
+  "error_type": "URLError",
+  "error": "<urlopen error [Errno 104] Connection reset by peer>"
+ },
+ {
+  "name": "csindex_copyright",
+  "url": "https://www.csindex.com.cn/",
+  "requested_at": "2026-11-22T22:02:54.720319+08:00",
+  "status": "ok",
+  "http_status": 200,
+  "bytes": 19563,
+  "sha256": "7e2525ba710203655fac8085e28eb78bfd44e67c766c6060c2baa4e20fc25c79",
+  "file": "reports/phase3/d3-1-round4/round4-licensing/csindex_copyright_raw.html",
+  "mentions_数据服务": false,
+  "mentions_指数数据": false,
+  "mentions_授权": false,
+  "mentions_service": false
+ }
+]
