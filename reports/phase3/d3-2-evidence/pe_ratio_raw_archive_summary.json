@@ -1,0 +1,67 @@
+{
+  "task": "D3-2 R4 PE四日期完整响应归档汇总",
+  "collected_at": "2026-11-22T09:49:32.955344+08:00",
+  "akshare_version": "1.18.22",
+  "results": [
+    {
+      "date": "20231130",
+      "file": "pe_ratio_20231130_raw_response.json",
+      "file_sha256": "68171fdb2c565ee1ad4b236cfe7933beee9bea4a5d14063ff471d91b67d8ac14",
+      "http_status": 200,
+      "url": "http://webapi.cninfo.com.cn/api/sysapi/p_sysapi1087",
+      "body_len_bytes": 23814,
+      "body_sha256": "2df501a6c898e2e75a4c628c27b5f957b8f84cb426bd943391a85d658f7d2686",
+      "sha256_match_first_round": true,
+      "byte_len_match_first_round": true,
+      "records_count": 109,
+      "total_field": 109,
+      "akshare_dataframe_rows": 109,
+      "parse_status": "ok"
+    },
+    {
+      "date": "20241129",
+      "file": "pe_ratio_20241129_raw_response.json",
+      "file_sha256": "d34f914b125b39921cc0b7a08d8a34a19087cacc1fa781dcb49e1108e69db59b",
+      "http_status": 200,
+      "url": "http://webapi.cninfo.com.cn/api/sysapi/p_sysapi1087",
+      "body_len_bytes": 29556,
+      "body_sha256": "af0c17d34c075bbc4272930372d67023067bc4712296f7be63ea68cfb19498a1",
+      "sha256_match_first_round": true,
+      "byte_len_match_first_round": true,
+      "records_count": 120,
+      "total_field": 120,
+      "akshare_dataframe_rows": 120,
+      "parse_status": "ok"
+    },
+    {
+      "date": "20251128",
+      "file": "pe_ratio_20251128_raw_response.json",
+      "file_sha256": "7e0afb5b4b2bad589d3df3197ece28ea756cb6824c98d6fb0804966cb9f349c4",
+      "http_status": 200,
+      "url": "http://webapi.cninfo.com.cn/api/sysapi/p_sysapi1087",
+      "body_len_bytes": 29570,
+      "body_sha256": "66b4f875850b1a6c80970ec736a093016f1331c88c90f0f5e8b4db7a615b596b",
+      "sha256_match_first_round": true,
+      "byte_len_match_first_round": true,
+      "records_count": 120,
+      "total_field": 120,
+      "akshare_dataframe_rows": 120,
+      "parse_status": "ok"
+    },
+    {
+      "date": "20261120",
+      "file": "pe_ratio_20261120_raw_response.json",
+      "file_sha256": "a1befa9fbfc4a79f54ec298beb025b4773faa98bf5ae589e074c756e89afff50",
+      "http_status": 200,
+      "url": "http://webapi.cninfo.com.cn/api/sysapi/p_sysapi1087",
+      "body_len_bytes": 29551,
+      "body_sha256": "c3ad41ff685b4c7da8b52ccdf06cd420962fe0092d9973e5da67d54a9c634b58",
+      "sha256_match_first_round": true,
+      "byte_len_match_first_round": true,
+      "records_count": 120,
+      "total_field": 120,
+      "akshare_dataframe_rows": 120,
+      "parse_status": "ok"
+    }
+  ]
+}
