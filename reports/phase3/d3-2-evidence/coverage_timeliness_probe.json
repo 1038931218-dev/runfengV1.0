@@ -79,15 +79,8 @@
           }
         ],
         "elapsed_ms": 417,
-        "termination_date_nonnull": 294,
-        "termination_date_samples": [
-          null,
-          null,
-          null,
-          null,
-          null,
-          null
-        ],
+        "termination_date_nonnull": 0,
+        "termination_date_samples": [],
         "level_distribution": {
           "4": 164,
           "3": 88,
@@ -97,7 +90,10 @@
         },
         "industry_type_codes": [
           "008002"
-        ]
+        ],
+        "termination_date_nonnull_original_wrong": 294,
+        "termination_date_nonnull_note": "修正:原 termination_date_nonnull 误填为目录总行数(row_count=294),非终止日期非空数。样本 termination_date_samples 原值全为 null,且 cninfo_category_termination_audit.json 对同一标准 notna_count=0,故真实非空数=0。修正后与独立审计一致。",
+        "termination_date_audit_ref": "cninfo_category_termination_audit.json#standards[].notna_count"
       },
       {
         "interface": "ak.stock_industry_category_cninfo",
@@ -173,15 +169,8 @@
           }
         ],
         "elapsed_ms": 433,
-        "termination_date_nonnull": 577,
-        "termination_date_samples": [
-          null,
-          null,
-          null,
-          null,
-          null,
-          null
-        ],
+        "termination_date_nonnull": 0,
+        "termination_date_samples": [],
         "level_distribution": {
           "3": 456,
           "2": 91,
@@ -190,7 +179,10 @@
         },
         "industry_type_codes": [
           "008001"
-        ]
+        ],
+        "termination_date_nonnull_original_wrong": 577,
+        "termination_date_nonnull_note": "修正:原 termination_date_nonnull 误填为目录总行数(row_count=577),非终止日期非空数。样本 termination_date_samples 原值全为 null,且 cninfo_category_termination_audit.json 对同一标准 notna_count=0,故真实非空数=0。修正后与独立审计一致。",
+        "termination_date_audit_ref": "cninfo_category_termination_audit.json#standards[].notna_count"
       },
       {
         "interface": "ak.stock_industry_category_cninfo",
@@ -266,15 +258,8 @@
           }
         ],
         "elapsed_ms": 343,
-        "termination_date_nonnull": 512,
-        "termination_date_samples": [
-          null,
-          null,
-          null,
-          null,
-          null,
-          null
-        ],
+        "termination_date_nonnull": 0,
+        "termination_date_samples": [],
         "level_distribution": {
           "3": 346,
           "2": 134,
@@ -283,7 +268,10 @@
         },
         "industry_type_codes": [
           "008003"
-        ]
+        ],
+        "termination_date_nonnull_original_wrong": 512,
+        "termination_date_nonnull_note": "修正:原 termination_date_nonnull 误填为目录总行数(row_count=512),非终止日期非空数。样本 termination_date_samples 原值全为 null,且 cninfo_category_termination_audit.json 对同一标准 notna_count=0,故真实非空数=0。修正后与独立审计一致。",
+        "termination_date_audit_ref": "cninfo_category_termination_audit.json#standards[].notna_count"
       }
     ],
     "cninfo_pe_ratio_timeliness": [

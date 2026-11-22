@@ -20,7 +20,11 @@
         "content_type": "application/json;charset=UTF-8",
         "body_len": 2430,
         "body_sha256": "7511f528e6a62283f8a83eed85d7cd47a94c8df884225bcbaad50fe129444db9",
-        "body_sample": "{\"code\":\"200\",\"msg\":\"Success\",\"data\":[{\"tradeDate\":\"20230101\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2372.32,\"high\":2403.14,\"low\":2364.31,\"close\":2399.25,\"change\":22.55,\"changePct\":0.95,\"tradingVol\":8.044845E8,\"tradingValue\":59.69,\"consNumber\":20.0,\"peg\":7.05},{\"tradeDate\":\"20230103\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2372.32,\"high\":2403.14,\"low\":2364.31,\"close\""
+        "body_sample": "{\"code\":\"200\",\"msg\":\"Success\",\"data\":[{\"tradeDate\":\"20230101\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2372.32,\"high\":2403.14,\"low\":2364.31,\"close\":2399.25,\"change\":22.55,\"changePct\":0.95,\"tradingVol\":8.044845E8,\"tradingValue\":59.69,\"consNumber\":20.0,\"peg\":7.05},{\"tradeDate\":\"20230103\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2372.32,\"high\":2403.14,\"low\":2364.31,\"close\"",
+        "body_sample_note": "body_sample 仅为正文前若干字节的片段(不足以展示第二条 20230103 记录全貌)。完整原始响应正文已独立归档于 csindex_000928_raw_response.json (raw_response_body 字段),其 body_sha256 与本条一致,可独立复核。",
+        "full_body_archived": true,
+        "full_body_file": "csindex_000928_raw_response.json",
+        "full_body_file_sha256": "7d791f62213343c3123d6c46f619c437e5179a807b9dab744f732ac761a65ecf"
       }
     ],
     "http_body_note": "原始JSON正文首600字节样本已存body_sample;完整正文SHA256见body_sha256;上游响应可据此独立复现",

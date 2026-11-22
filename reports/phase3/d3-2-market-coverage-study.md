@@ -3,7 +3,7 @@
 - 阶段：D3-2 分类数据依赖攻关（只读调查，不开发业务代码）
 - 基线：`833f38b84254dceb6e0e5986bbbd8ae6a285229f`；分支：`dev/d-analysis-engine`
 - 采集时间：2026-11-22（北京时间）；AKShare 1.18.22
-- 证据：`coverage_timeliness_probe.json`（SHA256 `2349ab0d2594287698c411054a6f01fecab56da388e198305776990f70b64e8a`）、`standards_probe.json`（SHA256 `d708312c55f20a4dac197930d8a06c1593d0c8c039187af44756e5476673a8e5`）、沿用 `d3-1-prerequisite-evidence/full_universe_code_audit.json`
+- 证据：`coverage_timeliness_probe.json`（SHA256 `bfdf3427ae3d7b4ad8810353f9b354dde57b319fd339e8e11ec38e8016b81882`）、`standards_probe.json`（SHA256 `d708312c55f20a4dac197930d8a06c1593d0c8c039187af44756e5476673a8e5`）、沿用 `d3-1-prerequisite-evidence/full_universe_code_audit.json`
 
 > 结论分级：已证实 / 未证实 / unknown / unavailable / 推测。五结论互不替代。
 
@@ -47,7 +47,7 @@
 - **纪律**：这是"行业指数成分快照"，不是行业分类；成分数 ≠ 行业映射数，并集 379 ≠ 全市场覆盖率分子。只能证明"指数成分可取"，不能回答"股票→行业分类覆盖"。
 
 ### 2.3 巨潮 pe_ratio 行业级：覆盖行业而非个股
-`stock_industry_pe_ratio_cninfo(symbol='证监会行业分类', date=...)` 返回 120 行行业级汇总（行业编码 A/B/...、行业名称、公司数量、纳入计算公司数量），**不含个股代码**。可回答"行业分类体系的行业级统计"，不能回答"个股覆盖"。
+`stock_industry_pe_ratio_cninfo(symbol='证监会行业分类', date=...)` 返回 109-120 行行业级汇总（2023-11-30 为 109 行，其余三个日期各 120 行）（行业编码 A/B/...、行业名称、公司数量、纳入计算公司数量），**不含个股代码**。可回答"行业分类体系的行业级统计"，不能回答"个股覆盖"。
 
 ---
 
@@ -72,7 +72,7 @@
 
 **无法完成以 5580 为分母的全市场行业分类覆盖核验。** 明确标记：
 
-- **全市场精确覆盖率：BLOCKED/unavailable** —— 无任一分类源给出"全市场股票→明确标准行业代码"的当前有效映射；profile 仅 200 样本、标准 unknown；中证成分是行业指数成分非行业分类；巨潮 change 历史止于 2024-02-08 且按单只调用。
+- **全市场精确覆盖率：BLOCKED/unavailable** —— 无任一分类源给出"全市场股票→明确标准行业代码"的当前有效映射；profile 仅 200 样本、标准 unknown；中证成分是行业指数成分非行业分类；巨潮 change 三只样本历史止于 2024-02-08（非全市场结论）且按单只调用。
 - **板块覆盖率**：仅中证指数成分给出分板块成分数（非覆盖率），不能作为分类覆盖证据。
 - **未估算冒充**：不把 200 样本 100%、379 成分并集或 120 行业行外推为全市场覆盖率。
 

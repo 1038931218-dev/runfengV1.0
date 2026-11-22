@@ -1,0 +1,19 @@
+{
+  "task": "D3-2 第四轮补证: 中证 000928 元旦异常完整原始 HTTP 响应正文",
+  "note": "重新请求与 D3-2 首轮完全相同的 URL+参数恢复完整正文;SHA256 与首轮捕获一致,证明为同一响应;非新增探测。",
+  "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+  "params": {
+    "indexCode": "000928",
+    "startDate": "20230101",
+    "endDate": "20230110"
+  },
+  "http_status": 200,
+  "content_type": "application/json;charset=UTF-8",
+  "body_len_bytes": 2430,
+  "body_sha256": "7511f528e6a62283f8a83eed85d7cd47a94c8df884225bcbaad50fe129444db9",
+  "first_round_archived_sha256": "7511f528e6a62283f8a83eed85d7cd47a94c8df884225bcbaad50fe129444db9",
+  "sha256_match_first_round": true,
+  "recovered_at": "2026-11-22T09:25:42.232623+08:00",
+  "raw_response_body": "{\"code\":\"200\",\"msg\":\"Success\",\"data\":[{\"tradeDate\":\"20230101\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2372.32,\"high\":2403.14,\"low\":2364.31,\"close\":2399.25,\"change\":22.55,\"changePct\":0.95,\"tradingVol\":8.044845E8,\"tradingValue\":59.69,\"consNumber\":20.0,\"peg\":7.05},{\"tradeDate\":\"20230103\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2372.32,\"high\":2403.14,\"low\":2364.31,\"close\":2399.25,\"change\":22.55,\"changePct\":0.95,\"tradingVol\":8.044845E8,\"tradingValue\":59.69,\"consNumber\":20.0,\"peg\":7.05},{\"tradeDate\":\"20230104\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2392.97,\"high\":2392.97,\"low\":2352.37,\"close\":2364.66,\"change\":-34.59,\"changePct\":-1.44,\"tradingVol\":8.116854E8,\"tradingValue\":65.88,\"consNumber\":20.0,\"peg\":6.98},{\"tradeDate\":\"20230105\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2364.38,\"high\":2373.01,\"low\":2352.29,\"close\":2368.03,\"change\":3.37,\"changePct\":0.14,\"tradingVol\":7.384818E8,\"tradingValue\":60.21,\"consNumber\":20.0,\"peg\":6.97},{\"tradeDate\":\"20230106\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2366.73,\"high\":2390.23,\"low\":2363.97,\"close\":2387.77,\"change\":19.74,\"changePct\":0.83,\"tradingVol\":7.510743E8,\"tradingValue\":61.23,\"consNumber\":20.0,\"peg\":6.99},{\"tradeDate\":\"20230109\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2400.25,\"high\":2409.02,\"low\":2378.61,\"close\":2400.64,\"change\":12.87,\"changePct\":0.54,\"tradingVol\":6.925437E8,\"tradingValue\":66.38,\"consNumber\":20.0,\"peg\":7.02},{\"tradeDate\":\"20230110\",\"indexCode\":\"000928\",\"indexNameCnAll\":\"中证能源指数\",\"indexNameCn\":\"800能源\",\"indexNameEnAll\":\"CSI Energy Index\",\"indexNameEn\":\"800 Energy\",\"open\":2396.21,\"high\":2401.21,\"low\":2372.14,\"close\":2380.86,\"change\":-19.78,\"changePct\":-0.82,\"tradingVol\":6.137249E8,\"tradingValue\":50.21,\"consNumber\":20.0,\"peg\":6.97}],\"success\":true}",
+  "jan_duplicate_records_note": "data[0]=20230101(元旦非交易日) 与 data[1]=20230103 的 close/tradingVol/tradingValue 完全相同,根因在上游。"
+}
