@@ -1,0 +1,2930 @@
+{
+  "task": "D3-1-blocker task B 行业指数源质量调查 - 腾讯/新浪双源",
+  "executed_at": "2026-11-22T11:13:47.249684+08:00",
+  "akshare_version": "1.18.22",
+  "method": "对每指数以腾讯stock_zh_index_daily_tx + 新浪stock_zh_index_daily拉完整历史,逐日比对close与量纲,检查重复/缺失/异常",
+  "indices": [
+    {
+      "symbol": "sh000932",
+      "name": "800消费",
+      "cross": {
+        "common_dates": 4223,
+        "close_max_abs_diff": 0.006000000001222361,
+        "close_strict_equal_days": 410,
+        "volume_ratio_sina_over_tx": null
+      },
+      "tencent": {
+        "status": "ok",
+        "rows": 4223,
+        "columns": [
+          "date",
+          "open",
+          "close",
+          "high",
+          "low",
+          "amount"
+        ],
+        "date_min": "2009-07-03",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 4254.46,
+        "close_max": 31779.73,
+        "close_nonpositive": 0,
+        "volume_col": "amount",
+        "requested_at": "2026-11-22T11:13:54.552541+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+            "params": {
+              "code": "sh000932",
+              "type": "qfq",
+              "_var": "trend_qfq",
+              "r": "0.3506048543943414"
+            },
+            "http_status": 200,
+            "body_len": 24509,
+            "body_sha256": "77efd91d840e530426a29d80103e6a5b4e734b4a4fa070a63386fa8d8297d956"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2009-01-01,2010-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 40533,
+            "body_sha256": "06aebcea8bb2011e301071ff6a984af5006ad513b8d41b73f7577a3c44d56f30"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2010-01-01,2011-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 65943,
+            "body_sha256": "8a4c8733ca937254e9c24699da6b9902e557a9e49bd0f8f9bf735471896259ad"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2011-01-01,2012-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68973,
+            "body_sha256": "90d6689556e98c692c9497ec7b5d74a4a4e35e94f71230ddb1f845873238033d"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2012-01-01,2013-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68947,
+            "body_sha256": "40c6f733d231cb55ddf6a8c108449d38cf2690bb1c2c2945c6ff6d402f9a7d9c"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2013-01-01,2014-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69069,
+            "body_sha256": "a2322e2142b899786e372f2008061b8fa205d9dca3f9f325a0a0a0a955161cdd"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2014-01-01,2015-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69537,
+            "body_sha256": "ec996b598a53e40bdf7092de8642d61f809847742fc2c1f01fd30b0c02a47653"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2015-01-01,2016-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69671,
+            "body_sha256": "d131e8e58c7cf5fb0955264a7898bb591c50bc9f00b5c53856dbcd3042dd5e40"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2016-01-01,2017-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69902,
+            "body_sha256": "830846a0592081ae65b63f2efeeff7c7aaac459747dd201b64f2f3074b35cb9c"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2017-01-01,2018-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70483,
+            "body_sha256": "19d2779e41d36f1a858f650e0acd1d4bcf2a652405a07ef9f18ad60fa010efe2"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2018-01-01,2019-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71571,
+            "body_sha256": "86c524e99a3a38ff0949ab4fae0389ce8b8a8494157d9d4e71cb38b4e960056e"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2019-01-01,2020-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 72009,
+            "body_sha256": "8a06741e9e8c37683c334c8d9c1a9ad13fabc69450c731a95a4a756578b9869c"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2020-01-01,2021-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 72362,
+            "body_sha256": "06cb50b157d2ad248e792cddbf5b855d9875ef3b75f3f4f21042f0894651b9a7"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2021-01-01,2022-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 72308,
+            "body_sha256": "c019bc3735608537ca1acb2fb52768206308fc51447a1ac6f3a87be99340f071"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2022-01-01,2023-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 72156,
+            "body_sha256": "8af17be757af322705ac41921893bc5185360fb193bcc4a1fc05d5e147042ae1"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2023-01-01,2024-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 72054,
+            "body_sha256": "13c7d8ac31cbc0eb50202ef6a4840abea3a18975f95145cecaef9f80f2435371"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2024-01-01,2025-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 72064,
+            "body_sha256": "aa677bc6e438a9784d766036182bd8e36de773dbb3cbfe8c7824b9657077d1a2"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2025-01-01,2026-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 72122,
+            "body_sha256": "4df9d03216b51b55bbd8be47a982a1f00b10c7085709a9b914e6c37cfed56931"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000932,day,2026-01-01,2027-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 72122,
+            "body_sha256": "9f30feeab07172022ae54f9e141d8e2e52eec9001ab946ee245793e7b4e6b06f"
+          }
+        ]
+      },
+      "sina": {
+        "status": "ok",
+        "rows": 4223,
+        "columns": [
+          "date",
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "date_min": "2009-07-03",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 4254.458,
+        "close_max": 31779.735,
+        "close_nonpositive": 0,
+        "volume_col": "volume",
+        "requested_at": "2026-11-22T11:13:54.858944+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://finance.sina.com.cn/realstock/company/sh000932/hisdata/klc_kl.js",
+            "params": {
+              "d": "2020_2_4"
+            },
+            "http_status": 200,
+            "body_len": 76708,
+            "body_sha256": "998483eb9f93dc5ae73b37d8f31b1a289b69eaeea6cc890a70fd1931de51de20"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sh000819",
+      "name": "有色金属",
+      "cross": {
+        "common_dates": 3533,
+        "close_max_abs_diff": 0.005000000001018634,
+        "close_strict_equal_days": 329,
+        "volume_ratio_sina_over_tx": null
+      },
+      "tencent": {
+        "status": "ok",
+        "rows": 3772,
+        "columns": [
+          "date",
+          "open",
+          "close",
+          "high",
+          "low",
+          "amount"
+        ],
+        "date_min": "2011-05-13",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 2992.01,
+        "close_max": 12560.05,
+        "close_nonpositive": 0,
+        "volume_col": "amount",
+        "requested_at": "2026-11-22T11:14:01.340308+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+            "params": {
+              "code": "sh000819",
+              "type": "qfq",
+              "_var": "trend_qfq",
+              "r": "0.3506048543943414"
+            },
+            "http_status": 200,
+            "body_len": 20196,
+            "body_sha256": "45c2db5ab890da7c733362fb9c99d1b8845819e7bfaf5468e55430e0f1af4082"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2012-01-01,2013-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68862,
+            "body_sha256": "32f2f7128f2347f51f2af6a9bb8f09e1bfc4b7c8548103ec69683b9257a34e15"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2013-01-01,2014-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68894,
+            "body_sha256": "4bc365c304984f014e04acc924217642450b6d007d7a78245aa3b2ed9af0ba56"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2014-01-01,2015-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69301,
+            "body_sha256": "cb24a19d531c76a3b21be395da2992d65aa5ae274d93ed57e790212f5fe5f638"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2015-01-01,2016-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69732,
+            "body_sha256": "814f265252a5fdf50c65205e7ae04d30d7e50248817f61382e2d1d0ac8f6f047"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2016-01-01,2017-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69827,
+            "body_sha256": "a8c68b0adf652309460abbcc8b3fe823149d3592921e3662fa3fb138bfa1623e"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2017-01-01,2018-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69711,
+            "body_sha256": "29ce1a6b4a09845444eef39af6550d4f8d76eeacdf9dba4817d9a45a1a5c12e7"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2018-01-01,2019-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69682,
+            "body_sha256": "f99e455c65caa4d84500394c6faaf63ca4300bb49af910479bc2bb59c50934e8"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2019-01-01,2020-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69710,
+            "body_sha256": "f17a63e119df105eab945d44fa85573f4ab75feacb7975ea599a7b6c0326d09f"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2020-01-01,2021-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69873,
+            "body_sha256": "7e5074d810b755f62419b172b9ac1d4e47e2f0511e77f6541a14882dac151583"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2021-01-01,2022-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69940,
+            "body_sha256": "98a1a2fbb31e841113df2304748cd982bf1d6152345038c3b426e3dab144b294"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2022-01-01,2023-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69908,
+            "body_sha256": "154871c4c052e2f10c8f5afc751eaa8714c96df5535d8451487906b85b896ed1"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2023-01-01,2024-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69899,
+            "body_sha256": "dcb1e720e53cca65895b215a9309e01a73a8878d6d7485d03f0adef1357c9831"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2024-01-01,2025-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69921,
+            "body_sha256": "92c8b79e7ca411e7b528dd799e9f396b6a79d97d9e7303e086fbbf39a62f0fcd"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2025-01-01,2026-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70331,
+            "body_sha256": "b50ab03ae27b21ce9c72a5f44d5542f32840f7f6bc8424915c17a7cebabaac5f"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000819,day,2026-01-01,2027-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70331,
+            "body_sha256": "b50ab03ae27b21ce9c72a5f44d5542f32840f7f6bc8424915c17a7cebabaac5f"
+          }
+        ]
+      },
+      "sina": {
+        "status": "ok",
+        "rows": 3533,
+        "columns": [
+          "date",
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "date_min": "2012-05-09",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 2992.012,
+        "close_max": 12560.047,
+        "close_nonpositive": 0,
+        "volume_col": "volume",
+        "requested_at": "2026-11-22T11:14:01.651426+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://finance.sina.com.cn/realstock/company/sh000819/hisdata/klc_kl.js",
+            "params": {
+              "d": "2020_2_4"
+            },
+            "http_status": 200,
+            "body_len": 63300,
+            "body_sha256": "00d8d5c914b8eb362876fee6ddb7b99f8ee9c1054c92c6412be907365e8c4f80"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sh000991",
+      "name": "全指医药",
+      "cross": {
+        "common_dates": 3716,
+        "close_max_abs_diff": 0.010000000000218279,
+        "close_strict_equal_days": 484,
+        "volume_ratio_sina_over_tx": null
+      },
+      "tencent": {
+        "status": "ok",
+        "rows": 3716,
+        "columns": [
+          "date",
+          "open",
+          "close",
+          "high",
+          "low",
+          "amount"
+        ],
+        "date_min": "2011-08-02",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 4100.67,
+        "close_max": 16708.55,
+        "close_nonpositive": 0,
+        "volume_col": "amount",
+        "requested_at": "2026-11-22T11:14:07.942158+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+            "params": {
+              "code": "sh000991",
+              "type": "qfq",
+              "_var": "trend_qfq",
+              "r": "0.3506048543943414"
+            },
+            "http_status": 200,
+            "body_len": 20257,
+            "body_sha256": "d29fef939aa087f8c598785b839fe3f94554412f69283630d1b4e1408590e473"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2012-01-01,2013-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 63105,
+            "body_sha256": "2b64a62e8fecfbb9b86870a6e686b709803f65347c8866ad0660057026251a11"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2013-01-01,2014-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69156,
+            "body_sha256": "6bc182b9a56de305a63f2477e5bf6f9ef1107efff6384a2c1158eb8281d51d3c"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2014-01-01,2015-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70121,
+            "body_sha256": "4c975cbb401d625ba9f36f65b32c3fc6ad048516a0b980583fcaea75ce2bce77"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2015-01-01,2016-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70571,
+            "body_sha256": "15c83d0cbf67d5fd125d6ee66c7796e620743c816c56ad67eab5ada1daa7557e"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2016-01-01,2017-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70616,
+            "body_sha256": "0ce1056873046b0337389dd13e26ed7b5569edd6fc7e9b6fef2da34305c288a0"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2017-01-01,2018-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70628,
+            "body_sha256": "fcf71eb140ce99e8e9bdace57d24587ff62afcefd68a0649593afa1bb05c0c02"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2018-01-01,2019-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70622,
+            "body_sha256": "49e94a1dc5fa34f75c80895b5696235763605bde413e8c5345e537d1c9e7e114"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2019-01-01,2020-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71239,
+            "body_sha256": "7a9f70c7950417b0d98d39ebc7262abc9792cbc457d4c8879813c52e6deef1c2"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2020-01-01,2021-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 72043,
+            "body_sha256": "d40b9729f3eb1da71c8ace8f3109d590358c421ce3f6ecde1a50ee348f9d913c"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2021-01-01,2022-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 72611,
+            "body_sha256": "884caa53b60bb9b4b2407ccc46677150fc7b17daa349e7fd8d4a6f2d818bce07"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2022-01-01,2023-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 72041,
+            "body_sha256": "7494ca9650ed0785d632796d314074323601007139d09d792ebbaa311d42458c"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2023-01-01,2024-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70972,
+            "body_sha256": "1876507de70322f7e97877cba26e7f0bd48414d8d64d7fa193c74043d2ac5a65"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2024-01-01,2025-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70080,
+            "body_sha256": "1f5ab09da768bda0e4c82dfc12679a2228c377e568854f85d18a5f2586af245b"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2025-01-01,2026-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69980,
+            "body_sha256": "3b93050f74ce468eebcacdfeae43d9282a8f7c2feacfc1c574f1759bb9830645"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000991,day,2026-01-01,2027-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69980,
+            "body_sha256": "3b93050f74ce468eebcacdfeae43d9282a8f7c2feacfc1c574f1759bb9830645"
+          }
+        ]
+      },
+      "sina": {
+        "status": "ok",
+        "rows": 3716,
+        "columns": [
+          "date",
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "date_min": "2011-08-02",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 4100.67,
+        "close_max": 16708.556,
+        "close_nonpositive": 0,
+        "volume_col": "volume",
+        "requested_at": "2026-11-22T11:14:08.332805+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://finance.sina.com.cn/realstock/company/sh000991/hisdata/klc_kl.js",
+            "params": {
+              "d": "2020_2_4"
+            },
+            "http_status": 200,
+            "body_len": 67361,
+            "body_sha256": "238374e07323b3c9f656a85e661723e66bdba7c3fa6ff1cc9af7c5dc2c96cd93"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sh000928",
+      "name": "中证能源",
+      "cross": {
+        "common_dates": 4223,
+        "close_max_abs_diff": 0.005000000000109139,
+        "close_strict_equal_days": 422,
+        "volume_ratio_sina_over_tx": null
+      },
+      "tencent": {
+        "status": "ok",
+        "rows": 4223,
+        "columns": [
+          "date",
+          "open",
+          "close",
+          "high",
+          "low",
+          "amount"
+        ],
+        "date_min": "2009-07-03",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 1364.66,
+        "close_max": 5163.05,
+        "close_nonpositive": 0,
+        "volume_col": "amount",
+        "requested_at": "2026-11-22T11:14:15.951648+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+            "params": {
+              "code": "sh000928",
+              "type": "qfq",
+              "_var": "trend_qfq",
+              "r": "0.3506048543943414"
+            },
+            "http_status": 200,
+            "body_len": 24043,
+            "body_sha256": "15cce8eb2bcbf68312f9cc6c92a2dcf5574f828d94b6bbe7f47d5003599e6bf0"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2009-01-01,2010-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 40520,
+            "body_sha256": "659985e4fdd602de4c99ed57ef3c94f0564897c9f0d29b197e058eebffe9e3e4"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2010-01-01,2011-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 65956,
+            "body_sha256": "1aee328fa1afab103218a406a3866e5cdcdf82a4c553632448266f9253b8db65"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2011-01-01,2012-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68952,
+            "body_sha256": "47fd6d70f6272e4bd36f9a152d5d955390517075ef48518ac59264fe127ee535"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2012-01-01,2013-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68838,
+            "body_sha256": "1eba67d3d0a45ae8f0c55b29b7a1e80a86e11052ebfe2023b7501deb1d95149c"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2013-01-01,2014-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68952,
+            "body_sha256": "bb3fcaa34f3caea4608859d1fb6d5ae51fb826097ad3775dec81a40a505623ac"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2014-01-01,2015-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69326,
+            "body_sha256": "7f6c6e2528f50d237d40ca1abaf3c8f7f8716e46e9f16341387b9cc22cc9f3c0"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2015-01-01,2016-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69412,
+            "body_sha256": "172a2a72ef558199737ed2c04b073b3bb1d6a2a22d3bcfbd8a5982bd14f66fda"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2016-01-01,2017-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69167,
+            "body_sha256": "8c3421c865b65a8e92091fee79fb0673a40ec9e7a84b52f6f9aa7294f16ff5e0"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2017-01-01,2018-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68979,
+            "body_sha256": "fc85c9e4a197101e47f2f80ce0fb576d8ce0bd1ca67692de95c7efb886596ad4"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2018-01-01,2019-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69031,
+            "body_sha256": "37ed4c606bd0a2c14c78be698a5699215dc82e21910b09b223ab0a069ea3d104"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2019-01-01,2020-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69007,
+            "body_sha256": "76e38e56c817508bfe5e77ad315c238acdd16d87a68920c6bf71e523805be22d"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2020-01-01,2021-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69204,
+            "body_sha256": "6bdf5690e1b029cd49550680daea9f399dcd10db04242ca40b1fd88db1dbb09d"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2021-01-01,2022-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69578,
+            "body_sha256": "f4fc0a7f3a3c40187a71426712f13a619ef1171d4a9a45786bc0e4bdf9a582c6"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2022-01-01,2023-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69626,
+            "body_sha256": "7f03d9ef10ae8be15eb4c40b7087c14c38949b4f37ff4c495137da7e93e3f4ce"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2023-01-01,2024-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69573,
+            "body_sha256": "8250fe09c144b69362f17dab297f50b5ab65916c0b75712f86ac1a074784aa4f"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2024-01-01,2025-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69564,
+            "body_sha256": "5bf3f40ea6f9693e7a0e6c21ff5594e4cf4baed4864e2e399e83626c543d58cb"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2025-01-01,2026-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69814,
+            "body_sha256": "ab7c4b5f6bab9fd72e1a353437fb8c2f66ce0f66de8c44f46a3b562ad76dd357"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000928,day,2026-01-01,2027-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69814,
+            "body_sha256": "ab7c4b5f6bab9fd72e1a353437fb8c2f66ce0f66de8c44f46a3b562ad76dd357"
+          }
+        ]
+      },
+      "sina": {
+        "status": "ok",
+        "rows": 4223,
+        "columns": [
+          "date",
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "date_min": "2009-07-03",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 1364.658,
+        "close_max": 5163.051,
+        "close_nonpositive": 0,
+        "volume_col": "volume",
+        "requested_at": "2026-11-22T11:14:16.533834+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://finance.sina.com.cn/realstock/company/sh000928/hisdata/klc_kl.js",
+            "params": {
+              "d": "2020_2_4"
+            },
+            "http_status": 200,
+            "body_len": 71477,
+            "body_sha256": "7e61232e26cffcda973f41494dd14fdb27951b530cf766bfe507da58abd0d8ef"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sh000807",
+      "name": "食品饮料",
+      "cross": {
+        "common_dates": 1670,
+        "close_max_abs_diff": 0.00999999999839929,
+        "close_strict_equal_days": 169,
+        "volume_ratio_sina_over_tx": null
+      },
+      "tencent": {
+        "status": "ok",
+        "rows": 3772,
+        "columns": [
+          "date",
+          "open",
+          "close",
+          "high",
+          "low",
+          "amount"
+        ],
+        "date_min": "2011-05-13",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 5565.32,
+        "close_max": 41698.97,
+        "close_nonpositive": 0,
+        "volume_col": "amount",
+        "requested_at": "2026-11-22T11:14:23.128486+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+            "params": {
+              "code": "sh000807",
+              "type": "qfq",
+              "_var": "trend_qfq",
+              "r": "0.3506048543943414"
+            },
+            "http_status": 200,
+            "body_len": 21008,
+            "body_sha256": "41d6104d64f49dd90e36720be19d37d1c5d4b791e4e29f060c7f585d02125956"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2012-01-01,2013-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68645,
+            "body_sha256": "0b92041a8a27f95972e47a4469ab80db890e28a03a8146e4c46c29fdf6aae540"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2013-01-01,2014-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68684,
+            "body_sha256": "40248fe05771fd51cca7b98812a69d41bb122fa908de945e1bbb25a06074e4da"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2014-01-01,2015-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69041,
+            "body_sha256": "c25a421f990180399080e131b43a201741eb1adb69a6f083486d8481a834bd1d"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2015-01-01,2016-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69148,
+            "body_sha256": "86bc0a1e3e04449654d57fbef4c9485ceb6d1c67cb2a0bea80744a40e7c18e73"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2016-01-01,2017-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69939,
+            "body_sha256": "11b7bb9aa548c56a404a1e65626b0b288e64434882c88d3a22e8fc912bc6185c"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2017-01-01,2018-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70783,
+            "body_sha256": "aa2e2c5a1a31cca88c158925b856ec3a13de88d3d5961c7e2177638a34151b25"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2018-01-01,2019-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71697,
+            "body_sha256": "cd5d1a16756d108b20d437040b7f52bb6bfa4090c38d2ee537fd0c69bfa19683"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2019-01-01,2020-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71769,
+            "body_sha256": "d39213e51b6f03251609c3611c83fde333ef8ac82c084951e0ad4302019f317a"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2020-01-01,2021-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71835,
+            "body_sha256": "bf046c407113a1f5bf20b60d45ba8392469b18bd263b0defe575f02ea1a15973"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2021-01-01,2022-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71833,
+            "body_sha256": "01801ee87259ea01de1273d9686f14d1dc178929e48fc892287391632dd20050"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2022-01-01,2023-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71823,
+            "body_sha256": "bcee9548eb51fdf8b88e0cabbfa340dda9a1e94005ee827b88681490b88976ad"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2023-01-01,2024-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71829,
+            "body_sha256": "90c37a845fb89940b60069dd5c7600a9d74204caec0b7bd62e7b9d0bf38a5992"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2024-01-01,2025-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71843,
+            "body_sha256": "59a42fbaea00348d14c140adaefbfdf29e7bd5dd9b9448058f6d20a578ab9073"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2025-01-01,2026-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71883,
+            "body_sha256": "d039c2b2e8d68f2eb8189c5939c9f992bb99fff47a601da35331ff7c05a2ccc1"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000807,day,2026-01-01,2027-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71883,
+            "body_sha256": "25a6cf9047b6db8e0deee8ffacc8f2b80c94071345cb85bea626701e3eebc4a6"
+          }
+        ]
+      },
+      "sina": {
+        "status": "ok",
+        "rows": 1670,
+        "columns": [
+          "date",
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "date_min": "2012-02-20",
+        "date_max": "2018-12-25",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 5565.32,
+        "close_max": 16219.515,
+        "close_nonpositive": 0,
+        "volume_col": "volume",
+        "requested_at": "2026-11-22T11:14:23.441059+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://finance.sina.com.cn/realstock/company/sh000807/hisdata/klc_kl.js",
+            "params": {
+              "d": "2020_2_4"
+            },
+            "http_status": 200,
+            "body_len": 30096,
+            "body_sha256": "e9f55ab695a56c053337127ffb10a7ebfcbdfde79aa6178dc333358e1e0b2d6a"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sh000808",
+      "name": "医药卫生",
+      "cross": {
+        "common_dates": 2184,
+        "close_max_abs_diff": 0.010000000000218279,
+        "close_strict_equal_days": 342,
+        "volume_ratio_sina_over_tx": null
+      },
+      "tencent": {
+        "status": "ok",
+        "rows": 3772,
+        "columns": [
+          "date",
+          "open",
+          "close",
+          "high",
+          "low",
+          "amount"
+        ],
+        "date_min": "2011-05-13",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 4010.08,
+        "close_max": 18220.28,
+        "close_nonpositive": 0,
+        "volume_col": "amount",
+        "requested_at": "2026-11-22T11:14:29.795051+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+            "params": {
+              "code": "sh000808",
+              "type": "qfq",
+              "_var": "trend_qfq",
+              "r": "0.3506048543943414"
+            },
+            "http_status": 200,
+            "body_len": 20749,
+            "body_sha256": "e52a61a59a80c326217c4b2b31c609e05bba2d194e7a5c56497f75e978da54aa"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2012-01-01,2013-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68797,
+            "body_sha256": "06bd845db22782ec63712ea4ec5bd6f7c2609e85300af4a415e4c05ad1960963"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2013-01-01,2014-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68932,
+            "body_sha256": "017377bb1fba32a24e4b1fd87a2d4986c9bbc543b6b3ba7690d9d1ed7db6ac43"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2014-01-01,2015-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69841,
+            "body_sha256": "2dfe02c13295f5180d1aa4d2b658d83e3ae22305c0dc1eb7ee33651b1363bd42"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2015-01-01,2016-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69997,
+            "body_sha256": "fa0018a619ff45c3cbe47c1f9449565645718f4922e875f8b604d96e4aec99a6"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2016-01-01,2017-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69976,
+            "body_sha256": "b45859626f7defe21e2e1f98180f8b1c27eb946ae98e35ae4e0b7bdaeb878f43"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2017-01-01,2018-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69987,
+            "body_sha256": "0cffecc66be42ba30d687aa6d1cf208cf69ec22c37d6032ad1274c4662749794"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2018-01-01,2019-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70311,
+            "body_sha256": "209e3f42f69841b0abd1159f5723afeef97ca138322d6d73c2f7a5708eaf6670"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2019-01-01,2020-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71015,
+            "body_sha256": "03e8ba3edca7864f3d5670bb926370e0cbc05723d82ebdd69847633580f52a17"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2020-01-01,2021-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71836,
+            "body_sha256": "e7d470c01d17ddd00989d4060a77af8d7397fe880e198b6b8a1049aa79b53b68"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2021-01-01,2022-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 72246,
+            "body_sha256": "4a0cac81a8a1827be5a9083e1e597867e79390c776f4b838948c464e0b224f4e"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2022-01-01,2023-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71535,
+            "body_sha256": "be34b63a357e8afc705a541948350f5f0ff54399bc5d972c81a8ddbd3a48e976"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2023-01-01,2024-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70526,
+            "body_sha256": "2f624c3688c35cab41c15eb9f4ca4f7d1984b263cc1fbea521e79e7555dc7d63"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2024-01-01,2025-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69694,
+            "body_sha256": "f7190a8f4f76d6f42927f91a784a00e165a50b24184faa0cc7bcfe104c3ffaed"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2025-01-01,2026-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69781,
+            "body_sha256": "00eb4f67a44dbdaf72b3f3ae20d089e20eb84b28245d8801bdea229d084ab14d"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000808,day,2026-01-01,2027-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69781,
+            "body_sha256": "00eb4f67a44dbdaf72b3f3ae20d089e20eb84b28245d8801bdea229d084ab14d"
+          }
+        ]
+      },
+      "sina": {
+        "status": "ok",
+        "rows": 2184,
+        "columns": [
+          "date",
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "date_min": "2012-02-20",
+        "date_max": "2021-02-04",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 4249.0,
+        "close_max": 17637.301,
+        "close_nonpositive": 0,
+        "volume_col": "volume",
+        "requested_at": "2026-11-22T11:14:30.416301+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://finance.sina.com.cn/realstock/company/sh000808/hisdata/klc_kl.js",
+            "params": {
+              "d": "2020_2_4"
+            },
+            "http_status": 200,
+            "body_len": 39306,
+            "body_sha256": "88aac84614f566857067333c21a81e443eb56cc4fa2682bd8273ab6528ba5836"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sz399986",
+      "name": "中证银行",
+      "cross": {
+        "common_dates": 2739,
+        "close_max_abs_diff": 0.006000000000312866,
+        "close_strict_equal_days": 290,
+        "volume_ratio_sina_over_tx": null
+      },
+      "tencent": {
+        "status": "ok",
+        "rows": 2739,
+        "columns": [
+          "date",
+          "open",
+          "close",
+          "high",
+          "low",
+          "amount"
+        ],
+        "date_min": "2015-08-11",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 4573.81,
+        "close_max": 8497.84,
+        "close_nonpositive": 0,
+        "volume_col": "amount",
+        "requested_at": "2026-11-22T11:14:35.470263+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+            "params": {
+              "code": "sz399986",
+              "type": "qfq",
+              "_var": "trend_qfq",
+              "r": "0.3506048543943414"
+            },
+            "http_status": 200,
+            "body_len": 15376,
+            "body_sha256": "ce11781d4f65143e11b6dd4eb191aaf730b3185118f668c404e8d0901c3f400e"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399986,day,2015-01-01,2016-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 38035,
+            "body_sha256": "6b963463a3cc8620d116584eb35920f3e22507f7d331f4eb388a59301261808c"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399986,day,2016-01-01,2017-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 63700,
+            "body_sha256": "32ce0af650b46930d4bca8418fb518587777daf73ab61d4a131a28f44575905e"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399986,day,2017-01-01,2018-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69623,
+            "body_sha256": "2213503997db7725b1dcaffd5bf5d14f5b28a908c27b91b6ed17df2c175a866f"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399986,day,2018-01-01,2019-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69898,
+            "body_sha256": "a96139367c616c0f4d7e49e63d2007ab6fe40b72d817cec1a9994ed20e86f073"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399986,day,2019-01-01,2020-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69907,
+            "body_sha256": "3597cdd0935a244bac1c4ee9b46f36e429818de11cb3f3aeac77e97b6d266cb7"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399986,day,2020-01-01,2021-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70079,
+            "body_sha256": "cf9bf3703f6b6c3cb597a8504be3a10350c0af66177b1cb516ebe6491fe5a2e4"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399986,day,2021-01-01,2022-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70181,
+            "body_sha256": "e6316371858562ad9249a484870ac8758d8fe3ebce1eac99e3b486b3036ecba7"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399986,day,2022-01-01,2023-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70177,
+            "body_sha256": "615ec157c2dd7850b55f89382fd67f8107ffa2a27cf757f43efcbf896c888e87"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399986,day,2023-01-01,2024-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70187,
+            "body_sha256": "6caae3f1b99f81bd60b03e292a58546d91bfdc77d0b32dce93605b40cd02734c"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399986,day,2024-01-01,2025-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70212,
+            "body_sha256": "42af0442c8197367c6b1ce2aa34367e4b500e1cf29a20f290f86fe659604565e"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399986,day,2025-01-01,2026-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70238,
+            "body_sha256": "e83e81fafe39052a259a6080923c45b73cd2227081523a2848b77505714e65bc"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399986,day,2026-01-01,2027-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70238,
+            "body_sha256": "e83e81fafe39052a259a6080923c45b73cd2227081523a2848b77505714e65bc"
+          }
+        ]
+      },
+      "sina": {
+        "status": "ok",
+        "rows": 2798,
+        "columns": [
+          "date",
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "date_min": "2015-05-19",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 4573.809,
+        "close_max": 8497.843,
+        "close_nonpositive": 0,
+        "volume_col": "volume",
+        "requested_at": "2026-11-22T11:14:35.883661+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://finance.sina.com.cn/realstock/company/sz399986/hisdata/klc_kl.js",
+            "params": {
+              "d": "2020_2_4"
+            },
+            "http_status": 200,
+            "body_len": 49663,
+            "body_sha256": "d481cfcfa3bc425b74f6d772c186032ffa6db71d1ae26ef6839387c3a1afe34f"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sz399975",
+      "name": "证券公司",
+      "cross": {
+        "common_dates": 2739,
+        "close_max_abs_diff": 0.014999999999986358,
+        "close_strict_equal_days": 272,
+        "volume_ratio_sina_over_tx": null
+      },
+      "tencent": {
+        "status": "ok",
+        "rows": 2739,
+        "columns": [
+          "date",
+          "open",
+          "close",
+          "high",
+          "low",
+          "amount"
+        ],
+        "date_min": "2015-08-11",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 472.62,
+        "close_max": 1152.89,
+        "close_nonpositive": 0,
+        "volume_col": "amount",
+        "requested_at": "2026-11-22T11:14:40.934807+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+            "params": {
+              "code": "sz399975",
+              "type": "qfq",
+              "_var": "trend_qfq",
+              "r": "0.3506048543943414"
+            },
+            "http_status": 200,
+            "body_len": 14818,
+            "body_sha256": "53d48f30ce863f8402a34e36abdbb96fb495ffa1e575f7aa74ee8532e49f8312"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399975,day,2015-01-01,2016-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 37067,
+            "body_sha256": "b4e50628565b3b41d18b11d8d2072f8fec4a192a75a8282892b24ba2edb42fb0"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399975,day,2016-01-01,2017-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 61644,
+            "body_sha256": "3cb1786b332482874ae346f3013e65f35dd23a6cd7ad898392d7dbac3a59d56c"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399975,day,2017-01-01,2018-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 66877,
+            "body_sha256": "a6673d5f7837b9baa7ddd1a5138e0ad411736935ddd235123801fa41de944e10"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399975,day,2018-01-01,2019-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 67082,
+            "body_sha256": "8ffbfcea13b170ee99c6fc3b0059a3c0d79d8e8eaca210f4f9735c7e10be4037"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399975,day,2019-01-01,2020-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 67386,
+            "body_sha256": "e038f5333bcccf120689e862b2a791b2fc896beeebac32b8ce4f8e194c95c743"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399975,day,2020-01-01,2021-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 67639,
+            "body_sha256": "d9a6dbb0871381df759fb551c0332910771d971171805e87e90e0e9594dda07a"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399975,day,2021-01-01,2022-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 67681,
+            "body_sha256": "37db27c3fd8e4007f88d8eb4ad787923f85772c0aced093e2d4d83be81329c03"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399975,day,2022-01-01,2023-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 67633,
+            "body_sha256": "bc8cbbb5dccf24c44a1f95149d115c68c60326cf98af4d4b3ce87b15a870986e"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399975,day,2023-01-01,2024-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 67659,
+            "body_sha256": "b43ff258c51815f225d9bbcb002d1614d4bf84645ddd462f6135134eb3009a89"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399975,day,2024-01-01,2025-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 67687,
+            "body_sha256": "340663520547b90101c0034ce0f5efd6a15b7137b22b7b4bf69a987e5d23a6fd"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399975,day,2025-01-01,2026-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 67699,
+            "body_sha256": "f0dafcd2012c327c7afee5c736aa4bd047da530550066697869cc387c5b245d5"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399975,day,2026-01-01,2027-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 67699,
+            "body_sha256": "f0dafcd2012c327c7afee5c736aa4bd047da530550066697869cc387c5b245d5"
+          }
+        ]
+      },
+      "sina": {
+        "status": "ok",
+        "rows": 2798,
+        "columns": [
+          "date",
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "date_min": "2015-05-19",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 472.621,
+        "close_max": 1720.23,
+        "close_nonpositive": 0,
+        "volume_col": "volume",
+        "requested_at": "2026-11-22T11:14:41.306335+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://finance.sina.com.cn/realstock/company/sz399975/hisdata/klc_kl.js",
+            "params": {
+              "d": "2020_2_4"
+            },
+            "http_status": 200,
+            "body_len": 45295,
+            "body_sha256": "df15981d9e98c72b658af726a3a8a54d32a9688cab7e5617a32e0a91f3966a0b"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sz399998",
+      "name": "中证煤炭",
+      "cross": {
+        "common_dates": 2778,
+        "close_max_abs_diff": 0.13599999999996726,
+        "close_strict_equal_days": 268,
+        "volume_ratio_sina_over_tx": null
+      },
+      "tencent": {
+        "status": "ok",
+        "rows": 2778,
+        "columns": [
+          "date",
+          "open",
+          "close",
+          "high",
+          "low",
+          "amount"
+        ],
+        "date_min": "2015-06-16",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 1014.76,
+        "close_max": 2772.58,
+        "close_nonpositive": 0,
+        "volume_col": "amount",
+        "requested_at": "2026-11-22T11:14:46.419644+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+            "params": {
+              "code": "sz399998",
+              "type": "qfq",
+              "_var": "trend_qfq",
+              "r": "0.3506048543943414"
+            },
+            "http_status": 200,
+            "body_len": 15376,
+            "body_sha256": "1e479456f6c7247dfad1d94867fdfa436fe2f48f4730722ccbaad3c17d7d0bd0"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399998,day,2015-01-01,2016-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 41594,
+            "body_sha256": "04092e786bc27cca2c85182a3f8ab1034d1c434e181ccc73e43b8bee43382af6"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399998,day,2016-01-01,2017-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 67055,
+            "body_sha256": "2277d217d3230c7ce9bfda22d44211a6d2f3db0fa869d15ffa86c0a8223e2e30"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399998,day,2017-01-01,2018-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68690,
+            "body_sha256": "c50ae879ce6b7ecb838b15eab7f15cf51409c1011e8660accbbc1ff20f0efc47"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399998,day,2018-01-01,2019-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68744,
+            "body_sha256": "631303659fba828c4d1e510e78a0fa04a8c1a1e5610fa7e40c33cf39724f346f"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399998,day,2019-01-01,2020-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68714,
+            "body_sha256": "cc8b9c31a4dd2f4287ce2278478e21c5e7ddc26577b6e42c1ab1323a4189021a"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399998,day,2020-01-01,2021-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69005,
+            "body_sha256": "e1d8c6572f3316a2d89bb1c3875b2325c98eec78f740980701f6f2197d2e1bc4"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399998,day,2021-01-01,2022-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69417,
+            "body_sha256": "af1651d97c692fb411953912d38448aa8583e889bbba8d4531bb217ebdfba1e0"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399998,day,2022-01-01,2023-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69333,
+            "body_sha256": "3a440b4c545e1c2cbb67d74f182ecc58fe7d959e36b49f6da73730ec8d1fc5dc"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399998,day,2023-01-01,2024-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69139,
+            "body_sha256": "111a8e4baf84077b9196cbfc7195d4ce2472271ff41bf46ede2b2e88e983a758"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399998,day,2024-01-01,2025-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69047,
+            "body_sha256": "c6be88a71c979546ce2cbf15b207ae05c5dc2a255c2e35f94a1c011d4d10c209"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399998,day,2025-01-01,2026-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69276,
+            "body_sha256": "52e7215af9b482604054dc4543f4adefbb23edf3623cdcd4c67a1082246fcdf9"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sz399998,day,2026-01-01,2027-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69276,
+            "body_sha256": "04120a3ba0129ad761d6f41d969bf462810cd9c1357fc4717ecbd79734c54fd3"
+          }
+        ]
+      },
+      "sina": {
+        "status": "ok",
+        "rows": 2778,
+        "columns": [
+          "date",
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "date_min": "2015-06-16",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 1014.761,
+        "close_max": 2772.581,
+        "close_nonpositive": 0,
+        "volume_col": "volume",
+        "requested_at": "2026-11-22T11:14:47.006516+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://finance.sina.com.cn/realstock/company/sz399998/hisdata/klc_kl.js",
+            "params": {
+              "d": "2020_2_4"
+            },
+            "http_status": 200,
+            "body_len": 46615,
+            "body_sha256": "28068c9f16534efdea721fc2baed2223019c18602499a57316bfe7ad7bc4db72"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sh000933",
+      "name": "中证医药",
+      "cross": {
+        "common_dates": 4223,
+        "close_max_abs_diff": 0.005999999997584382,
+        "close_strict_equal_days": 497,
+        "volume_ratio_sina_over_tx": null
+      },
+      "tencent": {
+        "status": "ok",
+        "rows": 4223,
+        "columns": [
+          "date",
+          "open",
+          "close",
+          "high",
+          "low",
+          "amount"
+        ],
+        "date_min": "2009-07-03",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 3967.76,
+        "close_max": 17499.51,
+        "close_nonpositive": 0,
+        "volume_col": "amount",
+        "requested_at": "2026-11-22T11:14:54.504494+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+            "params": {
+              "code": "sh000933",
+              "type": "qfq",
+              "_var": "trend_qfq",
+              "r": "0.3506048543943414"
+            },
+            "http_status": 200,
+            "body_len": 24280,
+            "body_sha256": "a813a2a9b021d5f74d427df2f7ee4c6f5f4d54dffb6c5faed881f3f3a625a386"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2009-01-01,2010-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 40376,
+            "body_sha256": "d02264bb39bf2fef4da53aa1f11625cecd41511a4b77a688a23bb52950740624"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2010-01-01,2011-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 65762,
+            "body_sha256": "8df8c79fd2dc6524e03a9332003fea0f8e244a73ed2ec5a1034b2785866a2446"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2011-01-01,2012-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68873,
+            "body_sha256": "6817b16c12f855187867964499e1064db651c88dcb95f130c518a81718554c07"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2012-01-01,2013-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68834,
+            "body_sha256": "a48463397798d3b66c715ef4fbb2fa607bc6e7e9c6cc70c4ae866f973bee4679"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2013-01-01,2014-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 68923,
+            "body_sha256": "94550886f68501782759db0d114a359ca657029f460e45d27c8905810458723b"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2014-01-01,2015-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69775,
+            "body_sha256": "718a1da8816baf752e49d167f32ceee94d1a734d37ce3ea93e1b9edb55abb0b3"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2015-01-01,2016-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69930,
+            "body_sha256": "b5812390030493c890c17d1f35073ec841cda0280cae8f91fef416f40447606f"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2016-01-01,2017-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69964,
+            "body_sha256": "6808cdb171c259b7f1e6e8b0c9d2cd5161f8a8822a4684821972cbd4ed241958"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2017-01-01,2018-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70081,
+            "body_sha256": "2519f24bd3f703bb25e7bfc92fadfded1b8312e2142eb86504f4245146f4aeee"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2018-01-01,2019-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70428,
+            "body_sha256": "50ba65fa41c0c27bd330a1c78f86c9b1ea35d04730597e1259b7617e0979fe79"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2019-01-01,2020-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71078,
+            "body_sha256": "0d06de6447afffc2da72452b63a4d271bb54e2b007cd848e02dc8346a160e21b"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2020-01-01,2021-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71890,
+            "body_sha256": "f30188f827ef179a05432c0676acbabc4f4e7f48a52d2f2a3ff8c79acf71d0fa"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2021-01-01,2022-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 72316,
+            "body_sha256": "cf258934787d81a01610149e98dc490957d1315ad09f15c611d365f1c6db1ae6"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2022-01-01,2023-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 71549,
+            "body_sha256": "5db4bb12f1ca1792b2f6dbb5f98bae0c8d527a7401529fdbb73a1217f2683b62"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2023-01-01,2024-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70516,
+            "body_sha256": "780580176684e51f056b1e511550820a490f51f1807dfadb2af261477cdacb09"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2024-01-01,2025-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69776,
+            "body_sha256": "8b14ed87189a7d33d5accf3987fd885792dc735f222df0c2b60ecbdb26bfb9e1"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2025-01-01,2026-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69867,
+            "body_sha256": "1acb60adc7f63e704da464c2cd2ccb69f4d5b3f31be620b63c0e7d023908e5c7"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000933,day,2026-01-01,2027-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69867,
+            "body_sha256": "1acb60adc7f63e704da464c2cd2ccb69f4d5b3f31be620b63c0e7d023908e5c7"
+          }
+        ]
+      },
+      "sina": {
+        "status": "ok",
+        "rows": 4223,
+        "columns": [
+          "date",
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "date_min": "2009-07-03",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 3967.759,
+        "close_max": 17499.512,
+        "close_nonpositive": 0,
+        "volume_col": "volume",
+        "requested_at": "2026-11-22T11:14:55.093239+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://finance.sina.com.cn/realstock/company/sh000933/hisdata/klc_kl.js",
+            "params": {
+              "d": "2020_2_4"
+            },
+            "http_status": 200,
+            "body_len": 75739,
+            "body_sha256": "496d7f2aae28b48f7d92b51bcce26947dcda5a2eb3cefbd4e15fbeab9287986e"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sh000934",
+      "name": "中证金融",
+      "cross": {
+        "common_dates": 4223,
+        "close_max_abs_diff": 0.005000000000109139,
+        "close_strict_equal_days": 431,
+        "volume_ratio_sina_over_tx": null
+      },
+      "tencent": {
+        "status": "ok",
+        "rows": 4223,
+        "columns": [
+          "date",
+          "open",
+          "close",
+          "high",
+          "low",
+          "amount"
+        ],
+        "date_min": "2009-07-03",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 2980.78,
+        "close_max": 7968.16,
+        "close_nonpositive": 0,
+        "volume_col": "amount",
+        "requested_at": "2026-11-22T11:15:02.716743+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+            "params": {
+              "code": "sh000934",
+              "type": "qfq",
+              "_var": "trend_qfq",
+              "r": "0.3506048543943414"
+            },
+            "http_status": 200,
+            "body_len": 24043,
+            "body_sha256": "e3c333816c2b937bba29cebcc99af291f4bb8892fe6bac25f8ea246fdfbe2dd4"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2009-01-01,2010-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 40865,
+            "body_sha256": "1330d255b3ad3485abd0c69a129635282e62d8abf4e60e678da61175e1845010"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2010-01-01,2011-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 66679,
+            "body_sha256": "867521628933640bab22451a75fbc1fdc6422f73bc474bb7700b80b527294158"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2011-01-01,2012-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69814,
+            "body_sha256": "fe0c996d2ab4302602b5873615861e35849f11ac2acbd9367e455524e13035e8"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2012-01-01,2013-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69817,
+            "body_sha256": "0a06066eb867d6cb06c02a93a8a204af0efde5c83f58ff53a957c428800070e8"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2013-01-01,2014-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69931,
+            "body_sha256": "8955faed63e9ca1894ffa4bd8b9ba4cb43bf42491fe3d7090c00538be24343d6"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2014-01-01,2015-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70264,
+            "body_sha256": "95ce399b240ca32e707b944a7b52396549d8d329780a315a9d21b5d14942ee36"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2015-01-01,2016-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70270,
+            "body_sha256": "ca9737259b145ece17820956a4f9d49381d0f34370744b00ee60d8d58cf492b6"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2016-01-01,2017-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70065,
+            "body_sha256": "7ef87fe7672d5f43db8c7b1a0da32f79ef91dacf18bf3f2b3dd0f547180ff147"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2017-01-01,2018-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69942,
+            "body_sha256": "6e5936034a663e40f3809ed694aa91e7ced11d2509844659f36f748df9925974"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2018-01-01,2019-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69974,
+            "body_sha256": "665810f9c24ea7b560e4d23192ab91ed582323d7f483ccfc231ac4c79bade9b5"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2019-01-01,2020-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70029,
+            "body_sha256": "3a45049a5125ee7e6514c7598373f561d2500a512b3ed4369c17fb9c50ea600e"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2020-01-01,2021-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70035,
+            "body_sha256": "5e66cbf5ef4a9ed2b0898300175edb4df8fe87e64b7bdeeb73457093b76d7fe9"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2021-01-01,2022-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70031,
+            "body_sha256": "943562dafd544ffa79a7321752df968072c9c722b360f4bbf64897dfd606fce6"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2022-01-01,2023-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 69977,
+            "body_sha256": "48cd0f383bdd90af61fba5a1f00a70f9ca274ba819b947d1e960d491e37288a7"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2023-01-01,2024-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70048,
+            "body_sha256": "2168158afc99127a0f8bf56ee1db4cbef89845b0d280479622f984f4273afd07"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2024-01-01,2025-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70153,
+            "body_sha256": "cef6bba4b8cc63744a95c87edd859bb3e338a0fd20789934629fc33c1e3b54df"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2025-01-01,2026-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70185,
+            "body_sha256": "394b4e3402fbcb3a9b0ccfc6a0aa8a27abfb4306bbd149bf82a562d2076a64be"
+          },
+          {
+            "method": "GET",
+            "url": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+            "params": {
+              "_var": "kline_dayqfq",
+              "param": "sh000934,day,2026-01-01,2027-12-31,640,qfq",
+              "r": "0.8205512681390605"
+            },
+            "http_status": 200,
+            "body_len": 70185,
+            "body_sha256": "394b4e3402fbcb3a9b0ccfc6a0aa8a27abfb4306bbd149bf82a562d2076a64be"
+          }
+        ]
+      },
+      "sina": {
+        "status": "ok",
+        "rows": 4223,
+        "columns": [
+          "date",
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "date_min": "2009-07-03",
+        "date_max": "2026-11-20",
+        "duplicate_date_groups": 0,
+        "duplicate_examples": {},
+        "close_min": 2980.784,
+        "close_max": 7968.16,
+        "close_nonpositive": 0,
+        "volume_col": "volume",
+        "requested_at": "2026-11-22T11:15:03.226028+08:00",
+        "http": [
+          {
+            "method": "GET",
+            "url": "https://finance.sina.com.cn/realstock/company/sh000934/hisdata/klc_kl.js",
+            "params": {
+              "d": "2020_2_4"
+            },
+            "http_status": 200,
+            "body_len": 75109,
+            "body_sha256": "01ec2747cf8432a80fb1fa88432e19e3598f6e653d4c0ff846aba731e6fd624c"
+          }
+        ]
+      }
+    }
+  ],
+  "unit_evidence": [
+    {
+      "symbol": "sh000932",
+      "n": 4223,
+      "ratio_min": 99.99999410273914,
+      "ratio_max": 100.00000580471219,
+      "ratio_mean": 99.99999998593353,
+      "ratio_median": 100.0,
+      "ratio_std": 5.611666069728536e-07
+    },
+    {
+      "symbol": "sh000819",
+      "n": 3533,
+      "ratio_min": 99.99999406132642,
+      "ratio_max": 100.00000588392464,
+      "ratio_mean": 99.99999999980511,
+      "ratio_median": 100.0,
+      "ratio_std": 7.587462987161082e-07
+    },
+    {
+      "symbol": "sh000991",
+      "n": 3716,
+      "ratio_min": 99.99999416130572,
+      "ratio_max": 100.00000576180413,
+      "ratio_mean": 99.99999998966943,
+      "ratio_median": 100.0,
+      "ratio_std": 6.239987681308404e-07
+    }
+  ],
+  "quality_summary": {
+    "tencent_ok": 11,
+    "sina_ok": 11,
+    "total": 11,
+    "tencent_dup_free": 11,
+    "sina_dup_free": 11,
+    "max_close_diff": 0.13599999999996726
+  }
+}

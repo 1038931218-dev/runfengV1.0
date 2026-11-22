@@ -1,0 +1,29 @@
+{
+ "generated_at": "2026-11-22T11:49:47.386148+08:00",
+ "files": [
+  {
+   "file": "audit_05_indices_11_inventory.json",
+   "bytes": 3448,
+   "sha256": "1e4c1e417e18d48d52248086e08d3b7b113730bef8272dac557aca5757b95a03",
+   "source": "本轮实测11指数双源 + 原证据taskB_index_quality.json名称交叉核对"
+  },
+  {
+   "file": "audit_06_trading_calendar_check.json",
+   "bytes": 11214,
+   "sha256": "2480a6b167ed564252ca99881826930cbb3f1910a1ade93caa93516c4b69e1a5",
+   "source": "本轮实测交易日历tool_trade_date_hist_sina + 11指数双源结构化数据"
+  },
+  {
+   "file": "audit_07_399998_anomaly.json",
+   "bytes": 4357,
+   "sha256": "edfd0f76271a62e3ef5e802f6e8a72a92249b40e9f8153fec487ba2e057913c2",
+   "source": "本轮实测399998腾讯/新浪双源逐日收盘价 + 原证据0.136偏差交叉核对"
+  },
+  {
+   "file": "audit_08_volume_unit_official.json",
+   "bytes": 3050,
+   "sha256": "8091d6205f46db5e0aebaf9d768124dca176f9c242cffa207f94c98264a09d1d",
+   "source": "AKShare官方文档与更新日志(WebFetch) + 本轮实测量纲交叉验证"
+  }
+ ]
+}

@@ -1,0 +1,29 @@
+{
+ "generated_at": "2026-11-22T11:48:07.166948+08:00",
+ "files": [
+  {
+   "file": "audit_01_universe_5580.json",
+   "bytes": 3793,
+   "sha256": "0b8a6fd4aead17834bf30514f3c40f1687f638c16d2294176649f0b10aa0faef",
+   "source": "本轮实测ak.stock_info_a_code_name()+既有基准文件full_universe_code_audit.json"
+  },
+  {
+   "file": "audit_02_missing_765_classification.json",
+   "bytes": 205378,
+   "sha256": "71b03a1b8eeb2c4b7cb42f5484dbe521f1bb17d44fc40c721bfe0d003cdfd628",
+   "source": "本轮实测退市名单/在册名单/上市日期 + 原证据coverage缺失集"
+  },
+  {
+   "file": "audit_03_multi_industry_304.json",
+   "bytes": 106069,
+   "sha256": "c8d862abfee11b56afd81db576e1da807c5ad175011aa36cfdc3a7760912596a",
+   "source": "原证据code_industry_map+detail_records+sectors(只读解析)"
+  },
+  {
+   "file": "audit_04_sina_history_capability.json",
+   "bytes": 3782,
+   "sha256": "23bb8e1879fcd9b6c9bf9b6cb7d6c33a8e742878f253dd5c5b052849d714e4c4",
+   "source": "本轮实测接口签名(inspect.signature/doc)+既有失败证据"
+  }
+ ]
+}
